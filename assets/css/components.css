@@ -5,6 +5,20 @@
  * avoids anything that can't be reproduced from dynamic data.
  */
 
+/* ── Elementor homepage overrides ─────────────────────────────
+ * Every homepage-builder section (see
+ * inc/importer/class-travail-elementor-page-builder.php) is a single
+ * full_width section > one 100%-width column > one widget, meant to
+ * render completely edge-to-edge. Elementor's own base CSS still insets
+ * that column's inner wrapper by its "Columns Gap" default though —
+ * confirmed via DevTools — independently of the section's own padding
+ * (already zeroed per-section in the generated data), so it's neutralized
+ * globally here rather than relying on a per-section JSON setting that a
+ * given Elementor version may not honor the same way. */
+.elementor-column-gap-default > .elementor-column > .elementor-element-populated {
+	padding: 0;
+}
+
 /* ── Hero ──────────────────────────────────────────────────── */
 
 .travail-hero {

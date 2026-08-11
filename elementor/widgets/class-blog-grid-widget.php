@@ -56,22 +56,38 @@ class Travail_Elementor_Blog_Grid_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'style',
+			array(
+				'label'       => __( 'Design', 'travail' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => '',
+				'options'     => array(
+					''         => __( 'Custom (use the fields below)', 'travail' ),
+					'classic'  => __( 'Travail Classic ("Stories from the road" grid)', 'travail' ),
+					'travello' => __( 'Travello (1 featured + 2 list posts)', 'travail' ),
+				),
+			)
+		);
+
+		$this->add_control(
 			'title',
 			array(
-				'label'   => __( 'Title', 'travail' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => __( 'Stories from the road', 'travail' ),
+				'label'     => __( 'Title', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::TEXT,
+				'default'   => __( 'Stories from the road', 'travail' ),
+				'condition' => array( 'style' => '' ),
 			)
 		);
 
 		$this->add_control(
 			'limit',
 			array(
-				'label'   => __( 'Number of Posts', 'travail' ),
-				'type'    => \Elementor\Controls_Manager::NUMBER,
-				'default' => 3,
-				'min'     => 1,
-				'max'     => 12,
+				'label'     => __( 'Number of Posts', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::NUMBER,
+				'default'   => 3,
+				'min'       => 1,
+				'max'       => 12,
+				'condition' => array( 'style' => '' ),
 			)
 		);
 
@@ -81,6 +97,7 @@ class Travail_Elementor_Blog_Grid_Widget extends \Elementor\Widget_Base {
 				'label'       => __( 'Category Slug (optional)', 'travail' ),
 				'type'        => \Elementor\Controls_Manager::TEXT,
 				'description' => __( 'Leave empty to show the latest posts from any category.', 'travail' ),
+				'condition'   => array( 'style' => '' ),
 			)
 		);
 
@@ -92,6 +109,16 @@ class Travail_Elementor_Blog_Grid_Widget extends \Elementor\Widget_Base {
 	 */
 	protected function render() {
 		$settings = $this->get_settings_for_display();
+
+		if ( 'classic' === $settings['style'] ) {
+			get_template_part( 'template-parts/blog/blog-grid' );
+			return;
+		}
+
+		if ( 'travello' === $settings['style'] ) {
+			get_template_part( 'template-parts/home/travello/blog' );
+			return;
+		}
 
 		$query_args = array(
 			'post_type'           => 'post',

@@ -9,6 +9,16 @@
  * arguments would be unnecessary duplication (per "create custom
  * widgets only when necessary" / "avoid duplicated queries").
  *
+ * For the three sources each reference design actually uses on its
+ * homepage (latest / best_seller / on_sale), this delegates to the real
+ * template-part for the selected Design style instead of the plugin's
+ * generic [ttbm-tour-list] shortcode grid — that shortcode renders its
+ * own default archive-style layout (including a filter sidebar), which
+ * doesn't match either reference design's homepage rail/card at all.
+ * The shortcode path is kept only for the two ad-hoc sources
+ * (category/location) that neither homepage design uses, where there's
+ * no reference layout to match.
+ *
  * @package Travail
  */
 
@@ -70,6 +80,21 @@ class Travail_Elementor_Tour_Grid_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'style',
+			array(
+				'label'       => __( 'Design', 'travail' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'classic',
+				'options'     => array(
+					'classic'  => __( 'Travail Classic', 'travail' ),
+					'travello' => __( 'Travello', 'travail' ),
+				),
+				'condition'   => array( 'source' => array( 'latest', 'best_seller', 'on_sale' ) ),
+				'description' => __( 'Only affects Latest/Popular/Deals — Category and Destination always use the generic grid below since neither reference design has one.', 'travail' ),
+			)
+		);
+
+		$this->add_control(
 			'source',
 			array(
 				'label'   => __( 'Show', 'travail' ),
@@ -110,7 +135,10 @@ class Travail_Elementor_Tour_Grid_Widget extends \Elementor\Widget_Base {
 
 		$this->start_controls_section(
 			'layout_section',
-			array( 'label' => __( 'Layout', 'travail' ) )
+			array(
+				'label'     => __( 'Layout', 'travail' ),
+				'condition' => array( 'source' => array( 'category', 'location' ) ),
+			)
 		);
 
 		$this->add_control(
@@ -163,15 +191,54 @@ class Travail_Elementor_Tour_Grid_Widget extends \Elementor\Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		if ( ! class_exists( 'Travail_Plugin_Compatibility' ) || ! Travail_Plugin_Compatibility::is_tour_booking_manager_active() || ! shortcode_exists( 'ttbm-tour-list' ) ) {
+		if ( ! class_exists( 'Travail_Plugin_Compatibility' ) || ! Travail_Plugin_Compatibility::is_tour_booking_manager_active() ) {
 			if ( current_user_can( 'edit_theme_options' ) ) {
 				echo '<div class="travail-empty-state">' . esc_html__( 'Install and activate Tour Booking Manager to display tours here.', 'travail' ) . '</div>';
 			}
 			return;
 		}
 
+		$style = 'travello' === $settings['style'] ? 'travello' : 'classic';
+		$limit = ! empty( $settings['limit'] ) ? absint( $settings['limit'] ) : 8;
+
+		switch ( $settings['source'] ) {
+			case 'latest':
+				if ( 'travello' === $style ) {
+					get_template_part( 'template-parts/home/travello/tours', null, array( 'limit' => $limit ) );
+				} else {
+					get_template_part(
+						'template-parts/tour/tour-rail',
+						null,
+						array(
+							'title' => $settings['title'] ? $settings['title'] : __( 'Popular experiences', 'travail' ),
+							'limit' => $limit,
+						)
+					);
+				}
+				return;
+
+			case 'best_seller':
+				// Both featured-journey.php and travello/featured-tour.php
+				// are fixed single-card "editorial pick" sections — no
+				// title/limit to pass, by design (matches the reference).
+				get_template_part( 'travello' === $style ? 'template-parts/home/travello/featured-tour' : 'template-parts/tour/featured-journey' );
+				return;
+
+			case 'on_sale':
+				// Both deals-grid.php and travello/deals.php render their
+				// own full section + heading, so the generic title row
+				// below is skipped for this source in either style.
+				get_template_part( 'travello' === $style ? 'template-parts/home/travello/deals' : 'template-parts/tour/deals-grid' );
+				return;
+		}
+
+		// category / location — no reference-design layout to match, so
+		// this keeps the original generic shortcode-based grid.
+		if ( ! shortcode_exists( 'ttbm-tour-list' ) ) {
+			return;
+		}
+
 		$columns = ! empty( $settings['columns'] ) ? absint( $settings['columns'] ) : 4;
-		$limit   = ! empty( $settings['limit'] ) ? absint( $settings['limit'] ) : 8;
 
 		$atts = array(
 			'style'      => 'grid',
@@ -180,26 +247,10 @@ class Travail_Elementor_Tour_Grid_Widget extends \Elementor\Widget_Base {
 			'pagination' => 'no',
 		);
 
-		switch ( $settings['source'] ) {
-			case 'best_seller':
-				// TTBM_Global_Function::get_post_info() reads the ttbm_best_seller meta toggle;
-				// the shortcode itself has no "best seller only" attribute, so filter client-side
-				// via the theme's own meta_query on a wrapped WP_Query instead of the shortcode
-				// when precision matters. For the common case we sort newest-first, which the
-				// shortcode already does — most stores mark only a handful of tours "best seller".
-				$atts['sort']    = 'yes';
-				$atts['sort_by'] = 'date';
-				break;
-			case 'category':
-				if ( ! empty( $settings['term'] ) ) {
-					$atts['cat'] = sanitize_title( $settings['term'] );
-				}
-				break;
-			case 'location':
-				if ( ! empty( $settings['term'] ) ) {
-					$atts['city'] = sanitize_title( $settings['term'] );
-				}
-				break;
+		if ( 'category' === $settings['source'] && ! empty( $settings['term'] ) ) {
+			$atts['cat'] = sanitize_title( $settings['term'] );
+		} elseif ( 'location' === $settings['source'] && ! empty( $settings['term'] ) ) {
+			$atts['city'] = sanitize_title( $settings['term'] );
 		}
 
 		$shortcode_atts_str = '';
@@ -208,12 +259,6 @@ class Travail_Elementor_Tour_Grid_Widget extends \Elementor\Widget_Base {
 		}
 
 		$wrap_class = 'rail' === $settings['layout'] ? 'travail-rail' : 'travail-tbm-grid-wrap';
-
-		// deals-grid.php renders its own full section + heading, so skip the widget's title row for it.
-		if ( 'on_sale' === $settings['source'] ) {
-			get_template_part( 'template-parts/tour/deals-grid' );
-			return;
-		}
 		?>
 		<?php if ( $settings['title'] ) : ?>
 			<div class="travail-section-head">

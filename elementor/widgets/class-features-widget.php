@@ -2,8 +2,16 @@
 /**
  * Elementor widget: Travail Features.
  *
- * Generic icon+title+text repeater — covers both the homepage
- * "Why Choose Us" style list and a simple 4-column feature grid.
+ * Both homepage designs use this one slot for three or two genuinely
+ * different, fixed sections apiece (Classic: "Why Choose Us" / "How It
+ * Works"; Travello: "Services" / "Why Travel With Us" / "How It Works")
+ * — each with its own distinct layout (image + floating badge, icon
+ * cards with photos, numbered steps) that the generic icon/numbered-list
+ * rendering below can't reproduce. The Section control routes straight
+ * to the real template-part for whichever one is picked; only when it's
+ * left as "Custom" does this fall back to the original generic
+ * icon-grid/numbered-list repeater, which stays useful for building a
+ * features section on any other page.
  *
  * @package Travail
  */
@@ -50,6 +58,38 @@ class Travail_Elementor_Features_Widget extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Maps the 'section' control's non-empty values to a real
+	 * template-part. Single source of truth, used by both register_controls()
+	 * (for the select options) and render() (for the lookup).
+	 *
+	 * @return array<string, array{label:string, template:string}>
+	 */
+	protected function get_section_map() {
+		return array(
+			'why_choose_us'         => array(
+				'label'    => __( 'Classic: Why Choose Us', 'travail' ),
+				'template' => 'template-parts/content/why-choose-us',
+			),
+			'how_it_works'          => array(
+				'label'    => __( 'Classic: How It Works', 'travail' ),
+				'template' => 'template-parts/content/how-it-works',
+			),
+			'travello_services'    => array(
+				'label'    => __( 'Travello: Services (Tours/Hotels/Transport/Activities)', 'travail' ),
+				'template' => 'template-parts/home/travello/services',
+			),
+			'travello_why_us'       => array(
+				'label'    => __( 'Travello: Why Travel With Us', 'travail' ),
+				'template' => 'template-parts/home/travello/why-us',
+			),
+			'travello_how_it_works' => array(
+				'label'    => __( 'Travello: 3-Step Process', 'travail' ),
+				'template' => 'template-parts/home/travello/how-it-works',
+			),
+		);
+	}
+
+	/**
 	 * Controls.
 	 */
 	protected function register_controls() {
@@ -58,18 +98,35 @@ class Travail_Elementor_Features_Widget extends \Elementor\Widget_Base {
 			array( 'label' => __( 'Content', 'travail' ) )
 		);
 
-		$this->add_control( 'title', array( 'label' => __( 'Title', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'Travel with confidence', 'travail' ) ) );
+		$section_options = array( '' => __( 'Custom (use the fields below)', 'travail' ) );
+		foreach ( $this->get_section_map() as $key => $section ) {
+			$section_options[ $key ] = $section['label'];
+		}
+
+		$this->add_control(
+			'section',
+			array(
+				'label'       => __( 'Section', 'travail' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => '',
+				'options'     => $section_options,
+				'description' => __( 'Pick a reference-design section to render it exactly as designed; everything below is ignored when one is picked.', 'travail' ),
+			)
+		);
+
+		$this->add_control( 'title', array( 'label' => __( 'Title', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'Travel with confidence', 'travail' ), 'condition' => array( 'section' => '' ) ) );
 
 		$this->add_control(
 			'layout',
 			array(
-				'label'   => __( 'Layout', 'travail' ),
-				'type'    => \Elementor\Controls_Manager::SELECT,
-				'default' => 'grid',
-				'options' => array(
+				'label'     => __( 'Layout', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::SELECT,
+				'default'   => 'grid',
+				'options'   => array(
 					'grid'    => __( 'Icon Grid', 'travail' ),
 					'numbered' => __( 'Numbered List', 'travail' ),
 				),
+				'condition' => array( 'section' => '' ),
 			)
 		);
 
@@ -90,6 +147,7 @@ class Travail_Elementor_Features_Widget extends \Elementor\Widget_Base {
 					array( 'heading' => __( 'Flexible plans', 'travail' ), 'text' => __( 'Modify or cancel up to 48 hours before.', 'travail' ) ),
 				),
 				'title_field' => '{{{ heading }}}',
+				'condition'   => array( 'section' => '' ),
 			)
 		);
 
@@ -100,7 +158,13 @@ class Travail_Elementor_Features_Widget extends \Elementor\Widget_Base {
 	 * Render.
 	 */
 	protected function render() {
-		$settings = $this->get_settings_for_display();
+		$settings    = $this->get_settings_for_display();
+		$section_map = $this->get_section_map();
+
+		if ( ! empty( $settings['section'] ) && isset( $section_map[ $settings['section'] ] ) ) {
+			get_template_part( $section_map[ $settings['section'] ]['template'] );
+			return;
+		}
 
 		if ( empty( $settings['items'] ) ) {
 			return;

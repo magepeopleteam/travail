@@ -55,14 +55,29 @@ class Travail_Elementor_Newsletter_Widget extends \Elementor\Widget_Base {
 			array( 'label' => __( 'Content', 'travail' ) )
 		);
 
-		$this->add_control( 'title', array( 'label' => __( 'Title', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'Your next adventure starts here.', 'travail' ) ) );
-		$this->add_control( 'text', array( 'label' => __( 'Text', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXTAREA, 'default' => __( 'Get travel inspiration, exclusive deals and new destinations delivered to your inbox.', 'travail' ) ) );
+		$this->add_control(
+			'style',
+			array(
+				'label'       => __( 'Design', 'travail' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'classic',
+				'options'     => array(
+					'classic'  => __( 'Travail Classic', 'travail' ),
+					'travello' => __( 'Travello (AJAX signup, own styling)', 'travail' ),
+				),
+				'description' => __( 'Travello renders its own real, working AJAX signup form (see inc/homepage-travello.php) — the fields below only apply to Classic.', 'travail' ),
+			)
+		);
+
+		$this->add_control( 'title', array( 'label' => __( 'Title', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'Your next adventure starts here.', 'travail' ), 'condition' => array( 'style' => 'classic' ) ) );
+		$this->add_control( 'text', array( 'label' => __( 'Text', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXTAREA, 'default' => __( 'Get travel inspiration, exclusive deals and new destinations delivered to your inbox.', 'travail' ), 'condition' => array( 'style' => 'classic' ) ) );
 		$this->add_control(
 			'background_image',
 			array(
-				'label'   => __( 'Background Image', 'travail' ),
-				'type'    => \Elementor\Controls_Manager::MEDIA,
-				'default' => array( 'url' => TRAVAIL_URI . '/assets/images/placeholder-wide.svg' ),
+				'label'     => __( 'Background Image', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::MEDIA,
+				'default'   => array( 'url' => TRAVAIL_URI . '/assets/images/placeholder-wide.svg' ),
+				'condition' => array( 'style' => 'classic' ),
 			)
 		);
 		$this->add_control(
@@ -71,6 +86,7 @@ class Travail_Elementor_Newsletter_Widget extends \Elementor\Widget_Base {
 				'label'       => __( 'Form Action URL', 'travail' ),
 				'type'        => \Elementor\Controls_Manager::URL,
 				'description' => __( 'Point this at your email-marketing provider\'s subscribe endpoint.', 'travail' ),
+				'condition'   => array( 'style' => 'classic' ),
 			)
 		);
 
@@ -82,7 +98,13 @@ class Travail_Elementor_Newsletter_Widget extends \Elementor\Widget_Base {
 	 */
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-		$bg_url   = ! empty( $settings['background_image']['url'] ) ? $settings['background_image']['url'] : TRAVAIL_URI . '/assets/images/placeholder-wide.svg';
+
+		if ( 'travello' === $settings['style'] ) {
+			get_template_part( 'template-parts/home/travello/newsletter' );
+			return;
+		}
+
+		$bg_url = ! empty( $settings['background_image']['url'] ) ? $settings['background_image']['url'] : TRAVAIL_URI . '/assets/images/placeholder-wide.svg';
 		$action   = ! empty( $settings['action_url']['url'] ) ? $settings['action_url']['url'] : apply_filters( 'travail_newsletter_action_url', '' );
 		?>
 		<section class="travail-newsletter">

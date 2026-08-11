@@ -2,8 +2,14 @@
 /**
  * Elementor widget: Travail Destination Grid.
  *
- * Renders ttbm_tour_location taxonomy terms as cards (same data source
- * as template-parts/destination/destination-grid.php).
+ * Delegates entirely to the real template-part for whichever design is
+ * selected (template-parts/destination/destination-grid.php for Classic,
+ * template-parts/home/travello/destinations.php for Travello) instead of
+ * re-implementing their markup inline, so this section always matches
+ * the reference design pixel-for-pixel. Title/subtitle copy for Classic
+ * lives in the Customizer (travail_get_option('destinations_title'/
+ * '_subtitle')) since destination-grid.php reads it from there, not from
+ * this widget's settings.
  *
  * @package Travail
  */
@@ -59,39 +65,28 @@ class Travail_Elementor_Destination_Grid_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'title',
+			'style',
 			array(
-				'label'   => __( 'Title', 'travail' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => __( 'Trending destinations', 'travail' ),
-			)
-		);
-
-		$this->add_control(
-			'subtitle',
-			array(
-				'label'   => __( 'Subtitle', 'travail' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => __( 'Popular places loved by travelers around the world.', 'travail' ),
+				'label'   => __( 'Design', 'travail' ),
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => 'classic',
+				'options' => array(
+					'classic'  => __( 'Travail Classic (4-card grid)', 'travail' ),
+					'travello' => __( 'Travello (bento grid)', 'travail' ),
+				),
 			)
 		);
 
 		$this->add_control(
 			'limit',
 			array(
-				'label'   => __( 'Number of Destinations', 'travail' ),
-				'type'    => \Elementor\Controls_Manager::NUMBER,
-				'default' => 4,
-				'min'     => 2,
-				'max'     => 12,
-			)
-		);
-
-		$this->add_control(
-			'view_all_url',
-			array(
-				'label' => __( '"View all" Link', 'travail' ),
-				'type'  => \Elementor\Controls_Manager::URL,
+				'label'       => __( 'Number of Destinations', 'travail' ),
+				'type'        => \Elementor\Controls_Manager::NUMBER,
+				'default'     => 4,
+				'min'         => 2,
+				'max'         => 12,
+				'condition'   => array( 'style' => 'classic' ),
+				'description' => __( 'Classic only — Travello\'s bento layout always shows exactly 4.', 'travail' ),
 			)
 		);
 
@@ -111,66 +106,17 @@ class Travail_Elementor_Destination_Grid_Widget extends \Elementor\Widget_Base {
 			return;
 		}
 
-		$terms = get_terms(
-			array(
-				'taxonomy'   => 'ttbm_tour_location',
-				'hide_empty' => true,
-				'orderby'    => 'count',
-				'order'      => 'DESC',
-				'number'     => ! empty( $settings['limit'] ) ? absint( $settings['limit'] ) : 4,
-			)
-		);
-
-		if ( is_wp_error( $terms ) || empty( $terms ) ) {
-			if ( current_user_can( 'edit_theme_options' ) ) {
-				echo '<div class="travail-empty-state">' . esc_html__( 'No destinations yet — assign a Location to a published tour first.', 'travail' ) . '</div>';
-			}
+		if ( 'travello' === $settings['style'] ) {
+			get_template_part( 'template-parts/home/travello/destinations' );
 			return;
 		}
-		?>
-		<?php if ( $settings['title'] ) : ?>
-			<div class="travail-section-head">
-				<div>
-					<h2 class="travail-serif"><?php echo esc_html( $settings['title'] ); ?></h2>
-					<?php if ( $settings['subtitle'] ) : ?>
-						<p><?php echo esc_html( $settings['subtitle'] ); ?></p>
-					<?php endif; ?>
-				</div>
-				<?php if ( ! empty( $settings['view_all_url']['url'] ) ) : ?>
-					<a href="<?php echo esc_url( $settings['view_all_url']['url'] ); ?>" class="travail-view-all travail-link-arrow"><?php esc_html_e( 'View all destinations', 'travail' ); ?></a>
-				<?php endif; ?>
-			</div>
-		<?php endif; ?>
 
-		<div class="travail-dest-grid">
-			<?php foreach ( $terms as $index => $term ) : ?>
-				<a href="<?php echo esc_url( get_term_link( $term ) ); ?>" class="travail-dest-card<?php echo $index < 2 ? ' travail-dest-card--tall' : ''; ?>">
-					<img src="<?php echo esc_url( travail_get_term_image_url( $term, $index < 2 ? 'travail-card-tall' : 'travail-card-wide' ) ); ?>" alt="<?php echo esc_attr( $term->name ); ?>" loading="lazy" />
-					<div class="travail-dest-card__gradient"></div>
-					<div class="travail-dest-card__info">
-						<div>
-							<h4><?php echo esc_html( $term->name ); ?></h4>
-							<p>
-								<?php $travail_country = travail_get_term_country( $term ); ?>
-								<?php if ( $travail_country ) : ?>
-									<?php echo esc_html( $travail_country ); ?> ·
-								<?php endif; ?>
-								<?php
-								printf(
-									/* translators: %d: number of tours in this destination. */
-									esc_html( _n( '%d experience', '%d experiences', $term->count, 'travail' ) ),
-									(int) $term->count
-								);
-								?>
-							</p>
-						</div>
-						<span class="travail-dest-arrow" aria-hidden="true">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-						</span>
-					</div>
-				</a>
-			<?php endforeach; ?>
-		</div>
-		<?php
+		// Classic style below delegates entirely to the real
+		// template-part too (rather than the inline markup this widget
+		// used to duplicate) — its section-head markup differs just
+		// enough from a hand-copy (missing wrapper div + "view all" arrow
+		// icon) to throw off the flex layout, so a direct call is both
+		// simpler and guaranteed byte-identical to the reference design.
+		get_template_part( 'template-parts/destination/destination-grid', null, array( 'limit' => ! empty( $settings['limit'] ) ? absint( $settings['limit'] ) : 4 ) );
 	}
 }

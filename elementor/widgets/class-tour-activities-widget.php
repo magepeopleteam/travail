@@ -2,10 +2,17 @@
 /**
  * Elementor widget: Travail Tour Activities.
  *
- * Renders ttbm_tour_activities taxonomy terms as a horizontal
- * pill/thumbnail rail — the "Find your kind of adventure" travel-style
- * explorer from the wanderly.html reference design (same data source as
- * template-parts/tour/category-explorer.php).
+ * Delegates entirely to the real template-part for whichever design is
+ * selected (template-parts/tour/category-explorer.php for Classic,
+ * template-parts/home/travello/categories.php for Travello) instead of
+ * re-implementing their markup inline. The Classic path used to
+ * duplicate category-explorer.php's term-fetch/render logic here, but
+ * was missing its `<section class="travail-section--tight
+ * travail-section--muted"><div class="travail-container">` wrapper
+ * entirely — the pill rail rendered with no side padding and no muted
+ * background band, visibly different from "Find your kind of adventure"
+ * in the reference design. A direct call is both simpler and guaranteed
+ * byte-identical.
  *
  * @package Travail
  */
@@ -68,22 +75,16 @@ class Travail_Elementor_Tour_Activities_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'title',
+			'style',
 			array(
-				'label'   => __( 'Title', 'travail' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => __( 'Find your kind of adventure', 'travail' ),
-			)
-		);
-
-		$this->add_control(
-			'limit',
-			array(
-				'label'   => __( 'Number of Activities', 'travail' ),
-				'type'    => \Elementor\Controls_Manager::NUMBER,
-				'default' => 10,
-				'min'     => 2,
-				'max'     => 24,
+				'label'       => __( 'Design', 'travail' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'classic',
+				'options'     => array(
+					'classic'  => __( 'Travail Classic (image-thumbnail pills)', 'travail' ),
+					'travello' => __( 'Travello (slim emoji pill nav)', 'travail' ),
+				),
+				'description' => __( 'Title copy for Classic comes from the Customizer (travail_get_option(\'activities_title\')), matching every other Classic section.', 'travail' ),
 			)
 		);
 
@@ -103,48 +104,6 @@ class Travail_Elementor_Tour_Activities_Widget extends \Elementor\Widget_Base {
 			return;
 		}
 
-		// Prefer the reference design's exact 8 terms, in its exact order,
-		// when they exist — see the matching comment in
-		// template-parts/tour/category-explorer.php for why.
-		$terms = array();
-		foreach ( array( 'Adventure', 'Beach', 'Culture', 'Hiking', 'Luxury', 'Wildlife', 'Family', 'Wellness' ) as $name ) {
-			$term = get_term_by( 'name', $name, 'ttbm_tour_activities' );
-			if ( $term && ! is_wp_error( $term ) ) {
-				$terms[] = $term;
-			}
-		}
-
-		if ( empty( $terms ) ) {
-			$terms = get_terms(
-				array(
-					'taxonomy'   => 'ttbm_tour_activities',
-					'hide_empty' => true,
-					'orderby'    => 'count',
-					'order'      => 'DESC',
-					'number'     => ! empty( $settings['limit'] ) ? absint( $settings['limit'] ) : 8,
-				)
-			);
-		}
-
-		if ( is_wp_error( $terms ) || empty( $terms ) ) {
-			if ( current_user_can( 'edit_theme_options' ) ) {
-				echo '<div class="travail-empty-state">' . esc_html__( 'No activities yet — assign an Activity to a published tour first.', 'travail' ) . '</div>';
-			}
-			return;
-		}
-		?>
-		<?php if ( $settings['title'] ) : ?>
-			<h2 class="travail-serif travail-loose-title"><?php echo esc_html( $settings['title'] ); ?></h2>
-		<?php endif; ?>
-
-		<div class="travail-cat-rail travail-cat-rail--fit" data-travail-pill-group>
-			<?php foreach ( $terms as $index => $term ) : ?>
-				<a href="<?php echo esc_url( get_term_link( $term ) ); ?>" class="travail-cat-card<?php echo 0 === $index ? ' is-active' : ''; ?>">
-					<img src="<?php echo esc_url( travail_get_term_image_url( $term, 'travail-thumb' ) ); ?>" alt="<?php echo esc_attr( $term->name ); ?>" loading="lazy" />
-					<div class="travail-cat-card__overlay"><span><?php echo esc_html( $term->name ); ?></span></div>
-				</a>
-			<?php endforeach; ?>
-		</div>
-		<?php
+		get_template_part( 'travello' === $settings['style'] ? 'template-parts/home/travello/categories' : 'template-parts/tour/category-explorer' );
 	}
 }

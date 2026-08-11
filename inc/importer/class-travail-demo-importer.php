@@ -1029,8 +1029,15 @@ class Travail_Demo_Importer {
 	 */
 	public static function step_homepage() {
 		$map = self::get_map();
-		if ( ! empty( $map['pages']['blog'] ) && 'page' !== get_option( 'show_on_front' ) ) {
-			update_option( 'show_on_front', 'posts' );
+
+		// Blog posts get their own page whenever one was created — this is
+		// independent of which homepage design is active, since
+		// show_on_front='page' supports a dedicated "Posts page" at the
+		// same time as a static front page. (Previously this block also
+		// forced show_on_front to 'posts' when nothing else had claimed
+		// 'page' yet — but that fought the homepage-activation logic
+		// below rather than deferring to it, so it's gone.)
+		if ( ! empty( $map['pages']['blog'] ) ) {
 			update_option( 'page_for_posts', $map['pages']['blog'] );
 		}
 
@@ -1043,11 +1050,11 @@ class Travail_Demo_Importer {
 		}
 
 		$context = array(
-			'destinations_url'          => ! empty( $map['pages']['destinations'] ) ? get_permalink( $map['pages']['destinations'] ) : '',
-			'hero_image'                => get_theme_mod( 'travail_hero_image', '' ),
-			'newsletter_image'          => get_theme_mod( 'travail_newsletter_image', '' ),
-			'travello_hero_image'       => get_theme_mod( 'travail_travello_hero_image', '' ),
-			'travello_newsletter_image' => get_theme_mod( 'travail_travello_newsletter_image', '' ),
+			'destinations_url'    => ! empty( $map['pages']['destinations'] ) ? get_permalink( $map['pages']['destinations'] ) : '',
+			'tours_url'           => ( class_exists( 'Travail_Plugin_Compatibility' ) && Travail_Plugin_Compatibility::is_tour_booking_manager_active() ) ? get_post_type_archive_link( 'ttbm_tour' ) : '',
+			'hero_image'          => get_theme_mod( 'travail_hero_image', '' ),
+			'newsletter_image'    => get_theme_mod( 'travail_newsletter_image', '' ),
+			'travello_hero_image' => get_theme_mod( 'travail_travello_hero_image', '' ),
 		);
 
 		$page_ids = array();
@@ -1056,24 +1063,70 @@ class Travail_Demo_Importer {
 			$page_ids[ $design_key ] = self::create_or_get_elementor_page( $design_key, $design['title'], $elements );
 		}
 
-		// Only auto-activate a homepage the first time this ever runs —
-		// once a site owner has explicitly chosen one from Travail →
-		// Homepages, re-running Demo Import must never silently switch it
-		// back out from under them.
-		if ( ! get_option( 'travail_active_homepage_id' ) && ! empty( $page_ids['travello'] ) ) {
+		// Re-affirm whichever homepage is already active every single run
+		// — not just the first time — and enforce it onto Settings →
+		// Reading regardless of what that screen currently says. This is
+		// what keeps the two screens from drifting apart: confirmed, a
+		// stray manual change on Settings → Reading (e.g. to "Your latest
+		// posts"), or a stale ID left over from an earlier import run
+		// whose page had since been trashed/recreated, could otherwise
+		// leave the front page silently showing the old hook-based
+		// homepage while both admin screens still claimed a design was
+		// active. First run ever (nothing chosen yet) defaults to Travello.
+		$active_id = self::resolve_active_homepage_id( $page_ids );
+		if ( $active_id ) {
 			update_option( 'show_on_front', 'page' );
-			update_option( 'page_on_front', $page_ids['travello'] );
-			update_option( 'travail_active_homepage_id', $page_ids['travello'] );
+			update_option( 'page_on_front', $active_id );
+			update_option( 'travail_active_homepage_id', $active_id );
 		}
 
 		return __( 'Two Elementor-ready homepage pages are set up — pick and edit them any time under Travail → Homepages.', 'travail' );
 	}
 
 	/**
-	 * Create-or-fetch one of the generated homepage pages. The
-	 * `_elementor_data` payload is only ever written the first time the
-	 * page is created — a re-run of the importer never overwrites a site
-	 * owner's own edits made in Elementor since.
+	 * Resolve which page ID should be the active homepage: whatever is
+	 * already recorded (re-affirmed, not just trusted blindly — see the
+	 * publish-status checks below), falling back to a page manually
+	 * assigned via Settings → Reading, falling back to Travello as the
+	 * default for a brand-new activation.
+	 *
+	 * Both existing-choice checks require the referenced page to still
+	 * actually exist and be published — an option holding a stale ID
+	 * (its page trashed/deleted, or recreated with a new ID by a later
+	 * import run) must never be trusted as-is.
+	 *
+	 * @param array $page_ids This run's design key => page ID map, see step_homepage().
+	 * @return int Page ID, or 0 if nothing resolved (shouldn't happen once $page_ids is non-empty).
+	 */
+	protected static function resolve_active_homepage_id( $page_ids ) {
+		$chosen_id = (int) get_option( 'travail_active_homepage_id' );
+		if ( $chosen_id && 'publish' === get_post_status( $chosen_id ) ) {
+			return $chosen_id;
+		}
+
+		if ( 'page' === get_option( 'show_on_front' ) ) {
+			$front_page_id = (int) get_option( 'page_on_front' );
+			if ( $front_page_id && 'publish' === get_post_status( $front_page_id ) && get_post_meta( $front_page_id, '_travail_homepage_design', true ) ) {
+				return $front_page_id;
+			}
+		}
+
+		return ! empty( $page_ids['travello'] ) ? (int) $page_ids['travello'] : 0;
+	}
+
+	/**
+	 * Create-or-fetch one of the generated homepage pages.
+	 *
+	 * `_elementor_data` is (re)written whenever it's safe to do so: on
+	 * first creation, or when the page's current Elementor content still
+	 * exactly matches what this builder wrote last time (tracked via the
+	 * `_travail_homepage_builder_hash` meta) — meaning nobody has edited
+	 * it in Elementor since. That lets a theme update's layout fixes
+	 * reach an already-imported site on the next Demo Import run, while
+	 * still never clobbering a site owner's own edits. A page with
+	 * Elementor content but no recorded hash (created before this
+	 * tracking existed) is treated as safe to refresh once, after which
+	 * it's protected the same as any other.
 	 *
 	 * @param string $key      Stable design key ('travello' or 'default' — see
 	 *                         Travail_Elementor_Page_Builder::get_designs()). Also
@@ -1087,10 +1140,31 @@ class Travail_Demo_Importer {
 	protected static function create_or_get_elementor_page( $key, $title, $elements ) {
 		$page_id = self::create_or_get_page( 'homepage-' . $key, $title );
 
-		if ( ! get_post_meta( $page_id, '_elementor_data', true ) ) {
-			update_post_meta( $page_id, '_elementor_data', wp_slash( wp_json_encode( $elements ) ) );
+		// Elementor's own "Full Width" page template — keeps the theme's
+		// header/footer but skips page.php entirely, so none of its
+		// wrapping <div class="travail-container"> or page-title header
+		// (both meant for ordinary pages) end up squeezing/labeling an
+		// Elementor-built homepage when it's viewed on its own permalink
+		// rather than as the front page (front-page.php has no such
+		// wrapper and was never affected by this). 'elementor_header_footer'
+		// is Elementor's own stable, documented template slug — confirmed
+		// against \Elementor\Modules\PageTemplates\Module::TEMPLATE_HEADER_FOOTER
+		// in this install rather than assumed. Backfilled unconditionally,
+		// like the design-flag meta below, so a page created before this
+		// fix existed is corrected on the next run.
+		update_post_meta( $page_id, '_wp_page_template', 'elementor_header_footer' );
+
+		$new_json     = wp_json_encode( $elements );
+		$new_hash     = md5( $new_json );
+		$current_data = get_post_meta( $page_id, '_elementor_data', true );
+		$last_hash    = get_post_meta( $page_id, '_travail_homepage_builder_hash', true );
+		$safe_to_write = ( '' === $current_data ) || ! $last_hash || $last_hash === md5( $current_data );
+
+		if ( $safe_to_write ) {
+			update_post_meta( $page_id, '_elementor_data', wp_slash( $new_json ) );
 			update_post_meta( $page_id, '_elementor_edit_mode', 'builder' );
 			update_post_meta( $page_id, '_elementor_version', defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : '3.18.0' );
+			update_post_meta( $page_id, '_travail_homepage_builder_hash', $new_hash );
 		}
 
 		// Backfilled unconditionally (like the thumbnail/category backfills

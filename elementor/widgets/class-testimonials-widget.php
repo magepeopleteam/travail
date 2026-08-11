@@ -61,29 +61,47 @@ class Travail_Elementor_Testimonials_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'style',
+			array(
+				'label'       => __( 'Design', 'travail' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => '',
+				'options'     => array(
+					''         => __( 'Custom (use the repeater below)', 'travail' ),
+					'classic'  => __( 'Travail Classic (dark slider)', 'travail' ),
+					'travello' => __( 'Travello (3-card review grid)', 'travail' ),
+				),
+				'description' => __( '"Classic"/"Travello" render that reference design\'s exact testimonials section (copy comes from travail_testimonials / travail_travello_reviews filters); everything below only applies to "Custom".', 'travail' ),
+			)
+		);
+
+		$this->add_control(
 			'title',
 			array(
-				'label'   => __( 'Title', 'travail' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => __( 'Loved by travelers worldwide', 'travail' ),
+				'label'     => __( 'Title', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::TEXT,
+				'default'   => __( 'Loved by travelers worldwide', 'travail' ),
+				'condition' => array( 'style' => '' ),
 			)
 		);
 
 		$this->add_control(
 			'show_avatars',
 			array(
-				'label'   => __( 'Show Avatar Strip', 'travail' ),
-				'type'    => \Elementor\Controls_Manager::SWITCHER,
-				'default' => 'yes',
+				'label'     => __( 'Show Avatar Strip', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::SWITCHER,
+				'default'   => 'yes',
+				'condition' => array( 'style' => '' ),
 			)
 		);
 
 		$this->add_control(
 			'count_label',
 			array(
-				'label'   => __( 'Review Count Label', 'travail' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => __( '5,000+ verified reviews', 'travail' ),
+				'label'     => __( 'Review Count Label', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::TEXT,
+				'default'   => __( '5,000+ verified reviews', 'travail' ),
+				'condition' => array( 'style' => '' ),
 			)
 		);
 
@@ -109,6 +127,7 @@ class Travail_Elementor_Testimonials_Widget extends \Elementor\Widget_Base {
 					),
 				),
 				'title_field' => '{{{ author }}}',
+				'condition'   => array( 'style' => '' ),
 			)
 		);
 
@@ -120,6 +139,16 @@ class Travail_Elementor_Testimonials_Widget extends \Elementor\Widget_Base {
 	 */
 	protected function render() {
 		$settings = $this->get_settings_for_display();
+
+		if ( 'classic' === $settings['style'] ) {
+			get_template_part( 'template-parts/testimonial/testimonials' );
+			return;
+		}
+
+		if ( 'travello' === $settings['style'] ) {
+			get_template_part( 'template-parts/home/travello/testimonials' );
+			return;
+		}
 
 		if ( empty( $settings['testimonials'] ) ) {
 			return;

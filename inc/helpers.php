@@ -271,9 +271,19 @@ function travail_is_travello_home() {
 		return false;
 	}
 
-	$front_page_id = (int) get_option( 'page_on_front' );
-	if ( $front_page_id && get_post_meta( $front_page_id, '_travail_homepage_design', true ) ) {
-		return false;
+	// `page_on_front` can hold a stale value from an earlier "A static
+	// page" choice even while Settings → Reading is currently set to
+	// "Your latest posts" — checking show_on_front first stops that
+	// leftover value from being mistaken for the page actually showing.
+	// The get_post_status() check additionally guards against the ID
+	// itself being stale (page trashed/deleted, or replaced by a newer
+	// import run) — a dead ID must not be treated as "not our page" and
+	// silently fall through to a hook-based homepage instead.
+	if ( 'page' === get_option( 'show_on_front' ) ) {
+		$front_page_id = (int) get_option( 'page_on_front' );
+		if ( $front_page_id && 'publish' === get_post_status( $front_page_id ) && get_post_meta( $front_page_id, '_travail_homepage_design', true ) ) {
+			return false;
+		}
 	}
 
 	return 'travello' === travail_get_option( 'homepage_style', 'travello' );
