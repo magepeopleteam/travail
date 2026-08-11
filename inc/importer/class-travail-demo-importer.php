@@ -1014,11 +1014,16 @@ class Travail_Demo_Importer {
 	}
 
 	/**
-	 * Step: homepage. Sends the blog to its own page and leaves the
-	 * front page rendering Travail's built-in default sections (see
-	 * front-page.php) — the safest choice since we don't fabricate an
-	 * empty "Home" page that would otherwise look broken without
-	 * Elementor content.
+	 * Step: homepage. Sends the blog to its own page, then — when
+	 * Elementor is active — builds two fully Elementor-editable homepage
+	 * pages (one per built-in design, via Travail_Elementor_Page_Builder)
+	 * and activates one of them as the front page, unless a site owner
+	 * has already picked one from Travail → Homepages.
+	 *
+	 * Without Elementor active, page creation is skipped entirely — an
+	 * `_elementor_data` payload with no Elementor plugin to render it
+	 * would just be a blank page, which is worse than the existing
+	 * hook-based homepage front-page.php already falls back to.
 	 *
 	 * @return string
 	 */
@@ -1029,11 +1034,75 @@ class Travail_Demo_Importer {
 			update_option( 'page_for_posts', $map['pages']['blog'] );
 		}
 
-		if ( class_exists( 'Travail_Plugin_Compatibility' ) && Travail_Plugin_Compatibility::is_elementor_active() ) {
-			return __( 'Elementor detected — build your homepage visually with the widgets under the "Travail" category, then set it as your front page under Settings → Reading.', 'travail' );
+		if ( ! class_exists( 'Travail_Plugin_Compatibility' ) || ! Travail_Plugin_Compatibility::is_elementor_active() ) {
+			return __( 'Elementor is not active — install and activate it, then re-run Demo Import to generate two ready-made, fully editable homepage pages.', 'travail' );
 		}
 
-		return __( 'Homepage configured — showing the built-in Travail homepage sections. Blog posts now live on their own page.', 'travail' );
+		if ( ! class_exists( 'Travail_Elementor_Page_Builder' ) ) {
+			return __( 'Homepage builder unavailable — skipped.', 'travail' );
+		}
+
+		$context = array(
+			'destinations_url'          => ! empty( $map['pages']['destinations'] ) ? get_permalink( $map['pages']['destinations'] ) : '',
+			'hero_image'                => get_theme_mod( 'travail_hero_image', '' ),
+			'newsletter_image'          => get_theme_mod( 'travail_newsletter_image', '' ),
+			'travello_hero_image'       => get_theme_mod( 'travail_travello_hero_image', '' ),
+			'travello_newsletter_image' => get_theme_mod( 'travail_travello_newsletter_image', '' ),
+		);
+
+		$page_ids = array();
+		foreach ( Travail_Elementor_Page_Builder::get_designs() as $design_key => $design ) {
+			$elements               = Travail_Elementor_Page_Builder::build_elements( $design_key, $context );
+			$page_ids[ $design_key ] = self::create_or_get_elementor_page( $design_key, $design['title'], $elements );
+		}
+
+		// Only auto-activate a homepage the first time this ever runs —
+		// once a site owner has explicitly chosen one from Travail →
+		// Homepages, re-running Demo Import must never silently switch it
+		// back out from under them.
+		if ( ! get_option( 'travail_active_homepage_id' ) && ! empty( $page_ids['travello'] ) ) {
+			update_option( 'show_on_front', 'page' );
+			update_option( 'page_on_front', $page_ids['travello'] );
+			update_option( 'travail_active_homepage_id', $page_ids['travello'] );
+		}
+
+		return __( 'Two Elementor-ready homepage pages are set up — pick and edit them any time under Travail → Homepages.', 'travail' );
+	}
+
+	/**
+	 * Create-or-fetch one of the generated homepage pages. The
+	 * `_elementor_data` payload is only ever written the first time the
+	 * page is created — a re-run of the importer never overwrites a site
+	 * owner's own edits made in Elementor since.
+	 *
+	 * @param string $key      Stable design key ('travello' or 'default' — see
+	 *                         Travail_Elementor_Page_Builder::get_designs()). Also
+	 *                         stored as the page's `_travail_homepage_design` post
+	 *                         meta flag so travail_is_travello_home() recognizes it
+	 *                         even if the import map option is ever lost.
+	 * @param string $title    Page title.
+	 * @param array  $elements Elementor element tree from Travail_Elementor_Page_Builder.
+	 * @return int Page ID.
+	 */
+	protected static function create_or_get_elementor_page( $key, $title, $elements ) {
+		$page_id = self::create_or_get_page( 'homepage-' . $key, $title );
+
+		if ( ! get_post_meta( $page_id, '_elementor_data', true ) ) {
+			update_post_meta( $page_id, '_elementor_data', wp_slash( wp_json_encode( $elements ) ) );
+			update_post_meta( $page_id, '_elementor_edit_mode', 'builder' );
+			update_post_meta( $page_id, '_elementor_version', defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : '3.18.0' );
+		}
+
+		// Backfilled unconditionally (like the thumbnail/category backfills
+		// elsewhere in this file) so the flag is self-healing even if it
+		// was ever cleared without the Elementor data itself changing.
+		update_post_meta( $page_id, '_travail_homepage_design', $key );
+
+		$map                       = self::get_map();
+		$map['homepages'][ $key ]  = $page_id;
+		self::save_map( $map );
+
+		return $page_id;
 	}
 }
 

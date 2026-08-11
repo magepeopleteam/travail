@@ -27,6 +27,7 @@ class Travail_Admin {
 		add_action( 'admin_notices', array( __CLASS__, 'maybe_show_activation_notice' ) );
 		add_action( 'wp_ajax_travail_install_plugin', array( __CLASS__, 'ajax_install_plugin' ) );
 		add_action( 'wp_ajax_travail_activate_plugin', array( __CLASS__, 'ajax_activate_plugin' ) );
+		add_action( 'wp_ajax_travail_set_active_homepage', array( __CLASS__, 'ajax_set_active_homepage' ) );
 	}
 
 	/**
@@ -166,6 +167,39 @@ class Travail_Admin {
 	}
 
 	/**
+	 * AJAX: set which generated homepage page is the site's live front
+	 * page. Only ever accepts a page ID actually flagged with the
+	 * `_travail_homepage_design` post meta this theme itself writes (see
+	 * Travail_Demo_Importer::create_or_get_elementor_page()) — never an
+	 * arbitrary post ID lifted straight from $_POST.
+	 */
+	public static function ajax_set_active_homepage() {
+		check_ajax_referer( 'travail_admin', 'nonce' );
+
+		if ( ! current_user_can( self::CAPABILITY ) ) {
+			wp_send_json_error( array( 'message' => __( 'You do not have permission to do this.', 'travail' ) ), 403 );
+		}
+
+		$page_id = isset( $_POST['page_id'] ) ? absint( $_POST['page_id'] ) : 0;
+		$design  = $page_id ? get_post_meta( $page_id, '_travail_homepage_design', true ) : '';
+
+		if ( ! $page_id || ! $design || 'publish' !== get_post_status( $page_id ) ) {
+			wp_send_json_error( array( 'message' => __( 'That page is not a recognized Travail homepage design.', 'travail' ) ), 400 );
+		}
+
+		update_option( 'show_on_front', 'page' );
+		update_option( 'page_on_front', $page_id );
+		update_option( 'travail_active_homepage_id', $page_id );
+
+		wp_send_json_success(
+			array(
+				'message'  => __( 'Homepage updated — this design is now live.', 'travail' ),
+				'edit_url' => admin_url( 'post.php?post=' . $page_id . '&action=elementor' ),
+			)
+		);
+	}
+
+	/**
 	 * Register the top-level "Travail" admin menu and its submenus.
 	 */
 	public static function register_menu() {
@@ -182,6 +216,7 @@ class Travail_Admin {
 		);
 
 		add_submenu_page( $parent_slug, __( 'Dashboard', 'travail' ), __( 'Dashboard', 'travail' ), self::CAPABILITY, $parent_slug, array( __CLASS__, 'render_dashboard' ) );
+		add_submenu_page( $parent_slug, __( 'Homepages', 'travail' ), __( 'Homepages', 'travail' ), self::CAPABILITY, 'travail-homepages', array( __CLASS__, 'render_homepages' ) );
 		add_submenu_page( $parent_slug, __( 'Setup Wizard', 'travail' ), __( 'Setup Wizard', 'travail' ), self::CAPABILITY, 'travail-setup-wizard', array( 'Travail_Onboarding', 'render_page' ) );
 		add_submenu_page( $parent_slug, __( 'Demo Import', 'travail' ), __( 'Demo Import', 'travail' ), self::CAPABILITY, 'travail-demo-import', array( 'Travail_Demo_Importer', 'render_page' ) );
 		add_submenu_page( $parent_slug, __( 'Recommended Plugins', 'travail' ), __( 'Recommended Plugins', 'travail' ), self::CAPABILITY, 'travail-plugins', array( __CLASS__, 'render_plugins' ) );
@@ -230,6 +265,24 @@ class Travail_Admin {
 		}
 		$scenario = class_exists( 'Travail_Plugin_Compatibility' ) ? Travail_Plugin_Compatibility::get_scenario() : 'bare';
 		include TRAVAIL_DIR . '/inc/admin/views/dashboard.php';
+	}
+
+	/**
+	 * Homepages screen: pick which Elementor-built homepage design is
+	 * live, and jump straight into Elementor's edit mode for it.
+	 */
+	public static function render_homepages() {
+		if ( ! current_user_can( self::CAPABILITY ) ) {
+			return;
+		}
+
+		$designs          = class_exists( 'Travail_Elementor_Page_Builder' ) ? Travail_Elementor_Page_Builder::get_designs() : array();
+		$map              = get_option( Travail_Demo_Importer::MAP_OPTION, array() );
+		$homepage_ids     = isset( $map['homepages'] ) ? $map['homepages'] : array();
+		$active_id        = ( 'page' === get_option( 'show_on_front' ) ) ? (int) get_option( 'page_on_front' ) : 0;
+		$elementor_active = class_exists( 'Travail_Plugin_Compatibility' ) && Travail_Plugin_Compatibility::is_elementor_active();
+
+		include TRAVAIL_DIR . '/inc/admin/views/homepages.php';
 	}
 
 	/**

@@ -62,6 +62,7 @@ $travail_includes = array(
 	'inc/woocommerce/class-travail-woocommerce.php',
 	'inc/admin/class-travail-admin.php',
 	'inc/onboarding/class-travail-onboarding.php',
+	'inc/importer/class-travail-elementor-page-builder.php',
 	'inc/importer/class-travail-demo-importer.php',
 	'inc/blocks.php',
 );

@@ -129,6 +129,99 @@
 	margin: 0 0 4px;
 }
 
+/* Homepages */
+.travail-homepage-grid {
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax( 320px, 1fr ) );
+	gap: 24px;
+	margin-top: 20px;
+}
+
+.travail-homepage-card {
+	background: #fff;
+	border: 1px solid #e2e2e2;
+	border-radius: 12px;
+	overflow: hidden;
+}
+
+.travail-homepage-card.is-active {
+	border-color: #16352d;
+	box-shadow: 0 0 0 1px #16352d;
+}
+
+.travail-homepage-card__preview {
+	position: relative;
+	height: 220px;
+	background: #f6f7f7;
+	overflow: hidden;
+}
+
+.travail-homepage-card__preview iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 400%;
+	height: 400%;
+	border: 0;
+	transform: scale( 0.25 );
+	transform-origin: top left;
+	pointer-events: none;
+}
+
+.travail-homepage-card__preview--empty {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #ccc;
+}
+
+.travail-homepage-card__preview--empty .dashicons {
+	font-size: 40px;
+	width: 40px;
+	height: 40px;
+}
+
+.travail-homepage-card__body {
+	padding: 20px 24px 24px;
+}
+
+.travail-homepage-card__title-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.travail-homepage-card__title-row h2 {
+	margin: 0;
+	font-size: 16px;
+}
+
+.travail-homepage-badge {
+	background: #16352d;
+	color: #fff;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	padding: 4px 10px;
+	border-radius: 999px;
+	white-space: nowrap;
+}
+
+.travail-homepage-card__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 16px;
+}
+
+.travail-homepage-card__message {
+	font-size: 13px;
+	margin: 10px 0 0;
+	min-height: 1em;
+}
+
 .travail-docs-toc {
 	columns: 2;
 	margin-bottom: 32px;

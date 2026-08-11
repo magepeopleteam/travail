@@ -40,7 +40,7 @@ function travail_customize_register( $wp_customize ) {
 			'title'       => __( 'Homepage', 'travail' ),
 			'panel'       => 'travail_options',
 			'priority'    => 5,
-			'description' => __( 'Choose which homepage design your site\'s front page shows. "Travello" (the default) always wins, even over a page assigned in Settings → Reading. Switch to "Travail" to fall back to that assigned page\'s own Elementor/block content, or to the built-in Travail demo sections when no page is assigned.', 'travail' ),
+			'description' => __( 'Choose which built-in homepage variation renders when no Travail-generated homepage page is set as your front page. If you\'ve run Demo Import and activated one from Travail → Homepages, that Elementor page always wins over this setting.', 'travail' ),
 		)
 	);
 
