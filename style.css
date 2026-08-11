@@ -1,0 +1,70 @@
+/*
+Theme Name: Travail
+Theme URI: https://travail-theme.example.com
+Author: Travail Studio
+Author URI: https://travail-theme.example.com
+Description: Travail is a premium, Elementor-ready travel &amp; tour booking theme built for Tour Booking Manager. Search, book and showcase tours, destinations and experiences with a fast, accessible and fully responsive design. Works standalone, with Elementor, and with WooCommerce.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: travail
+Tags: travel, tour-booking, e-commerce, one-column, two-columns, right-sidebar, left-sidebar, custom-logo, custom-menu, editor-style, featured-images, full-width-template, rtl-language-support, threaded-comments, translation-ready, accessibility-ready, block-patterns
+
+Travail is a registered trademark. This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+/* =========================================================
+   Design tokens
+   Source of truth: wanderly.html reference design
+   ========================================================= */
+:root {
+	--travail-forest: #16352d;
+	--travail-forest-mid: #1e4a3d;
+	--travail-coral: #ff6b4a;
+	--travail-beige: #e6e2da;
+	--travail-parchment: #f8f7f3;
+	--travail-ink: #151716;
+	--travail-white: #ffffff;
+
+	--travail-color-primary: var(--travail-forest);
+	--travail-color-secondary: var(--travail-ink);
+	--travail-color-accent: var(--travail-coral);
+	--travail-color-text: var(--travail-ink);
+	--travail-color-text-muted: rgba(21, 23, 22, 0.55);
+	--travail-color-bg: var(--travail-parchment);
+	--travail-color-surface: var(--travail-white);
+	--travail-color-border: var(--travail-beige);
+
+	--travail-font-heading: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+	--travail-font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+	--travail-radius-sm: 12px;
+	--travail-radius-md: 16px;
+	--travail-radius-lg: 20px;
+	--travail-radius-xl: 24px;
+	--travail-radius-2xl: 28px;
+
+	--travail-container: 1280px;
+	--travail-gutter: 80px;
+
+	--travail-shadow-sm: 0 2px 20px rgba(0, 0, 0, 0.07);
+	--travail-shadow-md: 0 8px 32px rgba(0, 0, 0, 0.08);
+	--travail-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.22);
+
+	--travail-space-1: 4px;
+	--travail-space-2: 8px;
+	--travail-space-3: 12px;
+	--travail-space-4: 16px;
+	--travail-space-6: 24px;
+	--travail-space-8: 32px;
+	--travail-space-12: 48px;
+	--travail-space-16: 64px;
+}
+
+/* Minimal print/base rules live here; the full design system lives in
+   assets/css/travail-*.css so style.css stays fast to parse and this
+   header stays readable for the WordPress.org / ThemeForest reviewer. */

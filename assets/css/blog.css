@@ -1,0 +1,138 @@
+/**
+ * Travail — Blog archive & single post specifics.
+ * Card styles live in components.css (.travail-blog-card etc).
+ */
+
+.travail-single-post-header {
+	padding: 140px 0 40px;
+}
+
+.travail-single-post-header h1 {
+	font-size: clamp( 30px, 4vw, 46px );
+	max-width: 780px;
+}
+
+.travail-post-meta {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	flex-wrap: wrap;
+	font-size: 13px;
+	color: var( --travail-color-text-muted );
+	margin: 16px 0;
+}
+
+.travail-post-meta img {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.travail-post-thumbnail {
+	border-radius: var( --travail-radius-lg );
+	overflow: hidden;
+	margin-bottom: 40px;
+	max-height: 520px;
+}
+
+.travail-post-thumbnail img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.travail-entry-content {
+	font-size: 16px;
+	line-height: 1.8;
+	color: var( --travail-color-text );
+}
+
+.travail-entry-content h2 {
+	font-size: 28px;
+	margin-top: 1.6em;
+}
+
+.travail-entry-content h3 {
+	font-size: 22px;
+	margin-top: 1.4em;
+}
+
+.travail-entry-content img {
+	border-radius: var( --travail-radius-md );
+}
+
+.travail-entry-content blockquote {
+	border-inline-start: 3px solid var( --travail-color-accent );
+	padding-inline-start: 20px;
+	font-style: italic;
+	color: var( --travail-color-text-muted );
+	margin: 24px 0;
+}
+
+.travail-entry-content a {
+	text-decoration: underline;
+	text-decoration-color: var( --travail-color-border );
+}
+
+.travail-post-tags {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+	margin-top: 40px;
+}
+
+.travail-author-box {
+	display: flex;
+	gap: 20px;
+	background: var( --travail-color-bg );
+	border-radius: var( --travail-radius-lg );
+	padding: 28px;
+	margin-top: 48px;
+}
+
+.travail-author-box img {
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+	object-fit: cover;
+	flex-shrink: 0;
+}
+
+.travail-comments-title {
+	font-size: 22px;
+	margin-bottom: 24px;
+}
+
+.travail-comment-list {
+	list-style: none;
+}
+
+.travail-comment {
+	display: flex;
+	gap: 16px;
+	padding: 20px 0;
+	border-bottom: 1px solid var( --travail-color-border );
+}
+
+.travail-comment .avatar {
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.travail-comment-form textarea {
+	min-height: 140px;
+	resize: vertical;
+}
+
+.travail-widget ul {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.travail-widget a {
+	font-size: 14px;
+	color: var( --travail-color-text );
+}

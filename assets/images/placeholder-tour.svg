@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" role="img" aria-label="Tour image placeholder">
+	<rect width="600" height="450" fill="#E6E2DA"/>
+	<path d="M0 320 L150 200 L260 300 L360 180 L600 340 L600 450 L0 450 Z" fill="#16352D" opacity="0.15"/>
+	<circle cx="480" cy="110" r="42" fill="#FF6B4A" opacity="0.18"/>
+	<g stroke="#16352D" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.35">
+		<path d="M220 260 L300 180 L380 260"/>
+		<path d="M180 300 L300 180 L420 300"/>
+	</g>
+</svg>

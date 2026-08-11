@@ -1,0 +1,570 @@
+/**
+ * Travail — Base layer: reset, typography, buttons, forms, utilities,
+ * accessibility. Loaded on every page; keep this file lean.
+ */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+	font-size: 16px;
+	-webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+body {
+	margin: 0;
+	font-family: var( --travail-font-body );
+	background-color: var( --travail-color-bg );
+	color: var( --travail-color-text );
+	font-size: 16px;
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+	overflow-x: hidden;
+}
+
+body.travail-menu-open {
+	overflow: hidden;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+svg {
+	fill: currentColor;
+}
+
+a {
+	color: var( --travail-color-primary );
+	text-decoration: none;
+	transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+a:hover {
+	opacity: 0.8;
+}
+
+/*
+ * No bullets/numbers anywhere by default — every navigation, card and
+ * component list in this theme is a plain list styled with flex/grid,
+ * not real bulleted content. Markers are explicitly restored for actual
+ * written content (post/page bodies, tour descriptions) below, since a
+ * site owner's own bulleted list in the block editor should still look
+ * like one. Missing this reset was a real bug: browsers still render
+ * default disc markers on flex <li> children unless list-style is
+ * cleared, which is what caused bullets between header nav items
+ * (caught by comparing a live screenshot against the reference design).
+ */
+ul,
+ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.travail-entry-content ul,
+.travail-entry-content ol,
+.ttbm_wp_editor ul,
+.ttbm_wp_editor ol,
+.widget ul,
+.widget ol {
+	list-style: revert;
+	margin: revert;
+	padding: revert;
+}
+
+.travail-entry-content li,
+.ttbm_wp_editor li {
+	margin-bottom: 0.4em;
+}
+
+.travail-list-reset {
+	list-style: none;
+}
+
+button {
+	font-family: inherit;
+}
+
+/* No blanket font-family or font-weight here on purpose — wanderly.html's
+   own base stylesheet has no h1-h6 rule at all, so its headings fall back
+   to two browser UA-stylesheet defaults it never overrides itself: a
+   sans-serif inherited font (most headings — card titles, .dest-info h4,
+   .blog-title, .footer-col h4, .search-widget h3…) and, separately, bold
+   weight. Its big-headline selectors (.hero-title, .section-head h2,
+   .featured-body h3, .why-content h2, .step h3, .testi-quote…) opt into
+   serif via font-family but never touch font-weight either, so they stay
+   at the browser's bold h1-h6 default too — rendered as synthesized/faux
+   bold since the Google Fonts request only loads DM Serif Display's
+   regular + italic styles, no true bold file (confirmed: same
+   family=DM+Serif+Display:ital@0;1 request as ours). Forcing
+   font-family + font-weight:400 here globally previously flattened every
+   big serif headline to a lighter regular weight than the reference, on
+   top of leaking serif into h3/h4 used for compact UI text (tour/blog/
+   destination/deal card titles) — see .travail-serif below for how
+   serif opts back in per-element for the headings that actually want it,
+   and each compact-UI title's own selector (e.g.
+   .travail-blog-card__title, .travail-search-widget h3) for its explicit
+   600-weight override where reference deliberately goes lighter than the
+   browser's bold default. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: var( --travail-color-secondary );
+	line-height: 1.15;
+	margin: 0 0 0.5em;
+}
+
+p {
+	margin: 0 0 1em;
+}
+
+/* ── Accessibility ─────────────────────────────────────────── */
+
+.travail-skip-link {
+	position: absolute;
+	top: -100px;
+	left: 0;
+	z-index: 999999;
+	padding: 12px 20px;
+	background: var( --travail-forest );
+	color: #fff;
+	font-weight: 600;
+	border-radius: 0 0 var( --travail-radius-sm ) 0;
+	transition: top 0.2s ease;
+}
+
+.travail-skip-link:focus {
+	top: 0;
+	opacity: 1;
+}
+
+.screen-reader-text {
+	border: 0;
+	clip: rect( 1px, 1px, 1px, 1px );
+	clip-path: inset( 50% );
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+.screen-reader-text:focus {
+	background-color: #fff;
+	border-radius: 3px;
+	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+	clip: auto !important;
+	clip-path: none;
+	color: var( --travail-ink );
+	display: block;
+	font-size: 14px;
+	height: auto;
+	left: 5px;
+	line-height: normal;
+	padding: 12px 16px;
+	text-decoration: none;
+	top: 5px;
+	width: auto;
+	z-index: 100000;
+}
+
+:focus-visible {
+	outline: 2px solid var( --travail-coral );
+	outline-offset: 2px;
+}
+
+/* ── Typography helpers ────────────────────────────────────── */
+
+.travail-serif {
+	font-family: var( --travail-font-heading );
+}
+
+.travail-italic {
+	font-style: italic;
+}
+
+.travail-accent {
+	color: var( --travail-color-accent );
+}
+
+.travail-eyebrow {
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var( --travail-color-text-muted );
+	display: inline-block;
+	margin-bottom: 12px;
+}
+
+.travail-eyebrow--accent {
+	color: var( --travail-color-accent );
+}
+
+/* Hero eyebrow uses a slightly wider tracking than the generic
+   .travail-eyebrow utility — matches wanderly.html's .hero-eyebrow
+   (0.22em) vs its shared .eyebrow (0.2em). */
+.travail-hero__eyebrow {
+	letter-spacing: 0.22em;
+}
+
+.travail-visually-hidden {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect( 0 0 0 0 );
+	white-space: nowrap;
+}
+
+/* ── Buttons ───────────────────────────────────────────────── */
+
+.travail-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 14px 26px;
+	border-radius: var( --travail-radius-sm );
+	font-size: 15px;
+	font-weight: 600;
+	font-family: inherit;
+	border: 1.5px solid transparent;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: opacity 0.2s ease, gap 0.2s ease, transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.travail-btn:hover {
+	opacity: 0.92;
+	gap: 12px;
+}
+
+.travail-btn:focus-visible {
+	outline-offset: 3px;
+}
+
+.travail-btn--primary {
+	background: var( --travail-color-primary );
+	color: #fff;
+}
+
+.travail-btn--accent {
+	background: var( --travail-color-accent );
+	color: #fff;
+}
+
+.travail-btn--outline {
+	background: transparent;
+	border-color: var( --travail-color-border );
+	color: var( --travail-color-text );
+}
+
+.travail-btn--outline:hover {
+	background: var( --travail-color-bg );
+}
+
+.travail-btn--ghost-light {
+	background: rgba( 255, 255, 255, 0.15 );
+	border-color: rgba( 255, 255, 255, 0.35 );
+	color: #fff;
+}
+
+.travail-btn--sm {
+	padding: 9px 18px;
+	font-size: 13px;
+}
+
+.travail-btn--block {
+	width: 100%;
+}
+
+.travail-btn:disabled,
+.travail-btn[aria-disabled="true"] {
+	opacity: 0.5;
+	cursor: not-allowed;
+	gap: 8px;
+}
+
+.travail-link-arrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 14px;
+	font-weight: 600;
+	color: var( --travail-color-primary );
+	transition: gap 0.2s ease;
+}
+
+.travail-link-arrow:hover {
+	gap: 12px;
+	opacity: 1;
+}
+
+/* ── Badges & pills ────────────────────────────────────────── */
+
+.travail-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 5px 10px;
+	border-radius: 6px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	background: var( --travail-color-accent );
+	color: #fff;
+}
+
+.travail-badge--outline {
+	background: rgba( 255, 255, 255, 0.2 );
+	border: 1px solid rgba( 255, 255, 255, 0.3 );
+	backdrop-filter: blur( 4px );
+	color: #fff;
+}
+
+.travail-badge--sale {
+	background: var( --travail-coral );
+}
+
+.travail-badge--soldout {
+	background: var( --travail-ink );
+}
+
+.travail-pill {
+	display: inline-flex;
+	align-items: center;
+	padding: 6px 14px;
+	border-radius: 999px;
+	font-size: 13px;
+	font-weight: 500;
+	color: var( --travail-color-primary );
+	background: var( --travail-color-bg );
+	transition: background 0.2s ease;
+}
+
+.travail-pill:hover {
+	background: var( --travail-color-border );
+	opacity: 1;
+}
+
+.travail-pill[aria-pressed="true"],
+.travail-pill.is-active {
+	background: var( --travail-color-primary );
+	color: #fff;
+}
+
+/* ── Forms ─────────────────────────────────────────────────── */
+
+.travail-field {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-bottom: 16px;
+}
+
+.travail-field label {
+	font-size: 13px;
+	font-weight: 600;
+	color: var( --travail-color-text );
+}
+
+.travail-field input[type="text"],
+.travail-field input[type="email"],
+.travail-field input[type="tel"],
+.travail-field input[type="number"],
+.travail-field input[type="date"],
+.travail-field input[type="search"],
+.travail-field select,
+.travail-field textarea,
+input[type="text"].travail-input,
+input[type="email"].travail-input,
+input[type="search"].travail-input,
+select.travail-input {
+	width: 100%;
+	padding: 12px 16px;
+	border-radius: var( --travail-radius-md );
+	border: 1.5px solid var( --travail-color-border );
+	background: var( --travail-color-surface );
+	font-family: inherit;
+	font-size: 14px;
+	color: var( --travail-color-text );
+	transition: border-color 0.2s ease;
+}
+
+.travail-field input:focus,
+.travail-field select:focus,
+.travail-field textarea:focus {
+	outline: none;
+	border-color: var( --travail-color-primary );
+}
+
+.travail-field .travail-field-error {
+	font-size: 12px;
+	color: #c0392b;
+}
+
+fieldset.travail-fieldset {
+	border: 1.5px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-md );
+	padding: 16px;
+	margin: 0 0 16px;
+}
+
+fieldset.travail-fieldset legend {
+	font-size: 13px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var( --travail-color-text-muted );
+	padding: 0 6px;
+}
+
+/* ── Star rating ───────────────────────────────────────────── */
+
+.travail-stars {
+	display: inline-flex;
+	gap: 2px;
+	font-size: 13px;
+	color: var( --travail-color-accent );
+	letter-spacing: 1px;
+}
+
+.travail-star::before {
+	content: "★";
+}
+
+.travail-star--empty {
+	color: var( --travail-color-border );
+}
+
+.travail-star--half {
+	position: relative;
+	color: var( --travail-color-border );
+}
+
+.travail-star--half::after {
+	content: "★";
+	position: absolute;
+	inset: 0;
+	width: 50%;
+	overflow: hidden;
+	color: var( --travail-color-accent );
+}
+
+/* ── Utility ───────────────────────────────────────────────── */
+
+.travail-container {
+	max-width: var( --travail-container );
+	margin-inline: auto;
+	padding-inline: var( --travail-gutter );
+}
+
+@media ( max-width: 1024px ) {
+	.travail-container {
+		padding-inline: 32px;
+	}
+	:root {
+		--travail-gutter: 32px;
+	}
+}
+
+@media ( max-width: 640px ) {
+	.travail-container {
+		padding-inline: 20px;
+	}
+	:root {
+		--travail-gutter: 20px;
+	}
+}
+
+.travail-text-center {
+	text-align: center;
+}
+
+.travail-hide-mobile {
+	display: block;
+}
+
+.travail-show-mobile {
+	display: none;
+}
+
+@media ( max-width: 768px ) {
+	.travail-hide-mobile {
+		display: none;
+	}
+	.travail-show-mobile {
+		display: block;
+	}
+}
+
+.travail-loading-spinner {
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border: 2px solid rgba( 0, 0, 0, 0.15 );
+	border-top-color: var( --travail-color-primary );
+	border-radius: 50%;
+	animation: travail-spin 0.7s linear infinite;
+}
+
+@keyframes travail-spin {
+	to {
+		transform: rotate( 360deg );
+	}
+}
+
+.travail-empty-state {
+	text-align: center;
+	padding: 80px 20px;
+	color: var( --travail-color-text-muted );
+}
+
+.travail-empty-state svg {
+	margin: 0 auto 16px;
+	opacity: 0.4;
+}
+
+/* Skeleton loaders used while AJAX filtering the tour archive */
+.travail-skeleton {
+	background: linear-gradient( 90deg, var( --travail-color-border ) 25%, rgba( 230, 226, 218, 0.5 ) 37%, var( --travail-color-border ) 63% );
+	background-size: 400% 100%;
+	animation: travail-skeleton 1.4s ease infinite;
+	border-radius: var( --travail-radius-md );
+}
+
+@keyframes travail-skeleton {
+	0% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0 50%;
+	}
+}

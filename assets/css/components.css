@@ -1,0 +1,1494 @@
+/**
+ * Travail — Reusable homepage/marketing components ported from the
+ * wanderly.html design reference. Every block here is also rendered by
+ * an Elementor widget (see /elementor/widgets) so the markup intentionally
+ * avoids anything that can't be reproduced from dynamic data.
+ */
+
+/* ── Hero ──────────────────────────────────────────────────── */
+
+.travail-hero {
+	position: relative;
+	width: 100%;
+	min-height: 720px;
+	border-radius: 0 0 var( --travail-radius-2xl ) var( --travail-radius-2xl );
+	overflow: hidden;
+	background: var( --travail-forest );
+}
+
+.travail-hero--image-height {
+	height: 100vh;
+}
+
+.travail-hero__media {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: 0.75;
+}
+
+.travail-hero__overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient( 105deg, rgba( 0, 0, 0, 0.58 ) 0%, rgba( 0, 0, 0, 0.22 ) 60%, transparent 100% );
+}
+
+.travail-hero__content {
+	position: relative;
+	z-index: 2;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-top: 72px;
+}
+
+.travail-hero__inner {
+	max-width: 680px;
+}
+
+.travail-hero__title {
+	font-size: clamp( 52px, 6vw, 80px );
+	line-height: 1.06;
+	color: #fff;
+	margin-bottom: 24px;
+}
+
+.travail-hero__title em {
+	font-style: italic;
+	color: var( --travail-color-accent );
+}
+
+.travail-hero__sub {
+	font-size: 17px;
+	line-height: 1.7;
+	color: rgba( 255, 255, 255, 0.75 );
+	margin-bottom: 36px;
+}
+
+.travail-hero__metrics {
+	display: flex;
+	align-items: center;
+	gap: 32px;
+	margin-top: 32px;
+	flex-wrap: wrap;
+}
+
+.travail-metric {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.travail-metric__val {
+	font-size: 20px;
+	font-weight: 700;
+	color: #fff;
+	line-height: 1;
+}
+
+.travail-metric__label {
+	font-size: 12px;
+	color: rgba( 255, 255, 255, 0.55 );
+	margin-top: 3px;
+}
+
+.travail-metric-divider {
+	width: 1px;
+	height: 32px;
+	background: rgba( 255, 255, 255, 0.2 );
+}
+
+@media ( max-width: 768px ) {
+	.travail-hero__metrics {
+		gap: 20px;
+	}
+	.travail-metric-divider {
+		display: none;
+	}
+}
+
+/* ── Search widget ─────────────────────────────────────────── */
+
+.travail-search-widget {
+	background: #fff;
+	border-radius: var( --travail-radius-xl );
+	padding: 24px;
+	box-shadow: var( --travail-shadow-lg );
+}
+
+.travail-search-widget--flat {
+	background: transparent;
+	box-shadow: none;
+	padding: 0;
+}
+
+.travail-search-widget h3 {
+	font-size: 16px;
+	font-weight: 600;
+	font-family: var( --travail-font-body );
+	color: var( --travail-color-text );
+	margin-bottom: 4px;
+}
+
+.travail-search-widget__hint {
+	font-size: 13px;
+	color: var( --travail-color-text-muted );
+	margin-bottom: 16px;
+}
+
+.travail-search-fields {
+	display: flex;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.travail-search-field {
+	flex: 1;
+	min-width: 140px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 16px;
+	border-radius: var( --travail-radius-md );
+	border: 1.5px solid var( --travail-color-border );
+	background: var( --travail-color-bg );
+	transition: border-color 0.2s ease;
+	position: relative;
+}
+
+.travail-search-field:hover,
+.travail-search-field:focus-within {
+	border-color: rgba( 22, 53, 45, 0.35 );
+}
+
+.travail-search-field__icon {
+	color: rgba( 22, 53, 45, 0.55 );
+	flex-shrink: 0;
+}
+
+.travail-search-field__label {
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: rgba( 21, 23, 22, 0.45 );
+	display: block;
+	margin-bottom: 2px;
+}
+
+.travail-search-field input,
+.travail-search-field select {
+	font-size: 14px;
+	font-weight: 500;
+	color: var( --travail-color-text );
+	border: none;
+	background: none;
+	outline: none;
+	font-family: inherit;
+	width: 100%;
+	padding: 0;
+	appearance: none;
+}
+
+.travail-search-field input::placeholder {
+	color: rgba( 21, 23, 22, 0.42 );
+}
+
+.travail-btn-search {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 24px;
+	border-radius: var( --travail-radius-sm );
+	background: var( --travail-color-primary );
+	color: #fff;
+	font-size: 14px;
+	font-weight: 600;
+	white-space: nowrap;
+	transition: opacity 0.2s ease, transform 0.2s ease;
+	border: none;
+}
+
+.travail-btn-search:hover {
+	opacity: 0.9;
+	transform: translateY( -1px );
+}
+
+@media ( max-width: 768px ) {
+	.travail-search-fields {
+		flex-direction: column;
+	}
+}
+
+/* ── Popular searches bar ──────────────────────────────────── */
+
+.travail-searches-bar-wrap {
+	position: relative;
+	z-index: 10;
+}
+
+.travail-searches-bar {
+	background: #fff;
+	border-radius: var( --travail-radius-lg );
+	padding: 16px 24px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin-top: -24px;
+	box-shadow: var( --travail-shadow-md );
+	flex-wrap: wrap;
+}
+
+.travail-searches-left {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.travail-searches-label {
+	font-size: 13px;
+	color: var( --travail-color-text-muted );
+	font-weight: 500;
+}
+
+.travail-searches-right {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.travail-avatars {
+	display: flex;
+}
+
+.travail-avatars img {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	border: 2px solid #fff;
+	object-fit: cover;
+	margin-inline-start: -8px;
+}
+
+.travail-avatars img:first-child {
+	margin-inline-start: 0;
+}
+
+.travail-searches-right span {
+	font-size: 13px;
+	font-weight: 500;
+	color: rgba( 21, 23, 22, 0.7 );
+}
+
+/* ── Destination cards ─────────────────────────────────────── */
+
+.travail-dest-grid {
+	display: grid;
+	grid-template-columns: repeat( 3, 1fr );
+	grid-template-rows: repeat( 2, 270px );
+	gap: 16px;
+}
+
+.travail-dest-card {
+	position: relative;
+	border-radius: var( --travail-radius-lg );
+	overflow: hidden;
+	background: var( --travail-forest );
+	display: block;
+}
+
+.travail-dest-card--tall {
+	grid-row: span 2;
+}
+
+.travail-dest-card img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.5s ease;
+}
+
+.travail-dest-card:hover img {
+	transform: scale( 1.04 );
+}
+
+.travail-dest-card__gradient {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient( to top, rgba( 0, 0, 0, 0.65 ) 0%, transparent 55% );
+}
+
+.travail-dest-card__info {
+	position: absolute;
+	inset-inline: 0;
+	bottom: 0;
+	padding: 20px;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.travail-dest-card__info h4 {
+	font-size: 18px;
+	font-weight: 700;
+	font-family: var( --travail-font-body );
+	color: #fff;
+	line-height: 1.2;
+	margin: 0;
+}
+
+.travail-dest-card__info p {
+	font-size: 13px;
+	color: rgba( 255, 255, 255, 0.7 );
+	margin: 2px 0 0;
+}
+
+.travail-dest-arrow {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background: rgba( 255, 255, 255, 0.2 );
+	border: 1px solid rgba( 255, 255, 255, 0.3 );
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	flex-shrink: 0;
+	transition: transform 0.25s ease;
+}
+
+.travail-dest-card:hover .travail-dest-arrow {
+	transform: translateX( 4px );
+}
+
+@media ( max-width: 768px ) {
+	.travail-dest-grid {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto;
+	}
+	.travail-dest-card--tall {
+		grid-row: span 1;
+		height: 220px;
+	}
+	.travail-dest-card:not( .travail-dest-card--tall ) {
+		height: 200px;
+	}
+}
+
+@media ( max-width: 480px ) {
+	.travail-dest-grid {
+		grid-template-columns: 1fr;
+		overflow-x: auto;
+		display: flex;
+		flex-wrap: nowrap;
+		scroll-snap-type: x mandatory;
+		gap: 12px;
+	}
+	.travail-dest-card,
+	.travail-dest-card--tall {
+		flex-shrink: 0;
+		width: 260px;
+		height: 320px;
+		scroll-snap-align: start;
+	}
+}
+
+/* ── Category cards (travel style explorer) ───────────────── */
+
+/* Shared size for any standalone section h2 that isn't wrapped in
+   .travail-section-head (no subtitle/"view all" link, so that flex
+   layout isn't needed) — the activities rail, and the generic
+   Features/CTA widget when used without one. Matches wanderly.html's
+   .section-categories h2 exactly. Without this such headings fell back
+   to the browser's plain default h2 size, rendering noticeably smaller
+   than every other section title on the page. */
+.travail-loose-title {
+	font-size: clamp( 32px, 3.5vw, 48px );
+	margin-bottom: 32px;
+}
+
+.travail-cat-rail {
+	display: flex;
+	gap: 12px;
+	overflow-x: auto;
+	padding-bottom: 4px;
+}
+
+/*
+ * "Find your kind of adventure" specifically wants all 8 cards visible
+ * without horizontal scrolling on desktop (explicit request) rather
+ * than the reference's own scroll-snap rail — an even grid fits 8 cards
+ * comfortably at the theme's container width, and only falls back to a
+ * scroll rail once the viewport is too narrow for that to look right.
+ */
+.travail-cat-rail--fit {
+	display: grid;
+	grid-template-columns: repeat( 8, 1fr );
+	overflow-x: visible;
+}
+
+.travail-cat-rail--fit .travail-cat-card {
+	width: 100%;
+}
+
+@media ( max-width: 1024px ) {
+	.travail-cat-rail--fit {
+		grid-template-columns: repeat( 4, 1fr );
+		row-gap: 12px;
+	}
+}
+
+@media ( max-width: 640px ) {
+	.travail-cat-rail--fit {
+		display: flex;
+		overflow-x: auto;
+		grid-template-columns: none;
+	}
+	.travail-cat-rail--fit .travail-cat-card {
+		width: 120px;
+	}
+}
+
+.travail-cat-card {
+	position: relative;
+	flex-shrink: 0;
+	width: 120px;
+	height: 100px;
+	border-radius: var( --travail-radius-lg );
+	overflow: hidden;
+	border: 2px solid transparent;
+	transition: border-color 0.2s ease;
+	display: block;
+}
+
+.travail-cat-card.is-active {
+	border-color: var( --travail-color-primary );
+}
+
+.travail-cat-card img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.travail-cat-card__overlay {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	padding-bottom: 10px;
+	background: rgba( 0, 0, 0, 0.32 );
+	transition: background 0.2s ease;
+}
+
+.travail-cat-card.is-active .travail-cat-card__overlay {
+	background: rgba( 22, 53, 45, 0.75 );
+}
+
+.travail-cat-card__overlay span {
+	font-size: 13px;
+	font-weight: 600;
+	color: #fff;
+}
+
+/* ── Tour cards ────────────────────────────────────────────── */
+
+.travail-tour-card {
+	background: #fff;
+	border-radius: var( --travail-radius-lg );
+	overflow: hidden;
+	box-shadow: var( --travail-shadow-sm );
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	transition: box-shadow 0.25s ease;
+}
+
+.travail-rail .travail-tour-card {
+	width: 280px;
+}
+
+.travail-tour-card:hover {
+	box-shadow: 0 12px 40px rgba( 0, 0, 0, 0.1 );
+}
+
+.travail-tour-card__img {
+	position: relative;
+	height: 192px;
+	background: var( --travail-color-border );
+	overflow: hidden;
+}
+
+.travail-tour-card__img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.5s ease;
+}
+
+.travail-tour-card:hover .travail-tour-card__img img {
+	transform: scale( 1.04 );
+}
+
+.travail-tour-card__badges {
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	display: flex;
+	gap: 6px;
+	flex-wrap: wrap;
+}
+
+.travail-wish-btn {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background: rgba( 255, 255, 255, 0.9 );
+	backdrop-filter: blur( 4px );
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform 0.2s ease;
+	border: none;
+	color: var( --travail-ink );
+	cursor: pointer;
+}
+
+.travail-wish-btn:hover {
+	transform: scale( 1.12 );
+	opacity: 1;
+}
+
+.travail-wish-btn[aria-pressed="true"] {
+	color: var( --travail-coral );
+}
+
+.travail-tour-card__body {
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	flex: 1;
+}
+
+.travail-tour-card__rating {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin-bottom: 4px;
+	font-size: 13px;
+}
+
+.travail-tour-card__rating strong {
+	color: var( --travail-ink );
+}
+
+.travail-tour-card__rating span {
+	color: var( --travail-color-text-muted );
+	font-size: 12px;
+}
+
+.travail-tour-card__title {
+	font-size: 15px;
+	font-weight: 600;
+	color: var( --travail-ink );
+	line-height: 1.35;
+	margin-bottom: 6px;
+}
+
+.travail-tour-card__title a {
+	color: inherit;
+}
+
+.travail-tour-card__loc {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 13px;
+	color: var( --travail-color-text-muted );
+	margin-bottom: 12px;
+}
+
+.travail-tour-card__footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-top: 1px solid var( --travail-color-border );
+	padding-top: 12px;
+	margin-top: auto;
+	gap: 8px;
+}
+
+.travail-tour-card__duration {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 12px;
+	color: var( --travail-color-text-muted );
+}
+
+.travail-tour-card__price {
+	font-size: 16px;
+	font-weight: 700;
+	color: var( --travail-color-primary );
+	text-align: right;
+}
+
+.travail-tour-card__price small {
+	font-size: 11px;
+	font-weight: 400;
+	color: var( --travail-color-text-muted );
+}
+
+.travail-tour-card__price-old {
+	font-size: 12px;
+	text-decoration: line-through;
+	color: var( --travail-color-text-muted );
+	margin-right: 4px;
+}
+
+.travail-tour-card__availability {
+	font-size: 12px;
+	font-weight: 600;
+	color: #c0392b;
+	margin-top: 2px;
+}
+
+/* Grid variant used on archive pages */
+.travail-tour-grid {
+	display: grid;
+	grid-template-columns: repeat( 3, 1fr );
+	gap: 24px;
+}
+
+@media ( max-width: 1024px ) {
+	.travail-tour-grid {
+		grid-template-columns: repeat( 2, 1fr );
+	}
+}
+
+@media ( max-width: 640px ) {
+	.travail-tour-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.travail-tour-grid--list .travail-tour-card {
+	flex-direction: row;
+}
+
+.travail-tour-grid--list .travail-tour-card__img {
+	width: 260px;
+	height: auto;
+	flex-shrink: 0;
+}
+
+@media ( max-width: 640px ) {
+	.travail-tour-grid--list .travail-tour-card {
+		flex-direction: column;
+	}
+	.travail-tour-grid--list .travail-tour-card__img {
+		width: 100%;
+		height: 192px;
+	}
+}
+
+/* ── Featured journey card ─────────────────────────────────── */
+
+.travail-featured-card {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	border-radius: var( --travail-radius-xl );
+	overflow: hidden;
+	box-shadow: 0 8px 48px rgba( 0, 0, 0, 0.1 );
+}
+
+.travail-featured-card__img {
+	position: relative;
+	height: 480px;
+	background: var( --travail-forest );
+}
+
+.travail-featured-card__img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.travail-featured-card__img-overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient( 135deg, rgba( 22, 53, 45, 0.3 ) 0%, transparent 60% );
+}
+
+.travail-featured-badge {
+	position: absolute;
+	top: 24px;
+	left: 24px;
+	padding: 6px 14px;
+	border-radius: 999px;
+	letter-spacing: 0.12em;
+}
+
+.travail-featured-card__body {
+	background: #fff;
+	padding: 56px 48px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.travail-featured-card__body h3 {
+	font-size: clamp( 34px, 3.5vw, 48px );
+	line-height: 1.1;
+	margin-bottom: 16px;
+}
+
+.travail-featured-meta {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	font-size: 14px;
+	color: var( --travail-color-text-muted );
+	margin-bottom: 20px;
+	flex-wrap: wrap;
+}
+
+.travail-featured-meta .travail-rating-inline strong {
+	color: var( --travail-ink );
+}
+
+.travail-featured-desc {
+	font-size: 15px;
+	line-height: 1.75;
+	color: rgba( 21, 23, 22, 0.65 );
+	margin-bottom: 32px;
+}
+
+.travail-featured-price-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: 32px;
+	margin-bottom: 32px;
+	border-bottom: 1px solid var( --travail-color-border );
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.travail-featured-price-from {
+	font-size: 13px;
+	color: var( --travail-color-text-muted );
+}
+
+.travail-featured-price-amt {
+	font-size: 40px;
+	font-weight: 700;
+	color: var( --travail-color-primary );
+	line-height: 1;
+}
+
+.travail-featured-price-pp {
+	font-size: 12px;
+	color: var( --travail-color-text-muted );
+}
+
+.travail-featured-checklist {
+	font-size: 13px;
+	color: var( --travail-color-text-muted );
+	line-height: 2;
+	text-align: right;
+	list-style: none;
+}
+
+.travail-featured-checklist li::before {
+	content: "✓ ";
+	color: var( --travail-color-primary );
+}
+
+@media ( max-width: 768px ) {
+	.travail-featured-card {
+		grid-template-columns: 1fr;
+	}
+	.travail-featured-card__img {
+		height: 280px;
+	}
+	.travail-featured-card__body {
+		padding: 32px 28px;
+	}
+	.travail-featured-checklist {
+		text-align: left;
+	}
+}
+
+/* ── Why choose us ─────────────────────────────────────────── */
+
+.travail-why-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 64px;
+	align-items: center;
+}
+
+.travail-why-img-wrap {
+	position: relative;
+	border-radius: var( --travail-radius-xl );
+	overflow: hidden;
+	height: 500px;
+	background: var( --travail-forest );
+}
+
+.travail-why-img-wrap img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.travail-why-float {
+	position: absolute;
+	bottom: 24px;
+	inset-inline: 24px;
+	background: rgba( 255, 255, 255, 0.96 );
+	backdrop-filter: blur( 8px );
+	border-radius: var( --travail-radius-md );
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	box-shadow: 0 8px 24px rgba( 0, 0, 0, 0.12 );
+}
+
+.travail-why-float-icon {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: var( --travail-forest );
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	flex-shrink: 0;
+}
+
+.travail-why-float-text strong {
+	font-size: 15px;
+	font-weight: 600;
+	color: var( --travail-ink );
+	display: block;
+}
+
+.travail-why-float-text p {
+	font-size: 13px;
+	color: var( --travail-color-text-muted );
+	margin: 2px 0 0;
+}
+
+.travail-why-content h2 {
+	font-size: clamp( 36px, 4vw, 52px );
+	margin-bottom: 48px;
+}
+
+/* "How it works" section title uses a slightly different clamp than the
+   generic .travail-section-head h2 rule (matches wanderly.html's
+   .section-how .center-head h2 exactly). */
+.travail-section-head--center h2 {
+	font-size: clamp( 32px, 4vw, 52px );
+}
+
+.travail-why-items {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+.travail-why-item {
+	display: flex;
+	gap: 24px;
+	align-items: flex-start;
+}
+
+.travail-why-num {
+	font-size: 48px;
+	line-height: 1;
+	color: var( --travail-color-border );
+	flex-shrink: 0;
+	transition: color 0.2s ease;
+}
+
+.travail-why-item:hover .travail-why-num {
+	color: rgba( 22, 53, 45, 0.2 );
+}
+
+.travail-why-item-text strong {
+	font-size: 17px;
+	font-weight: 600;
+	color: var( --travail-ink );
+	display: block;
+	margin-bottom: 4px;
+}
+
+.travail-why-item-text p {
+	font-size: 14px;
+	color: var( --travail-color-text-muted );
+	line-height: 1.7;
+	margin: 0;
+}
+
+@media ( max-width: 768px ) {
+	.travail-why-grid {
+		grid-template-columns: 1fr;
+		gap: 40px;
+	}
+	.travail-why-img-wrap {
+		height: 320px;
+	}
+}
+
+/* ── How it works ──────────────────────────────────────────── */
+
+.travail-steps-grid {
+	display: grid;
+	grid-template-columns: repeat( 3, 1fr );
+	gap: 32px;
+}
+
+.travail-step-num {
+	font-size: 88px;
+	font-weight: 700;
+	line-height: 1;
+	color: var( --travail-color-border );
+	margin-bottom: -16px;
+}
+
+.travail-step h3 {
+	font-size: 34px;
+	margin-bottom: 12px;
+}
+
+.travail-step p {
+	font-size: 15px;
+	color: var( --travail-color-text-muted );
+	line-height: 1.75;
+	max-width: 280px;
+}
+
+@media ( max-width: 768px ) {
+	.travail-steps-grid {
+		grid-template-columns: 1fr;
+		gap: 40px;
+	}
+}
+
+/* ── Deals ─────────────────────────────────────────────────── */
+
+.travail-deals-grid {
+	display: grid;
+	grid-template-columns: repeat( 3, 1fr );
+	gap: 24px;
+}
+
+.travail-deal-card {
+	position: relative;
+	height: 290px;
+	border-radius: var( --travail-radius-lg );
+	overflow: hidden;
+	background: var( --travail-forest );
+	display: block;
+}
+
+.travail-deal-card img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: 0.7;
+	transition: transform 0.5s ease;
+}
+
+.travail-deal-card:hover img {
+	transform: scale( 1.04 );
+}
+
+.travail-deal-card__gradient {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient( to top, rgba( 0, 0, 0, 0.72 ) 0%, rgba( 0, 0, 0, 0.12 ) 55% );
+}
+
+.travail-deal-card__badge {
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	letter-spacing: 0.08em;
+}
+
+.travail-deal-card__body {
+	position: absolute;
+	inset-inline: 0;
+	bottom: 0;
+	padding: 20px;
+}
+
+.travail-deal-card__body h4 {
+	font-size: 22px;
+	font-weight: 700;
+	font-family: var( --travail-font-body );
+	color: #fff;
+	margin: 0;
+}
+
+.travail-deal-card__sub {
+	font-size: 13px;
+	color: rgba( 255, 255, 255, 0.6 );
+	margin-bottom: 12px;
+}
+
+.travail-deal-pricing {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 12px;
+	gap: 8px;
+}
+
+.travail-deal-pricing .travail-old {
+	font-size: 14px;
+	color: rgba( 255, 255, 255, 0.5 );
+	text-decoration: line-through;
+}
+
+.travail-deal-pricing .travail-new {
+	font-size: 24px;
+	font-weight: 700;
+	color: #fff;
+	margin-inline-start: 8px;
+}
+
+.travail-deal-pct {
+	padding: 2px 8px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 700;
+	background: var( --travail-coral );
+	color: #fff;
+}
+
+.travail-btn-book-now {
+	width: 100%;
+	padding: 10px;
+	border-radius: var( --travail-radius-sm );
+	background: #fff;
+	color: var( --travail-color-primary );
+	font-size: 14px;
+	font-weight: 600;
+	transition: background 0.2s ease;
+	border: none;
+	cursor: pointer;
+}
+
+.travail-btn-book-now:hover {
+	background: var( --travail-color-bg );
+	opacity: 1;
+}
+
+@media ( max-width: 768px ) {
+	.travail-deals-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ── Testimonials ──────────────────────────────────────────── */
+
+.travail-testimonials {
+	text-align: center;
+}
+
+.travail-testi-avatars {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 40px;
+}
+
+.travail-testi-avatars img {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	border: 2px solid var( --travail-forest );
+	object-fit: cover;
+	margin-inline-start: -10px;
+}
+
+.travail-testi-avatars img:first-child {
+	margin-inline-start: 0;
+}
+
+.travail-testimonials h2 {
+	font-size: clamp( 28px, 4vw, 52px );
+	color: #fff;
+	margin-bottom: 32px;
+}
+
+.travail-testi-quote {
+	font-size: clamp( 26px, 3.5vw, 46px );
+	line-height: 1.2;
+	color: #fff;
+	max-width: 760px;
+	margin: 0 auto 28px;
+}
+
+.travail-testi-quote em {
+	font-style: italic;
+	color: var( --travail-color-accent );
+}
+
+.travail-testi-stars {
+	display: flex;
+	justify-content: center;
+	gap: 4px;
+	margin-bottom: 16px;
+	font-size: 18px;
+	color: var( --travail-color-accent );
+}
+
+.travail-testi-author {
+	color: rgba( 255, 255, 255, 0.7 );
+	font-size: 14px;
+	margin-bottom: 8px;
+}
+
+.travail-testi-author strong {
+	color: #fff;
+	font-size: 15px;
+}
+
+.travail-testi-tags {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	font-size: 12px;
+	color: rgba( 255, 255, 255, 0.5 );
+	flex-wrap: wrap;
+}
+
+.travail-testi-tags .travail-tag {
+	padding: 3px 10px;
+	border-radius: 4px;
+	border: 1px solid rgba( 255, 255, 255, 0.2 );
+	color: rgba( 255, 255, 255, 0.6 );
+}
+
+.travail-testi-count {
+	margin-top: 40px;
+	font-size: 13px;
+	color: rgba( 255, 255, 255, 0.4 );
+}
+
+/* Slider dots (used with JS carousels) */
+.travail-testi-slides {
+	position: relative;
+}
+
+.travail-testi-slide {
+	display: none;
+}
+
+.travail-testi-slide.is-active {
+	display: block;
+	animation: travail-fade-in 0.4s ease;
+}
+
+@keyframes travail-fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.travail-testi-dots {
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+	margin-top: 24px;
+}
+
+.travail-testi-dots button {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: rgba( 255, 255, 255, 0.3 );
+	padding: 0;
+	cursor: pointer;
+}
+
+.travail-testi-dots button.is-active {
+	background: #fff;
+}
+
+/* ── Blog cards ────────────────────────────────────────────── */
+
+.travail-blog-grid {
+	display: grid;
+	grid-template-columns: repeat( 3, 1fr );
+	gap: 28px;
+}
+
+.travail-blog-card {
+	background: #fff;
+	border-radius: var( --travail-radius-lg );
+	overflow: hidden;
+	box-shadow: var( --travail-shadow-sm );
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+	display: block;
+}
+
+.travail-blog-card:hover {
+	transform: translateY( -4px );
+	box-shadow: 0 12px 40px rgba( 0, 0, 0, 0.1 );
+	opacity: 1;
+}
+
+.travail-blog-card__img {
+	height: 210px;
+	background: var( --travail-color-border );
+	overflow: hidden;
+}
+
+.travail-blog-card__img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.5s ease;
+}
+
+.travail-blog-card:hover .travail-blog-card__img img {
+	transform: scale( 1.04 );
+}
+
+.travail-blog-card__body {
+	padding: 24px;
+}
+
+.travail-blog-card__cat {
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var( --travail-color-accent );
+	margin-bottom: 12px;
+}
+
+.travail-blog-card__title {
+	font-size: 17px;
+	font-weight: 600;
+	font-family: var( --travail-font-body );
+	color: var( --travail-ink );
+	line-height: 1.4;
+	margin-bottom: 16px;
+	transition: color 0.2s ease;
+}
+
+.travail-blog-card:hover .travail-blog-card__title {
+	color: var( --travail-color-primary );
+}
+
+.travail-blog-card__meta {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 12px;
+	color: var( --travail-color-text-muted );
+}
+
+.travail-blog-card__meta .travail-dot {
+	color: rgba( 21, 23, 22, 0.25 );
+}
+
+@media ( max-width: 768px ) {
+	.travail-blog-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ── Newsletter ────────────────────────────────────────────── */
+
+.travail-newsletter {
+	position: relative;
+	min-height: 440px;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	background: var( --travail-forest );
+}
+
+.travail-newsletter__bg {
+	position: absolute;
+	inset: 0;
+}
+
+.travail-newsletter__bg img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: 0.4;
+}
+
+.travail-newsletter__overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient( to right, rgba( 22, 53, 45, 0.85 ) 0%, rgba( 22, 53, 45, 0.6 ) 100% );
+}
+
+.travail-newsletter__content {
+	position: relative;
+	z-index: 2;
+	text-align: center;
+	padding: 96px 0;
+	width: 100%;
+}
+
+.travail-newsletter__content h2 {
+	font-size: clamp( 34px, 5vw, 60px );
+	color: #fff;
+	line-height: 1.15;
+	margin-bottom: 16px;
+}
+
+.travail-newsletter__content h2 em {
+	font-style: italic;
+	color: var( --travail-color-accent );
+}
+
+.travail-newsletter__content p {
+	font-size: 16px;
+	color: rgba( 255, 255, 255, 0.65 );
+	max-width: 420px;
+	margin: 0 auto 40px;
+	line-height: 1.7;
+}
+
+.travail-newsletter-form {
+	display: flex;
+	gap: 12px;
+	max-width: 440px;
+	margin: 0 auto;
+}
+
+.travail-newsletter-form input {
+	flex: 1;
+	padding: 14px 20px;
+	border-radius: var( --travail-radius-md );
+	border: 2px solid transparent;
+	background: #fff;
+	font-size: 14px;
+	font-weight: 500;
+	font-family: inherit;
+	color: var( --travail-ink );
+	outline: none;
+	transition: border-color 0.2s ease;
+}
+
+.travail-newsletter-form input:focus {
+	border-color: var( --travail-color-accent );
+}
+
+.travail-newsletter-note {
+	margin-top: 16px;
+	font-size: 12px;
+	color: rgba( 255, 255, 255, 0.35 );
+}
+
+@media ( max-width: 480px ) {
+	.travail-newsletter-form {
+		flex-direction: column;
+	}
+}
+
+/* ── Generic feature grid (used by "Features"/CTA widgets) ──── */
+
+.travail-features-grid {
+	display: grid;
+	grid-template-columns: repeat( 4, 1fr );
+	gap: 32px;
+}
+
+@media ( max-width: 1024px ) {
+	.travail-features-grid {
+		grid-template-columns: repeat( 2, 1fr );
+	}
+}
+
+@media ( max-width: 640px ) {
+	.travail-features-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.travail-feature-item {
+	text-align: center;
+}
+
+.travail-feature-icon {
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	background: var( --travail-color-bg );
+	color: var( --travail-color-primary );
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto 16px;
+}
+
+.travail-feature-item h3 {
+	font-size: 18px;
+	font-family: var( --travail-font-body );
+	font-weight: 600;
+	margin-bottom: 8px;
+}
+
+.travail-feature-item p {
+	font-size: 14px;
+	color: var( --travail-color-text-muted );
+	margin: 0;
+}
+
+/* ── CTA banner ────────────────────────────────────────────── */
+
+.travail-cta-banner {
+	border-radius: var( --travail-radius-xl );
+	background: var( --travail-forest );
+	color: #fff;
+	padding: 56px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 32px;
+	flex-wrap: wrap;
+}
+
+.travail-cta-banner h2 {
+	color: #fff;
+	font-size: clamp( 26px, 3vw, 38px );
+	margin-bottom: 8px;
+}
+
+.travail-cta-banner p {
+	color: rgba( 255, 255, 255, 0.7 );
+	margin: 0;
+}

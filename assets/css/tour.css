@@ -1,0 +1,800 @@
+/**
+ * Travail — Tour archive (search/filter/grid) and single tour page
+ * (gallery, sticky booking card, itinerary, FAQ, reviews).
+ */
+
+/* ── Archive toolbar ───────────────────────────────────────── */
+
+.travail-archive-header {
+	background: var( --travail-forest );
+	color: #fff;
+	padding: 160px 0 48px;
+}
+
+.travail-archive-header h1 {
+	color: #fff;
+	font-size: clamp( 32px, 4vw, 48px);
+}
+
+.travail-archive-header p {
+	color: rgba( 255, 255, 255, 0.7 );
+	max-width: 620px;
+}
+
+.travail-toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+	margin-bottom: 24px;
+}
+
+.travail-results-count {
+	font-size: 14px;
+	color: var( --travail-color-text-muted );
+}
+
+.travail-toolbar-actions {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.travail-view-toggle {
+	display: flex;
+	border: 1.5px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-sm );
+	overflow: hidden;
+}
+
+.travail-view-toggle button {
+	padding: 8px 12px;
+	background: transparent;
+	color: var( --travail-color-text-muted );
+	border: none;
+	cursor: pointer;
+	display: flex;
+}
+
+.travail-view-toggle button.is-active {
+	background: var( --travail-color-primary );
+	color: #fff;
+}
+
+.travail-sort-select {
+	padding: 8px 14px;
+	border-radius: var( --travail-radius-sm );
+	border: 1.5px solid var( --travail-color-border );
+	font-size: 13px;
+	background: #fff;
+}
+
+.travail-filter-drawer-toggle {
+	display: none;
+}
+
+@media ( max-width: 1024px ) {
+	.travail-filter-drawer-toggle {
+		display: inline-flex;
+	}
+}
+
+/* Active filter chips */
+.travail-active-filters {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+	margin-bottom: 24px;
+}
+
+.travail-filter-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 10px 6px 14px;
+	border-radius: 999px;
+	background: var( --travail-color-bg );
+	border: 1px solid var( --travail-color-border );
+	font-size: 13px;
+	color: var( --travail-ink );
+}
+
+.travail-filter-chip button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: var( --travail-color-border );
+	color: var( --travail-ink );
+	border: none;
+	cursor: pointer;
+	font-size: 11px;
+}
+
+.travail-filter-reset {
+	font-size: 13px;
+	font-weight: 600;
+	color: var( --travail-coral );
+}
+
+/* ── Filter sidebar ────────────────────────────────────────── */
+
+.travail-archive-layout {
+	display: grid;
+	grid-template-columns: 280px minmax( 0, 1fr );
+	gap: 40px;
+	align-items: start;
+}
+
+.travail-filter-sidebar {
+	background: #fff;
+	border: 1px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-lg );
+	padding: 24px;
+}
+
+.travail-filter-group {
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid var( --travail-color-border );
+}
+
+.travail-filter-group:last-child {
+	border-bottom: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.travail-filter-group h4 {
+	font-size: 13px;
+	font-weight: 700;
+	font-family: var( --travail-font-body );
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	margin-bottom: 14px;
+}
+
+.travail-filter-checkbox {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 14px;
+	color: var( --travail-color-text );
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+
+.travail-filter-checkbox input {
+	accent-color: var( --travail-color-primary );
+	width: 16px;
+	height: 16px;
+}
+
+.travail-filter-checkbox span.travail-count {
+	color: var( --travail-color-text-muted );
+	margin-inline-start: auto;
+	font-size: 12px;
+}
+
+.travail-price-range {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.travail-price-range input[type="number"] {
+	width: 100%;
+	padding: 8px 10px;
+	border-radius: 8px;
+	border: 1.5px solid var( --travail-color-border );
+	font-size: 13px;
+}
+
+@media ( max-width: 1024px ) {
+	.travail-archive-layout {
+		grid-template-columns: 1fr;
+	}
+	.travail-filter-sidebar {
+		position: fixed;
+		inset: 0;
+		z-index: 200;
+		border-radius: 0;
+		overflow-y: auto;
+		transform: translateX( -100% );
+		transition: transform 0.3s ease;
+	}
+	.travail-filter-sidebar.is-open {
+		transform: translateX( 0 );
+	}
+	.travail-filter-drawer-backdrop {
+		display: none;
+		position: fixed;
+		inset: 0;
+		background: rgba( 0, 0, 0, 0.4 );
+		z-index: 199;
+	}
+	.travail-filter-drawer-backdrop.is-open {
+		display: block;
+	}
+}
+
+.travail-load-more-wrap {
+	text-align: center;
+	margin-top: 40px;
+}
+
+/* ── Pagination ────────────────────────────────────────────── */
+
+.travail-pagination {
+	display: flex;
+	justify-content: center;
+	gap: 6px;
+	margin-top: 48px;
+}
+
+.travail-pagination a,
+.travail-pagination span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 38px;
+	height: 38px;
+	padding: 0 8px;
+	border-radius: var( --travail-radius-sm );
+	font-size: 14px;
+	color: var( --travail-color-text );
+}
+
+.travail-pagination .current {
+	background: var( --travail-color-primary );
+	color: #fff;
+}
+
+.travail-pagination a:hover {
+	background: var( --travail-color-bg );
+	opacity: 1;
+}
+
+/* ── Single tour ───────────────────────────────────────────── */
+
+.travail-tour-hero {
+	padding-top: 120px;
+}
+
+.travail-tour-hero h1 {
+	font-size: clamp( 30px, 4vw, 46px );
+	margin-bottom: 12px;
+}
+
+.travail-tour-meta-row {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	flex-wrap: wrap;
+	font-size: 14px;
+	color: var( --travail-color-text-muted );
+	margin-bottom: 28px;
+}
+
+.travail-tour-meta-row .travail-rating-inline {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: var( --travail-ink );
+}
+
+.travail-tour-gallery {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr;
+	grid-template-rows: repeat( 2, 200px );
+	gap: 12px;
+	border-radius: var( --travail-radius-lg );
+	overflow: hidden;
+	margin-bottom: 48px;
+	position: relative;
+}
+
+.travail-tour-gallery__main {
+	grid-row: span 2;
+}
+
+.travail-tour-gallery img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	cursor: pointer;
+}
+
+.travail-tour-gallery__more {
+	position: absolute;
+	bottom: 16px;
+	right: 16px;
+	background: rgba( 0, 0, 0, 0.6 );
+	color: #fff;
+	padding: 8px 16px;
+	border-radius: var( --travail-radius-sm );
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+	border: none;
+}
+
+@media ( max-width: 768px ) {
+	.travail-tour-gallery {
+		grid-template-columns: 1fr;
+		grid-template-rows: 240px;
+	}
+	.travail-tour-gallery__main {
+		grid-row: auto;
+	}
+	.travail-tour-gallery > img:not( .travail-tour-gallery__main ) {
+		display: none;
+	}
+}
+
+.travail-tour-highlights {
+	display: grid;
+	grid-template-columns: repeat( 2, 1fr );
+	gap: 16px;
+	margin: 32px 0;
+}
+
+.travail-tour-highlight {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	font-size: 14px;
+}
+
+.travail-tour-highlight svg {
+	color: var( --travail-color-primary );
+	flex-shrink: 0;
+	margin-top: 2px;
+}
+
+.travail-tour-section {
+	padding: 40px 0;
+	border-bottom: 1px solid var( --travail-color-border );
+}
+
+.travail-tour-section:last-child {
+	border-bottom: none;
+}
+
+.travail-tour-section h2 {
+	font-size: 26px;
+	margin-bottom: 20px;
+}
+
+.travail-included-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 32px;
+}
+
+.travail-included-list,
+.travail-excluded-list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	list-style: none;
+}
+
+.travail-included-list li,
+.travail-excluded-list li {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	font-size: 14px;
+}
+
+.travail-included-list li::before {
+	content: "✓";
+	color: #2e7d32;
+	font-weight: 700;
+}
+
+.travail-excluded-list li::before {
+	content: "✕";
+	color: #c0392b;
+	font-weight: 700;
+}
+
+@media ( max-width: 640px ) {
+	.travail-included-grid {
+		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+}
+
+/* Itinerary (accordion of day-by-day) */
+.travail-itinerary {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.travail-itinerary-day {
+	border: 1px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-md );
+	margin-bottom: 12px;
+	overflow: hidden;
+}
+
+.travail-itinerary-day__toggle {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 18px 20px;
+	background: #fff;
+	border: none;
+	cursor: pointer;
+	text-align: left;
+}
+
+.travail-itinerary-day__num {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: var( --travail-color-bg );
+	color: var( --travail-color-primary );
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	flex-shrink: 0;
+	font-size: 13px;
+}
+
+.travail-itinerary-day__title {
+	flex: 1;
+	font-weight: 600;
+	font-size: 15px;
+}
+
+.travail-itinerary-day__chevron {
+	transition: transform 0.2s ease;
+	flex-shrink: 0;
+}
+
+.travail-itinerary-day.is-open .travail-itinerary-day__chevron {
+	transform: rotate( 180deg );
+}
+
+.travail-itinerary-day__panel {
+	display: none;
+	padding: 0 20px 20px 76px;
+	font-size: 14px;
+	color: var( --travail-color-text-muted );
+	line-height: 1.7;
+}
+
+.travail-itinerary-day.is-open .travail-itinerary-day__panel {
+	display: block;
+}
+
+/* FAQ accordion */
+.travail-faq-item {
+	border-bottom: 1px solid var( --travail-color-border );
+}
+
+.travail-faq-item__toggle {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 18px 0;
+	background: none;
+	border: none;
+	cursor: pointer;
+	text-align: left;
+	font-weight: 600;
+	font-size: 15px;
+	color: var( --travail-ink );
+}
+
+.travail-faq-item__panel {
+	display: none;
+	padding: 0 0 18px;
+	font-size: 14px;
+	color: var( --travail-color-text-muted );
+	line-height: 1.7;
+}
+
+.travail-faq-item.is-open .travail-faq-item__panel {
+	display: block;
+}
+
+.travail-faq-item.is-open .travail-faq-item__toggle svg {
+	transform: rotate( 180deg );
+}
+
+/* Map */
+.travail-tour-map {
+	border-radius: var( --travail-radius-lg );
+	overflow: hidden;
+	height: 380px;
+	border: 1px solid var( --travail-color-border );
+}
+
+.travail-tour-map iframe {
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+/* Reviews */
+.travail-review-summary {
+	display: flex;
+	align-items: center;
+	gap: 32px;
+	margin-bottom: 32px;
+	flex-wrap: wrap;
+}
+
+.travail-review-score {
+	text-align: center;
+}
+
+.travail-review-score__num {
+	font-size: 48px;
+	font-weight: 700;
+	color: var( --travail-ink );
+	line-height: 1;
+}
+
+.travail-review-bars {
+	flex: 1;
+	min-width: 220px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.travail-review-bar-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 12px;
+	color: var( --travail-color-text-muted );
+}
+
+.travail-review-bar-track {
+	flex: 1;
+	height: 6px;
+	background: var( --travail-color-border );
+	border-radius: 999px;
+	overflow: hidden;
+}
+
+.travail-review-bar-fill {
+	height: 100%;
+	background: var( --travail-color-accent );
+}
+
+.travail-review-item {
+	display: flex;
+	gap: 16px;
+	padding: 24px 0;
+	border-bottom: 1px solid var( --travail-color-border );
+}
+
+.travail-review-item__avatar {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	object-fit: cover;
+	flex-shrink: 0;
+}
+
+.travail-review-item__name {
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.travail-review-item__date {
+	font-size: 12px;
+	color: var( --travail-color-text-muted );
+}
+
+.travail-review-item__text {
+	font-size: 14px;
+	line-height: 1.7;
+	margin-top: 8px;
+	color: var( --travail-color-text );
+}
+
+/* Related tours */
+.travail-related-tours {
+	margin-top: 48px;
+}
+
+/* ── Sticky booking card ───────────────────────────────────── */
+
+.travail-booking-card {
+	background: #fff;
+	border: 1px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-lg );
+	box-shadow: var( --travail-shadow-md );
+	padding: 28px;
+}
+
+.travail-booking-card__price {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	margin-bottom: 4px;
+}
+
+.travail-booking-card__price .travail-amount {
+	font-size: 32px;
+	font-weight: 700;
+	color: var( --travail-ink );
+}
+
+.travail-booking-card__price .travail-old-amount {
+	font-size: 16px;
+	color: var( --travail-color-text-muted );
+	text-decoration: line-through;
+}
+
+.travail-booking-card__price small {
+	font-size: 13px;
+	color: var( --travail-color-text-muted );
+}
+
+.travail-booking-card__divider {
+	border-top: 1px solid var( --travail-color-border );
+	margin: 20px 0;
+}
+
+.travail-booking-card .travail-field {
+	margin-bottom: 14px;
+}
+
+.travail-guest-stepper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 4px;
+	border-bottom: 1px solid var( --travail-color-border );
+}
+
+.travail-guest-stepper:last-child {
+	border-bottom: none;
+}
+
+.travail-guest-stepper__label strong {
+	display: block;
+	font-size: 14px;
+}
+
+.travail-guest-stepper__label span {
+	font-size: 12px;
+	color: var( --travail-color-text-muted );
+}
+
+.travail-stepper-controls {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.travail-stepper-btn {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	border: 1.5px solid var( --travail-color-border );
+	background: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	font-size: 16px;
+	line-height: 1;
+}
+
+.travail-stepper-btn:hover {
+	border-color: var( --travail-color-primary );
+	opacity: 1;
+}
+
+.travail-stepper-value {
+	min-width: 20px;
+	text-align: center;
+	font-weight: 600;
+}
+
+.travail-extra-service {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 10px 0;
+	border-bottom: 1px solid var( --travail-color-border );
+}
+
+.travail-extra-service:last-child {
+	border-bottom: none;
+}
+
+.travail-extra-service__label {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	font-size: 14px;
+}
+
+.travail-extra-service__price {
+	font-size: 13px;
+	color: var( --travail-color-text-muted );
+}
+
+.travail-booking-card__total-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-weight: 700;
+	font-size: 16px;
+	margin: 16px 0;
+}
+
+.travail-coupon-row {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 16px;
+}
+
+.travail-coupon-row input {
+	flex: 1;
+}
+
+.travail-booking-note {
+	font-size: 12px;
+	color: var( --travail-color-text-muted );
+	text-align: center;
+	margin-top: 12px;
+}
+
+.travail-partial-payment-toggle {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 13px;
+	padding: 12px;
+	background: var( --travail-color-bg );
+	border-radius: var( --travail-radius-md );
+	margin-bottom: 16px;
+}
+
+@media ( max-width: 1024px ) {
+	.travail-booking-card {
+		position: fixed;
+		inset-inline: 0;
+		bottom: 0;
+		z-index: 90;
+		border-radius: var( --travail-radius-xl ) var( --travail-radius-xl ) 0 0;
+		box-shadow: 0 -8px 32px rgba( 0, 0, 0, 0.15 );
+		max-height: 85vh;
+		overflow-y: auto;
+	}
+	.travail-booking-card.is-collapsed .travail-booking-card__body {
+		display: none;
+	}
+	.travail-booking-card__mobile-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		cursor: pointer;
+	}
+}
+
+.travail-booking-card__mobile-bar {
+	display: none;
+}

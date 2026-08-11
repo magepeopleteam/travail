@@ -1,0 +1,1886 @@
+# Copyright (C) 2026 Travail Studio
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Travail 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/travail\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-11T15:31:44+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: travail\n"
+
+#. Theme Name of the theme
+#: style.css
+#: inc/admin/class-travail-admin.php:175
+#: inc/admin/class-travail-admin.php:176
+#: inc/admin/views/dashboard.php:16
+#: inc/elementor/class-travail-elementor.php:44
+#: inc/setup.php:155
+msgid "Travail"
+msgstr ""
+
+#. Theme URI of the theme
+#. Author URI of the theme
+#: style.css
+msgid "https://travail-theme.example.com"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "Travail is a premium, Elementor-ready travel &amp; tour booking theme built for Tour Booking Manager. Search, book and showcase tours, destinations and experiences with a fast, accessible and fully responsive design. Works standalone, with Elementor, and with WooCommerce."
+msgstr ""
+
+#. Author of the theme
+#: style.css
+msgid "Travail Studio"
+msgstr ""
+
+#: 404.php:19
+msgid "Looks like you've wandered off the map"
+msgstr ""
+
+#: 404.php:20
+msgid "We couldn't find the page you were looking for. It may have been moved or no longer exists."
+msgstr ""
+
+#: 404.php:26
+msgid "Back to Home"
+msgstr ""
+
+#: 404.php:29
+msgid "Browse Tours"
+msgstr ""
+
+#: comments.php:24
+msgid "1 Comment"
+msgstr ""
+
+#. translators: %s: number of comments.
+#: comments.php:28
+#, php-format
+msgid "%s Comment"
+msgid_plural "%s Comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:51
+msgid "Older Comments"
+msgstr ""
+
+#: comments.php:52
+msgid "Newer Comments"
+msgstr ""
+
+#: comments.php:60
+msgid "Comments are closed."
+msgstr ""
+
+#: comments.php:67
+msgid "Leave a Reply"
+msgstr ""
+
+#: comments.php:68
+msgid "Comment"
+msgstr ""
+
+#: comments.php:70
+msgid "Name"
+msgstr ""
+
+#: comments.php:71
+msgid "Email"
+msgstr ""
+
+#: elementor/widgets/class-blog-grid-widget.php:32
+msgid "Travail Blog Grid"
+msgstr ""
+
+#: elementor/widgets/class-blog-grid-widget.php:55
+#: elementor/widgets/class-cta-widget.php:55
+#: elementor/widgets/class-destination-grid-widget.php:58
+#: elementor/widgets/class-features-widget.php:58
+#: elementor/widgets/class-hero-widget.php:69
+#: elementor/widgets/class-newsletter-widget.php:55
+#: elementor/widgets/class-tour-categories-widget.php:58
+#: elementor/widgets/class-tour-search-widget.php:60
+msgid "Content"
+msgstr ""
+
+#: elementor/widgets/class-blog-grid-widget.php:61
+#: elementor/widgets/class-cta-widget.php:58
+#: elementor/widgets/class-destination-grid-widget.php:64
+#: elementor/widgets/class-features-widget.php:61
+#: elementor/widgets/class-hero-widget.php:85
+#: elementor/widgets/class-newsletter-widget.php:58
+#: elementor/widgets/class-testimonials-widget.php:66
+#: elementor/widgets/class-tour-categories-widget.php:64
+#: elementor/widgets/class-tour-search-widget.php:66
+msgid "Title"
+msgstr ""
+
+#: elementor/widgets/class-blog-grid-widget.php:63
+#: template-parts/blog/blog-grid.php:29
+msgid "Stories from the road"
+msgstr ""
+
+#: elementor/widgets/class-blog-grid-widget.php:70
+msgid "Number of Posts"
+msgstr ""
+
+#: elementor/widgets/class-blog-grid-widget.php:81
+msgid "Category Slug (optional)"
+msgstr ""
+
+#: elementor/widgets/class-blog-grid-widget.php:83
+msgid "Leave empty to show the latest posts from any category."
+msgstr ""
+
+#: elementor/widgets/class-blog-grid-widget.php:111
+msgid "No blog posts published yet."
+msgstr ""
+
+#: elementor/widgets/class-cta-widget.php:32
+msgid "Travail CTA"
+msgstr ""
+
+#: elementor/widgets/class-cta-widget.php:58
+#: inc/blocks.php:29
+msgid "Ready for your next adventure?"
+msgstr ""
+
+#: elementor/widgets/class-cta-widget.php:59
+msgid "Description"
+msgstr ""
+
+#: elementor/widgets/class-cta-widget.php:59
+#: inc/blocks.php:33
+msgid "Browse handpicked tours and book securely in minutes."
+msgstr ""
+
+#: elementor/widgets/class-cta-widget.php:60
+msgid "Button Text"
+msgstr ""
+
+#: elementor/widgets/class-cta-widget.php:60
+#: inc/blocks.php:38
+msgid "Explore Tours"
+msgstr ""
+
+#: elementor/widgets/class-cta-widget.php:61
+msgid "Button URL"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:35
+msgid "Travail Destinations"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:66
+#: inc/blocks.php:52
+#: template-parts/destination/destination-grid.php:39
+msgid "Trending destinations"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:73
+#: elementor/widgets/class-hero-widget.php:103
+#: elementor/widgets/class-tour-search-widget.php:75
+msgid "Subtitle"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:75
+#: template-parts/destination/destination-grid.php:40
+msgid "Popular places loved by travelers around the world."
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:82
+msgid "Number of Destinations"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:93
+#: elementor/widgets/class-tour-grid-widget.php:152
+msgid "\"View all\" Link"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:109
+msgid "Install and activate Tour Booking Manager to list destinations here."
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:126
+msgid "No destinations yet — assign a Location to a published tour first."
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:140
+#: template-parts/destination/destination-grid.php:45
+msgid "View all destinations"
+msgstr ""
+
+#. translators: %d: number of tours in this destination.
+#: elementor/widgets/class-destination-grid-widget.php:157
+#: template-parts/destination/destination-grid.php:63
+#: templates/pages/page-destinations.php:70
+#, php-format
+msgid "%d experience"
+msgid_plural "%d experiences"
+msgstr[0] ""
+msgstr[1] ""
+
+#: elementor/widgets/class-features-widget.php:35
+msgid "Travail Features"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:61
+#: template-parts/content/why-choose-us.php:63
+msgid "Travel with confidence"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:66
+#: elementor/widgets/class-tour-grid-widget.php:113
+#: elementor/widgets/class-tour-grid-widget.php:119
+msgid "Layout"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:70
+msgid "Icon Grid"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:71
+msgid "Numbered List"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:77
+msgid "Icon"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:78
+msgid "Heading"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:78
+#: elementor/widgets/class-features-widget.php:87
+#: template-parts/content/why-choose-us.php:19
+msgid "Handpicked experiences"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:79
+#: elementor/widgets/class-newsletter-widget.php:59
+msgid "Text"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:87
+msgid "Every tour is carefully vetted by our team."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:88
+#: template-parts/content/why-choose-us.php:23
+msgid "Local experts"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:88
+msgid "Connect with passionate local guides."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:89
+#: template-parts/content/why-choose-us.php:27
+msgid "Secure booking"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:89
+msgid "Your payment is fully protected."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:90
+#: template-parts/content/why-choose-us.php:31
+msgid "Flexible plans"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:90
+msgid "Modify or cancel up to 48 hours before."
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:38
+msgid "Travail Hero"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:76
+msgid "Eyebrow"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:78
+#: inc/importer/class-travail-demo-importer.php:388
+#: template-parts/hero/hero.php:18
+msgid "Explore · Dream · Discover"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:87
+msgid "Discover your next"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:94
+msgid "Title (emphasized word)"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:96
+#: inc/importer/class-travail-demo-importer.php:390
+#: template-parts/hero/hero.php:20
+msgid "adventure"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:105
+#: inc/importer/class-travail-demo-importer.php:391
+#: template-parts/hero/hero.php:21
+msgid "Curated trips. Extraordinary places. Unforgettable memories."
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:112
+#: elementor/widgets/class-newsletter-widget.php:63
+msgid "Background Image"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:123
+msgid "Show Search Widget"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:132
+msgid "Show Trust Metrics"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:143
+msgid "Trust Metrics"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:149
+#: inc/admin/views/status.php:31
+msgid "Value"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:150
+msgid "Label"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:150
+#: elementor/widgets/class-hero-widget.php:158
+#: inc/importer/class-travail-demo-importer.php:393
+#: template-parts/hero/trust-metrics.php:17
+msgid "Happy Travelers"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:159
+#: inc/importer/class-travail-demo-importer.php:395
+#: template-parts/hero/trust-metrics.php:21
+msgid "Overall Rating"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:160
+msgid "Countries"
+msgstr ""
+
+#: elementor/widgets/class-newsletter-widget.php:32
+msgid "Travail Newsletter"
+msgstr ""
+
+#: elementor/widgets/class-newsletter-widget.php:58
+msgid "Your next adventure starts here."
+msgstr ""
+
+#: elementor/widgets/class-newsletter-widget.php:59
+#: template-parts/content/newsletter.php:28
+msgid "Get travel inspiration, exclusive deals and new destinations delivered to your inbox."
+msgstr ""
+
+#: elementor/widgets/class-newsletter-widget.php:71
+msgid "Form Action URL"
+msgstr ""
+
+#: elementor/widgets/class-newsletter-widget.php:73
+msgid "Point this at your email-marketing provider's subscribe endpoint."
+msgstr ""
+
+#: elementor/widgets/class-newsletter-widget.php:99
+#: elementor/widgets/class-newsletter-widget.php:100
+#: template-parts/content/newsletter.php:32
+#: template-parts/content/newsletter.php:33
+msgid "Your email address"
+msgstr ""
+
+#: elementor/widgets/class-newsletter-widget.php:102
+#: template-parts/content/newsletter.php:35
+msgid "Subscribe"
+msgstr ""
+
+#: elementor/widgets/class-newsletter-widget.php:105
+msgid "Set a Form Action URL to activate this form."
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:37
+msgid "Travail Testimonials"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:60
+#: template-parts/testimonial/testimonials.php:43
+msgid "Testimonials"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:68
+#: template-parts/testimonial/testimonials.php:44
+msgid "Loved by travelers worldwide"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:73
+msgid "Quote"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:73
+msgid "An unforgettable experience from start to finish."
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:74
+msgid "Author Name"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:74
+msgid "Happy Traveler"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:75
+msgid "Author Location/Meta"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:76
+msgid "Trip Tag"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:77
+msgid "Rating (1-5)"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:86
+msgid "We didn’t just visit Bali. We experienced it."
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:87
+#: template-parts/testimonial/testimonials.php:23
+msgid "Sarah Williams"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:88
+#: template-parts/testimonial/testimonials.php:24
+msgid "New York, USA"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:89
+#: template-parts/testimonial/testimonials.php:26
+msgid "Bali · 7 day adventure"
+msgstr ""
+
+#. translators: %d: testimonial slide number.
+#: elementor/widgets/class-testimonials-widget.php:133
+#: template-parts/testimonial/testimonials.php:73
+#, php-format
+msgid "Testimonial %d"
+msgstr ""
+
+#: elementor/widgets/class-tour-categories-widget.php:35
+msgid "Travail Tour Categories"
+msgstr ""
+
+#: elementor/widgets/class-tour-categories-widget.php:66
+#: template-parts/tour/category-explorer.php:34
+msgid "Find your kind of adventure"
+msgstr ""
+
+#: elementor/widgets/class-tour-categories-widget.php:73
+msgid "Number of Categories"
+msgstr ""
+
+#: elementor/widgets/class-tour-categories-widget.php:92
+msgid "Install and activate Tour Booking Manager to list categories here."
+msgstr ""
+
+#: elementor/widgets/class-tour-categories-widget.php:109
+msgid "No categories yet — assign a Category to a published tour first."
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:39
+msgid "Travail Tour Grid"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:69
+msgid "Query"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:75
+msgid "Show"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:79
+msgid "Latest Tours"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:80
+msgid "Popular / Best-Selling Tours"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:81
+msgid "Special Deals (on sale)"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:82
+msgid "Specific Category"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:83
+msgid "Specific Destination"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:91
+msgid "Category / Destination Slug"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:94
+msgid "Enter the term slug (found under Tours → Categories / Locations)."
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:101
+msgid "Number of Tours"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:123
+#: inc/customizer.php:276
+#: inc/customizer.php:312
+msgid "Grid"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:124
+msgid "Horizontal scroll (carousel-style)"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:132
+msgid "Columns"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:143
+msgid "Section Title"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:168
+msgid "Install and activate Tour Booking Manager to display tours here."
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:222
+msgid "View all"
+msgstr ""
+
+#: elementor/widgets/class-tour-search-widget.php:37
+msgid "Travail Tour Search"
+msgstr ""
+
+#: elementor/widgets/class-tour-search-widget.php:68
+#: template-parts/search/search-widget.php:25
+msgid "Where do you want to go?"
+msgstr ""
+
+#: elementor/widgets/class-tour-search-widget.php:77
+#: template-parts/search/search-widget.php:26
+msgid "Search destinations, tours or experiences"
+msgstr ""
+
+#: elementor/widgets/class-tour-search-widget.php:84
+msgid "Card Background"
+msgstr ""
+
+#: elementor/widgets/class-tour-search-widget.php:86
+msgid "White card"
+msgstr ""
+
+#: elementor/widgets/class-tour-search-widget.php:87
+msgid "Transparent"
+msgstr ""
+
+#: elementor/widgets/class-tour-search-widget.php:103
+msgid "Install and activate Tour Booking Manager to enable the tour search widget."
+msgstr ""
+
+#: footer.php:28
+#: inc/customizer.php:206
+#: inc/importer/class-travail-demo-importer.php:396
+msgid "Curating the world's finest travel experiences. Every trip, a new story."
+msgstr ""
+
+#: footer.php:32
+#: template-parts/content/how-it-works.php:16
+msgid "Discover"
+msgstr ""
+
+#: footer.php:33
+msgid "Company"
+msgstr ""
+
+#: footer.php:34
+msgid "Support"
+msgstr ""
+
+#. translators: 1: current year, 2: site name
+#: footer.php:43
+#, php-format
+msgid "© %1$s %2$s. All rights reserved."
+msgstr ""
+
+#: footer.php:51
+msgid "Legal"
+msgstr ""
+
+#: footer.php:83
+msgid "Site search"
+msgstr ""
+
+#: footer.php:85
+msgid "Close search"
+msgstr ""
+
+#. translators: 1: required PHP version, 2: current PHP version
+#: functions.php:36
+#, php-format
+msgid "Travail requires PHP %1$s or higher. Your server is running PHP %2$s. Please ask your host to upgrade PHP."
+msgstr ""
+
+#: header.php:39
+msgid "Skip to content"
+msgstr ""
+
+#: header.php:56
+msgid "Learn more"
+msgstr ""
+
+#: header.php:67
+msgid "Primary"
+msgstr ""
+
+#: header.php:81
+msgid "Assign a Primary Menu"
+msgstr ""
+
+#: header.php:92
+msgid "Open menu"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:43
+#: inc/admin/class-travail-admin.php:308
+msgid "Elementor"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:44
+msgid "The visual page builder that powers every editable section of the Travail homepage."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:51
+#: inc/admin/class-travail-admin.php:311
+#: inc/admin/views/docs.php:34
+msgid "WooCommerce"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:52
+msgid "Optional — adds cart, checkout and a full My Account area for paid tour bookings."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:59
+#: inc/admin/class-travail-admin.php:309
+msgid "Tour Booking Manager"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:60
+msgid "The tour listings, search and booking engine Travail is designed around."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:67
+#: inc/admin/class-travail-admin.php:310
+msgid "Tour Booking Manager Pro"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:68
+msgid "Adds extra services, coupons, partial payments, wishlist and richer availability."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:104
+msgid "You do not have permission to install plugins."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:110
+#: inc/admin/class-travail-admin.php:156
+msgid "That plugin is not on the approved list."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:127
+msgid "Installation failed."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:132
+msgid "Plugin installed but could not be located for activation."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:140
+msgid "Installed and activated."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:150
+msgid "You do not have permission to activate plugins."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:165
+msgid "Activated."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:184
+msgid "Dashboard"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:185
+#: inc/admin/views/dashboard.php:22
+msgid "Setup Wizard"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:186
+#: inc/admin/views/dashboard.php:34
+#: inc/admin/views/docs.php:22
+#: inc/importer/class-travail-demo-importer.php:60
+#: inc/onboarding/class-travail-onboarding.php:52
+msgid "Demo Import"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:187
+#: inc/admin/views/plugins.php:16
+msgid "Recommended Plugins"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:188
+#: inc/admin/views/dashboard.php:40
+#: inc/admin/views/status.php:23
+msgid "System Status"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:189
+#: inc/admin/views/docs.php:61
+msgid "Documentation"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:192
+#: inc/admin/views/dashboard.php:28
+#: inc/admin/views/docs.php:42
+msgid "Theme Settings"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:278
+msgid "WordPress Version"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:281
+msgid "Travail is tested on WordPress 6.0+."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:285
+msgid "PHP Version"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:288
+msgid "PHP 7.4 or higher is required; PHP 8.1+ recommended."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:293
+msgid "Memory Limit"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:296
+msgid "128M or higher recommended, especially for demo import and Elementor."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:301
+msgid "Max Execution Time"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:302
+msgid "Unlimited"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:304
+msgid "60s or higher recommended for the demo importer."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:316
+#: inc/admin/views/partials/plugin-cards.php:25
+msgid "Active"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:316
+msgid "Not active"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:324
+msgid "Uploads Directory Writable"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:325
+msgid "Yes"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:325
+msgid "No"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:327
+msgid "Required for the Demo Importer to download and attach media."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:332
+msgid "Permalink Structure"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:333
+msgid "Plain (not recommended)"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:335
+msgid "A \"pretty\" permalink structure is required for the tour/destination archives."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:342
+msgid "Loaded"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:342
+msgid "Missing"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:364
+msgid "Welcome to Travail!"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:365
+msgid "Run the Setup Wizard to install recommended plugins and import demo content."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:366
+msgid "Start Setup Wizard"
+msgstr ""
+
+#: inc/admin/views/dashboard.php:17
+msgid "A premium, Elementor-ready tour booking theme."
+msgstr ""
+
+#: inc/admin/views/dashboard.php:23
+msgid "Install recommended plugins, import demo content and set your homepage in a few guided steps."
+msgstr ""
+
+#: inc/admin/views/dashboard.php:24
+msgid "Launch Setup Wizard"
+msgstr ""
+
+#: inc/admin/views/dashboard.php:29
+msgid "Colors, typography, header/footer options and more — all in the native Customizer."
+msgstr ""
+
+#: inc/admin/views/dashboard.php:30
+msgid "Open Theme Settings"
+msgstr ""
+
+#: inc/admin/views/dashboard.php:35
+msgid "One-click import of demo pages, menus, widgets and homepage sections."
+msgstr ""
+
+#: inc/admin/views/dashboard.php:36
+#: inc/admin/views/wizard.php:77
+#: inc/importer/class-travail-demo-importer.php:78
+msgid "Import Demo Content"
+msgstr ""
+
+#: inc/admin/views/dashboard.php:41
+msgid "Check server requirements and plugin compatibility at a glance."
+msgstr ""
+
+#: inc/admin/views/dashboard.php:42
+msgid "View System Status"
+msgstr ""
+
+#: inc/admin/views/dashboard.php:47
+msgid "Current Setup"
+msgstr ""
+
+#: inc/admin/views/dashboard.php:50
+msgid "Elementor + Tour Booking Manager + WooCommerce — the complete travel booking experience is unlocked."
+msgstr ""
+
+#: inc/admin/views/dashboard.php:51
+msgid "Elementor + Tour Booking Manager — tours, search and booking cards are fully active. Add WooCommerce for cart/checkout."
+msgstr ""
+
+#: inc/admin/views/dashboard.php:52
+msgid "Elementor is active but Tour Booking Manager was not detected — install it to unlock tour listings and booking."
+msgstr ""
+
+#: inc/admin/views/dashboard.php:53
+msgid "WooCommerce is active. Install Tour Booking Manager to sell bookable tours, or use Travail as a general WooCommerce theme."
+msgstr ""
+
+#: inc/admin/views/dashboard.php:54
+msgid "Running with core WordPress only. Install Elementor and Tour Booking Manager from the Recommended Plugins screen to unlock the full experience."
+msgstr ""
+
+#: inc/admin/views/dashboard.php:55
+msgid "A mix of optional plugins is active — visit System Status for the full breakdown."
+msgstr ""
+
+#: inc/admin/views/dashboard.php:60
+msgid "Manage recommended plugins →"
+msgstr ""
+
+#: inc/admin/views/docs.php:14
+msgid "Installation & Activation"
+msgstr ""
+
+#: inc/admin/views/docs.php:15
+msgid "Upload Travail via Appearance → Themes → Add New → Upload Theme, then Activate. Right after activation you'll see a notice linking to the Setup Wizard — use it to install recommended plugins and import demo content."
+msgstr ""
+
+#: inc/admin/views/docs.php:18
+msgid "Installing Plugins"
+msgstr ""
+
+#: inc/admin/views/docs.php:19
+msgid "Elementor is required for the fully visual homepage builder. Tour Booking Manager (and its Pro add-on) power tours, search and booking — install them from your license account, then activate. WooCommerce is optional and only needed for cart/checkout. Visit Travail → Recommended Plugins to install/activate Elementor and WooCommerce in one click, or check current status on Travail → System Status."
+msgstr ""
+
+#: inc/admin/views/docs.php:23
+msgid "Travail → Demo Import creates a starter set of pages, a primary menu, footer widgets and homepage theme settings. It is safe to run more than once — it will not duplicate pages it already created (each imported item is tracked so re-running only fills in what is missing). It never deletes existing content."
+msgstr ""
+
+#: inc/admin/views/docs.php:26
+msgid "Building Pages with Elementor"
+msgstr ""
+
+#: inc/admin/views/docs.php:27
+msgid "Every homepage section (Hero, Tour Search, Tour Grid/Carousel, Destinations, Categories, Testimonials, Blog, CTA, Newsletter, Features) is available as an Elementor widget under the \"Travail\" category. Create/edit a Page, set it as your front page under Settings → Reading, then edit it with Elementor and drag in any Travail widget — no theme code is hardcoded in the way."
+msgstr ""
+
+#: inc/admin/views/docs.php:30
+msgid "Setting Up Tours"
+msgstr ""
+
+#: inc/admin/views/docs.php:31
+msgid "Tours are managed entirely inside Tour Booking Manager (Tours → Add New). Travail only renders that data — categories, locations, pricing, availability, extra services, reviews. Assign a Location term (used for \"Destinations\") and a Category term to every tour so the homepage destination/category widgets have something to show."
+msgstr ""
+
+#: inc/admin/views/docs.php:35
+msgid "If Tour Booking Manager is configured to sell through WooCommerce, checkout/cart/My Account inherit Travail's styling automatically — no extra setup required. If you don't use WooCommerce, hide it from Recommended Plugins and Travail keeps working normally."
+msgstr ""
+
+#: inc/admin/views/docs.php:38
+msgid "Header & Footer"
+msgstr ""
+
+#: inc/admin/views/docs.php:39
+msgid "Customize logo, header style (transparent/solid), header CTA button and announcement bar under Appearance → Customize → Travail Theme Options → Header. Footer columns pull from Appearance → Menus (Footer Column 1/2/3 locations) or Appearance → Widgets (Footer Column 1/2/3 sidebars) — whichever has content."
+msgstr ""
+
+#: inc/admin/views/docs.php:43
+msgid "All visual settings live in the native Customizer (Appearance → Customize → Travail Theme Options) grouped into General, Colors & Typography, Header, Footer, Social, Blog, Tours & Booking, Breadcrumbs, Performance and Custom CSS."
+msgstr ""
+
+#: inc/admin/views/docs.php:46
+msgid "Child Themes"
+msgstr ""
+
+#: inc/admin/views/docs.php:47
+msgid "Travail exposes travail_before_header, travail_after_header, travail_before_content, travail_after_content, travail_before_footer and travail_after_footer action hooks, plus numerous apply_filters() calls (see inc/helpers.php and inc/template-functions.php), so most customizations don't require copying template files into a child theme at all."
+msgstr ""
+
+#: inc/admin/views/docs.php:50
+msgid "Translation"
+msgstr ""
+
+#: inc/admin/views/docs.php:51
+msgid "Every string uses the \"travail\" text domain and is wrapped in __()/_e()/esc_html__(). Generate a .pot file with WP-CLI (wp i18n make-pot .) or Loco Translate, place .po/.mo files in /languages, and set your site language under Settings → General."
+msgstr ""
+
+#: inc/admin/views/docs.php:54
+msgid "Troubleshooting"
+msgstr ""
+
+#: inc/admin/views/docs.php:55
+msgid "Start with Travail → System Status. A red ✕ means a hard requirement is unmet (e.g. PHP version); a yellow ⚠ is a recommendation. If tour data isn't rendering, confirm Tour Booking Manager is active and that the tour has a published status, a price and at least one Location/Category term assigned."
+msgstr ""
+
+#: inc/admin/views/docs.php:62
+msgid "Everything you need to set up and customize Travail."
+msgstr ""
+
+#: inc/admin/views/partials/plugin-cards.php:19
+msgid "Required"
+msgstr ""
+
+#: inc/admin/views/partials/plugin-cards.php:19
+msgid "Recommended"
+msgstr ""
+
+#: inc/admin/views/partials/plugin-cards.php:28
+msgid "Activate"
+msgstr ""
+
+#: inc/admin/views/partials/plugin-cards.php:32
+msgid "Install & Activate"
+msgstr ""
+
+#: inc/admin/views/partials/plugin-cards.php:36
+msgid "Not detected. Please install this plugin from your license account."
+msgstr ""
+
+#: inc/admin/views/plugins.php:17
+msgid "Travail works standalone, but these plugins unlock its full travel-booking experience."
+msgstr ""
+
+#: inc/admin/views/status.php:24
+msgid "A quick health check of your server and the plugins Travail integrates with."
+msgstr ""
+
+#: inc/admin/views/status.php:30
+msgid "Check"
+msgstr ""
+
+#: inc/admin/views/status.php:32
+msgid "Status"
+msgstr ""
+
+#: inc/admin/views/status.php:33
+msgid "Notes"
+msgstr ""
+
+#: inc/admin/views/wizard.php:19
+msgid "Travail Setup Wizard"
+msgstr ""
+
+#: inc/admin/views/wizard.php:20
+msgid "A few guided steps to get your travel site production-ready."
+msgstr ""
+
+#: inc/admin/views/wizard.php:23
+msgid "Setup Wizard steps"
+msgstr ""
+
+#: inc/admin/views/wizard.php:39
+msgid "Welcome to Travail"
+msgstr ""
+
+#: inc/admin/views/wizard.php:40
+msgid "This wizard checks your server, helps install the recommended plugins, and imports demo content so you can see the full design in minutes. You can exit at any time — nothing here is required to use the theme."
+msgstr ""
+
+#: inc/admin/views/wizard.php:44
+#: inc/onboarding/class-travail-onboarding.php:50
+msgid "System Check"
+msgstr ""
+
+#: inc/admin/views/wizard.php:45
+msgid "Travail runs fine on any modern WordPress host. Here is your current environment:"
+msgstr ""
+
+#: inc/admin/views/wizard.php:70
+msgid "Install Plugins"
+msgstr ""
+
+#: inc/admin/views/wizard.php:71
+msgid "Elementor is required for the visual homepage builder. Tour Booking Manager and WooCommerce are recommended."
+msgstr ""
+
+#: inc/admin/views/wizard.php:78
+msgid "Creates a starter homepage, pages, menus, footer widgets and theme settings so you can explore Travail with real content. Safe to run more than once."
+msgstr ""
+
+#: inc/admin/views/wizard.php:83
+msgid "You're all set!"
+msgstr ""
+
+#: inc/admin/views/wizard.php:84
+msgid "Here is where to go next:"
+msgstr ""
+
+#: inc/admin/views/wizard.php:86
+msgid "Customize Theme Settings"
+msgstr ""
+
+#: inc/admin/views/wizard.php:87
+msgid "View Your Site"
+msgstr ""
+
+#: inc/admin/views/wizard.php:94
+msgid "← Back"
+msgstr ""
+
+#: inc/admin/views/wizard.php:100
+msgid "Continue →"
+msgstr ""
+
+#: inc/admin/views/wizard.php:102
+msgid "Go to Dashboard"
+msgstr ""
+
+#: inc/blocks.php:25
+msgid "Travail: CTA Banner"
+msgstr ""
+
+#: inc/blocks.php:48
+msgid "Travail: Section Heading"
+msgstr ""
+
+#: inc/blocks.php:56
+msgid "View all destinations →"
+msgstr ""
+
+#: inc/compatibility/tour-booking-manager.php:109
+#: inc/compatibility/tour-booking-manager.php:131
+msgid "Card Image"
+msgstr ""
+
+#: inc/compatibility/tour-booking-manager.php:111
+#: inc/compatibility/tour-booking-manager.php:134
+msgid "Choose Image"
+msgstr ""
+
+#: inc/compatibility/tour-booking-manager.php:113
+#: inc/compatibility/tour-booking-manager.php:141
+msgid "Shown on destination/category cards across the homepage and archive."
+msgstr ""
+
+#: inc/compatibility/tour-booking-manager.php:135
+msgid "Remove"
+msgstr ""
+
+#: inc/customizer.php:26
+msgid "Travail Theme Options"
+msgstr ""
+
+#: inc/customizer.php:36
+msgid "General"
+msgstr ""
+
+#: inc/customizer.php:48
+msgid "Container max-width (px)"
+msgstr ""
+
+#: inc/customizer.php:62
+msgid "Corner roundness"
+msgstr ""
+
+#: inc/customizer.php:64
+msgid "Square (sharp corners)"
+msgstr ""
+
+#: inc/customizer.php:65
+msgid "Default (matches design)"
+msgstr ""
+
+#: inc/customizer.php:66
+msgid "Extra round"
+msgstr ""
+
+#: inc/customizer.php:81
+msgid "Load DM Serif Display / Plus Jakarta Sans from Google Fonts"
+msgstr ""
+
+#: inc/customizer.php:82
+msgid "Disable to serve fonts from your own CDN/child theme for full GDPR/offline compliance."
+msgstr ""
+
+#: inc/customizer.php:92
+msgid "Colors & Typography"
+msgstr ""
+
+#: inc/customizer.php:102
+msgid "Primary color"
+msgstr ""
+
+#: inc/customizer.php:113
+msgid "Accent color"
+msgstr ""
+
+#: inc/customizer.php:124
+msgid "Page background"
+msgstr ""
+
+#: inc/customizer.php:133
+msgid "Header"
+msgstr ""
+
+#: inc/customizer.php:145
+msgid "Header style"
+msgstr ""
+
+#: inc/customizer.php:147
+msgid "Transparent over hero, solid on scroll"
+msgstr ""
+
+#: inc/customizer.php:148
+msgid "Always solid"
+msgstr ""
+
+#: inc/customizer.php:158
+#: template-parts/header/actions.php:39
+#: template-parts/header/mobile-actions.php:19
+msgid "List Your Tour"
+msgstr ""
+
+#: inc/customizer.php:160
+msgid "Header CTA button text"
+msgstr ""
+
+#: inc/customizer.php:170
+msgid "Header CTA button URL"
+msgstr ""
+
+#: inc/customizer.php:180
+msgid "Announcement bar text (leave empty to hide)"
+msgstr ""
+
+#: inc/customizer.php:190
+msgid "Announcement \"Learn more\" URL"
+msgstr ""
+
+#: inc/customizer.php:199
+msgid "Footer"
+msgstr ""
+
+#: inc/customizer.php:208
+msgid "Footer brand description"
+msgstr ""
+
+#: inc/customizer.php:218
+msgid "Show accepted-payments row (WooCommerce only)"
+msgstr ""
+
+#: inc/customizer.php:228
+msgid "Show mobile bottom navigation bar"
+msgstr ""
+
+#: inc/customizer.php:237
+msgid "Social"
+msgstr ""
+
+#. translators: %s: social network name.
+#: inc/customizer.php:251
+#, php-format
+msgid "%s URL"
+msgstr ""
+
+#: inc/customizer.php:262
+#: inc/importer/class-travail-demo-importer.php:228
+#: inc/importer/class-travail-demo-importer.php:258
+#: inc/importer/class-travail-demo-importer.php:274
+msgid "Blog"
+msgstr ""
+
+#: inc/customizer.php:274
+msgid "Blog archive layout"
+msgstr ""
+
+#: inc/customizer.php:277
+msgid "List with sidebar"
+msgstr ""
+
+#: inc/customizer.php:288
+msgid "Tours & Booking"
+msgstr ""
+
+#: inc/customizer.php:297
+msgid "Tours per archive page"
+msgstr ""
+
+#: inc/customizer.php:310
+msgid "Default tour archive view"
+msgstr ""
+
+#: inc/customizer.php:313
+msgid "List"
+msgstr ""
+
+#: inc/customizer.php:325
+msgid "Sticky booking card on single tour (desktop)"
+msgstr ""
+
+#: inc/customizer.php:334
+msgid "Breadcrumbs"
+msgstr ""
+
+#: inc/customizer.php:343
+msgid "Show breadcrumb trail"
+msgstr ""
+
+#: inc/customizer.php:352
+msgid "Performance"
+msgstr ""
+
+#: inc/customizer.php:361
+msgid "Lazy-load below-the-fold images"
+msgstr ""
+
+#: inc/customizer.php:370
+msgid "Travail Custom CSS"
+msgstr ""
+
+#: inc/customizer.php:370
+msgid "Prefer the core \"Additional CSS\" panel below for most tweaks — this field exists for import/export portability."
+msgstr ""
+
+#: inc/customizer.php:379
+msgid "Custom CSS"
+msgstr ""
+
+#. translators: 1: opening link tag, 2: closing link tag
+#: inc/elementor/class-travail-elementor.php:120
+#, php-format
+msgid "Travail is built for Elementor. %1$sInstall Elementor%2$s to unlock the fully visual homepage builder and every Travail widget."
+msgstr ""
+
+#: inc/enqueue.php:112
+msgid "Guest"
+msgstr ""
+
+#: inc/enqueue.php:113
+msgid "Guests"
+msgstr ""
+
+#: inc/enqueue.php:114
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#. translators: %s: numeric rating out of 5
+#: inc/helpers.php:90
+#, php-format
+msgid "Rated %s out of 5"
+msgstr ""
+
+#: inc/helpers.php:138
+#: inc/importer/class-travail-demo-importer.php:250
+msgid "Home"
+msgstr ""
+
+#. translators: %s: search query
+#: inc/helpers.php:181
+#, php-format
+msgid "Search results for \"%s\""
+msgstr ""
+
+#: inc/helpers.php:188
+msgid "404"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:42
+msgid "Creating pages"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:43
+msgid "Building menus"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:44
+msgid "Setting up widgets"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:45
+msgid "Applying theme settings"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:46
+msgid "Configuring homepage"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:61
+msgid "Import a starter homepage, pages, menus and widgets in one click."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:78
+#: inc/importer/class-travail-demo-importer.php:101
+msgid "Re-run Demo Import"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:100
+msgid "Done! Your demo content is ready."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:116
+msgid "Request failed — please try again."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:135
+msgid "Permission denied."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:141
+msgid "Unknown step."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:146
+msgid "Step not implemented."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:221
+msgid "Tell your story here — who you are, why you started, and what makes your tours different. Edit this page any time from Pages → All Pages."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:222
+msgid "Add your contact details, a contact form (from your favorite form plugin) or an embedded map here."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:223
+msgid "Answer the questions travelers ask most before booking."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:225
+msgid "About Us"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:226
+#: inc/importer/class-travail-demo-importer.php:261
+#: inc/importer/class-travail-demo-importer.php:283
+msgid "Contact"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:227
+#: inc/importer/class-travail-demo-importer.php:289
+msgid "FAQ"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:231
+#: inc/importer/class-travail-demo-importer.php:255
+#: inc/importer/class-travail-demo-importer.php:271
+#: template-parts/hero/trust-metrics.php:25
+msgid "Destinations"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:234
+msgid "Pages created."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:252
+#: inc/importer/class-travail-demo-importer.php:268
+#: template-parts/footer/mobile-bottom-nav.php:34
+msgid "Tours"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:264
+#: inc/setup.php:76
+msgid "Primary Menu"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:276
+msgid "Footer: Discover"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:280
+msgid "About"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:285
+msgid "Footer: Company"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:291
+msgid "Footer: Support"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:293
+msgid "Menus created and assigned."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:353
+msgid "Blog sidebar already has widgets — left untouched."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:358
+msgid "Recent Posts"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:359
+msgid "Categories"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:377
+msgid "Blog sidebar widgets added."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:389
+#: template-parts/hero/hero.php:19
+msgid "Discover your next {emphasis}"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:405
+msgid "Default theme settings applied (existing values were not overwritten)."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:425
+msgid "Elementor detected — build your homepage visually with the widgets under the \"Travail\" category, then set it as your front page under Settings → Reading."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:428
+msgid "Homepage configured — showing the built-in Travail homepage sections. Blog posts now live on their own page."
+msgstr ""
+
+#: inc/onboarding/class-travail-onboarding.php:49
+msgid "Welcome"
+msgstr ""
+
+#: inc/onboarding/class-travail-onboarding.php:51
+msgid "Plugins"
+msgstr ""
+
+#: inc/onboarding/class-travail-onboarding.php:53
+msgid "Finish"
+msgstr ""
+
+#: inc/setup.php:77
+msgid "Mobile Menu (optional — falls back to Primary)"
+msgstr ""
+
+#: inc/setup.php:78
+#: inc/setup.php:112
+msgid "Footer Column 1"
+msgstr ""
+
+#: inc/setup.php:79
+#: inc/setup.php:124
+msgid "Footer Column 2"
+msgstr ""
+
+#: inc/setup.php:80
+#: inc/setup.php:136
+msgid "Footer Column 3"
+msgstr ""
+
+#: inc/setup.php:81
+msgid "Footer Legal Links"
+msgstr ""
+
+#: inc/setup.php:100
+msgid "Blog Sidebar"
+msgstr ""
+
+#: inc/setup.php:102
+msgid "Displayed alongside blog posts and the blog archive."
+msgstr ""
+
+#: inc/setup.php:114
+msgid "First footer widget column (falls back to the Discover links if empty)."
+msgstr ""
+
+#: inc/setup.php:126
+msgid "Second footer widget column."
+msgstr ""
+
+#: inc/setup.php:138
+msgid "Third footer widget column."
+msgstr ""
+
+#: inc/template-functions.php:44
+msgid "Previous page"
+msgstr ""
+
+#: inc/template-functions.php:45
+msgid "Next page"
+msgstr ""
+
+#: inc/template-functions.php:54
+msgid "Pagination"
+msgstr ""
+
+#: inc/template-functions.php:82
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: inc/template-hooks.php:52
+#: template-parts/tour/tour-rail.php:21
+msgid "Popular experiences"
+msgstr ""
+
+#: inc/woocommerce/class-travail-woocommerce.php:106
+msgid "Sale"
+msgstr ""
+
+#: page.php:40
+#: single.php:73
+msgid "Page"
+msgstr ""
+
+#: page.php:40
+#: single.php:73
+msgid "Pages:"
+msgstr ""
+
+#. translators: %s: search query.
+#: search.php:21
+#, php-format
+msgid "Search results for: %s"
+msgstr ""
+
+#. translators: %d: number of results.
+#: search.php:41
+#, php-format
+msgid "%d result found"
+msgid_plural "%d results found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: searchform.php:15
+msgid "Search for:"
+msgstr ""
+
+#: searchform.php:20
+msgid "Search tours, destinations, articles…"
+msgstr ""
+
+#: searchform.php:24
+#: template-parts/header/actions.php:22
+msgid "Search"
+msgstr ""
+
+#: sidebar.php:16
+msgid "Blog sidebar"
+msgstr ""
+
+#. translators: %s: estimated reading time in minutes.
+#: single.php:52
+#: template-parts/content/content.php:40
+#, php-format
+msgid "%s min read"
+msgstr ""
+
+#: single.php:102
+msgid "Previous"
+msgstr ""
+
+#: single.php:103
+msgid "Next"
+msgstr ""
+
+#: template-parts/blog/blog-grid.php:32
+msgid "View all stories"
+msgstr ""
+
+#: template-parts/content/breadcrumbs.php:24
+msgid "Breadcrumb"
+msgstr ""
+
+#: template-parts/content/content-none.php:16
+msgid "Nothing found"
+msgstr ""
+
+#: template-parts/content/content-none.php:17
+msgid "Nothing matched your search. Try different keywords."
+msgstr ""
+
+#: template-parts/content/content-none.php:20
+msgid "No posts found"
+msgstr ""
+
+#: template-parts/content/content-none.php:21
+msgid "It seems we can’t find what you’re looking for."
+msgstr ""
+
+#: template-parts/content/how-it-works.php:17
+msgid "Find experiences you’ll love from our curated collection of tours."
+msgstr ""
+
+#: template-parts/content/how-it-works.php:20
+msgid "Choose"
+msgstr ""
+
+#: template-parts/content/how-it-works.php:21
+msgid "Compare dates, prices and reviews to find the perfect adventure."
+msgstr ""
+
+#: template-parts/content/how-it-works.php:24
+msgid "Book"
+msgstr ""
+
+#: template-parts/content/how-it-works.php:25
+msgid "Reserve your adventure securely with instant confirmation."
+msgstr ""
+
+#: template-parts/content/how-it-works.php:33
+msgid "Plan your trip in 3 simple steps"
+msgstr ""
+
+#: template-parts/content/newsletter.php:26
+msgid "Your next adventure <em>starts here.</em>"
+msgstr ""
+
+#: template-parts/content/newsletter.php:37
+msgid "No spam, ever. Unsubscribe anytime."
+msgstr ""
+
+#: template-parts/content/newsletter.php:42
+msgid "Connect a newsletter provider (e.g. via the travail_newsletter_action_url filter, or an email-marketing plugin) to activate this form."
+msgstr ""
+
+#: template-parts/content/why-choose-us.php:20
+msgid "Every tour and destination is carefully vetted by our team of expert travelers."
+msgstr ""
+
+#: template-parts/content/why-choose-us.php:24
+msgid "Connect with passionate local guides who know their destinations intimately."
+msgstr ""
+
+#: template-parts/content/why-choose-us.php:28
+msgid "Your payment is protected with industry-leading security and fraud prevention."
+msgstr ""
+
+#: template-parts/content/why-choose-us.php:32
+msgid "Modify or cancel your booking up to 48 hours before departure."
+msgstr ""
+
+#: template-parts/content/why-choose-us.php:45
+msgid "Trusted by thousands of travelers"
+msgstr ""
+
+#: template-parts/content/why-choose-us.php:46
+msgid "Secure booking · Instant confirmation"
+msgstr ""
+
+#: template-parts/content/why-choose-us.php:62
+msgid "Why choose us"
+msgstr ""
+
+#: template-parts/footer/mobile-bottom-nav.php:25
+msgid "Explore"
+msgstr ""
+
+#: template-parts/footer/mobile-bottom-nav.php:43
+msgid "Favorites"
+msgstr ""
+
+#: template-parts/footer/mobile-bottom-nav.php:51
+msgid "Account"
+msgstr ""
+
+#: template-parts/footer/mobile-bottom-nav.php:51
+#: template-parts/header/actions.php:35
+#: template-parts/header/mobile-actions.php:17
+msgid "Sign in"
+msgstr ""
+
+#: template-parts/footer/mobile-bottom-nav.php:57
+msgid "Mobile navigation"
+msgstr ""
+
+#: template-parts/footer/socials.php:15
+msgid "Facebook"
+msgstr ""
+
+#: template-parts/footer/socials.php:19
+msgid "Instagram"
+msgstr ""
+
+#: template-parts/footer/socials.php:23
+msgid "YouTube"
+msgstr ""
+
+#: template-parts/footer/socials.php:27
+msgid "X (Twitter)"
+msgstr ""
+
+#: template-parts/header/actions.php:27
+msgid "Wishlist"
+msgstr ""
+
+#: template-parts/header/actions.php:33
+#: template-parts/header/mobile-actions.php:17
+msgid "My Account"
+msgstr ""
+
+#: template-parts/search/popular-searches.php:36
+msgid "Popular searches:"
+msgstr ""
+
+#. translators: %s: number of published reviews.
+#: template-parts/search/popular-searches.php:53
+#, php-format
+msgid "%s+ verified reviews"
+msgstr ""
+
+#: template-parts/testimonial/testimonials.php:21
+msgid "We didn’t just visit Bali. {emphasis}"
+msgstr ""
+
+#: template-parts/testimonial/testimonials.php:22
+msgid "We experienced it."
+msgstr ""
+
+#: template-parts/testimonial/testimonials.php:63
+msgid "Verified traveler"
+msgstr ""
+
+#: template-parts/tour/deals-grid.php:48
+msgid "Adventure doesn't have to wait."
+msgstr ""
+
+#: template-parts/tour/deals-grid.php:49
+msgid "Limited-time offers on handpicked tours."
+msgstr ""
+
+#: template-parts/tour/deals-grid.php:63
+msgid "Limited Offer"
+msgstr ""
+
+#: template-parts/tour/deals-grid.php:77
+msgid "Explore →"
+msgstr ""
+
+#: template-parts/tour/featured-journey.php:72
+msgid "Featured Journey"
+msgstr ""
+
+#: template-parts/tour/featured-journey.php:75
+msgid "Editor's Pick"
+msgstr ""
+
+#: template-parts/tour/featured-journey.php:83
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: template-parts/tour/featured-journey.php:85
+msgid "Night"
+msgid_plural "Nights"
+msgstr[0] ""
+msgstr[1] ""
+
+#: template-parts/tour/featured-journey.php:100
+msgid "Starting from"
+msgstr ""
+
+#: template-parts/tour/featured-journey.php:102
+msgid "per person"
+msgstr ""
+
+#: template-parts/tour/featured-journey.php:119
+msgid "Explore trip"
+msgstr ""
+
+#: template-parts/tour/tour-rail.php:22
+msgid "Handpicked adventures travelers love."
+msgstr ""
+
+#: template-parts/tour/tour-rail.php:36
+msgid "View all tours"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Travail: Destinations"
+msgstr ""
+
+#: templates/pages/page-destinations.php:55
+msgid "No destinations yet — add a Location to a tour in Tour Booking Manager to see it here."
+msgstr ""
+
+#: templates/tours/archive-tour.php:31
+msgid "Handpicked tours and experiences, curated by our travel experts."
+msgstr ""

@@ -1,0 +1,65 @@
+/**
+ * Travail — Destination landing/single page specifics.
+ * Grid card styles live in components.css (.travail-dest-card etc).
+ */
+
+.travail-destination-hero {
+	position: relative;
+	height: 420px;
+	border-radius: var( --travail-radius-xl );
+	overflow: hidden;
+	margin-bottom: 40px;
+}
+
+.travail-destination-hero img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.travail-destination-hero__overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient( to top, rgba( 0, 0, 0, 0.6 ) 0%, transparent 60% );
+	display: flex;
+	align-items: flex-end;
+	padding: 40px;
+}
+
+.travail-destination-hero__overlay h1 {
+	color: #fff;
+	font-size: clamp( 32px, 4vw, 52px );
+	margin-bottom: 4px;
+}
+
+.travail-destination-hero__overlay p {
+	color: rgba( 255, 255, 255, 0.75 );
+	margin: 0;
+}
+
+.travail-destination-stats {
+	display: flex;
+	gap: 32px;
+	margin-bottom: 40px;
+	flex-wrap: wrap;
+}
+
+.travail-destination-stat strong {
+	display: block;
+	font-size: 24px;
+	color: var( --travail-ink );
+}
+
+.travail-destination-stat span {
+	font-size: 13px;
+	color: var( --travail-color-text-muted );
+}
+
+@media ( max-width: 640px ) {
+	.travail-destination-hero {
+		height: 260px;
+	}
+	.travail-destination-hero__overlay {
+		padding: 24px;
+	}
+}

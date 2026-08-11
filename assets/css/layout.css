@@ -1,0 +1,153 @@
+/**
+ * Travail — Layout: sections, grids, breakpoints shared by many components.
+ */
+
+.travail-section {
+	padding: 80px 0;
+}
+
+.travail-section--tight {
+	padding: 64px 0;
+}
+
+.travail-section--lg {
+	padding: 96px 0;
+}
+
+.travail-section--surface {
+	background: var( --travail-color-surface );
+}
+
+.travail-section--muted {
+	background: var( --travail-color-bg );
+}
+
+.travail-section--dark {
+	background: var( --travail-color-primary );
+	color: #fff;
+}
+
+.travail-section-head {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	margin-bottom: 40px;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.travail-section-head h2 {
+	font-size: clamp( 32px, 3.5vw, 48px );
+	line-height: 1.12;
+}
+
+.travail-section-head p {
+	font-size: 16px;
+	color: var( --travail-color-text-muted );
+	margin-top: 8px;
+	margin-bottom: 0;
+}
+
+.travail-section-head--center {
+	justify-content: center;
+	text-align: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* ── Grids ─────────────────────────────────────────────────── */
+
+.travail-grid {
+	display: grid;
+	gap: 24px;
+}
+
+.travail-grid--2 {
+	grid-template-columns: repeat( 2, 1fr );
+}
+
+.travail-grid--3 {
+	grid-template-columns: repeat( 3, 1fr );
+}
+
+.travail-grid--4 {
+	grid-template-columns: repeat( 4, 1fr );
+}
+
+@media ( max-width: 1024px ) {
+	.travail-grid--3,
+	.travail-grid--4 {
+		grid-template-columns: repeat( 2, 1fr );
+	}
+}
+
+@media ( max-width: 640px ) {
+	.travail-grid--2,
+	.travail-grid--3,
+	.travail-grid--4 {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Horizontal scroll rails used for tour/destination carousels on mobile */
+.travail-rail {
+	display: flex;
+	gap: 20px;
+	overflow-x: auto;
+	padding-bottom: 8px;
+	scroll-snap-type: x proximity;
+	-webkit-overflow-scrolling: touch;
+}
+
+.travail-rail > * {
+	scroll-snap-align: start;
+	flex-shrink: 0;
+}
+
+.travail-rail::-webkit-scrollbar {
+	height: 6px;
+}
+
+.travail-rail::-webkit-scrollbar-thumb {
+	background: var( --travail-color-border );
+	border-radius: 999px;
+}
+
+/* Two-column layout with sticky secondary column (booking card, sidebar) */
+.travail-layout-sticky {
+	display: grid;
+	grid-template-columns: minmax( 0, 1fr ) 380px;
+	gap: 48px;
+	align-items: start;
+}
+
+.travail-layout-sticky__main {
+	min-width: 0;
+}
+
+.travail-layout-sticky__aside {
+	position: sticky;
+	top: 96px;
+}
+
+@media ( max-width: 1024px ) {
+	.travail-layout-sticky {
+		grid-template-columns: 1fr;
+	}
+	.travail-layout-sticky__aside {
+		position: static;
+	}
+}
+
+/* Content + sidebar (blog) */
+.travail-layout-content-sidebar {
+	display: grid;
+	grid-template-columns: minmax( 0, 1fr ) 320px;
+	gap: 48px;
+}
+
+@media ( max-width: 1024px ) {
+	.travail-layout-content-sidebar {
+		grid-template-columns: 1fr;
+	}
+}

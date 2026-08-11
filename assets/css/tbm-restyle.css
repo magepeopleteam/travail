@@ -1,0 +1,275 @@
+/**
+ * Travail — Tour Booking Manager visual re-skin.
+ *
+ * IMPORTANT: this file does not alter any plugin markup, JS behaviour,
+ * data or business logic — it only retints/re-skins the plugin's own
+ * CSS. Loaded only on tour-related views — see travail_is_tour_view()
+ * in inc/enqueue.php — and enqueued at PHP_INT_MAX priority so it
+ * always prints after the plugin's own stylesheets (confirmed via
+ * testing that Tour Booking Manager enqueues its frontend CSS at
+ * priority 90; anything earlier gets outranked and silently ignored).
+ *
+ * Scope note from QA: an earlier draft of this file tried to re-lay-out
+ * the single tour page's hero/stats/booking sections (display:grid /
+ * display:flex overrides). A screenshot taken during QA showed the
+ * plugin's own #ttbm_content .ttbm_default_theme … rules (which use
+ * ID-qualified, high-specificity selectors and already implement a
+ * genuinely well-designed responsive layout — two-column content +
+ * sticky-feeling sidebar, icon-card stats row, gallery with price/date
+ * pills) either winning the cascade unpredictably or losing it in a way
+ * that broke the layout (squashed columns). Re-testing with this file
+ * removed entirely showed the plugin's native single-tour page already
+ * looks polished. So this file deliberately does NOT touch layout for
+ * anything already proven to look good untouched — it only retints
+ * colors (via the plugin's own CSS custom properties, which is safe
+ * because changing a variable's value can never break a layout) and
+ * re-skins the archive/grid card + search-bar markup, which WAS
+ * verified visually after fixing.
+ */
+
+/* ══════════════════════════════════════════════════════════════
+   Brand retint — the plugin's own design-token custom properties.
+   ══════════════════════════════════════════════════════════════
+   Tour Booking Manager already themes almost everything (buttons,
+   links, active states) through CSS custom properties defined in an
+   inline <style> block it prints itself (inc/TTBM_Global_Style.php,
+   hooked at wp_head priority 100 — later than a normal enqueued
+   stylesheet's priority-10 wp_print_styles call, so a plain :root
+   override in an ordinary stylesheet would actually be OVERWRITTEN by
+   the plugin's later inline block regardless of enqueue order). Using
+   !important here — the one deliberate exception to "avoid !important"
+   in this theme — sidesteps that entirely: it beats the plugin's
+   non-important declaration regardless of print order, safely, because
+   only the *value* of a variable changes, never a selector or a layout
+   property. This single block re-themes buttons/links/active-states
+   everywhere in the plugin's UI (archive, single tour, search, admin)
+   without touching a single layout rule.
+   Site owners can reach the same result with zero CSS by changing
+   Tour Booking Manager's own Theme Color setting — this block exists
+   so Travail looks on-brand immediately, out of the box. */
+:root {
+	--color_theme: var( --travail-color-primary ) !important;
+	--color_theme_secondary: var( --travail-forest-mid ) !important;
+	/* _ee/_cc/_aa/_88/_77 were "theme_color + hex alpha suffix" in the
+	   plugin's own PHP (93%/80%/67%/53%/47% opacity) — reproduced with
+	   color-mix() so hover/overlay states keep their intended translucency
+	   instead of turning fully solid. */
+	--color_theme_ee: color-mix( in srgb, var( --travail-color-primary ) 93%, transparent ) !important;
+	--color_theme_cc: color-mix( in srgb, var( --travail-color-primary ) 80%, transparent ) !important;
+	--color_theme_aa: color-mix( in srgb, var( --travail-color-primary ) 67%, transparent ) !important;
+	--color_theme_88: color-mix( in srgb, var( --travail-color-primary ) 53%, transparent ) !important;
+	--color_theme_77: color-mix( in srgb, var( --travail-color-primary ) 47%, transparent ) !important;
+	--color_navy_blue: var( --travail-color-primary ) !important;
+	--button_bg: var( --travail-color-primary ) !important;
+	--color_button: #ffffff !important;
+	--color_active: var( --travail-color-primary ) !important;
+	--color_blue: var( --travail-color-primary ) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Shared: price/badge colors, section titles (cosmetic only)
+   ══════════════════════════════════════════════════════════════ */
+
+.ttbm_regular_price.strikeLine,
+.ttbm_hero_price_regular {
+	text-decoration: line-through;
+	color: var( --travail-color-text-muted );
+	font-weight: 400;
+	font-size: 0.85em;
+	margin-inline-end: 6px;
+}
+
+.ttbm_start_price_display .woocommerce-Price-amount,
+.ttbm-gc-price-current .woocommerce-Price-amount,
+.ttbm_list_price .woocommerce-Price-amount {
+	color: var( --travail-color-primary );
+	font-weight: 700;
+}
+
+.ribbon,
+.ttbm-gc-badge-sale,
+._bgWarning {
+	font-family: var( --travail-font-body );
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	border-radius: 6px;
+	background: var( --travail-color-accent );
+	color: #fff;
+	padding: 5px 10px;
+}
+
+._bgWarning {
+	background: var( --travail-ink );
+}
+
+.content-title.ttbm_section_title {
+	font-family: var( --travail-font-heading );
+	font-weight: 400;
+	font-size: 28px;
+	color: var( --travail-ink );
+	margin-bottom: 20px;
+}
+
+/*
+ * The hero "Book Now" button is a deliberate exception: the plugin
+ * hardcodes a 3-stop gradient (`--color_theme` → a fixed indigo → a
+ * fixed red) rather than reading theme_color throughout, so the :root
+ * variable retint above only recolors its first stop. Matching the
+ * plugin's own exact selector (confirmed in ttbm_details.css) swaps the
+ * whole gradient for Travail's palette while keeping the same nice
+ * diagonal-gradient CTA effect.
+ */
+#ttbm_content .ttbm_default_theme .ttbm_hero_book_now {
+	background: linear-gradient( 135deg, var( --travail-color-primary ) 0%, var( --travail-forest-mid ) 48%, var( --travail-color-accent ) 100% ) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Grid card ("new grid" style — [ttbm-tour-list]) — layout verified
+   visually against a live screenshot after fixing the .flexWrap bug
+   described above; only border/radius/shadow are touched, never the
+   plugin's own display:flex + grid_N percentage-width system.
+   ══════════════════════════════════════════════════════════════ */
+
+.filter_item {
+	border-color: transparent;
+	border-radius: var( --travail-radius-lg );
+	overflow: hidden;
+	box-shadow: var( --travail-shadow-sm );
+	transition: box-shadow 0.25s ease;
+}
+
+.filter_item:hover {
+	box-shadow: 0 12px 40px rgba( 0, 0, 0, 0.1 );
+}
+
+.ttbm-lv-image-col {
+	position: relative;
+	height: 192px;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.ttbm-lv-thumb {
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position: center;
+	transition: transform 0.5s ease;
+}
+
+.filter_item:hover .ttbm-lv-thumb {
+	transform: scale( 1.04 );
+}
+
+.ttbm-gc-wishlist {
+	background: rgba( 255, 255, 255, 0.9 );
+	backdrop-filter: blur( 4px );
+	color: var( --travail-ink );
+}
+
+.ttbm-gc-wishlist.active {
+	color: var( --travail-coral );
+}
+
+.ttbm_list_title {
+	font-family: var( --travail-font-body );
+	color: var( --travail-ink );
+}
+
+.ttbm_list_title a {
+	color: inherit;
+}
+
+.ttbm_list_info.location_name .mi {
+	color: var( --travail-color-primary );
+}
+
+.circleIcon_xs {
+	color: var( --travail-color-primary );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Search bar ([ttbm-top-search]) — verified visually (see
+   template-parts/hero/hero.php's .travail-hero__search-wrap note).
+   ══════════════════════════════════════════════════════════════ */
+
+.ttbm-top-search-form {
+	display: flex;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.ttbm-top-search-row {
+	flex: 1;
+	display: flex;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.ttbm_filter_input_with_icon,
+.formControl {
+	padding: 12px 16px;
+	border-radius: var( --travail-radius-md );
+	border: 1.5px solid var( --travail-color-border );
+	background: var( --travail-color-bg );
+	font-family: inherit;
+	font-size: 14px;
+	color: var( --travail-color-text );
+}
+
+.ttbm_filter_icon_container {
+	position: relative;
+	flex: 1;
+	min-width: 200px;
+}
+
+.ttbm_filter_icon {
+	position: absolute;
+	top: 50%;
+	left: 14px;
+	transform: translateY( -50% );
+	color: var( --travail-color-text-muted );
+}
+
+.ttbm_filter_icon_container .ttbm_filter_input_with_icon {
+	width: 100%;
+	padding-inline-start: 38px;
+}
+
+.ttbm-top-search-submit {
+	padding: 12px 24px;
+	font-size: 14px;
+	white-space: nowrap;
+	border-radius: var( --travail-radius-sm );
+}
+
+/* Archive page: search bar card wrapper */
+.travail-tour-archive-search {
+	background: #fff;
+	border-radius: var( --travail-radius-xl );
+	padding: 20px 24px;
+	box-shadow: var( --travail-shadow-sm );
+	margin-bottom: 32px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Reviews & ratings (Pro — TTBM_Review_Rating) — color only.
+   ══════════════════════════════════════════════════════════════ */
+
+.ttbm-rating-stars {
+	color: var( --travail-color-accent );
+	font-size: 14px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   WooCommerce My Account — "My Bookings" (Pro) / "Wishlist" (Free)
+   Typography only — table/column layout stays exactly as WooCommerce
+   and the plugin already render it.
+   ══════════════════════════════════════════════════════════════ */
+
+.woocommerce-account .ttbm-portal-dashboard,
+.woocommerce-account .ttbm-wishlist-list {
+	font-family: var( --travail-font-body );
+}

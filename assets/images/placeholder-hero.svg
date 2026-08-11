@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-label="Hero background placeholder">
+	<defs>
+		<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0%" stop-color="#1e4a3d"/>
+			<stop offset="100%" stop-color="#16352d"/>
+		</linearGradient>
+	</defs>
+	<rect width="1920" height="1080" fill="url(#sky)"/>
+	<g fill="#0f241f" opacity="0.55">
+		<path d="M0 780 L280 480 L520 700 L760 420 L1040 720 L1320 460 L1600 700 L1920 520 L1920 1080 L0 1080 Z"/>
+	</g>
+	<g fill="#0a1a16" opacity="0.6">
+		<path d="M0 900 L380 640 L680 860 L1040 600 L1400 880 L1920 700 L1920 1080 L0 1080 Z"/>
+	</g>
+	<circle cx="1550" cy="220" r="90" fill="#F8F7F3" opacity="0.15"/>
+</svg>

@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wanderly — Discover Your Next Adventure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #F8F7F3;
+      color: #151716;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    ul { list-style: none; }
+    ::-webkit-scrollbar { width: 0; height: 0; }
+
+    /* ── Tokens ──────────────────────────────────────────────── */
+    :root {
+      --forest:     #16352D;
+      --forest-mid: #1e4a3d;
+      --coral:      #FF6B4A;
+      --beige:      #E6E2DA;
+      --parchment:  #F8F7F3;
+      --ink:        #151716;
+      --white:      #FFFFFF;
+      --radius-sm:  12px;
+      --radius-md:  16px;
+      --radius-lg:  20px;
+      --radius-xl:  24px;
+      --radius-2xl: 28px;
+    }
+
+    /* ── Typography helpers ─────────────────────────────────── */
+    .serif { font-family: 'DM Serif Display', serif; }
+    .italic { font-style: italic; }
+    .coral  { color: var(--coral); }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* ── Layout ─────────────────────────────────────────────── */
+    .container {
+      max-width: 1280px;
+      margin-inline: auto;
+      padding-inline: 80px;
+    }
+    @media (max-width: 1024px) { .container { padding-inline: 32px; } }
+    @media (max-width: 640px)  { .container { padding-inline: 20px; } }
+
+    /* ══════════════════════════════════════════════════════════
+       HEADER
+    ══════════════════════════════════════════════════════════ */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .header.scrolled {
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 20px rgba(0,0,0,0.08);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      color: #fff;
+      transition: color 0.3s;
+    }
+    .header.scrolled .logo { color: var(--ink); }
+    .logo-icon {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--forest);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-icon svg { color: #fff; }
+
+    .nav { display: flex; align-items: center; gap: 28px; }
+    .nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      transition: opacity 0.2s;
+    }
+    .nav a:hover { opacity: 0.65; }
+    .header.scrolled .nav a { color: var(--ink); }
+
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .icon-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      transition: background 0.2s;
+    }
+    .icon-btn:hover { background: rgba(255,255,255,0.15); }
+    .header.scrolled .icon-btn { color: var(--ink); }
+    .header.scrolled .icon-btn:hover { background: var(--beige); }
+
+    .signin-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      transition: opacity 0.2s;
+    }
+    .signin-link:hover { opacity: 0.7; }
+    .header.scrolled .signin-link { color: var(--ink); }
+
+    .btn-list {
+      padding: 8px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.35);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-list:hover { background: rgba(255,255,255,0.25); }
+    .header.scrolled .btn-list { background: var(--forest); border-color: var(--forest); }
+
+    /* Mobile menu */
+    .menu-toggle { display: none; color: #fff; }
+    .header.scrolled .menu-toggle { color: var(--ink); }
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      padding: 20px 24px;
+      background: #fff;
+      border-top: 1px solid var(--beige);
+    }
+    .mobile-menu a { font-size: 15px; font-weight: 500; color: var(--ink); }
+    .mobile-menu .mobile-actions { display: flex; align-items: center; gap: 12px; padding-top: 12px; border-top: 1px solid var(--beige); }
+    .mobile-menu.open { display: flex; }
+
+    @media (max-width: 1024px) {
+      .nav, .header-actions { display: none; }
+      .menu-toggle { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 720px;
+      border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+      overflow: hidden;
+      background: var(--forest);
+    }
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.75;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.22) 60%, transparent 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 72px;
+    }
+    .hero-inner { max-width: 680px; }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(52px, 6vw, 80px);
+      line-height: 1.06;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--coral);
+    }
+    .hero-sub {
+      font-size: 17px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 36px;
+    }
+
+    /* Search widget */
+    .search-widget {
+      background: #fff;
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.22);
+    }
+    .search-widget h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .search-widget p {
+      font-size: 13px;
+      color: rgba(21,23,22,0.5);
+      margin-bottom: 16px;
+    }
+    .search-fields {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .search-field {
+      flex: 1;
+      min-width: 140px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--beige);
+      background: var(--parchment);
+      transition: border-color 0.2s;
+    }
+    .search-field:hover,
+    .search-field:focus-within { border-color: rgba(22,53,45,0.35); }
+    .search-field .field-icon { color: rgba(22,53,45,0.55); flex-shrink: 0; }
+    .search-field .field-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(21,23,22,0.45);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .search-field input,
+    .search-field .field-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(21,23,22,0.42);
+      border: none;
+      background: none;
+      outline: none;
+      font-family: inherit;
+      width: 100%;
+    }
+    .search-field input::placeholder { color: rgba(21,23,22,0.42); }
+    .btn-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      background: var(--forest);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      white-space: nowrap;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-search:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* Trust metrics */
+    .hero-metrics {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-top: 32px;
+    }
+    .metric { display: flex; align-items: center; gap: 12px; }
+    .metric-val {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+    .metric-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.55);
+      margin-top: 3px;
+    }
+    .metric-divider { width: 1px; height: 32px; background: rgba(255,255,255,0.2); }
+
+    @media (max-width: 768px) {
+      .search-fields { flex-direction: column; }
+      .hero-metrics { gap: 20px; }
+      .metric-divider { display: none; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       POPULAR SEARCHES BAR
+    ══════════════════════════════════════════════════════════ */
+    .searches-bar-wrap { position: relative; z-index: 10; }
+    .searches-bar {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: -24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      flex-wrap: wrap;
+    }
+    .searches-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .searches-label { font-size: 13px; color: rgba(21,23,22,0.5); font-weight: 500; }
+    .pill {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--forest);
+      background: var(--parchment);
+      transition: background 0.2s;
+    }
+    .pill:hover { background: var(--beige); }
+    .searches-right { display: flex; align-items: center; gap: 10px; }
+    .avatars { display: flex; }
+    .avatars img {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      object-fit: cover;
+      margin-left: -8px;
+    }
+    .avatars img:first-child { margin-left: 0; }
+    .searches-right span { font-size: 13px; font-weight: 500; color: rgba(21,23,22,0.7); }
+
+    /* ══════════════════════════════════════════════════════════
+       SECTION HEADERS
+    ══════════════════════════════════════════════════════════ */
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      gap: 16px;
+    }
+    .section-head h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 3.5vw, 48px);
+      line-height: 1.12;
+      color: var(--ink);
+    }
+    .section-head p {
+      font-size: 16px;
+      color: rgba(21,23,22,0.55);
+      margin-top: 8px;
+    }
+    .view-all {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--forest);
+      white-space: nowrap;
+      transition: gap 0.2s;
+    }
+    .view-all:hover { gap: 12px; }
+
+    /* ══════════════════════════════════════════════════════════
+       DESTINATIONS GRID
+    ══════════════════════════════════════════════════════════ */
+    .section-destinations { padding: 80px 0; }
+    .dest-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 270px);
+      gap: 16px;
+    }
+    .dest-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--forest);
+      cursor: pointer;
+    }
+    .dest-card.tall { grid-row: span 2; }
+    .dest-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .dest-card:hover img { transform: scale(1.04); }
+    .dest-grad {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
+    }
+    .dest-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+    .dest-info h4 { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.2; }
+    .dest-info p { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+    .dest-arrow {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+      transition: transform 0.25s;
+    }
+    .dest-card:hover .dest-arrow { transform: translateX(4px); }
+
+    @media (max-width: 768px) {
+      .dest-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      .dest-card.tall { grid-row: span 1; height: 220px; }
+      .dest-card:not(.tall) { height: 200px; }
+    }
+    @media (max-width: 480px) {
+      .dest-grid {
+        grid-template-columns: 1fr;
+        overflow-x: auto;
+        display: flex;
+        flex-wrap: nowrap;
+        scroll-snap-type: x mandatory;
+        gap: 12px;
+      }
+      .dest-card, .dest-card.tall {
+        flex-shrink: 0;
+        width: 260px;
+        height: 320px;
+        scroll-snap-align: start;
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       CATEGORIES
+    ══════════════════════════════════════════════════════════ */
+    .section-categories { padding: 64px 0; background: var(--parchment); }
+    .section-categories h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 3.5vw, 48px);
+      color: var(--ink);
+      margin-bottom: 32px;
+    }
+    .categories-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .cat-card {
+      position: relative;
+      flex-shrink: 0;
+      width: 120px; height: 100px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .cat-card.active { border-color: var(--forest); }
+    .cat-card img { width: 100%; height: 100%; object-fit: cover; }
+    .cat-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 10px;
+      background: rgba(0,0,0,0.32);
+      transition: background 0.2s;
+    }
+    .cat-card.active .cat-overlay { background: rgba(22,53,45,0.75); }
+    .cat-overlay span {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       TOUR CARDS
+    ══════════════════════════════════════════════════════════ */
+    .section-experiences { padding: 80px 0; }
+    .tours-scroll {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .tour-card {
+      flex-shrink: 0;
+      width: 280px;
+      background: #fff;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+      cursor: pointer;
+    }
+    .tour-img {
+      position: relative;
+      height: 192px;
+      background: var(--beige);
+      overflow: hidden;
+    }
+    .tour-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .tour-card:hover .tour-img img { transform: scale(1.04); }
+    .wish-btn {
+      position: absolute;
+      top: 12px; right: 12px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s;
+    }
+    .wish-btn:hover { transform: scale(1.12); }
+    .tour-body { padding: 16px; }
+    .tour-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    .tour-rating .star { color: var(--coral); font-size: 13px; }
+    .tour-rating strong { font-size: 13px; color: var(--ink); }
+    .tour-rating span { font-size: 12px; color: rgba(21,23,22,0.5); }
+    .tour-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.35;
+      margin-bottom: 6px;
+    }
+    .tour-loc {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      color: rgba(21,23,22,0.55);
+      margin-bottom: 12px;
+    }
+    .tour-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--beige);
+      padding-top: 12px;
+    }
+    .tour-duration {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: rgba(21,23,22,0.5);
+    }
+    .tour-price { font-size: 16px; font-weight: 700; color: var(--forest); }
+    .tour-price small { font-size: 11px; font-weight: 400; color: rgba(21,23,22,0.45); }
+
+    /* ══════════════════════════════════════════════════════════
+       FEATURED JOURNEY
+    ══════════════════════════════════════════════════════════ */
+    .section-featured { padding: 40px 0 80px; }
+    .featured-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.1);
+    }
+    .featured-img {
+      position: relative;
+      height: 480px;
+      background: var(--forest);
+    }
+    .featured-img img { width: 100%; height: 100%; object-fit: cover; }
+    .featured-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(22,53,45,0.3) 0%, transparent 60%);
+    }
+    .featured-badge {
+      position: absolute;
+      top: 24px; left: 24px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(4px);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .featured-body {
+      background: #fff;
+      padding: 56px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .featured-body .eyebrow { color: var(--coral); margin-bottom: 12px; }
+    .featured-body h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(34px, 3.5vw, 48px);
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+    .featured-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 14px;
+      color: rgba(21,23,22,0.6);
+      margin-bottom: 20px;
+    }
+    .featured-meta .rating-inline { display: flex; align-items: center; gap: 5px; }
+    .featured-meta .rating-inline strong { color: var(--ink); }
+    .featured-desc {
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(21,23,22,0.65);
+      margin-bottom: 32px;
+    }
+    .featured-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 32px;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--beige);
+    }
+    .featured-price-from { font-size: 13px; color: rgba(21,23,22,0.45); }
+    .featured-price-amt {
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--forest);
+      line-height: 1;
+    }
+    .featured-price-pp { font-size: 12px; color: rgba(21,23,22,0.45); }
+    .featured-checklist {
+      font-size: 13px;
+      color: rgba(21,23,22,0.55);
+      line-height: 2;
+      text-align: right;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 28px;
+      border-radius: var(--radius-sm);
+      background: var(--forest);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      transition: opacity 0.2s, gap 0.2s;
+      width: fit-content;
+    }
+    .btn-primary:hover { opacity: 0.9; gap: 12px; }
+
+    @media (max-width: 768px) {
+      .featured-card { grid-template-columns: 1fr; }
+      .featured-img { height: 280px; }
+      .featured-body { padding: 32px 28px; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       WHY US
+    ══════════════════════════════════════════════════════════ */
+    .section-why { padding: 80px 0; background: #fff; }
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .why-img-wrap {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      height: 500px;
+      background: var(--forest);
+    }
+    .why-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .why-float {
+      position: absolute;
+      bottom: 24px; left: 24px; right: 24px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .why-float-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--forest);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .why-float-text strong { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .why-float-text p { font-size: 13px; color: rgba(21,23,22,0.55); margin-top: 2px; }
+
+    .why-content .eyebrow { color: var(--coral); margin-bottom: 16px; }
+    .why-content h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 4vw, 52px);
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 48px;
+    }
+    .why-items { display: flex; flex-direction: column; gap: 32px; }
+    .why-item { display: flex; gap: 24px; align-items: flex-start; }
+    .why-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 48px;
+      line-height: 1;
+      color: var(--beige);
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+    .why-item:hover .why-num { color: rgba(22,53,45,0.2); }
+    .why-item-text { padding-top: 4px; }
+    .why-item-text strong { font-size: 17px; font-weight: 600; color: var(--ink); display: block; margin-bottom: 4px; }
+    .why-item-text p { font-size: 14px; color: rgba(21,23,22,0.55); line-height: 1.7; }
+
+    @media (max-width: 768px) {
+      .why-grid { grid-template-columns: 1fr; gap: 40px; }
+      .why-img-wrap { height: 320px; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       HOW IT WORKS
+    ══════════════════════════════════════════════════════════ */
+    .section-how { padding: 96px 0; background: var(--parchment); }
+    .section-how .center-head {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .section-how .center-head h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 4vw, 52px);
+      color: var(--ink);
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .step-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 88px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--beige);
+      margin-bottom: -16px;
+    }
+    .step h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 34px;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .step p { font-size: 15px; color: rgba(21,23,22,0.6); line-height: 1.75; max-width: 280px; }
+
+    @media (max-width: 768px) {
+      .steps-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       DEALS
+    ══════════════════════════════════════════════════════════ */
+    .section-deals { padding: 80px 0; background: #fff; }
+    .deals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .deal-card {
+      position: relative;
+      height: 290px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--forest);
+      cursor: pointer;
+    }
+    .deal-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.7;
+      transition: transform 0.5s ease;
+    }
+    .deal-card:hover img { transform: scale(1.04); }
+    .deal-grad {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.12) 55%);
+    }
+    .deal-badge {
+      position: absolute;
+      top: 16px; left: 16px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--coral);
+      color: #fff;
+    }
+    .deal-body {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px;
+    }
+    .deal-body h4 { font-size: 22px; font-weight: 700; color: #fff; }
+    .deal-body .deal-sub { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
+    .deal-pricing {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .deal-pricing .old { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: line-through; }
+    .deal-pricing .new { font-size: 24px; font-weight: 700; color: #fff; margin-left: 8px; }
+    .deal-pct {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--coral);
+      color: #fff;
+    }
+    .btn-book-now {
+      width: 100%;
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      background: #fff;
+      color: var(--forest);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .btn-book-now:hover { background: var(--parchment); }
+
+    @media (max-width: 768px) {
+      .deals-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       TESTIMONIALS
+    ══════════════════════════════════════════════════════════ */
+    .section-testimonials {
+      padding: 96px 0;
+      background: var(--forest);
+      text-align: center;
+    }
+    .section-testimonials .eyebrow { color: var(--coral); margin-bottom: 16px; }
+    .section-testimonials h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 4vw, 52px);
+      color: #fff;
+      margin-bottom: 32px;
+    }
+    .testi-avatars {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .testi-avatars img {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--forest);
+      object-fit: cover;
+      margin-left: -10px;
+    }
+    .testi-avatars img:first-child { margin-left: 0; }
+    .testi-quote {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(26px, 3.5vw, 46px);
+      line-height: 1.2;
+      color: #fff;
+      max-width: 760px;
+      margin: 0 auto 28px;
+    }
+    .testi-quote em { font-style: italic; color: var(--coral); }
+    .testi-stars { display: flex; justify-content: center; gap: 4px; margin-bottom: 16px; font-size: 18px; color: var(--coral); }
+    .testi-author { color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 8px; }
+    .testi-author strong { color: #fff; font-size: 15px; }
+    .testi-tags {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+    .testi-tags .tag {
+      padding: 3px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.6);
+    }
+    .testi-count { margin-top: 40px; font-size: 13px; color: rgba(255,255,255,0.4); }
+
+    /* ══════════════════════════════════════════════════════════
+       BLOG
+    ══════════════════════════════════════════════════════════ */
+    .section-blog { padding: 96px 0; background: var(--parchment); }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .blog-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .blog-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+    .blog-img {
+      height: 210px;
+      background: var(--beige);
+      overflow: hidden;
+    }
+    .blog-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .blog-card:hover .blog-img img { transform: scale(1.04); }
+    .blog-body { padding: 24px; }
+    .blog-cat {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 12px;
+    }
+    .blog-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.4;
+      margin-bottom: 16px;
+      transition: color 0.2s;
+    }
+    .blog-card:hover .blog-title { color: var(--forest); }
+    .blog-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: rgba(21,23,22,0.45);
+    }
+    .blog-meta .dot { color: rgba(21,23,22,0.25); }
+
+    @media (max-width: 768px) {
+      .blog-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       NEWSLETTER
+    ══════════════════════════════════════════════════════════ */
+    .section-newsletter {
+      position: relative;
+      min-height: 440px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--forest);
+    }
+    .newsletter-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .newsletter-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
+    .newsletter-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(22,53,45,0.85) 0%, rgba(22,53,45,0.6) 100%);
+    }
+    .newsletter-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 96px 0;
+      width: 100%;
+    }
+    .newsletter-content h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(34px, 5vw, 60px);
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .newsletter-content h2 em { font-style: italic; color: var(--coral); }
+    .newsletter-content p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      max-width: 420px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    .newsletter-form {
+      display: flex;
+      gap: 12px;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      border: 2px solid transparent;
+      background: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .newsletter-form input::placeholder { color: rgba(21,23,22,0.4); }
+    .newsletter-form input:focus { border-color: var(--coral); }
+    .btn-coral {
+      padding: 14px 28px;
+      border-radius: var(--radius-sm);
+      background: var(--coral);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .btn-coral:hover { opacity: 0.88; }
+    .newsletter-note { margin-top: 16px; font-size: 12px; color: rgba(255,255,255,0.35); }
+
+    @media (max-width: 480px) {
+      .newsletter-form { flex-direction: column; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════════════════ */
+    .footer { background: #151716; color: #fff; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding: 64px 0 60px;
+    }
+    .footer-brand .logo { margin-bottom: 16px; }
+    .footer-brand p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+      max-width: 280px;
+      margin-bottom: 24px;
+    }
+    .footer-socials { display: flex; gap: 10px; }
+    .social-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.6);
+      transition: background 0.2s, color 0.2s;
+    }
+    .social-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+    .footer-col h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: 12px; }
+    .footer-col a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: #fff; }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 24px 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap;
+    }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.35); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.35); transition: color 0.2s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+    .footer-locale { display: flex; align-items: center; gap: 16px; font-size: 13px; color: rgba(255,255,255,0.35); }
+    .footer-locale span { display: flex; align-items: center; gap: 6px; }
+
+    @media (max-width: 1024px) {
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       MOBILE BOTTOM NAV
+    ══════════════════════════════════════════════════════════ */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 99;
+      background: #fff;
+      border-top: 1px solid var(--beige);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .mobile-bottom-nav ul {
+      display: flex;
+    }
+    .mobile-bottom-nav li {
+      flex: 1;
+    }
+    .mobile-bottom-nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 12px 0;
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(21,23,22,0.4);
+    }
+    .mobile-bottom-nav a.active { color: var(--forest); }
+    .mobile-bottom-nav svg { width: 20px; height: 20px; }
+
+    @media (max-width: 768px) {
+      .mobile-bottom-nav { display: block; }
+      body { padding-bottom: 64px; }
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       SVG ICONS (inline helpers)
+    ══════════════════════════════════════════════════════════ */
+    .icon { display: inline-flex; align-items: center; justify-content: center; }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════════════════════ -->
+  <header class="header" id="header">
+    <div class="container">
+      <div class="header-inner">
+
+        <!-- Logo -->
+        <a href="#" class="logo">
+          <div class="logo-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          Wanderly
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="nav">
+          <a href="#">Explore</a>
+          <a href="#">Destinations</a>
+          <a href="#">Tours</a>
+          <a href="#">Experiences</a>
+          <a href="#">Deals</a>
+          <a href="#">Blog</a>
+        </nav>
+
+        <!-- Right Actions -->
+        <div class="header-actions">
+          <button class="icon-btn" aria-label="Search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </button>
+          <button class="icon-btn" aria-label="Wishlist">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <a href="#" class="signin-link">Sign in</a>
+          <a href="#" class="btn-list">List Your Tour</a>
+        </div>
+
+        <!-- Mobile toggle -->
+        <button class="menu-toggle icon-btn" id="menuToggle" aria-label="Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#">Explore</a>
+      <a href="#">Destinations</a>
+      <a href="#">Tours</a>
+      <a href="#">Experiences</a>
+      <a href="#">Deals</a>
+      <a href="#">Blog</a>
+      <div class="mobile-actions">
+        <a href="#">Sign in</a>
+        <a href="#" class="btn-list" style="border-radius:12px;padding:8px 18px;">List Your Tour</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <img
+      class="hero-img"
+      src="https://images.unsplash.com/photo-1464852045489-bccb7d17fe39?w=1920&h=1080&fit=crop&auto=format"
+      alt="Snow-covered mountain near pristine lake"
+    />
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content container">
+      <div class="hero-inner">
+
+        <p class="hero-eyebrow">Explore · Dream · Discover</p>
+
+        <h1 class="hero-title serif">
+          Discover your<br />
+          next <em>adventure</em>
+        </h1>
+
+        <p class="hero-sub">
+          Curated trips. Extraordinary places.<br />
+          Unforgettable memories.
+        </p>
+
+        <!-- Search Widget -->
+        <div class="search-widget">
+          <h3>Where do you want to go?</h3>
+          <p>Search destinations, tours or experiences</p>
+          <div class="search-fields">
+            <div class="search-field">
+              <span class="field-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              </span>
+              <div>
+                <span class="field-label">Where</span>
+                <input type="text" placeholder="Anywhere" />
+              </div>
+            </div>
+            <div class="search-field">
+              <span class="field-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+              </span>
+              <div>
+                <span class="field-label">When</span>
+                <div class="field-value">Add dates</div>
+              </div>
+            </div>
+            <div class="search-field" style="flex:0 0 auto;min-width:130px;">
+              <span class="field-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </span>
+              <div>
+                <span class="field-label">Guests</span>
+                <div class="field-value">2 Guests</div>
+              </div>
+            </div>
+            <button class="btn-search">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              Search tours
+            </button>
+          </div>
+        </div>
+
+        <!-- Trust Metrics -->
+        <div class="hero-metrics">
+          <div class="metric">
+            <div>
+              <div class="metric-val">12,000+</div>
+              <div class="metric-label">Happy Travelers</div>
+            </div>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric">
+            <div>
+              <div class="metric-val">4.9/5</div>
+              <div class="metric-label">Overall Rating</div>
+            </div>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric">
+            <div>
+              <div class="metric-val">120+</div>
+              <div class="metric-label">Countries</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       POPULAR SEARCHES BAR
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="container searches-bar-wrap">
+    <div class="searches-bar">
+      <div class="searches-left">
+        <span class="searches-label">Popular searches:</span>
+        <a href="#" class="pill">Bali</a>
+        <a href="#" class="pill">Switzerland</a>
+        <a href="#" class="pill">Iceland</a>
+        <a href="#" class="pill">Maldives</a>
+        <a href="#" class="pill">Japan</a>
+      </div>
+      <div class="searches-right">
+        <div class="avatars">
+          <img src="https://i.pravatar.cc/32?img=1" alt="Traveler" />
+          <img src="https://i.pravatar.cc/32?img=2" alt="Traveler" />
+          <img src="https://i.pravatar.cc/32?img=3" alt="Traveler" />
+          <img src="https://i.pravatar.cc/32?img=4" alt="Traveler" />
+        </div>
+        <span>5K+ travelers this week</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TRENDING DESTINATIONS
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="section-destinations">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2 class="serif">Trending destinations</h2>
+          <p>Popular places loved by travelers around the world.</p>
+        </div>
+        <a href="#" class="view-all">
+          View all destinations
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="dest-grid">
+
+        <div class="dest-card tall">
+          <img src="https://images.unsplash.com/photo-1559628233-eb1b1a45564b?w=900&h=900&fit=crop&auto=format" alt="Bali rice terraces" />
+          <div class="dest-grad"></div>
+          <div class="dest-info">
+            <div>
+              <h4>Bali</h4>
+              <p>Indonesia · 128 experiences</p>
+            </div>
+            <div class="dest-arrow">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="dest-card tall">
+          <img src="https://images.unsplash.com/photo-1507039915464-9d829b6d2d78?w=900&h=900&fit=crop&auto=format" alt="Swiss Alps mountains" />
+          <div class="dest-grad"></div>
+          <div class="dest-info">
+            <div>
+              <h4>Swiss Alps</h4>
+              <p>Switzerland · 96 experiences</p>
+            </div>
+            <div class="dest-arrow">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1629470035936-3296c3bd8237?w=800&h=500&fit=crop&auto=format" alt="Santorini blue dome" />
+          <div class="dest-grad"></div>
+          <div class="dest-info">
+            <div>
+              <h4>Santorini</h4>
+              <p>Greece · 76 experiences</p>
+            </div>
+            <div class="dest-arrow">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1573455494060-c5595004fb6c?w=800&h=500&fit=crop&auto=format" alt="Tokyo night streets" />
+          <div class="dest-grad"></div>
+          <div class="dest-info">
+            <div>
+              <h4>Tokyo</h4>
+              <p>Japan · 64 experiences</p>
+            </div>
+            <div class="dest-arrow">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TRAVEL STYLE EXPLORER
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="section-categories">
+    <div class="container">
+      <h2 class="serif">Find your kind of adventure</h2>
+      <div class="categories-scroll" id="catScroll">
+        <div class="cat-card active" onclick="setActive(this)">
+          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=200&h=160&fit=crop&auto=format" alt="Adventure" />
+          <div class="cat-overlay"><span>Adventure</span></div>
+        </div>
+        <div class="cat-card" onclick="setActive(this)">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=200&h=160&fit=crop&auto=format" alt="Beach" />
+          <div class="cat-overlay"><span>Beach</span></div>
+        </div>
+        <div class="cat-card" onclick="setActive(this)">
+          <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=200&h=160&fit=crop&auto=format" alt="Culture" />
+          <div class="cat-overlay"><span>Culture</span></div>
+        </div>
+        <div class="cat-card" onclick="setActive(this)">
+          <img src="https://images.unsplash.com/photo-1464852045489-bccb7d17fe39?w=200&h=160&fit=crop&auto=format" alt="Hiking" />
+          <div class="cat-overlay"><span>Hiking</span></div>
+        </div>
+        <div class="cat-card" onclick="setActive(this)">
+          <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=200&h=160&fit=crop&auto=format" alt="Luxury" />
+          <div class="cat-overlay"><span>Luxury</span></div>
+        </div>
+        <div class="cat-card" onclick="setActive(this)">
+          <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=200&h=160&fit=crop&auto=format" alt="Wildlife" />
+          <div class="cat-overlay"><span>Wildlife</span></div>
+        </div>
+        <div class="cat-card" onclick="setActive(this)">
+          <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=200&h=160&fit=crop&auto=format" alt="Family" />
+          <div class="cat-overlay"><span>Family</span></div>
+        </div>
+        <div class="cat-card" onclick="setActive(this)">
+          <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&h=160&fit=crop&auto=format" alt="Wellness" />
+          <div class="cat-overlay"><span>Wellness</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       POPULAR EXPERIENCES
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="section-experiences">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2 class="serif">Popular experiences</h2>
+          <p>Handpicked adventures travelers love.</p>
+        </div>
+      </div>
+      <div class="tours-scroll">
+
+        <div class="tour-card">
+          <div class="tour-img">
+            <img src="https://images.unsplash.com/photo-1558005530-a7958896ec60?w=500&h=380&fit=crop&auto=format" alt="Bali Sunrise Jeep Adventure" />
+            <button class="wish-btn" aria-label="Save to wishlist">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#151716" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="tour-body">
+            <div class="tour-rating"><span class="star">★</span><strong>4.9</strong><span>(128)</span></div>
+            <div class="tour-title">Bali Sunrise Jeep Adventure</div>
+            <div class="tour-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Bali, Indonesia
+            </div>
+            <div class="tour-footer">
+              <div class="tour-duration">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                6 hours
+              </div>
+              <div class="tour-price"><small>From </small>$89<small> / person</small></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tour-card">
+          <div class="tour-img">
+            <img src="https://images.unsplash.com/photo-1520681504224-093d46124820?w=500&h=380&fit=crop&auto=format" alt="Swiss Alps Hiking Trail" />
+            <button class="wish-btn" aria-label="Save to wishlist">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#151716" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="tour-body">
+            <div class="tour-rating"><span class="star">★</span><strong>4.8</strong><span>(94)</span></div>
+            <div class="tour-title">Swiss Alps Hiking Trail</div>
+            <div class="tour-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Grindelwald, Switzerland
+            </div>
+            <div class="tour-footer">
+              <div class="tour-duration">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                8 hours
+              </div>
+              <div class="tour-price"><small>From </small>$149<small> / person</small></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tour-card">
+          <div class="tour-img">
+            <img src="https://images.unsplash.com/photo-1629470035936-3296c3bd8237?w=500&h=380&fit=crop&auto=format" alt="Santorini Sunset Sailing" />
+            <button class="wish-btn" aria-label="Save to wishlist">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#151716" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="tour-body">
+            <div class="tour-rating"><span class="star">★</span><strong>5.0</strong><span>(211)</span></div>
+            <div class="tour-title">Santorini Sunset Sailing</div>
+            <div class="tour-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Oia, Greece
+            </div>
+            <div class="tour-footer">
+              <div class="tour-duration">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                4 hours
+              </div>
+              <div class="tour-price"><small>From </small>$119<small> / person</small></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tour-card">
+          <div class="tour-img">
+            <img src="https://images.unsplash.com/photo-1601042879364-f3947d3f9c16?w=500&h=380&fit=crop&auto=format" alt="Tokyo Food & Culture Walk" />
+            <button class="wish-btn" aria-label="Save to wishlist">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#151716" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="tour-body">
+            <div class="tour-rating"><span class="star">★</span><strong>4.9</strong><span>(176)</span></div>
+            <div class="tour-title">Tokyo Food & Culture Walk</div>
+            <div class="tour-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Shibuya, Japan
+            </div>
+            <div class="tour-footer">
+              <div class="tour-duration">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                5 hours
+              </div>
+              <div class="tour-price"><small>From </small>$75<small> / person</small></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tour-card">
+          <div class="tour-img">
+            <img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=500&h=380&fit=crop&auto=format" alt="Iceland Northern Lights" />
+            <button class="wish-btn" aria-label="Save to wishlist">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#151716" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="tour-body">
+            <div class="tour-rating"><span class="star">★</span><strong>4.7</strong><span>(88)</span></div>
+            <div class="tour-title">Iceland Northern Lights</div>
+            <div class="tour-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Reykjavik, Iceland
+            </div>
+            <div class="tour-footer">
+              <div class="tour-duration">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Full day
+              </div>
+              <div class="tour-price"><small>From </small>$199<small> / person</small></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FEATURED JOURNEY
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="section-featured">
+    <div class="container">
+      <div class="featured-card">
+        <div class="featured-img">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&h=700&fit=crop&auto=format" alt="Patagonia dramatic peaks" />
+          <div class="featured-img-overlay"></div>
+          <div class="featured-badge">Featured Journey</div>
+        </div>
+        <div class="featured-body">
+          <p class="eyebrow coral">Editor's Pick</p>
+          <h3 class="serif">Discover Patagonia</h3>
+          <div class="featured-meta">
+            <span>8 Days · 7 Nights</span>
+            <span class="rating-inline">★ <strong>4.9</strong></span>
+          </div>
+          <p class="featured-desc">
+            Journey through the end of the world — dramatic granite towers, vast glaciers, and pristine wilderness that will redefine what adventure means to you.
+          </p>
+          <div class="featured-price-row">
+            <div>
+              <div class="featured-price-from">Starting from</div>
+              <div class="featured-price-amt">$1,290</div>
+              <div class="featured-price-pp">per person</div>
+            </div>
+            <div class="featured-checklist">
+              ✓ Small group<br />
+              ✓ Expert guides<br />
+              ✓ All gear included
+            </div>
+          </div>
+          <a href="#" class="btn-primary">
+            Explore trip
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       WHY TRAVEL WITH US
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="section-why">
+    <div class="container">
+      <div class="why-grid">
+        <div class="why-img-wrap">
+          <img src="https://images.unsplash.com/photo-1439853949127-fa647821eba0?w=800&h=700&fit=crop&auto=format" alt="Mountain adventure" />
+          <div class="why-float">
+            <div class="why-float-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="why-float-text">
+              <strong>Trusted by 12,000+ travelers</strong>
+              <p>Secure booking · Instant confirmation</p>
+            </div>
+          </div>
+        </div>
+        <div class="why-content">
+          <p class="eyebrow">Why choose us</p>
+          <h2 class="serif">Travel with confidence</h2>
+          <div class="why-items">
+            <div class="why-item">
+              <div class="why-num serif">01</div>
+              <div class="why-item-text">
+                <strong>Handpicked experiences</strong>
+                <p>Every tour and destination is carefully vetted by our team of expert travelers.</p>
+              </div>
+            </div>
+            <div class="why-item">
+              <div class="why-num serif">02</div>
+              <div class="why-item-text">
+                <strong>Local experts</strong>
+                <p>Connect with passionate local guides who know their destinations intimately.</p>
+              </div>
+            </div>
+            <div class="why-item">
+              <div class="why-num serif">03</div>
+              <div class="why-item-text">
+                <strong>Secure booking</strong>
+                <p>Your payment is protected with industry-leading security and fraud prevention.</p>
+              </div>
+            </div>
+            <div class="why-item">
+              <div class="why-num serif">04</div>
+              <div class="why-item-text">
+                <strong>Flexible plans</strong>
+                <p>Modify or cancel your booking up to 48 hours before departure.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HOW IT WORKS
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="section-how">
+    <div class="container">
+      <div class="center-head">
+        <h2 class="serif">Plan your trip in 3 simple steps</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-num serif">01</div>
+          <h3 class="serif">Discover</h3>
+          <p>Find experiences you'll love from our curated collection of 2,000+ tours across 120 countries.</p>
+        </div>
+        <div class="step">
+          <div class="step-num serif">02</div>
+          <h3 class="serif">Choose</h3>
+          <p>Compare dates, prices and reviews to find the perfect adventure that fits your schedule and budget.</p>
+        </div>
+        <div class="step">
+          <div class="step-num serif">03</div>
+          <h3 class="serif">Book</h3>
+          <p>Reserve your adventure securely in minutes with instant confirmation and flexible cancellation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SPECIAL DEALS
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="section-deals">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2 class="serif">Adventure doesn't have to wait.</h2>
+          <p>Limited-time offers on handpicked destinations.</p>
+        </div>
+      </div>
+      <div class="deals-grid">
+
+        <div class="deal-card">
+          <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600&h=400&fit=crop&auto=format" alt="Maldives" />
+          <div class="deal-grad"></div>
+          <div class="deal-badge">Limited Offer</div>
+          <div class="deal-body">
+            <h4>Maldives</h4>
+            <p class="deal-sub">7 nights · All inclusive</p>
+            <div class="deal-pricing">
+              <div><span class="old">$2,890</span><span class="new">$2,023</span></div>
+              <span class="deal-pct">-30%</span>
+            </div>
+            <button class="btn-book-now">Book now →</button>
+          </div>
+        </div>
+
+        <div class="deal-card">
+          <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=600&h=400&fit=crop&auto=format" alt="Bali" />
+          <div class="deal-grad"></div>
+          <div class="deal-badge">Limited Offer</div>
+          <div class="deal-body">
+            <h4>Bali</h4>
+            <p class="deal-sub">5 nights · All inclusive</p>
+            <div class="deal-pricing">
+              <div><span class="old">$1,450</span><span class="new">$1,160</span></div>
+              <span class="deal-pct">-20%</span>
+            </div>
+            <button class="btn-book-now">Book now →</button>
+          </div>
+        </div>
+
+        <div class="deal-card">
+          <img src="https://images.unsplash.com/photo-1516655855035-d5215bcb5604?w=600&h=400&fit=crop&auto=format" alt="Iceland" />
+          <div class="deal-grad"></div>
+          <div class="deal-badge">Limited Offer</div>
+          <div class="deal-body">
+            <h4>Iceland</h4>
+            <p class="deal-sub">6 nights · All inclusive</p>
+            <div class="deal-pricing">
+              <div><span class="old">$3,200</span><span class="new">$2,400</span></div>
+              <span class="deal-pct">-25%</span>
+            </div>
+            <button class="btn-book-now">Book now →</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TESTIMONIALS
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="section-testimonials">
+    <div class="container">
+      <p class="eyebrow">Testimonials</p>
+      <h2 class="serif">Loved by travelers worldwide</h2>
+      <div class="testi-avatars">
+        <img src="https://i.pravatar.cc/48?img=11" alt="Traveler" />
+        <img src="https://i.pravatar.cc/48?img=12" alt="Traveler" />
+        <img src="https://i.pravatar.cc/48?img=13" alt="Traveler" />
+        <img src="https://i.pravatar.cc/48?img=14" alt="Traveler" />
+        <img src="https://i.pravatar.cc/48?img=15" alt="Traveler" />
+        <img src="https://i.pravatar.cc/48?img=16" alt="Traveler" />
+      </div>
+      <blockquote class="testi-quote serif">
+        "We didn't just visit Bali.<br />
+        <em>We experienced it.</em>"
+      </blockquote>
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-author"><strong>Sarah Williams</strong> · New York, USA</p>
+      <div class="testi-tags">
+        <span class="tag">Verified traveler</span>
+        <span>Bali · 7 day adventure</span>
+      </div>
+      <p class="testi-count">5,000+ verified reviews</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TRAVEL STORIES
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="section-blog">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="serif">Stories from the road</h2>
+        <a href="#" class="view-all">View all stories
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="blog-grid">
+
+        <article class="blog-card">
+          <div class="blog-img">
+            <img src="https://images.unsplash.com/photo-1559628233-eb1b1a45564b?w=700&h=480&fit=crop&auto=format" alt="Bali" />
+          </div>
+          <div class="blog-body">
+            <p class="blog-cat">Travel Guide</p>
+            <h3 class="blog-title">10 unforgettable places to discover in Bali</h3>
+            <div class="blog-meta">
+              <span>Aug 4, 2026</span>
+              <span class="dot">·</span>
+              <span>7 min read</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-card">
+          <div class="blog-img">
+            <img src="https://images.unsplash.com/photo-1507039915464-9d829b6d2d78?w=700&h=480&fit=crop&auto=format" alt="Swiss Alps" />
+          </div>
+          <div class="blog-body">
+            <p class="blog-cat">Destination</p>
+            <h3 class="blog-title">A beginner's guide to the Swiss Alps</h3>
+            <div class="blog-meta">
+              <span>Jul 28, 2026</span>
+              <span class="dot">·</span>
+              <span>5 min read</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-card">
+          <div class="blog-img">
+            <img src="https://images.unsplash.com/photo-1629470035936-3296c3bd8237?w=700&h=480&fit=crop&auto=format" alt="Santorini" />
+          </div>
+          <div class="blog-body">
+            <p class="blog-cat">Inspiration</p>
+            <h3 class="blog-title">The ultimate weekend escape to Santorini</h3>
+            <div class="blog-meta">
+              <span>Jul 19, 2026</span>
+              <span class="dot">·</span>
+              <span>4 min read</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       NEWSLETTER CTA
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="section-newsletter">
+    <div class="newsletter-bg">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=800&fit=crop&auto=format" alt="Mountain sunset" />
+      <div class="newsletter-overlay"></div>
+    </div>
+    <div class="newsletter-content container">
+      <h2 class="serif">
+        Your next adventure<br />
+        <em>starts here.</em>
+      </h2>
+      <p>Get travel inspiration, exclusive deals and new destinations delivered to your inbox.</p>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input type="email" placeholder="Your email address" />
+        <button type="submit" class="btn-coral">Subscribe</button>
+      </form>
+      <p class="newsletter-note">No spam, ever. Unsubscribe anytime.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            Wanderly
+          </a>
+          <p>Curating the world's finest travel experiences since 2020. Every trip, a new story.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn" aria-label="Instagram">In</a>
+            <a href="#" class="social-btn" aria-label="Facebook">Fb</a>
+            <a href="#" class="social-btn" aria-label="YouTube">Yt</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Discover</h4>
+          <ul>
+            <li><a href="#">Destinations</a></li>
+            <li><a href="#">Tours</a></li>
+            <li><a href="#">Experiences</a></li>
+            <li><a href="#">Deals</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Cancellation</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Wanderly. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+        </div>
+        <div class="footer-locale">
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            English
+          </span>
+          <span>USD</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
+    <ul>
+      <li><a href="#" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Explore
+      </a></li>
+      <li><a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+        Bookings
+      </a></li>
+      <li><a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Favorites
+      </a></li>
+      <li><a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        Profile
+      </a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════════════════════════ -->
+  <script>
+    // Sticky header
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Mobile menu
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    // Category selector
+    function setActive(el) {
+      document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // Wishlist toggle
+    document.querySelectorAll('.wish-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const svg = this.querySelector('svg');
+        const active = svg.getAttribute('fill') === '#FF6B4A';
+        svg.setAttribute('fill', active ? 'none' : '#FF6B4A');
+        svg.setAttribute('stroke', active ? '#151716' : '#FF6B4A');
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+/**
+ * Travail RTL stylesheet.
+ *
+ * Most of the theme already uses logical properties (inset-inline,
+ * margin-inline-start, text alignment via flex) so this file only needs
+ * to correct the handful of rules that hard-code left/right for a
+ * decorative reason (absolutely-positioned badges/buttons over images).
+ *
+ * Enqueued conditionally in inc/enqueue.php when is_rtl().
+ */
+
+body {
+	direction: rtl;
+}
+
+.travail-skip-link {
+	left: auto;
+	right: 0;
+	border-radius: 0 0 0 var( --travail-radius-sm );
+}
+
+.travail-tour-card__badges {
+	left: auto;
+	right: 12px;
+}
+
+.travail-wish-btn {
+	right: auto;
+	left: 12px;
+}
+
+.travail-deal-card__badge,
+.travail-featured-badge {
+	left: auto;
+	right: 24px;
+}
+
+.travail-deal-card__badge {
+	right: 16px;
+}
+
+.travail-announcement-bar__close {
+	right: auto;
+	left: 12px;
+}
+
+.travail-testi-avatars img,
+.travail-avatars img {
+	margin-inline-start: 0;
+	margin-inline-end: -8px;
+}
+
+.travail-testi-avatars img:first-child,
+.travail-avatars img:first-child {
+	margin-inline-end: 0;
+}
+
+.travail-itinerary-day__panel {
+	padding-inline-end: 20px;
+	padding-inline-start: 76px;
+}
+
+.travail-hero__title,
+.travail-hero__sub {
+	text-align: right;
+}
+
+.travail-featured-checklist {
+	text-align: left;
+}
+
+.travail-nav .sub-menu {
+	text-align: right;
+}
