@@ -542,6 +542,8 @@ class Travail_Demo_Importer {
 
 		$locations = array(
 			array( 'Bali', 'Indonesia', 'https://images.unsplash.com/photo-1559628233-eb1b1a45564b?w=900&h=900&fit=crop&auto=format' ),
+			array( 'Dubai', 'UAE', 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=900&h=900&fit=crop&auto=format' ),
+			array( 'Paris', 'France', 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=900&h=900&fit=crop&auto=format' ),
 			array( 'Swiss Alps', 'Switzerland', 'https://images.unsplash.com/photo-1507039915464-9d829b6d2d78?w=900&h=900&fit=crop&auto=format' ),
 			array( 'Santorini', 'Greece', 'https://images.unsplash.com/photo-1629470035936-3296c3bd8237?w=800&h=500&fit=crop&auto=format' ),
 			array( 'Tokyo', 'Japan', 'https://images.unsplash.com/photo-1573455494060-c5595004fb6c?w=800&h=500&fit=crop&auto=format' ),
@@ -717,6 +719,30 @@ class Travail_Demo_Importer {
 				'duration_type' => 'hour',
 				'rating'        => '4.9',
 			),
+			'dubai-safari'    => array(
+				'title'         => __( 'Dubai Desert Safari at Dusk', 'travail' ),
+				'description'   => __( 'Dune-bash across the Arabian desert at golden hour, then unwind at a Bedouin-style camp with a barbecue dinner and live entertainment under the stars.', 'travail' ),
+				'image'         => 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=900&h=600&fit=crop&auto=format',
+				'location_term' => 'Dubai',
+				'activity_term' => 'Adventure',
+				'full_location' => 'Dubai, UAE',
+				'price'         => '120',
+				'duration'      => '8',
+				'duration_type' => 'hour',
+				'rating'        => '4.8',
+			),
+			'paris-eiffel'    => array(
+				'title'         => __( 'Paris Eiffel Tower & Seine Cruise', 'travail' ),
+				'description'   => __( 'Skip the line up the Eiffel Tower at golden hour, then drift past Notre-Dame and the Louvre on an evening Seine river cruise.', 'travail' ),
+				'image'         => 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=900&h=600&fit=crop&auto=format',
+				'location_term' => 'Paris',
+				'activity_term' => 'Culture',
+				'full_location' => 'Paris, France',
+				'price'         => '85',
+				'duration'      => '4',
+				'duration_type' => 'hour',
+				'rating'        => '4.9',
+			),
 			'swiss-hiking'    => array(
 				'title'         => __( 'Swiss Alps Hiking Trail', 'travail' ),
 				'description'   => __( 'A guided high-alpine hike through Grindelwald with panoramic views of the Eiger, finishing at a mountain hut for a traditional Swiss lunch.', 'travail' ),
@@ -881,6 +907,18 @@ class Travail_Demo_Importer {
 					continue;
 				}
 
+			}
+
+			// Backfill the category on every run too, not just at creation —
+			// caught a run where the initial wp_set_post_terms() call below
+			// didn't stick (post was left on the default "Uncategorized"
+			// term WordPress auto-assigns on insert) and, since this only
+			// lived inside the create-only branch, no later run ever
+			// corrected it. Same rationale as the thumbnail backfill just
+			// below: never leave a demo post silently wrong forever just
+			// because it already exists.
+			$travail_current_cats = wp_get_post_terms( $post_id, 'category', array( 'fields' => 'names' ) );
+			if ( is_wp_error( $travail_current_cats ) || array( 'Uncategorized' ) === $travail_current_cats || empty( $travail_current_cats ) ) {
 				// wp_insert_term() returns an array (term_id/term_taxonomy_id), not an object.
 				$term    = wp_insert_term( $post_data['category'], 'category' );
 				$term_id = is_wp_error( $term ) ? get_cat_ID( $post_data['category'] ) : $term['term_id'];
@@ -917,9 +955,18 @@ class Travail_Demo_Importer {
 	 */
 	protected static function apply_demo_theme_images() {
 		$images = array(
-			'hero_image'          => 'https://images.unsplash.com/photo-1464852045489-bccb7d17fe39?w=1920&h=1080&fit=crop&auto=format',
-			'why_choose_us_image' => 'https://images.unsplash.com/photo-1439853949127-fa647821eba0?w=800&h=700&fit=crop&auto=format',
-			'newsletter_image'    => 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=800&fit=crop&auto=format',
+			'hero_image'                    => 'https://images.unsplash.com/photo-1464852045489-bccb7d17fe39?w=1920&h=1080&fit=crop&auto=format',
+			'why_choose_us_image'            => 'https://images.unsplash.com/photo-1439853949127-fa647821eba0?w=800&h=700&fit=crop&auto=format',
+			'newsletter_image'               => 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=800&fit=crop&auto=format',
+			// Travello homepage (see Customizer → Homepage) — same photos
+			// travello.html itself uses for these spots.
+			'travello_hero_image'            => 'https://images.unsplash.com/photo-1477346611705-65d1883cee1e?w=1920&h=1080&fit=crop&auto=format',
+			'travello_why_us_image'          => 'https://images.unsplash.com/photo-1618479357575-1cbeaf396a93?w=800&h=700&fit=crop&auto=format',
+			'travello_newsletter_image'      => 'https://images.unsplash.com/photo-1770838916964-0ae934bf7632?w=1920&h=800&fit=crop&auto=format',
+			'travello_service_tours_image'   => 'https://images.unsplash.com/photo-1559628233-eb1b1a45564b?w=600&h=500&fit=crop&auto=format',
+			'travello_service_hotels_image'  => 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&h=500&fit=crop&auto=format',
+			'travello_service_transport_image' => 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&h=500&fit=crop&auto=format',
+			'travello_service_activities_image' => 'https://images.unsplash.com/photo-1618479357575-1cbeaf396a93?w=600&h=500&fit=crop&auto=format',
 		);
 
 		foreach ( $images as $mod_key => $url ) {

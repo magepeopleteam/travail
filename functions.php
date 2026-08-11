@@ -53,6 +53,7 @@ $travail_includes = array(
 	'inc/enqueue.php',                 // Scripts & styles.
 	'inc/template-functions.php',      // Functions used inside templates (classes, meta, pagination…).
 	'inc/template-hooks.php',          // Wires template-parts to travail_* action hooks.
+	'inc/homepage-travello.php',       // Alternate "Travello" homepage — see Customizer → Homepage.
 	'inc/customizer.php',              // Customizer sections/settings.
 	'inc/compatibility/class-travail-plugin-compatibility.php',
 	'inc/compatibility/woocommerce.php',

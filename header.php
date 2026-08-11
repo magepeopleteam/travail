@@ -23,6 +23,8 @@ if ( 'solid' === $travail_header_style ) {
 	// every other page gets a solid header by default so text stays legible.
 	$travail_header_class .= ' travail-header--solid';
 }
+
+$travail_is_travello = travail_is_travello_home();
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -58,70 +60,78 @@ if ( $travail_announcement ) :
 	</div>
 <?php endif; ?>
 
-<header id="masthead" class="<?php echo esc_attr( $travail_header_class ); ?>" data-travail-header data-sticky="<?php echo esc_attr( 'sticky' === $travail_header_style || 'transparent' === $travail_header_style ? '1' : '0' ); ?>">
-	<div class="travail-container">
-		<div class="travail-header-inner">
+<?php if ( $travail_is_travello ) : ?>
 
-			<?php get_template_part( 'template-parts/header/logo' ); ?>
+	<?php get_template_part( 'template-parts/home/travello/header' ); ?>
 
-			<nav class="travail-nav" aria-label="<?php esc_attr_e( 'Primary', 'travail' ); ?>">
-				<?php
-				if ( has_nav_menu( 'primary' ) ) {
-					wp_nav_menu(
-						array(
-							'theme_location' => 'primary',
-							'container'      => false,
-							'items_wrap'     => '<ul id="primary-menu">%3$s</ul>',
-							'depth'          => 2,
-						)
-					);
-				} else {
-					echo '<ul id="primary-menu">';
-					if ( current_user_can( 'edit_theme_options' ) ) {
-						echo '<li><a href="' . esc_url( admin_url( 'nav-menus.php' ) ) . '">' . esc_html__( 'Assign a Primary Menu', 'travail' ) . '</a></li>';
+<?php else : ?>
+
+	<header id="masthead" class="<?php echo esc_attr( $travail_header_class ); ?>" data-travail-header data-sticky="<?php echo esc_attr( 'sticky' === $travail_header_style || 'transparent' === $travail_header_style ? '1' : '0' ); ?>">
+		<div class="travail-container">
+			<div class="travail-header-inner">
+
+				<?php get_template_part( 'template-parts/header/logo' ); ?>
+
+				<nav class="travail-nav" aria-label="<?php esc_attr_e( 'Primary', 'travail' ); ?>">
+					<?php
+					if ( has_nav_menu( 'primary' ) ) {
+						wp_nav_menu(
+							array(
+								'theme_location' => 'primary',
+								'container'      => false,
+								'items_wrap'     => '<ul id="primary-menu">%3$s</ul>',
+								'depth'          => 2,
+							)
+						);
+					} else {
+						echo '<ul id="primary-menu">';
+						if ( current_user_can( 'edit_theme_options' ) ) {
+							echo '<li><a href="' . esc_url( admin_url( 'nav-menus.php' ) ) . '">' . esc_html__( 'Assign a Primary Menu', 'travail' ) . '</a></li>';
+						}
+						echo '</ul>';
 					}
-					echo '</ul>';
-				}
-				?>
-			</nav>
+					?>
+				</nav>
 
-			<div class="travail-header-actions">
-				<?php get_template_part( 'template-parts/header/actions' ); ?>
+				<div class="travail-header-actions">
+					<?php get_template_part( 'template-parts/header/actions' ); ?>
+				</div>
+
+				<button class="travail-menu-toggle travail-icon-btn" id="travail-menu-toggle" aria-expanded="false" aria-controls="travail-mobile-menu" aria-label="<?php esc_attr_e( 'Open menu', 'travail' ); ?>">
+					<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+				</button>
 			</div>
-
-			<button class="travail-menu-toggle travail-icon-btn" id="travail-menu-toggle" aria-expanded="false" aria-controls="travail-mobile-menu" aria-label="<?php esc_attr_e( 'Open menu', 'travail' ); ?>">
-				<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
-			</button>
 		</div>
-	</div>
 
-	<div class="travail-mobile-menu" id="travail-mobile-menu">
-		<?php
-		if ( has_nav_menu( 'mobile' ) ) {
-			wp_nav_menu(
-				array(
-					'theme_location' => 'mobile',
-					'container'      => false,
-					'items_wrap'     => '%3$s',
-					'depth'          => 2,
-				)
-			);
-		} elseif ( has_nav_menu( 'primary' ) ) {
-			wp_nav_menu(
-				array(
-					'theme_location' => 'primary',
-					'container'      => false,
-					'items_wrap'     => '%3$s',
-					'depth'          => 2,
-				)
-			);
-		}
-		?>
-		<div class="travail-mobile-actions">
-			<?php get_template_part( 'template-parts/header/mobile-actions' ); ?>
+		<div class="travail-mobile-menu" id="travail-mobile-menu">
+			<?php
+			if ( has_nav_menu( 'mobile' ) ) {
+				wp_nav_menu(
+					array(
+						'theme_location' => 'mobile',
+						'container'      => false,
+						'items_wrap'     => '%3$s',
+						'depth'          => 2,
+					)
+				);
+			} elseif ( has_nav_menu( 'primary' ) ) {
+				wp_nav_menu(
+					array(
+						'theme_location' => 'primary',
+						'container'      => false,
+						'items_wrap'     => '%3$s',
+						'depth'          => 2,
+					)
+				);
+			}
+			?>
+			<div class="travail-mobile-actions">
+				<?php get_template_part( 'template-parts/header/mobile-actions' ); ?>
+			</div>
 		</div>
-	</div>
-</header>
+	</header>
+
+<?php endif; ?>
 
 <?php
 /**

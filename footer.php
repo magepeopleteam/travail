@@ -19,59 +19,67 @@ if ( ! defined( 'ABSPATH' ) ) {
 do_action( 'travail_before_footer' );
 ?>
 
-<footer id="colophon" class="travail-footer">
-	<div class="travail-container">
-		<div class="travail-footer-top">
+<?php if ( travail_is_travello_home() ) : ?>
 
-			<div class="travail-footer-brand">
-				<?php get_template_part( 'template-parts/header/logo' ); ?>
-				<p><?php echo esc_html( travail_get_option( 'footer_description', __( "Curating the world's finest travel experiences. Every trip, a new story.", 'travail' ) ) ); ?></p>
-				<?php get_template_part( 'template-parts/footer/socials' ); ?>
+	<?php get_template_part( 'template-parts/home/travello/footer' ); ?>
+
+<?php else : ?>
+
+	<footer id="colophon" class="travail-footer">
+		<div class="travail-container">
+			<div class="travail-footer-top">
+
+				<div class="travail-footer-brand">
+					<?php get_template_part( 'template-parts/header/logo' ); ?>
+					<p><?php echo esc_html( travail_get_option( 'footer_description', __( "Curating the world's finest travel experiences. Every trip, a new story.", 'travail' ) ) ); ?></p>
+					<?php get_template_part( 'template-parts/footer/socials' ); ?>
+				</div>
+
+				<?php get_template_part( 'template-parts/footer/column', null, array( 'sidebar' => 'footer-1', 'menu' => 'footer-1', 'fallback_title' => __( 'Discover', 'travail' ) ) ); ?>
+				<?php get_template_part( 'template-parts/footer/column', null, array( 'sidebar' => 'footer-2', 'menu' => 'footer-2', 'fallback_title' => __( 'Company', 'travail' ) ) ); ?>
+				<?php get_template_part( 'template-parts/footer/column', null, array( 'sidebar' => 'footer-3', 'menu' => 'footer-3', 'fallback_title' => __( 'Support', 'travail' ) ) ); ?>
+
 			</div>
 
-			<?php get_template_part( 'template-parts/footer/column', null, array( 'sidebar' => 'footer-1', 'menu' => 'footer-1', 'fallback_title' => __( 'Discover', 'travail' ) ) ); ?>
-			<?php get_template_part( 'template-parts/footer/column', null, array( 'sidebar' => 'footer-2', 'menu' => 'footer-2', 'fallback_title' => __( 'Company', 'travail' ) ) ); ?>
-			<?php get_template_part( 'template-parts/footer/column', null, array( 'sidebar' => 'footer-3', 'menu' => 'footer-3', 'fallback_title' => __( 'Support', 'travail' ) ) ); ?>
-
-		</div>
-
-		<div class="travail-footer-bottom">
-			<p>
-				<?php
-				printf(
-					/* translators: 1: current year, 2: site name */
-					esc_html__( '© %1$s %2$s. All rights reserved.', 'travail' ),
-					esc_html( gmdate( 'Y' ) ),
-					esc_html( get_bloginfo( 'name' ) )
-				);
-				?>
-			</p>
-
-			<?php if ( has_nav_menu( 'legal' ) ) : ?>
-				<nav aria-label="<?php esc_attr_e( 'Legal', 'travail' ); ?>">
+			<div class="travail-footer-bottom">
+				<p>
 					<?php
-					wp_nav_menu(
-						array(
-							'theme_location' => 'legal',
-							'container'      => false,
-							'items_wrap'     => '<ul class="travail-footer-links">%3$s</ul>',
-							'depth'          => 1,
-						)
+					printf(
+						/* translators: 1: current year, 2: site name */
+						esc_html__( '© %1$s %2$s. All rights reserved.', 'travail' ),
+						esc_html( gmdate( 'Y' ) ),
+						esc_html( get_bloginfo( 'name' ) )
 					);
 					?>
-				</nav>
-			<?php endif; ?>
+				</p>
 
-			<?php if ( class_exists( 'Travail_Plugin_Compatibility' ) && Travail_Plugin_Compatibility::is_woocommerce_active() && travail_get_option( 'show_footer_payment_icons', true ) ) : ?>
-				<div class="travail-footer-payments" aria-hidden="true">
-					<?php get_template_part( 'template-parts/footer/payment-icons' ); ?>
-				</div>
-			<?php endif; ?>
+				<?php if ( has_nav_menu( 'legal' ) ) : ?>
+					<nav aria-label="<?php esc_attr_e( 'Legal', 'travail' ); ?>">
+						<?php
+						wp_nav_menu(
+							array(
+								'theme_location' => 'legal',
+								'container'      => false,
+								'items_wrap'     => '<ul class="travail-footer-links">%3$s</ul>',
+								'depth'          => 1,
+							)
+						);
+						?>
+					</nav>
+				<?php endif; ?>
+
+				<?php if ( class_exists( 'Travail_Plugin_Compatibility' ) && Travail_Plugin_Compatibility::is_woocommerce_active() && travail_get_option( 'show_footer_payment_icons', true ) ) : ?>
+					<div class="travail-footer-payments" aria-hidden="true">
+						<?php get_template_part( 'template-parts/footer/payment-icons' ); ?>
+					</div>
+				<?php endif; ?>
+			</div>
 		</div>
-	</div>
-</footer>
+	</footer>
 
-<?php get_template_part( 'template-parts/footer/mobile-bottom-nav' ); ?>
+	<?php get_template_part( 'template-parts/footer/mobile-bottom-nav' ); ?>
+
+<?php endif; ?>
 
 <?php
 /**

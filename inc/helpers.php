@@ -246,3 +246,19 @@ function travail_get_primary_term( $post_id, $post_type = '' ) {
 function travail_kses( $html ) {
 	return wp_kses_post( $html );
 }
+
+/**
+ * Whether the current request should render the "Travello" homepage
+ * variation instead of Travail's default homepage.
+ *
+ * Only ever true on the site's actual front page — visiting the Travello
+ * template-parts' markup anywhere else isn't a supported entry point, so
+ * every Travello-only hook (header/footer swap, conditional asset
+ * enqueue, body class) can gate on this single helper instead of
+ * repeating both checks everywhere.
+ *
+ * @return bool
+ */
+function travail_is_travello_home() {
+	return is_front_page() && 'travello' === travail_get_option( 'homepage_style', 'travello' );
+}

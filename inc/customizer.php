@@ -29,6 +29,109 @@ function travail_customize_register( $wp_customize ) {
 	);
 
 	/* ---------------------------------------------------------------
+	 * Homepage — which homepage design the front page renders.
+	 * Kept as its own section (rather than a General checkbox) since
+	 * it's the single most consequential setting in this panel and
+	 * benefits from its own description text.
+	 * ------------------------------------------------------------- */
+	$wp_customize->add_section(
+		'travail_homepage',
+		array(
+			'title'       => __( 'Homepage', 'travail' ),
+			'panel'       => 'travail_options',
+			'priority'    => 5,
+			'description' => __( 'Choose which homepage design your site\'s front page shows. "Travello" (the default) always wins, even over a page assigned in Settings → Reading. Switch to "Travail" to fall back to that assigned page\'s own Elementor/block content, or to the built-in Travail demo sections when no page is assigned.', 'travail' ),
+		)
+	);
+
+	travail_add_setting(
+		$wp_customize,
+		'homepage_style',
+		array(
+			'default'           => 'travello',
+			'sanitize_callback' => 'sanitize_key',
+			'control'           => array(
+				'type'    => 'radio',
+				'section' => 'travail_homepage',
+				'label'   => __( 'Homepage design', 'travail' ),
+				'choices' => array(
+					'travello' => __( 'Travello (default homepage)', 'travail' ),
+					'default'  => __( 'Travail (alternate demo homepage)', 'travail' ),
+				),
+			),
+		)
+	);
+
+	/* ---------------------------------------------------------------
+	 * Travello homepage content — only the handful of fields that
+	 * can't reasonably come from real WordPress/tour data (hero copy,
+	 * newsletter background). Everything else on that homepage (tours,
+	 * destinations, activities, deals, blog posts) is live data; see
+	 * inc/homepage-travello.php.
+	 * ------------------------------------------------------------- */
+	$wp_customize->add_section(
+		'travail_travello',
+		array( 'title' => __( 'Travello Homepage', 'travail' ), 'panel' => 'travail_options' )
+	);
+
+	travail_add_setting(
+		$wp_customize,
+		'travello_hero_eyebrow',
+		array(
+			'default'           => __( 'Travel Beyond Ordinary', 'travail' ),
+			'sanitize_callback' => 'sanitize_text_field',
+			'control'           => array( 'type' => 'text', 'section' => 'travail_travello', 'label' => __( 'Hero eyebrow text', 'travail' ) ),
+		)
+	);
+
+	travail_add_setting(
+		$wp_customize,
+		'travello_hero_headline',
+		array(
+			'default'           => __( 'Explore the world.{break}{emphasis}Create unforgettable memories.{/emphasis}', 'travail' ),
+			'sanitize_callback' => 'sanitize_text_field',
+			'control'           => array(
+				'type'        => 'text',
+				'section'     => 'travail_travello',
+				'label'       => __( 'Hero headline', 'travail' ),
+				'description' => __( 'Use {break} for a line break and {emphasis}...{/emphasis} to italicize part of the headline.', 'travail' ),
+			),
+		)
+	);
+
+	travail_add_setting(
+		$wp_customize,
+		'travello_hero_sub',
+		array(
+			'default'           => __( 'Discover handpicked tours, extraordinary destinations and experiences designed for curious travelers.', 'travail' ),
+			'sanitize_callback' => 'sanitize_text_field',
+			'control'           => array( 'type' => 'textarea', 'section' => 'travail_travello', 'label' => __( 'Hero subtitle', 'travail' ) ),
+		)
+	);
+
+	travail_add_setting(
+		$wp_customize,
+		'travello_hero_image',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'esc_url_raw',
+			'control_class'     => 'WP_Customize_Image_Control',
+			'control'           => array( 'section' => 'travail_travello', 'label' => __( 'Hero background image', 'travail' ) ),
+		)
+	);
+
+	travail_add_setting(
+		$wp_customize,
+		'travello_newsletter_image',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'esc_url_raw',
+			'control_class'     => 'WP_Customize_Image_Control',
+			'control'           => array( 'section' => 'travail_travello', 'label' => __( 'Newsletter background image', 'travail' ) ),
+		)
+	);
+
+	/* ---------------------------------------------------------------
 	 * General
 	 * ------------------------------------------------------------- */
 	$wp_customize->add_section(

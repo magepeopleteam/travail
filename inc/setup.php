@@ -73,12 +73,13 @@ function travail_setup() {
 	// Nav menus.
 	register_nav_menus(
 		array(
-			'primary' => __( 'Primary Menu', 'travail' ),
-			'mobile'  => __( 'Mobile Menu (optional — falls back to Primary)', 'travail' ),
-			'footer-1' => __( 'Footer Column 1', 'travail' ),
-			'footer-2' => __( 'Footer Column 2', 'travail' ),
-			'footer-3' => __( 'Footer Column 3', 'travail' ),
-			'legal'   => __( 'Footer Legal Links', 'travail' ),
+			'primary'         => __( 'Primary Menu', 'travail' ),
+			'mobile'          => __( 'Mobile Menu (optional — falls back to Primary)', 'travail' ),
+			'footer-1'        => __( 'Footer Column 1', 'travail' ),
+			'footer-2'        => __( 'Footer Column 2', 'travail' ),
+			'footer-3'        => __( 'Footer Column 3', 'travail' ),
+			'legal'           => __( 'Footer Legal Links', 'travail' ),
+			'travello-primary' => __( 'Travello Homepage — Primary Menu (optional — falls back to Primary Menu)', 'travail' ),
 		)
 	);
 

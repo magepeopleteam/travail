@@ -13,6 +13,14 @@
  * homepage sections, each of which also exists as a standalone Elementor
  * widget so the user can rebuild the same page visually at any time.
  *
+ * A site owner can also opt into the alternate "Travello" homepage design
+ * from Customizer → Travail Theme Options → Homepage
+ * (travail_get_option('homepage_style')). That check runs first and, when
+ * active, takes priority even over an assigned static front page — it's
+ * an explicit, single-click choice, so it should always win rather than
+ * silently doing nothing because a page happens to be assigned in Reading
+ * settings. See inc/homepage-travello.php for what's hooked to it.
+ *
  * @package Travail
  */
 
@@ -27,7 +35,17 @@ $travail_static_front = ( 'page' === get_option( 'show_on_front' ) ) && (int) ge
 
 <main id="main" class="travail-main" role="main">
 
-	<?php if ( $travail_static_front && have_posts() ) : ?>
+	<?php if ( travail_is_travello_home() ) : ?>
+
+		<?php
+		/**
+		 * Renders the Travello homepage sections.
+		 * See inc/homepage-travello.php for what's hooked here.
+		 */
+		do_action( 'travail_travello_homepage' );
+		?>
+
+	<?php elseif ( $travail_static_front && have_posts() ) : ?>
 
 		<?php
 		while ( have_posts() ) :

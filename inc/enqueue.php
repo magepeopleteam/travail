@@ -94,6 +94,13 @@ function travail_enqueue_styles() {
 	if ( ! empty( $custom_css ) ) {
 		wp_add_inline_style( 'travail-style', wp_strip_all_tags( $custom_css ) );
 	}
+
+	// Travello homepage — only enqueued on the front page when that
+	// homepage design is selected (Customizer → Homepage), never on any
+	// other page.
+	if ( travail_is_travello_home() ) {
+		wp_enqueue_style( 'travail-travello', TRAVAIL_URI . '/assets/css/travello.css', array( 'travail-style' ), travail_asset_version( '/assets/css/travello.css' ) );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'travail_enqueue_styles' );
 
@@ -137,8 +144,12 @@ function travail_enqueue_scripts() {
 		wp_enqueue_script( 'travail-tour-booking', TRAVAIL_URI . '/assets/js/tour-booking.js', array( 'travail-main' ), travail_asset_version( '/assets/js/tour-booking.js' ), true );
 	}
 
-	if ( is_front_page() ) {
+	if ( is_front_page() && ! travail_is_travello_home() ) {
 		wp_enqueue_script( 'travail-hero-search', TRAVAIL_URI . '/assets/js/hero-search.js', array( 'travail-main' ), travail_asset_version( '/assets/js/hero-search.js' ), true );
+	}
+
+	if ( travail_is_travello_home() ) {
+		wp_enqueue_script( 'travail-travello', TRAVAIL_URI . '/assets/js/travello.js', array( 'travail-main' ), travail_asset_version( '/assets/js/travello.js' ), true );
 	}
 
 	if ( comments_open() || get_comments_number() ) {
@@ -186,6 +197,10 @@ function travail_body_classes( $classes ) {
 		$classes[] = 'travail-elementor-page';
 	}
 
+	if ( travail_is_travello_home() ) {
+		$classes[] = 'travail-travello-home';
+	}
+
 	return $classes;
 }
 add_filter( 'body_class', 'travail_body_classes' );
@@ -198,7 +213,10 @@ function travail_preload_hero_image() {
 		return;
 	}
 
-	$hero_image = travail_get_option( 'hero_image', '' );
+	$hero_image = travail_is_travello_home()
+		? travail_get_option( 'travello_hero_image', '' )
+		: travail_get_option( 'hero_image', '' );
+
 	if ( $hero_image ) {
 		printf(
 			'<link rel="preload" as="image" href="%s" fetchpriority="high" />' . "\n",
