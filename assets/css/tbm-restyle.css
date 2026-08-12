@@ -49,6 +49,21 @@
    so Travail looks on-brand immediately, out of the box. */
 :root {
 	--color_theme: var( --travail-color-primary ) !important;
+	/* The plugin also has a SEPARATE r,g,b-triplet variable — used
+	   everywhere it needs an rgba() with custom opacity (icon badge
+	   gradients, hover borders/shadows) instead of a solid color — that
+	   this block never covered until now. It isn't derived from
+	   --color_theme by the plugin itself (TTBM_Global_Style.php computes
+	   it from its OWN separate "Theme Color" setting via hexToRgb()), so
+	   without an explicit override here it stayed the plugin's default
+	   purple (90, 86, 224) even after every solid --color_theme use
+	   above turned green — confirmed: every icon badge in the hero stats
+	   grid was still purple-tinted. CSS can't derive r,g,b components
+	   from a hex custom property on its own, so this is the decomposed
+	   RGB of --travail-forest (#16352d) — the theme's actual default
+	   primary — rather than a var() reference; update it to match if
+	   that default color ever changes. */
+	--color_theme_rgb: 22, 53, 45 !important;
 	--color_theme_secondary: var( --travail-forest-mid ) !important;
 	/* _ee/_cc/_aa/_88/_77 were "theme_color + hex alpha suffix" in the
 	   plugin's own PHP (93%/80%/67%/53%/47% opacity) — reproduced with
@@ -389,4 +404,233 @@ div.ttbm_viator_theme {
 	margin-inline: auto;
 	padding-inline: var( --travail-gutter );
 	background: transparent;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Single tour hero — Location/Duration/Age Limit/Available seat/
+   Language stat cards: tighter, more compact spacing.
+   ══════════════════════════════════════════════════════════════
+   The plugin's own rules (ttbm_details.css) are ID-qualified
+   (`#ttbm_content .ttbm_default_theme …`), so this reuses the exact
+   same selectors to reach equal specificity and win on this
+   stylesheet's later print order — no !important needed, same
+   approach as the container-width fix above. Only spacing values
+   change (gap/padding/min-height/icon size); the grid structure,
+   colors and hover behaviour are left exactly as the plugin built
+   them. */
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats_grid {
+	gap: 6px;
+	padding: 10px;
+}
+
+/* Plugin default (ttbm_details.css:781-785) switches to a fixed
+   5-column row at this same breakpoint — 4 reads less cramped with
+   these tighter card sizes above. Collapse/"Load more" membership
+   (which stat is marked .ttbm_hero_stat_item--extra) is decided by
+   the plugin's own PHP/JS and is unaffected by this — changing the
+   column count here only changes how many of the always-visible
+   stats sit per row before wrapping. */
+@media ( min-width: 1100px ) {
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats_grid {
+		grid-template-columns: repeat( 4, minmax( 0, 1fr ) );
+	}
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon {
+	grid-template-columns: 32px minmax( 0, 1fr );
+	column-gap: 8px;
+	row-gap: 2px;
+	padding: 8px 10px;
+	min-height: 52px;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon i {
+	width: 32px;
+	height: 32px;
+	font-size: 15px;
+}
+
+@media ( max-width: 768px ) {
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats_grid {
+		gap: 6px;
+		padding: 8px;
+	}
+
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon {
+		grid-template-columns: 30px minmax( 0, 1fr );
+		column-gap: 7px;
+		padding: 7px 9px;
+		min-height: 46px;
+	}
+
+	#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon i {
+		width: 30px;
+		height: 30px;
+		font-size: 14px;
+	}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Same stat cards — a second, "stylish" pass on top of the spacing
+   fix above: brand color, hover polish, and a proper button for
+   "Load more" instead of a bare underlined link.
+   ══════════════════════════════════════════════════════════════
+   The icon badges' purple tint (rgba(var(--color_theme_rgb, 90, 86,
+   224))) is now on-brand for free, via the --color_theme_rgb fix
+   added to the retint block near the top of this file — nothing
+   below re-states that. Same equal-specificity approach as every
+   other rule in this file: reuse the plugin's own selectors, let
+   this stylesheet's later print order win, no !important. */
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon {
+	border-radius: var( --travail-radius-sm );
+	transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon:hover {
+	transform: translateY( -2px );
+	box-shadow: var( --travail-shadow-sm );
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon i {
+	border-radius: var( --travail-radius-sm );
+}
+
+/* label — "LOCATION" / "DURATION" / etc. eyebrow above the value */
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon::before {
+	color: var( --travail-color-text-muted );
+}
+
+/* Location gets a light brand tint — the one stat worth a glance first. */
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon.ttbm_hero_loc {
+	background: color-mix( in srgb, var( --travail-color-primary ) 6%, #fff );
+	border-color: color-mix( in srgb, var( --travail-color-primary ) 18%, #fff );
+}
+
+/* Sale price (Price stat is normally hidden — see ttbm_details.css's
+   own `:has(.mi-coins)` rule — styled anyway for parity if that ever
+   changes, e.g. a browser without :has() support). */
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats .item_icon .ttbm_start_price_display > .woocommerce-Price-amount {
+	color: var( --travail-color-accent );
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats_load_more {
+	padding: 5px 12px;
+	border: 1px solid color-mix( in srgb, var( --travail-color-primary ) 30%, transparent );
+	border-radius: var( --travail-radius-sm );
+	background: transparent;
+	color: var( --travail-color-primary );
+	text-decoration: none;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#ttbm_content .ttbm_default_theme .ttbm_hero_stats_load_more:hover {
+	background: var( --travail-color-primary );
+	color: #fff;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Single tour page — narrower booking sidebar column.
+   ══════════════════════════════════════════════════════════════
+   Plugin default (ttbm_registration.css:151-158, inside the same
+   min-width:960px breakpoint): .ttbm_content__right at 360px with
+   .ttbm_content__left filled via calc(100% - 376px) — the 16px
+   difference is the gap between the two columns. Narrowing the
+   sidebar to 300px, so the 16px gap is preserved by matching
+   .ttbm_content__left to calc(100% - 316px). Same bare selectors as
+   the plugin (specificity 0,1,0 each) inside the same breakpoint, so
+   this wins purely on this stylesheet printing last — no !important
+   needed. */
+@media ( min-width: 960px ) {
+	.ttbm_content__right {
+		width: 300px;
+	}
+
+	.ttbm_content__left {
+		width: calc( 100% - 316px );
+	}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Single tour page — sidebar CTA price columns (From X / Adult
+   Ticket, From Y / Child Ticket) re-skinned to feel like part of
+   Travail rather than a generic admin-panel price table.
+   ══════════════════════════════════════════════════════════════
+   Same selectors as the plugin (ttbm_details.css:1229-1309, all
+   #ttbm_content-qualified) for equal specificity, winning on this
+   stylesheet's later print order — no !important needed. Structure
+   (2-column grid, :has() single-ticket fallback, badge offset) is
+   left exactly as the plugin built it; only colors/typography/
+   spacing change, reusing the theme's own tokens (brand green,
+   serif heading font, radius scale) instead of the plugin's generic
+   grays and a plain border-bottom divider. Each price becomes its
+   own soft, rounded "chip" with a gap between them instead of one
+   flat block split by an internal border-left. */
+#ttbm_content .ttbm_details_page .ttbm_sidebar_cta_pricing {
+	gap: 10px;
+	padding-bottom: 4px;
+	border-bottom: none;
+}
+
+#ttbm_content .ttbm_details_page .ttbm_sidebar_cta_pricing.has-badge {
+	padding-top: 30px;
+}
+
+#ttbm_content .ttbm_details_page .ttbm_sidebar_cta_price_col {
+	padding: 14px 10px;
+	background: var( --travail-color-bg );
+	border-radius: var( --travail-radius-sm );
+}
+
+#ttbm_content .ttbm_details_page .ttbm_sidebar_cta_price_col + .ttbm_sidebar_cta_price_col {
+	border-left: none;
+}
+
+#ttbm_content .ttbm_details_page .ttbm_sidebar_cta_from {
+	margin-bottom: 6px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var( --travail-color-text-muted );
+}
+
+#ttbm_content .ttbm_details_page .ttbm_sidebar_cta_amount strong {
+	font-family: var( --travail-font-heading );
+	font-size: 22px;
+	font-weight: 700;
+	color: var( --travail-color-primary );
+}
+
+#ttbm_content .ttbm_details_page .ttbm_sidebar_cta_per {
+	font-size: 12px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Search results page (/find/, [ttbm-search-result]) — outer
+   container width vs. the theme's header/nav.
+   ══════════════════════════════════════════════════════════════
+   This page never matched travail_is_tour_view() (it's an ordinary
+   WP Page, not the tour CPT archive/taxonomy/our own page template),
+   so this stylesheet wasn't even enqueued here at all — fixed
+   separately in inc/enqueue.php. The width culprit itself is
+   ttbm_plugin_global.css:1811-1819's theme-name-sniffing fallback:
+     body.theme-astra div.mpContainer, …, div.mpContainer {
+         max-width: 1460px; width: 100%; margin: 0 auto;
+     }
+   Travail isn't one of the explicitly-named themes, so it always
+   fell through to the bare `div.mpContainer` rule and its hardcoded
+   1460px — unrelated to `--travail-container`. The plugin also ships
+   ttbm_theme_align.css, a generic-theme compatibility layer keyed off
+   the body class this same detection adds (`ttbm-page-with-shortcode`),
+   but every selector in it targets block-theme markup (`.entry-content`,
+   `.wp-block-post-content`, `.is-layout-constrained`) that Travail — a
+   classic PHP theme — never outputs (page.php uses `.travail-entry-content`,
+   not `.entry-content`), so none of it actually applies here either.
+   Matching the plugin's own `div.` qualifier reaches the same 0,1,1
+   specificity as both competing rules, winning on this stylesheet's
+   later print order. */
+div.mpContainer {
+	max-width: var( --travail-container );
+	padding-inline: var( --travail-gutter );
+	margin-inline: auto;
 }

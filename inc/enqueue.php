@@ -49,7 +49,23 @@ function travail_is_tour_view() {
 		}
 	}
 
-	return is_page_template( 'templates/pages/page-tours.php' );
+	if ( is_page_template( 'templates/pages/page-tours.php' ) ) {
+		return true;
+	}
+
+	// Ordinary WP Pages carrying a TTBM shortcode — e.g. the plugin's own
+	// auto-created "/find/" search-results page ([ttbm-search-result]) —
+	// are none of the above (not the CPT archive, not a taxonomy, not our
+	// own page template), so without this check tbm-restyle.css never
+	// loaded there at all and every fix in it was silently absent.
+	// TTBM_Theme_Align::post_has_ttbm_shortcode() is the plugin's own
+	// detection (it drives its `ttbm-page-with-shortcode` body class),
+	// reused here instead of re-deriving the same shortcode list.
+	if ( class_exists( 'TTBM_Theme_Align' ) && TTBM_Theme_Align::post_has_ttbm_shortcode() ) {
+		return true;
+	}
+
+	return false;
 }
 
 /**
