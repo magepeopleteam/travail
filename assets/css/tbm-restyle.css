@@ -273,3 +273,120 @@
 .woocommerce-account .ttbm-wishlist-list {
 	font-family: var( --travail-font-body );
 }
+
+/* ══════════════════════════════════════════════════════════════
+   Archive filter sidebar vs. this theme's fixed header — a second
+   deliberate exception to "no layout changes, colors only" (see the
+   file header): the plugin's own JS ( ttbm_sticky_management() in
+   ttbm_plugin_global.js ) sticks the "Filters" sidebar to the viewport
+   on scroll by adding an .mpSticky class ( position: fixed ) and
+   setting an inline top:100px, with z-index:1111 on its inner scroll
+   area — both numbers chosen with no knowledge of this theme's own
+   fixed header ( .travail-header, z-index:100, ~72px tall, and taller
+   still once body.admin-bar shifts it down to clear the WP toolbar —
+   see header-footer.css ). Confirmed via screenshot: the sidebar's
+   higher z-index rendered it above the header, and 100px wasn't enough
+   clearance once the admin-bar offset was added, so the fixed sidebar
+   overlapped the logo/nav on scroll. !important is required only to
+   beat the plugin's own inline style (inline beats any non-!important
+   stylesheet rule regardless of print order) — this still doesn't
+   touch the plugin's markup, JS, or the sidebar's actual layout,
+   only the two numbers that collide with the theme's header.
+   ══════════════════════════════════════════════════════════════ */
+
+.ttbm_style .ttbm_sticky_area.mpSticky {
+	top: 88px !important; /* 72px header + a little breathing room */
+	z-index: 90 !important; /* stay under .travail-header's z-index:100 */
+}
+
+.ttbm_style .ttbm_sticky_area.mpSticky .ttbm_sticky_on_scroll {
+	z-index: auto !important; /* was 1111 — no need to out-rank its own parent */
+}
+
+body.admin-bar .ttbm_style .ttbm_sticky_area.mpSticky {
+	top: 120px !important; /* + 32px admin bar */
+}
+
+@media ( max-width: 782px ) {
+	body.admin-bar .ttbm_style .ttbm_sticky_area.mpSticky {
+		top: 134px !important; /* + 46px admin bar (WP's own mobile breakpoint) */
+	}
+}
+
+/* Same stacking-context fix, applied before .mpSticky even kicks in:
+   .leftSidebar has no z-index of its own in the plugin's CSS (only
+   width/max-width), so give it an explicit, low value now rather than
+   leaving it at the default `auto` and only correcting things once JS
+   adds .mpSticky on scroll. */
+.ttbm_filter_area .leftSidebar {
+	z-index: 10;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Single tour page — outer container width vs. the theme's header/nav.
+   ══════════════════════════════════════════════════════════════
+   Confirmed by reading the plugin's rendered markup + its whole CSS:
+   the actual wrapper chain is
+     #ttbm_content > .ttbm_default_theme > .ttbm_style.ttbm_wraper > .ttbm_container > .ttbm_details_page > …
+   and NONE of those ancestors carry a max-width/centering of their
+   own anywhere in the plugin's CSS — the block just fills whatever
+   it's inside. TTBM_Global_Style.php even defines a
+   `--dcontainer_width: 1320px` custom property that looks like it
+   should be the page width, but nothing in the plugin ever actually
+   reads it (grepped the whole plugin — dead variable). Meanwhile
+   this theme's header/footer/every other page use `.travail-container`,
+   capped at `--travail-container` (1280px by default, Customizer-
+   editable) — hence the mismatch between the tour details page's
+   content width and the menu above it.
+   Constraining the outermost of the plugin's own wrapper divs — rather
+   than something further down (`.ttbm_container`, tried first) — means
+   there's exactly one element doing the centering for this whole page,
+   instead of two nested containers each adding their own margin/padding
+   and compounding the gap. Rather than guess at whatever width the
+   plugin's un-constrained markup happens to render at across themes/
+   viewports, just give it the exact same box model as `.travail-container`
+   so it's guaranteed to line up. This only touches this OUTER wrapper's
+   width/centering — not the two-column content+sidebar layout inside
+   it, which the scope note above already found to be best left alone.
+
+   `.ttbm_default_theme` is only ONE of four such outer wrappers — each
+   single-tour "Theme File" choice (Tour edit screen → Layout) renders
+   through its own template with its own class (checked every file
+   under templates/themes/):
+     default.php      → .ttbm_default_theme   (also used, +modifier
+                         class, by hotel_default.php for single hotels)
+     smart.php         → .ttbm_smart_theme
+     viator.php        → .ttbm_viator_theme
+   A tour set to "Smart" or "Viator" layout wasn't covered by the first
+   pass of this fix (confirmed: /tour/highlights-of-naples-and-the-amalfi-
+   coast/ uses smart.php and was still full-width) — listed together so
+   a future template variant is easy to add to the same rule.
+
+   Second pass, found via DevTools (Boga Lake / default.php still didn't
+   line up after the above): ttbm_registration.css:28-34 has its own
+     div.ttbm_default_theme, div.ttbm_viator_theme {
+         width: 100%; max-width: 1400px; margin: auto; background: #fff;
+     }
+   `div.ttbm_default_theme` (element + class, specificity 0,1,1) beats a
+   plain `.ttbm_default_theme` (0,1,0) regardless of stylesheet order —
+   that's why Smart Theme lined up immediately (no such div-qualified
+   rule exists for `.ttbm_smart_theme`) while Default/Viator silently
+   kept the plugin's own hardcoded 1400px and its own solid #fff
+   background (a second, separate white from the page's actual parchment
+   background — the source of an earlier "extra white margin" report).
+   Matching the plugin's own `div.` element qualifier here brings this
+   rule to the same 0,1,1 specificity, so — combined with this
+   stylesheet always printing last (enqueued at PHP_INT_MAX, see
+   travail_enqueue_tbm_restyle() in inc/enqueue.php) — it wins on
+   cascade order alone, no !important needed. `background: transparent`
+   removes the plugin's own white fill so this box shows the page's
+   real background instead of a second, separately-colored one. */
+div.ttbm_default_theme,
+div.ttbm_smart_theme,
+div.ttbm_viator_theme {
+	width: 100%;
+	max-width: var( --travail-container );
+	margin-inline: auto;
+	padding-inline: var( --travail-gutter );
+	background: transparent;
+}
