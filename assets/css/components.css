@@ -323,9 +323,19 @@
 .travail-dest-card img {
 	position: absolute;
 	inset: 0;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+	/* !important: confirmed via a real sideloaded attachment (square
+	   900x900 / landscape 800x500 source, no generated crop available —
+	   this server has neither GD nor Imagick, see System Status) that
+	   the base.css `img { height: auto }` reset was winning over this
+	   rule for some sources despite lower specificity + earlier source
+	   order, leaving a card only partly covered by its image with the
+	   card's own background color showing through below. A portrait
+	   source photo happened to mask the same bug elsewhere by coincidence
+	   (tall enough at auto-height to still fill the card). Forcing it
+	   here guarantees the intended full-bleed cropped card regardless. */
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: cover !important;
 	transition: transform 0.5s ease;
 }
 

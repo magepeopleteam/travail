@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Search Tours — TRAVELLO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#F7F7F4;color:#17201D;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;border:none;background:none;cursor:pointer}
+input,select{font-family:inherit}
+img{display:block;max-width:100%}
+::-webkit-scrollbar{width:0}
+:root{
+  --bg:#F7F7F4;--fg:#17201D;--primary:#123B32;--accent:#F36B4F;
+  --muted:#737A76;--border:#E7E7E2;--card:#FFFFFF;--soft:#EEF1EF;
+  --max-w:1280px;--px:clamp(20px,5vw,80px);
+  --shadow-sm:0 2px 16px rgba(18,59,50,.07);--shadow:0 8px 40px rgba(18,59,50,.12);
+}
+.serif-italic{font-family:'DM Serif Display',serif;font-style:italic;font-weight:400}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 var(--px)}
+
+/* ── HEADER ──────────────────────────────────────────────────────────────── */
+.site-header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border)}
+.header-inner{max-width:var(--max-w);margin:0 auto;padding:0 var(--px);height:68px;display:flex;align-items:center;gap:24px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;margin-right:8px}
+.logo-text{font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--fg)}
+
+/* ── BIG SEARCH BAR ──────────────────────────────────────────────────────── */
+.main-search{flex:1;display:flex;align-items:center;background:#F7F7F4;border:1.5px solid var(--border);border-radius:999px;overflow:visible;max-width:720px;position:relative}
+.ms-field{flex:1;display:flex;align-items:center;gap:8px;padding:12px 18px;border-right:1px solid var(--border);position:relative}
+.ms-field:last-of-type{border-right:none}
+.ms-field input{border:none;outline:none;font-size:13px;font-weight:500;color:var(--fg);background:transparent;width:100%}
+.ms-field input::placeholder{color:#B0B5B2}
+.ms-field .ms-label{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
+.ms-inner{display:flex;flex-direction:column}
+.ms-inner input{font-size:13px;font-weight:600;color:var(--fg)}
+.ms-btn{padding:10px 22px;margin:5px;border-radius:999px;font-size:13px;font-weight:700;color:#fff;background:var(--primary);flex-shrink:0;display:flex;align-items:center;gap:7px;transition:opacity .2s}
+.ms-btn:hover{opacity:.88}
+.header-right{display:flex;align-items:center;gap:14px;margin-left:auto;flex-shrink:0}
+.icon-btn{color:var(--muted);padding:4px;display:flex;align-items:center;transition:color .2s}
+.icon-btn:hover{color:var(--primary)}
+.sign-in{font-size:13px;font-weight:600;color:var(--fg)}
+.list-prop{padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700;color:#fff;background:var(--primary);transition:opacity .2s}
+.list-prop:hover{opacity:.88}
+@media(max-width:900px){.main-search{display:none}.header-right .list-prop{display:none}}
+
+/* ── SEARCH SUGGESTIONS DROPDOWN ────────────────────────────────────────── */
+.search-dropdown{position:absolute;top:calc(100% + 12px);left:0;width:360px;background:#fff;border-radius:16px;box-shadow:var(--shadow);border:1px solid var(--border);z-index:200;display:none;overflow:hidden}
+.search-dropdown.open{display:block}
+.sd-section{padding:14px 16px}
+.sd-label{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.sd-item{display:flex;align-items:center;gap:12px;padding:8px 0;cursor:pointer;transition:background .15s;border-radius:8px}
+.sd-item:hover{background:var(--soft);padding-left:6px;margin:0 -6px;padding-right:6px}
+.sd-icon{width:32px;height:32px;border-radius:10px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.sd-name{font-size:13px;font-weight:600;color:var(--fg)}
+.sd-sub{font-size:11px;color:var(--muted)}
+.sd-divider{border:none;border-top:1px solid var(--border);margin:4px 0}
+
+/* ── FILTER STRIP ────────────────────────────────────────────────────────── */
+.filter-strip{background:#fff;border-bottom:1px solid var(--border);padding:12px 0;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.filter-strip::-webkit-scrollbar{display:none}
+.fs-inner{display:flex;align-items:center;gap:8px;padding:0 var(--px)}
+.fs-pill{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;font-size:12px;font-weight:600;color:var(--muted);border:1.5px solid var(--border);background:#fff;transition:all .2s;white-space:nowrap}
+.fs-pill:hover{border-color:var(--primary);color:var(--primary)}
+.fs-pill.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.fs-pill.active svg{stroke:#fff}
+.fs-divider{width:1px;height:24px;background:var(--border);flex-shrink:0}
+.fs-pill svg{stroke:var(--muted);transition:stroke .2s}
+.fs-sort{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;font-size:12px;font-weight:600;color:var(--fg);border:1.5px solid var(--border);background:#fff;margin-left:auto}
+
+/* ── MAIN LAYOUT ─────────────────────────────────────────────────────────── */
+.search-layout{display:grid;grid-template-columns:1fr 380px;gap:0;min-height:calc(100vh - 130px)}
+@media(max-width:1100px){.search-layout{grid-template-columns:1fr}}
+
+/* ── RESULTS COLUMN ──────────────────────────────────────────────────────── */
+.results-col{border-right:1px solid var(--border);padding:24px var(--px) 60px}
+@media(max-width:1100px){.results-col{border-right:none}}
+.results-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.results-count{font-size:14px;font-weight:700;color:var(--fg)}
+.results-count span{font-weight:400;color:var(--muted)}
+.map-toggle-btn{display:none;align-items:center;gap:6px;padding:9px 16px;border-radius:999px;border:1.5px solid var(--border);font-size:12px;font-weight:600;color:var(--fg)}
+@media(max-width:1100px){.map-toggle-btn{display:inline-flex}}
+
+/* ── HORIZONTAL TOUR CARD ────────────────────────────────────────────────── */
+.sr-card{display:grid;grid-template-columns:200px 1fr;gap:0;background:var(--card);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);margin-bottom:16px;transition:box-shadow .3s,transform .3s}
+.sr-card:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+.sr-img{position:relative;overflow:hidden;background:var(--soft)}
+.sr-img img{width:100%;height:100%;object-fit:cover;transition:transform .7s}
+.sr-card:hover .sr-img img{transform:scale(1.05)}
+.sr-badge{position:absolute;top:12px;left:12px}
+.sr-wish{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:999px;background:rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--muted);transition:all .2s;backdrop-filter:blur(4px)}
+.sr-wish.on{background:var(--accent);color:#fff}
+.sr-body{padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between}
+.sr-tags{display:flex;gap:5px;margin-bottom:8px;flex-wrap:wrap}
+.sr-tag{font-size:10px;font-weight:600;color:var(--primary);background:var(--soft);padding:3px 9px;border-radius:999px}
+.sr-title{font-size:14px;font-weight:700;color:var(--fg);line-height:1.35;margin-bottom:5px;letter-spacing:-.01em}
+.sr-meta{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:8px}
+.sr-desc{font-size:12px;color:var(--muted);line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:12px}
+.sr-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.sr-price-info{}
+.sr-price-lbl{font-size:10px;color:var(--muted);font-weight:500}
+.sr-price{font-size:17px;font-weight:700;color:var(--primary)}
+.sr-price span{font-size:11px;font-weight:500;color:var(--muted)}
+.sr-cta{display:inline-flex;align-items:center;gap:5px;padding:9px 18px;border-radius:999px;font-size:12px;font-weight:700;color:#fff;background:var(--primary);transition:gap .2s,opacity .2s}
+.sr-cta:hover{gap:9px;opacity:.9}
+@media(max-width:600px){.sr-card{grid-template-columns:1fr}.sr-img{height:180px}}
+
+/* ── BADGE ────────────────────────────────────────────────────────────────── */
+.badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--accent)}
+.badge.green{background:var(--primary)}
+
+/* ── MAP PANEL ────────────────────────────────────────────────────────────── */
+.map-panel{position:sticky;top:68px;height:calc(100vh - 68px);background:#dde8e4;overflow:hidden}
+@media(max-width:1100px){.map-panel{display:none}}
+.map-bg{width:100%;height:100%;object-fit:cover;opacity:.65}
+.map-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(18,59,50,.2))}
+/* Map pins */
+.map-pin{position:absolute;transform:translate(-50%,-100%);cursor:pointer}
+.pin-bubble{background:#fff;border-radius:10px;padding:6px 12px;font-size:12px;font-weight:700;color:var(--primary);box-shadow:0 4px 16px rgba(18,59,50,.18);white-space:nowrap;transition:all .2s}
+.pin-bubble:hover,.pin-bubble.active{background:var(--primary);color:#fff;transform:scale(1.08)}
+.pin-bubble::after{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-bottom:none;border-top-color:#fff}
+.pin-bubble.active::after{border-top-color:var(--primary)}
+.map-card{position:absolute;bottom:24px;left:16px;right:16px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);display:flex;gap:0}
+.map-card-img{width:100px;flex-shrink:0;overflow:hidden}
+.map-card-img img{width:100%;height:100%;object-fit:cover}
+.map-card-body{padding:14px;flex:1}
+.map-card-title{font-size:13px;font-weight:700;color:var(--fg);margin-bottom:4px;line-height:1.3}
+.map-card-meta{font-size:11px;color:var(--muted);margin-bottom:8px}
+.map-card-price{font-size:15px;font-weight:700;color:var(--primary)}
+.map-card-close{position:absolute;top:10px;right:10px;width:24px;height:24px;border-radius:999px;background:rgba(255,255,255,.9);font-size:12px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+
+/* ── NO RESULTS / SUGGESTIONS ────────────────────────────────────────────── */
+.no-results{text-align:center;padding:60px 20px}
+.no-results h3{font-size:22px;font-weight:700;color:var(--fg);margin-bottom:10px}
+.no-results p{font-size:14px;color:var(--muted);margin-bottom:24px}
+
+/* ── RELATED SEARCHES ────────────────────────────────────────────────────── */
+.related-searches{margin-bottom:24px}
+.rs-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px}
+.rs-pills{display:flex;flex-wrap:wrap;gap:8px}
+.rs-pill{padding:7px 14px;border-radius:999px;border:1.5px solid var(--border);background:#fff;font-size:12px;font-weight:600;color:var(--fg);transition:all .2s}
+.rs-pill:hover{border-color:var(--primary);color:var(--primary)}
+
+/* ── MOBILE BOTTOM NAV ───────────────────────────────────────────────────── */
+.mob-bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);z-index:100;padding:6px 0 10px;box-shadow:0 -4px 24px rgba(18,59,50,.08)}
+@media(max-width:768px){.mob-bottom-nav{display:flex;justify-content:space-around};body{padding-bottom:72px}}
+.mob-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 12px}
+.mob-icon{font-size:18px}
+.mob-label{font-size:10px;font-weight:600;color:var(--muted)}
+.mob-item.active .mob-label{color:var(--primary)}
+</style>
+</head>
+<body>
+
+<!-- HEADER WITH SEARCH -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="travello.html" class="logo">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#123B32"/><path d="M16 6 L22 20 L16 17 L10 20 Z" fill="#F7F7F4" opacity="0.9"/><circle cx="16" cy="22" r="2" fill="#F36B4F"/></svg>
+      <span class="logo-text">TRAVELLO</span>
+    </a>
+
+    <!-- Expanded search bar in header -->
+    <div class="main-search" id="main-search">
+      <div class="ms-field" style="max-width:240px;position:relative">
+        <div class="ms-inner">
+          <span class="ms-label">Where to?</span>
+          <input type="text" id="dest-in" value="Bali, Indonesia" autocomplete="off" />
+        </div>
+        <!-- Search suggestions -->
+        <div class="search-dropdown" id="search-dd">
+          <div class="sd-section">
+            <p class="sd-label">Popular Destinations</p>
+            <div class="sd-item" onclick="setDest('Bali, Indonesia')"><span class="sd-icon">🌴</span><div><p class="sd-name">Bali, Indonesia</p><p class="sd-sub">128 tours available</p></div></div>
+            <div class="sd-item" onclick="setDest('Dubai, UAE')"><span class="sd-icon">🏙️</span><div><p class="sd-name">Dubai, UAE</p><p class="sd-sub">94 tours available</p></div></div>
+            <div class="sd-item" onclick="setDest('Santorini, Greece')"><span class="sd-icon">🏛️</span><div><p class="sd-name">Santorini, Greece</p><p class="sd-sub">76 tours available</p></div></div>
+            <div class="sd-item" onclick="setDest('Tokyo, Japan')"><span class="sd-icon">🗾</span><div><p class="sd-name">Tokyo, Japan</p><p class="sd-sub">64 tours available</p></div></div>
+            <hr class="sd-divider">
+            <p class="sd-label" style="margin-top:10px">Recent Searches</p>
+            <div class="sd-item" onclick="setDest('Maldives')"><span class="sd-icon">🕐</span><div><p class="sd-name">Maldives</p><p class="sd-sub">52 tours available</p></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="ms-field" style="max-width:150px">
+        <div class="ms-inner">
+          <span class="ms-label">When?</span>
+          <input type="text" value="Aug 15 – 22" />
+        </div>
+      </div>
+      <div class="ms-field">
+        <div class="ms-inner">
+          <span class="ms-label">Travelers</span>
+          <input type="text" value="2 Adults" />
+        </div>
+      </div>
+      <button class="ms-btn">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M14.5 14.5 L18 18"/></svg>
+        Search
+      </button>
+    </div>
+
+    <div class="header-right">
+      <button class="icon-btn"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17S2 11.5 2 6.5A4 4 0 0110 4.06 4 4 0 0118 6.5C18 11.5 10 17 10 17Z"/></svg></button>
+      <a href="#" class="sign-in">Sign in</a>
+      <a href="#" class="list-prop">List Your Property</a>
+    </div>
+  </div>
+</header>
+
+<!-- FILTER STRIP -->
+<div class="filter-strip">
+  <div class="fs-inner">
+    <button class="fs-pill" onclick="openFilter()">
+      <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 5h14M6 10h8M9 15h2"/></svg>
+      All Filters
+      <span style="background:var(--primary);color:#fff;border-radius:999px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:2px">3</span>
+    </button>
+    <div class="fs-divider"></div>
+    <button class="fs-pill active" onclick="togglePill(this)">Adventure</button>
+    <button class="fs-pill" onclick="togglePill(this)">Beach</button>
+    <button class="fs-pill" onclick="togglePill(this)">Cultural</button>
+    <button class="fs-pill" onclick="togglePill(this)">Hiking</button>
+    <button class="fs-pill" onclick="togglePill(this)">Wildlife</button>
+    <button class="fs-pill" onclick="togglePill(this)">Luxury</button>
+    <button class="fs-pill" onclick="togglePill(this)">Family</button>
+    <div class="fs-divider"></div>
+    <button class="fs-pill" onclick="togglePill(this)">Under $100</button>
+    <button class="fs-pill" onclick="togglePill(this)">Half day</button>
+    <button class="fs-pill" onclick="togglePill(this)">★ 4.8+</button>
+    <button class="fs-pill" onclick="togglePill(this)">Free cancellation</button>
+    <div class="fs-divider"></div>
+    <button class="fs-sort" onclick="togglePill(this)">
+      Sort: Recommended
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="search-layout">
+  <!-- Results -->
+  <div class="results-col">
+    <div class="results-meta">
+      <p class="results-count"><strong>342 tours</strong> <span>in Bali, Indonesia · Aug 15–22 · 2 Adults</span></p>
+      <button class="map-toggle-btn" onclick="toggleMap()">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2 4l5 2 6-2 5 2v12l-5-2-6 2-5-2V4Z"/><path d="M7 6v12M13 4v12"/></svg>
+        Show map
+      </button>
+    </div>
+
+    <!-- Related searches -->
+    <div class="related-searches">
+      <p class="rs-title">Related searches</p>
+      <div class="rs-pills">
+        <button class="rs-pill">Ubud day trips</button>
+        <button class="rs-pill">Sunrise tours Bali</button>
+        <button class="rs-pill">Bali cooking class</button>
+        <button class="rs-pill">Seminyak beach clubs</button>
+        <button class="rs-pill">Nusa Penida boat tour</button>
+        <button class="rs-pill">Temple tours</button>
+      </div>
+    </div>
+
+    <!-- Result cards -->
+    <div id="results-list">
+
+      <div class="sr-card">
+        <div class="sr-img">
+          <img src="https://images.unsplash.com/photo-1761521688849-9700476692e5?w=500&h=400&fit=crop&auto=format" alt="Bali Sunrise" loading="lazy" />
+          <div class="sr-badge"><span class="badge">BESTSELLER</span></div>
+          <button class="sr-wish" onclick="tw(this)">♡</button>
+        </div>
+        <div class="sr-body">
+          <div>
+            <div class="sr-tags"><span class="sr-tag">Adventure</span><span class="sr-tag">Nature</span><span class="sr-tag">Free cancellation</span></div>
+            <h3 class="sr-title"><a href="tour-details.html">Bali Sunrise Jeep Adventure</a></h3>
+            <p class="sr-meta">📍 Bali, Indonesia &nbsp;·&nbsp; 🕐 6 hours &nbsp;·&nbsp; ★ <strong>4.9</strong> (128 reviews) &nbsp;·&nbsp; English</p>
+            <p class="sr-desc">Conquer Bali's volcanic highlands before dawn in a private 4WD jeep — watch the sunrise from 1,700m above sea level with panoramic views across three volcanoes.</p>
+          </div>
+          <div class="sr-footer">
+            <div class="sr-price-info"><p class="sr-price-lbl">From</p><p class="sr-price">$89<span>/person</span></p></div>
+            <a href="tour-details.html" class="sr-cta">View tour →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sr-card">
+        <div class="sr-img">
+          <img src="https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=500&h=400&fit=crop&auto=format" alt="Volcano" loading="lazy" />
+          <div class="sr-badge"><span class="badge">FEATURED</span></div>
+          <button class="sr-wish" onclick="tw(this)">♡</button>
+        </div>
+        <div class="sr-body">
+          <div>
+            <div class="sr-tags"><span class="sr-tag">Hiking</span><span class="sr-tag">Adventure</span><span class="sr-tag">Free cancellation</span></div>
+            <h3 class="sr-title"><a href="tour-details.html">Mount Batur Volcano Sunrise Trek</a></h3>
+            <p class="sr-meta">📍 Kintamani, Bali &nbsp;·&nbsp; 🕐 8 hours &nbsp;·&nbsp; ★ <strong>4.9</strong> (312 reviews) &nbsp;·&nbsp; English</p>
+            <p class="sr-desc">Trek the active volcano by torchlight and reach the rim just in time for sunrise. A certified local guide leads the way with breakfast served at the summit.</p>
+          </div>
+          <div class="sr-footer">
+            <div class="sr-price-info"><p class="sr-price-lbl">From</p><p class="sr-price">$69<span>/person</span></p></div>
+            <a href="tour-details.html" class="sr-cta">View tour →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sr-card">
+        <div class="sr-img">
+          <img src="https://images.unsplash.com/photo-1618479357575-1cbeaf396a93?w=500&h=400&fit=crop&auto=format" alt="Beach" loading="lazy" />
+          <button class="sr-wish on" onclick="tw(this)">♥</button>
+        </div>
+        <div class="sr-body">
+          <div>
+            <div class="sr-tags"><span class="sr-tag">Beach</span><span class="sr-tag">Water</span></div>
+            <h3 class="sr-title"><a href="tour-details.html">Hidden Beach &amp; Snorkel Escape</a></h3>
+            <p class="sr-meta">📍 South Bali &nbsp;·&nbsp; 🕐 8 hours &nbsp;·&nbsp; ★ <strong>4.8</strong> (94 reviews) &nbsp;·&nbsp; English</p>
+            <p class="sr-desc">Discover secluded white-sand beaches accessible only by boat. Snorkel vibrant coral reefs and enjoy a fresh seafood lunch on the water.</p>
+          </div>
+          <div class="sr-footer">
+            <div class="sr-price-info"><p class="sr-price-lbl">From</p><p class="sr-price">$75<span>/person</span></p></div>
+            <a href="tour-details.html" class="sr-cta">View tour →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sr-card">
+        <div class="sr-img">
+          <img src="https://images.unsplash.com/photo-1767651811744-17370b913160?w=500&h=400&fit=crop&auto=format" alt="Rice terraces" loading="lazy" />
+          <div class="sr-badge"><span class="badge green">NEW</span></div>
+          <button class="sr-wish" onclick="tw(this)">♡</button>
+        </div>
+        <div class="sr-body">
+          <div>
+            <div class="sr-tags"><span class="sr-tag">Cultural</span><span class="sr-tag">Nature</span><span class="sr-tag">Free cancellation</span></div>
+            <h3 class="sr-title"><a href="tour-details.html">Jatiluwih Rice Terrace Sunrise Walk</a></h3>
+            <p class="sr-meta">📍 Tabanan, Bali &nbsp;·&nbsp; 🕐 4 hours &nbsp;·&nbsp; ★ <strong>5.0</strong> (17 reviews) &nbsp;·&nbsp; English / Indonesian</p>
+            <p class="sr-desc">Walk the UNESCO-listed terraces as the morning mist clears, guided by a local farmer who will explain the 1,000-year-old subak irrigation system.</p>
+          </div>
+          <div class="sr-footer">
+            <div class="sr-price-info"><p class="sr-price-lbl">From</p><p class="sr-price">$55<span>/person</span></p></div>
+            <a href="tour-details.html" class="sr-cta">View tour →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sr-card">
+        <div class="sr-img">
+          <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=500&h=400&fit=crop&auto=format" alt="Spa" loading="lazy" />
+          <div class="sr-badge"><span class="badge">HOT DEAL</span></div>
+          <button class="sr-wish" onclick="tw(this)">♡</button>
+        </div>
+        <div class="sr-body">
+          <div>
+            <div class="sr-tags"><span class="sr-tag">Wellness</span><span class="sr-tag">Luxury</span></div>
+            <h3 class="sr-title"><a href="tour-details.html">Ubud Wellness &amp; Spa Full Day</a></h3>
+            <p class="sr-meta">📍 Ubud, Bali &nbsp;·&nbsp; 🕐 Full day &nbsp;·&nbsp; ★ <strong>4.7</strong> (203 reviews) &nbsp;·&nbsp; English</p>
+            <p class="sr-desc">Indulge in traditional Balinese healing rituals — including a 90-min massage, flower bath, yoga session, and organic lunch in a jungle setting.</p>
+          </div>
+          <div class="sr-footer">
+            <div class="sr-price-info">
+              <p class="sr-price-lbl">From <s style="color:var(--muted);font-size:12px;margin-left:4px">$175</s> <span style="color:var(--accent);font-size:10px;font-weight:700;background:#FFF0ED;padding:2px 7px;border-radius:999px;margin-left:4px">20% OFF</span></p>
+              <p class="sr-price">$140<span>/person</span></p>
+            </div>
+            <a href="tour-details.html" class="sr-cta">View tour →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Load more -->
+    <div style="text-align:center;padding-top:32px">
+      <button onclick="loadMore()" style="padding:14px 32px;border-radius:999px;border:1.5px solid var(--border);font-size:13px;font-weight:700;color:var(--fg);background:#fff;transition:all .2s" onmouseover="this.style.borderColor='var(--primary)';this.style.color='var(--primary)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--fg)'">
+        Load more results
+      </button>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px">Showing 5 of 342 tours</p>
+    </div>
+  </div>
+
+  <!-- Map panel -->
+  <div class="map-panel" id="map-panel">
+    <img src="https://images.unsplash.com/photo-1604223190546-a43e4c7f29d7?w=800&h=1200&fit=crop&auto=format" alt="Map" class="map-bg" />
+    <div class="map-overlay"></div>
+
+    <!-- Pins -->
+    <div class="map-pin" style="left:38%;top:42%">
+      <div class="pin-bubble active" onclick="showMapCard(this,'Bali Sunrise Jeep','Bali, Indonesia','$89','https://images.unsplash.com/photo-1761521688849-9700476692e5?w=200&h=150&fit=crop')">$89</div>
+    </div>
+    <div class="map-pin" style="left:55%;top:38%">
+      <div class="pin-bubble" onclick="showMapCard(this,'Mt. Batur Trek','Kintamani','$69','https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=200&h=150&fit=crop')">$69</div>
+    </div>
+    <div class="map-pin" style="left:32%;top:60%">
+      <div class="pin-bubble" onclick="showMapCard(this,'Hidden Beach Snorkel','South Bali','$75','https://images.unsplash.com/photo-1618479357575-1cbeaf396a93?w=200&h=150&fit=crop')">$75</div>
+    </div>
+    <div class="map-pin" style="left:48%;top:55%">
+      <div class="pin-bubble" onclick="showMapCard(this,'Ubud Wellness','Ubud, Bali','$140','https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=200&h=150&fit=crop')">$140</div>
+    </div>
+    <div class="map-pin" style="left:44%;top:30%">
+      <div class="pin-bubble" onclick="showMapCard(this,'Rice Terrace Walk','Tabanan','$55','https://images.unsplash.com/photo-1767651811744-17370b913160?w=200&h=150&fit=crop')">$55</div>
+    </div>
+
+    <!-- Map card -->
+    <div class="map-card" id="map-card">
+      <div class="map-card-img">
+        <img id="mc-img" src="https://images.unsplash.com/photo-1761521688849-9700476692e5?w=200&h=150&fit=crop" alt="Tour" />
+      </div>
+      <div class="map-card-body">
+        <h4 class="map-card-title" id="mc-title">Bali Sunrise Jeep Adventure</h4>
+        <p class="map-card-meta" id="mc-loc">📍 Bali, Indonesia · ★ 4.9</p>
+        <p class="map-card-price" id="mc-price">From $89/person</p>
+        <a href="tour-details.html" style="font-size:11px;font-weight:700;color:var(--primary)">View tour →</a>
+      </div>
+      <button class="map-card-close" onclick="document.getElementById('map-card').style.display='none'">✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mob-bottom-nav">
+  <button class="mob-item active"><span class="mob-icon">🔍</span><span class="mob-label">Explore</span></button>
+  <button class="mob-item"><span class="mob-icon">📋</span><span class="mob-label">Bookings</span></button>
+  <button class="mob-item"><span class="mob-icon">♥</span><span class="mob-label">Favorites</span></button>
+  <button class="mob-item"><span class="mob-icon">👤</span><span class="mob-label">Profile</span></button>
+</nav>
+
+<script>
+// Search dropdown
+const destIn = document.getElementById('dest-in')
+const dd = document.getElementById('search-dd')
+destIn.addEventListener('focus', () => dd.classList.add('open'))
+document.addEventListener('click', e => { if (!e.target.closest('#main-search')) dd.classList.remove('open') })
+function setDest(v){ destIn.value = v; dd.classList.remove('open') }
+
+// Filter pills
+function togglePill(btn){ btn.classList.toggle('active') }
+
+// Wishlist
+function tw(btn){ btn.classList.toggle('on'); btn.textContent = btn.classList.contains('on') ? '♥' : '♡' }
+
+// Map card
+function showMapCard(pin, title, loc, price, img){
+  document.querySelectorAll('.pin-bubble').forEach(p => p.classList.remove('active'))
+  pin.classList.add('active')
+  document.getElementById('mc-title').textContent = title
+  document.getElementById('mc-loc').textContent = '📍 ' + loc + ' · ★ 4.9'
+  document.getElementById('mc-price').textContent = 'From ' + price + '/person'
+  document.getElementById('mc-img').src = img
+  document.getElementById('map-card').style.display = 'flex'
+}
+
+// Load more
+function loadMore(){ alert('Loading more results...') }
+
+// Map toggle (mobile)
+function toggleMap(){
+  const m = document.getElementById('map-panel')
+  m.style.display = m.style.display === 'block' ? 'none' : 'block'
+}
+
+// Filter modal placeholder
+function openFilter(){ alert('Full filter panel — implement as modal') }
+</script>
+</body>
+</html>
