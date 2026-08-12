@@ -403,7 +403,24 @@ body.travail-travello-home .travail-travello-hero {
 }
 
 body.admin-bar.travail-travello-home .travail-travello-hero {
-	padding-top: 100px;
+	padding: 0;
+}
+
+/*
+ * The 68px padding-top above exists to reserve space for .travail-header,
+ * which is `position: fixed` on the real frontend (see header-footer.css)
+ * so it floats over the hero instead of pushing it down. Inside
+ * Elementor's own editor preview iframe that fixed positioning doesn't
+ * hold (confirmed via screenshot: a blank ~68px band appeared between the
+ * header and the hero image, i.e. the header was taking up its own
+ * in-flow space AND the hero was still reserving room for an overlay that
+ * wasn't happening). Elementor flags its preview iframe's <body> with
+ * `elementor-editor-active`, so drop the reservation there — whether the
+ * header ends up in-flow (closing the gap) or still manages to float on
+ * top (matching the intended frontend look), zero is correct either way.
+ */
+body.elementor-editor-active.travail-travello-home .travail-travello-hero {
+	padding-top: 0;
 }
 
 @media ( max-width: 782px ) {

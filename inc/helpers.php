@@ -268,21 +268,28 @@ function travail_kses( $html ) {
  * page visually, since every `.travail-travello-*` class in the Elementor
  * widgets had no stylesheet backing it at all).
  *
+ * Also true when *directly* viewing either generated homepage-design page
+ * on its own permalink, regardless of which one (if either) is currently
+ * the live front page — Travail → Homepages lets a site owner preview and
+ * edit both variants before picking one, and the Elementor editor loads
+ * exactly this permalink in its preview iframe. Without this, opening the
+ * Travello page in Elementor while the Classic page was still the active
+ * front page reported false here, so travello.css/.js never loaded and
+ * the editor preview rendered completely unstyled (confirmed via
+ * screenshot) even though the live frontend (viewed only after Travello
+ * was actually activated as the front page) looked correct.
+ *
  * @return bool
  */
 function travail_is_travello_home() {
-	if ( ! is_front_page() ) {
-		return false;
-	}
-
-	// `page_on_front` can hold a stale value from an earlier "A static
-	// page" choice even while Settings → Reading is currently set to
-	// "Your latest posts" — checking show_on_front first stops that
-	// leftover value from being mistaken for the page actually showing.
-	// The get_post_status() check additionally guards against the ID
-	// itself being stale (page trashed/deleted, or replaced by a newer
-	// import run).
-	if ( 'page' === get_option( 'show_on_front' ) ) {
+	if ( is_front_page() && 'page' === get_option( 'show_on_front' ) ) {
+		// `page_on_front` can hold a stale value from an earlier "A static
+		// page" choice even while Settings → Reading is currently set to
+		// "Your latest posts" — checking show_on_front first stops that
+		// leftover value from being mistaken for the page actually showing.
+		// The get_post_status() check additionally guards against the ID
+		// itself being stale (page trashed/deleted, or replaced by a newer
+		// import run).
 		$front_page_id = (int) get_option( 'page_on_front' );
 		if ( $front_page_id && 'publish' === get_post_status( $front_page_id ) ) {
 			$design = get_post_meta( $front_page_id, '_travail_homepage_design', true );
@@ -292,7 +299,18 @@ function travail_is_travello_home() {
 		}
 	}
 
-	return 'travello' === travail_get_option( 'homepage_style', 'travello' );
+	if ( is_page() ) {
+		$design = get_post_meta( get_the_ID(), '_travail_homepage_design', true );
+		if ( $design ) {
+			return 'travello' === $design;
+		}
+	}
+
+	if ( is_front_page() ) {
+		return 'travello' === travail_get_option( 'homepage_style', 'travello' );
+	}
+
+	return false;
 }
 
 /**

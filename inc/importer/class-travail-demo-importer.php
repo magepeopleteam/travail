@@ -364,11 +364,20 @@ class Travail_Demo_Importer {
 
 		$new_widget_ids = array();
 		foreach ( $widgets_to_add as $id_base => $instance ) {
-			$option_key                        = 'widget_' . $id_base;
-			$all_instances                     = get_option( $option_key, array() );
-			$next_number                       = empty( $all_instances ) ? 2 : ( max( array_diff( array_keys( $all_instances ), array( '_multiwidget' ) ) ) + 1 );
-			$all_instances[ $next_number ]     = $instance;
-			$all_instances['_multiwidget']     = 1;
+			$option_key       = 'widget_' . $id_base;
+			$all_instances    = get_option( $option_key, array() );
+			$existing_numbers = array_diff( array_keys( $all_instances ), array( '_multiwidget' ) );
+			// `$all_instances` can be non-empty yet contain no numeric keys at
+			// all — WordPress leaves options like `widget_search` behind as
+			// just `array( '_multiwidget' => 1 )` once every instance of that
+			// widget type has been removed. `empty( $all_instances )` misses
+			// that case, and max() on the resulting empty array is a fatal
+			// ValueError on PHP 8+ (caught while triaging a "Request failed"
+			// AJAX error partway through demo import), so check the diffed
+			// list itself instead.
+			$next_number                    = empty( $existing_numbers ) ? 2 : ( max( $existing_numbers ) + 1 );
+			$all_instances[ $next_number ] = $instance;
+			$all_instances['_multiwidget'] = 1;
 			update_option( $option_key, $all_instances );
 			$new_widget_ids[] = $id_base . '-' . $next_number;
 		}
@@ -541,6 +550,13 @@ class Travail_Demo_Importer {
 		$count = 0;
 
 		$locations = array(
+			// Names must match the existing ttbm_tour_location terms exactly
+			// (upsert_demo_term() looks up by name) — these two were created
+			// directly on the live site, not by this importer, and had no
+			// Card Image set yet (confirmed: they were falling back to the
+			// theme's placeholder-tour.svg on the destination grid).
+			array( 'Bandarban', 'Bangladesh', 'https://images.unsplash.com/photo-1751769539073-d675c0ac98d6?w=900&h=900&fit=crop&auto=format' ),
+			array( 'Coxbazar', 'Bangladesh', 'https://images.unsplash.com/photo-1778432763684-8d14000d8e2a?w=900&h=900&fit=crop&auto=format' ),
 			array( 'Bali', 'Indonesia', 'https://images.unsplash.com/photo-1559628233-eb1b1a45564b?w=900&h=900&fit=crop&auto=format' ),
 			array( 'Dubai', 'UAE', 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=900&h=900&fit=crop&auto=format' ),
 			array( 'Paris', 'France', 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=900&h=900&fit=crop&auto=format' ),

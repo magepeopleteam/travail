@@ -7,6 +7,10 @@
  * without the plugin, so there is zero risk of a fatal error
  * (Scenario B/D/E from the spec).
  *
+ * The one exception is skip_onboarding_redirect(), which hooks the
+ * generic `admin_init` action because that's where Elementor itself
+ * fires the redirect we're cancelling — see its doc-comment.
+ *
  * @package Travail
  */
 
@@ -28,6 +32,10 @@ class Travail_Elementor {
 		add_action( 'elementor/frontend/after_enqueue_styles', array( __CLASS__, 'enqueue_editor_assets' ) );
 		add_action( 'elementor/editor/after_enqueue_styles', array( __CLASS__, 'enqueue_editor_assets' ) );
 		add_action( 'admin_notices', array( __CLASS__, 'maybe_show_missing_notice' ) );
+
+		// Priority 5 so this runs before Elementor's own `admin_init`
+		// callback (registered at the default priority 10).
+		add_action( 'admin_init', array( __CLASS__, 'skip_onboarding_redirect' ), 5 );
 	}
 
 	/**
@@ -94,6 +102,27 @@ class Travail_Elementor {
 		wp_enqueue_style( 'travail-base', TRAVAIL_URI . '/assets/css/base.css', array(), TRAVAIL_VERSION );
 		wp_enqueue_style( 'travail-layout', TRAVAIL_URI . '/assets/css/layout.css', array( 'travail-base' ), TRAVAIL_VERSION );
 		wp_enqueue_style( 'travail-components', TRAVAIL_URI . '/assets/css/components.css', array( 'travail-layout' ), TRAVAIL_VERSION );
+	}
+
+	/**
+	 * Cancel Elementor's own "redirect to the onboarding wizard" after
+	 * install/activation.
+	 *
+	 * Elementor's activation hook (Elementor\Maintenance::activation())
+	 * sets a 1-minute transient, `elementor_activation_redirect`, and its
+	 * Admin component checks that transient on `admin_init`
+	 * (Elementor\Core\Admin\Admin::maybe_redirect_to_getting_started(),
+	 * hooked at the default priority 10) to bounce the very next admin
+	 * request to `admin.php?page=elementor-app#onboarding`.
+	 *
+	 * We run one tick earlier — priority 5 — and clear that transient
+	 * before Elementor's callback ever checks it, so activating Elementor
+	 * leaves the admin on the Plugins screen instead of being redirected
+	 * into the onboarding wizard. Deleting a transient that doesn't exist
+	 * is a harmless no-op, so this is safe to run on every admin request.
+	 */
+	public static function skip_onboarding_redirect() {
+		delete_transient( 'elementor_activation_redirect' );
 	}
 
 	/**
