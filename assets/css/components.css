@@ -14,9 +14,14 @@
  * confirmed via DevTools — independently of the section's own padding
  * (already zeroed per-section in the generated data), so it's neutralized
  * globally here rather than relying on a per-section JSON setting that a
- * given Elementor version may not honor the same way. */
+ * given Elementor version may not honor the same way. !important because
+ * this specific rule was reported as still not taking effect at the
+ * previous (non-!important) specificity even though it's confirmed
+ * present and served — the most likely explanation is Elementor applying
+ * an equal-or-higher-specificity (or inline) padding rule of its own
+ * that a plain selector can't outrank regardless of source order. */
 .elementor-column-gap-default > .elementor-column > .elementor-element-populated {
-	padding: 0;
+	padding: 0 !important;
 }
 
 /* ── Hero ──────────────────────────────────────────────────── */
