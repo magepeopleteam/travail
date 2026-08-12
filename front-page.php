@@ -25,8 +25,12 @@
  * (Travail → Homepages, see
  * inc/importer/class-travail-elementor-page-builder.php) always wins once
  * it's assigned as the front page, regardless of the Customizer setting
- * above — travail_is_travello_home() itself bails out to false for that
- * case, so this template doesn't need its own check for it.
+ * above — travail_should_render_travello_hook() itself bails out to
+ * false for that case, so this template doesn't need its own check for
+ * it. (That check deliberately lives in a separate helper from
+ * travail_is_travello_home() — the latter answers "is Travello showing"
+ * for asset-loading purposes and must stay true for an Elementor
+ * Travello page too, so its own travello.css/.js still load.)
  *
  * @package Travail
  */
@@ -42,7 +46,7 @@ $travail_static_front = ( 'page' === get_option( 'show_on_front' ) ) && (int) ge
 
 <main id="main" class="travail-main" role="main">
 
-	<?php if ( travail_is_travello_home() ) : ?>
+	<?php if ( travail_should_render_travello_hook() ) : ?>
 
 		<?php
 		/**
