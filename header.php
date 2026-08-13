@@ -140,7 +140,15 @@ if ( $travail_announcement ) :
 do_action( 'travail_after_header' );
 ?>
 
-<?php if ( ! is_front_page() ) : ?>
+<?php
+/**
+ * Tour archive renders its own breadcrumb inside .travail-archive-header
+ * (matching the reference design's page-hero, which has the breadcrumb as
+ * part of the same white hero block rather than a separate strip above it)
+ * — skip the global one here so it isn't shown twice.
+ */
+if ( ! is_front_page() && ! is_post_type_archive( 'ttbm_tour' ) ) :
+	?>
 	<div class="travail-container">
 		<?php get_template_part( 'template-parts/content/breadcrumbs' ); ?>
 	</div>
