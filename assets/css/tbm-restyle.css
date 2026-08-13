@@ -631,6 +631,5 @@ div.ttbm_viator_theme {
    later print order. */
 div.mpContainer {
 	max-width: var( --travail-container );
-	padding-inline: var( --travail-gutter );
 	margin-inline: auto;
 }
