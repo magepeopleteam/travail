@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php the_custom_logo(); ?>
 	<?php else : ?>
 		<span class="travail-logo-icon" aria-hidden="true">
-			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+			<svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" style="fill:var(--travail-color-primary)"/><path d="M16 6 L22 20 L16 17 L10 20 Z" style="fill:var(--travail-color-bg,#F7F7F4)" opacity="0.9"/><circle cx="16" cy="22" r="2" style="fill:var(--travail-color-accent)"/></svg>
 		</span>
 		<span><?php bloginfo( 'name' ); ?></span>
 	<?php endif; ?>

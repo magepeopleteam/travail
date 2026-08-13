@@ -74,16 +74,17 @@ body.admin-bar .travail-header {
 	width: auto;
 }
 
+/* Reference's logo mark is one self-contained SVG (its own circle + needle +
+   dot, all with explicit fills) — no separate wrapping badge behind it. This
+   span used to draw that circular badge itself, for a plain outline icon
+   sitting on top; now redundant since the SVG below provides its own circle. */
 .travail-logo-icon {
 	width: 32px;
 	height: 32px;
-	border-radius: 50%;
-	background: var( --travail-forest );
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-shrink: 0;
-	color: #fff;
 }
 
 .travail-nav {
@@ -150,15 +151,28 @@ body.admin-bar .travail-header {
 	gap: 12px;
 }
 
+/* Reference's equivalent (.icon-btn) is bare — no fixed circular hit-box,
+   no background, just an icon that changes color on hover — on every
+   reference page that has one (homepage hero included), not just this
+   archive. The 36px circle + background-on-hover here was a theme-only
+   embellishment with no reference counterpart, so it's removed at the base
+   rule rather than just for the "solid header" states below. */
+/* base.css's global `svg{fill:currentColor}` reset (needed elsewhere for
+   solid-icon usages) beats these two icons' own `fill="none"` — a CSS
+   property always wins over the same SVG presentation attribute, regardless
+   of specificity — turning the heart into a solid blob and the magnifying
+   glass into a filled dot instead of an outline. Scoped back to none just
+   for icons inside this button, rather than touching the global reset. */
+.travail-icon-btn svg {
+	fill: none;
+}
+
 .travail-icon-btn {
-	width: 36px;
-	height: 36px;
-	border-radius: 50%;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	padding: 4px;
 	color: #fff;
-	transition: background 0.2s ease;
+	transition: color 0.2s ease;
 	border: none;
 	background: transparent;
 	cursor: pointer;
@@ -166,20 +180,21 @@ body.admin-bar .travail-header {
 }
 
 .travail-icon-btn:hover {
-	background: rgba( 255, 255, 255, 0.15 );
-	opacity: 1;
+	color: #fff;
+	opacity: 0.8;
 }
 
 .travail-header.is-scrolled .travail-icon-btn,
 .travail-header--solid .travail-icon-btn,
 .travail-header--static .travail-icon-btn {
-	color: var( --travail-ink );
+	color: var( --travail-color-text-muted );
 }
 
 .travail-header.is-scrolled .travail-icon-btn:hover,
 .travail-header--solid .travail-icon-btn:hover,
 .travail-header--static .travail-icon-btn:hover {
-	background: var( --travail-color-border );
+	background: transparent;
+	color: var( --travail-color-primary );
 }
 
 .travail-icon-btn__count {

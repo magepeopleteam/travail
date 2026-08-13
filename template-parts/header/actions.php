@@ -20,12 +20,12 @@ if ( class_exists( 'Travail_Plugin_Compatibility' ) && Travail_Plugin_Compatibil
 }
 ?>
 <button type="button" class="travail-icon-btn" id="travail-search-toggle" aria-haspopup="dialog" aria-expanded="false" aria-controls="travail-search-modal" aria-label="<?php esc_attr_e( 'Search', 'travail' ); ?>">
-	<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+	<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M14.5 14.5 L18 18"/></svg>
 </button>
 
 <?php if ( class_exists( 'Travail_Plugin_Compatibility' ) && Travail_Plugin_Compatibility::has_wishlist_page() ) : ?>
 	<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'ttbm-wishlist' ) ); ?>" class="travail-icon-btn" id="travail-wishlist-link" aria-label="<?php esc_attr_e( 'Wishlist', 'travail' ); ?>">
-		<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+		<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 17S2 11.5 2 6.5A4 4 0 0110 4.06 4 4 0 0118 6.5C18 11.5 10 17 10 17Z"/></svg>
 	</a>
 <?php endif; ?>
 
