@@ -325,8 +325,21 @@ body.admin-bar .travail-header {
 
 /* ── Breadcrumbs ───────────────────────────────────────────── */
 
+/*
+ * .travail-header is position:fixed (height 72px) and out of document
+ * flow, so breadcrumbs — rendered immediately after it in header.php —
+ * were painting underneath the bar. Front page is excluded: its hero
+ * already owns the clearance via .travail-hero__content { padding-top:72px }.
+ * Admin-bar: WP's html { margin-top } + header { top:32px/46px } already
+ * account for the toolbar; content still only needs the 72px header height.
+ */
 .travail-breadcrumbs {
-	padding: 16px 0;
+	padding: calc( 72px + 16px ) 0 16px;
+}
+
+/* Breadcrumbs off / empty — still clear the fixed header for interior pages. */
+body:not( .home ):not( :has( .travail-breadcrumbs ) ) #travail-content {
+	padding-top: 72px;
 }
 
 .travail-breadcrumbs ol {

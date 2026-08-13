@@ -197,6 +197,10 @@
 	color: inherit;
 }
 
+.ttbm-lv-content-col .ttbm_list_info.location_name {
+	margin: 0 0 2px 0;
+}
+
 .ttbm_list_info.location_name .mi {
 	color: var( --travail-color-primary );
 }
@@ -276,6 +280,7 @@
 .ttbm-rating-stars {
 	color: var( --travail-color-accent );
 	font-size: 14px;
+	margin: 2px 0 5px 0;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -404,6 +409,17 @@ div.ttbm_viator_theme {
 	margin-inline: auto;
 	padding-inline: var( --travail-gutter );
 	background: transparent;
+}
+
+div.ttbm_wraper {
+	margin: 0;
+}
+
+div.ttbm_container {
+	border-radius: var( --travail-radius-lg );
+	box-shadow: var( --travail-shadow-sm );
+	overflow: hidden;
+	margin-bottom: 20px;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -632,4 +648,956 @@ div.ttbm_viator_theme {
 div.mpContainer {
 	max-width: var( --travail-container );
 	margin-inline: auto;
+}
+
+/* Related tours ("Discover Your Next Adventure") — drop card dividers */
+#ttbm_related_tour .ttbm-gc-divider {
+	display: none;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Tour list filter bar — date tabs + sort + view switcher.
+   Plugin markup/JS untouched; activities stay hidden (plugin sets
+   .ttbm-activity-pills-hidden for JS-only use).
+   ══════════════════════════════════════════════════════════════ */
+
+.ttbm-filter-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: nowrap;
+	gap: 12px 16px;
+	padding: 8px var( --ttbm_mp_xs ) 20px;
+	border-bottom: 1px solid var( --travail-color-border );
+	margin-bottom: 24px;
+	background: transparent;
+}
+
+.ttbm-filter-tabs {
+	display: inline-flex;
+	align-items: center;
+	flex-wrap: nowrap;
+	gap: 4px;
+	flex: 0 1 auto;
+	min-width: 0;
+	padding: 4px;
+	background: var( --travail-color-bg );
+	border: 1px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-md );
+}
+
+.ttbm-tab-btn {
+	background: transparent;
+	border: none;
+	padding: 10px 14px;
+	font-family: var( --travail-font-body );
+	font-size: 13px;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	color: var( --travail-color-text-muted );
+	cursor: pointer;
+	border-radius: var( --travail-radius-sm );
+	position: relative;
+	transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+	white-space: nowrap;
+	line-height: 1.3;
+	box-shadow: none;
+	min-height: 0;
+	flex-shrink: 0;
+}
+
+.ttbm-tab-btn::after {
+	display: none;
+}
+
+.ttbm_style button.ttbm-tab-btn:hover,
+.ttbm_style button.ttbm-tab-btn:focus {
+	background: color-mix( in srgb, var( --travail-color-primary ) 8%, transparent );
+	color: var( --travail-color-primary );
+	outline: 0;
+	box-shadow: none;
+}
+
+.ttbm-tab-btn.ttbm-tab-active {
+	background: var( --travail-color-primary );
+	color: #fff;
+	font-weight: 600;
+	box-shadow: 0 4px 14px rgba( 22, 53, 45, 0.22 );
+}
+
+.ttbm_style button.ttbm-tab-btn.ttbm-tab-active:hover,
+.ttbm_style button.ttbm-tab-btn.ttbm-tab-active:focus {
+	background: var( --travail-forest-mid );
+	color: #fff;
+}
+
+.ttbm-filter-bar-count {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-family: var( --travail-font-body );
+	font-size: 13px;
+	color: var( --travail-color-text-muted );
+	font-weight: 500;
+	white-space: nowrap;
+	flex: 0 0 auto;
+	margin-left: auto;
+	margin-right: 0;
+}
+
+.ttbm-filter-count-highlight,
+.ttbm-filter-count-highlight strong {
+	color: var( --travail-color-primary );
+	font-weight: 700;
+}
+
+.ttbm-filter-controls {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: nowrap;
+	flex: 0 0 auto;
+}
+
+.ttbm-sort-select {
+	appearance: none;
+	-webkit-appearance: none;
+	background-color: var( --travail-color-surface ) !important;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2316352d' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 14px center;
+	border: 1.5px solid var( --travail-color-border ) !important;
+	border-radius: var( --travail-radius-sm ) !important;
+	padding: 10px 40px 10px 16px !important;
+	font-family: var( --travail-font-body );
+	font-size: 13px !important;
+	font-weight: 600;
+	color: var( --travail-ink );
+	cursor: pointer;
+	min-width: 170px;
+	max-width: 210px;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	box-shadow: none !important;
+	height: auto !important;
+	line-height: 1.3;
+}
+
+.ttbm-sort-select:hover {
+	background-color: var( --travail-color-surface ) !important;
+	border-color: color-mix( in srgb, var( --travail-color-primary ) 35%, var( --travail-color-border ) ) !important;
+}
+
+.ttbm-sort-select:focus {
+	border-color: var( --travail-color-primary ) !important;
+	outline: none;
+	box-shadow: 0 0 0 3px color-mix( in srgb, var( --travail-color-primary ) 14%, transparent ) !important;
+}
+
+.ttbm-view-switcher {
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+	border: 1.5px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-sm );
+	padding: 3px;
+	background: var( --travail-color-surface );
+}
+
+.ttbm-view-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border: none;
+	border-radius: calc( var( --travail-radius-sm ) - 4px );
+	background: transparent;
+	color: var( --travail-color-text-muted );
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease;
+	font-size: 16px;
+	padding: 0;
+	line-height: 1;
+	box-shadow: none;
+	min-height: 0;
+}
+
+.ttbm_style button.ttbm-view-btn:hover,
+.ttbm_style button.ttbm-view-btn:focus {
+	background: color-mix( in srgb, var( --travail-color-primary ) 8%, transparent );
+	color: var( --travail-color-primary );
+	outline: 0;
+	box-shadow: none;
+}
+
+.ttbm-view-btn.ttbm-view-active,
+.ttbm-view-btn[aria-pressed="true"] {
+	background: var( --travail-color-primary );
+	color: #fff;
+}
+
+.ttbm-view-btn.ttbm-view-active .mi,
+.ttbm-view-btn[aria-pressed="true"] .mi {
+	color: #fff;
+}
+
+@media ( max-width: 767px ) {
+	.ttbm-filter-bar {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+		padding: 4px var( --ttbm_mp_xs ) 16px;
+	}
+
+	.ttbm-filter-tabs {
+		width: 100%;
+		overflow-x: auto;
+		overflow-y: hidden;
+		flex-wrap: nowrap;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+	}
+
+	.ttbm-filter-tabs::-webkit-scrollbar {
+		display: none;
+	}
+
+	.ttbm-tab-btn {
+		flex-shrink: 0;
+		padding: 9px 14px;
+		font-size: 12px;
+	}
+
+	.ttbm-filter-bar-count {
+		order: 3;
+		justify-content: center;
+		width: 100%;
+		margin: 0;
+	}
+
+	.ttbm-filter-controls {
+		order: 2;
+		width: 100%;
+		justify-content: space-between;
+	}
+
+	.ttbm-sort-select {
+		min-width: 0;
+		width: 100%;
+	}
+
+	.ttbm-sort-dropdown {
+		flex: 1;
+		min-width: 0;
+	}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Left sidebar filters (.ttbm_filter) — Location / Feature / etc.
+   Match the filter-bar + theme cards: parchment shell, white
+   accordion panels, forest accents. Markup/JS unchanged.
+   ══════════════════════════════════════════════════════════════ */
+
+.ttbm_filter_area div.leftSidebar,
+.ttbm_filter_area .leftSidebar,
+.ttbm-tour-list-shortcode .leftSidebar {
+	background: #fff;
+	border: 1px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-lg );
+	padding: 16px;
+	box-shadow: var( --travail-shadow-sm );
+}
+
+.ttbm_filter_area .mainSection.ttbm-search-results,
+.ttbm_filter_area .mainSection {
+	background: #fff;
+}
+
+.ttbm_filter_area .leftSidebar .filter-top-label,
+.ttbm-tour-list-shortcode .filter-top-label {
+	padding: 4px 4px 14px;
+	border-bottom: 1px solid var( --travail-color-border );
+	margin-bottom: 14px;
+}
+
+.ttbm_filter_area .leftSidebar .filter-top-label h4,
+.ttbm-tour-list-shortcode .filter-top-label h4,
+.ttbm_filter_area .leftSidebar .filter-top-label .ttbm-filter-top-title,
+.ttbm-tour-list-shortcode .filter-top-label .ttbm-filter-top-title {
+	font-family: var( --travail-font-heading );
+	font-size: 22px;
+	font-weight: 400;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var( --travail-ink );
+}
+
+.ttbm_filter_area .leftSidebar .filter-top-label .filter-subtitle,
+.ttbm-tour-list-shortcode .filter-top-label .filter-subtitle {
+	color: var( --travail-color-text-muted );
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.ttbm_filter_area .leftSidebar .ttbm-mobile-filter-toggle,
+.ttbm-tour-list-shortcode .ttbm-mobile-filter-toggle {
+	border: 1.5px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-sm );
+	background: var( --travail-color-surface );
+	color: var( --travail-color-primary );
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_filter > h5,
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter > h5 {
+	margin: 0 0 10px;
+	padding: 12px 14px;
+	border: 1.5px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-sm );
+	background: var( --travail-color-surface );
+	box-shadow: none;
+	font-family: var( --travail-font-body );
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var( --travail-ink );
+	transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_filter > h5:hover,
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter > h5:hover {
+	border-color: color-mix( in srgb, var( --travail-color-primary ) 30%, var( --travail-color-border ) );
+	box-shadow: none;
+	background: var( --travail-color-surface );
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_filter > h5 > span:first-child,
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter > h5 > span:first-child {
+	padding-bottom: 0;
+	border-bottom: none;
+	gap: 8px;
+	font-size: inherit;
+	color: inherit;
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_filter > h5 i,
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter > h5 i,
+.ttbm_filter_area .leftSidebar .ttbm_filter > h5 .mi,
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter > h5 .mi {
+	font-size: 15px;
+	color: var( --travail-color-primary );
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_filter > h5 [data-icon],
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter > h5 [data-icon] {
+	font-size: 11px;
+	color: var( --travail-color-text-muted );
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_filter > .divider,
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter > .divider {
+	display: none;
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_filter > [data-collapse],
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter > [data-collapse] {
+	margin: -8px 0 12px;
+	padding: 4px 14px 14px;
+	border: 1.5px solid var( --travail-color-border );
+	border-top: none;
+	border-radius: 0 0 var( --travail-radius-sm ) var( --travail-radius-sm );
+	background: var( --travail-color-surface );
+	box-shadow: none;
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_filter > h5 + .divider + [data-collapse].mActive,
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter > h5 + .divider + [data-collapse].mActive {
+	margin-top: -18px;
+	padding-top: 4px;
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_filter > h5:has( + .divider + [data-collapse].mActive ),
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter > h5:has( + .divider + [data-collapse].mActive ) {
+	margin-bottom: 0;
+	border-radius: var( --travail-radius-sm ) var( --travail-radius-sm ) 0 0;
+	border-bottom: none;
+	box-shadow: none;
+	background: var( --travail-color-surface );
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_filter .groupCheckBox,
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter .groupCheckBox {
+	gap: 2px;
+}
+
+.ttbm_filter_area .leftSidebar .customCheckboxLabel,
+.ttbm-tour-list-shortcode .leftSidebar .customCheckboxLabel {
+	margin: 0;
+	padding: 8px 10px;
+	border-radius: calc( var( --travail-radius-sm ) - 4px );
+	font-family: var( --travail-font-body );
+	font-size: 13px;
+	font-weight: 500;
+	color: var( --travail-ink );
+	transition: background 0.15s ease;
+}
+
+.ttbm_filter_area .leftSidebar .customCheckboxLabel:hover,
+.ttbm-tour-list-shortcode .leftSidebar .customCheckboxLabel:hover {
+	background: var( --travail-color-bg );
+}
+
+.ttbm_filter_area .leftSidebar .customCheckbox,
+.ttbm-tour-list-shortcode .leftSidebar .customCheckbox {
+	padding-left: 28px;
+	line-height: 1.4;
+	color: var( --travail-ink );
+	font-size: inherit;
+}
+
+.ttbm_filter_area .leftSidebar .customCheckbox .mR_xs,
+.ttbm-tour-list-shortcode .leftSidebar .customCheckbox .mR_xs {
+	display: none;
+}
+
+.ttbm_filter_area .leftSidebar .customCheckbox::before,
+.ttbm-tour-list-shortcode .leftSidebar .customCheckbox::before {
+	width: 18px;
+	height: 18px;
+	border: 1.5px solid var( --travail-color-border );
+	border-radius: 5px;
+	background-color: var( --travail-color-surface );
+	top: 1px !important;
+}
+
+.ttbm_filter_area .leftSidebar .customCheckboxLabel input:checked ~ .customCheckbox,
+.ttbm-tour-list-shortcode .leftSidebar .customCheckboxLabel input:checked ~ .customCheckbox {
+	color: var( --travail-color-primary );
+	font-weight: 600;
+}
+
+.ttbm_filter_area .leftSidebar .customCheckboxLabel input:checked ~ .customCheckbox::before,
+.ttbm-tour-list-shortcode .leftSidebar .customCheckboxLabel input:checked ~ .customCheckbox::before {
+	background: var( --travail-color-primary );
+	border-color: var( --travail-color-primary );
+}
+
+.ttbm_filter_area .leftSidebar .customCheckboxLabel input:checked ~ .customCheckbox::after,
+.ttbm-tour-list-shortcode .leftSidebar .customCheckboxLabel input:checked ~ .customCheckbox::after {
+	border-color: #fff;
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_see-more-button,
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_see-more-button {
+	margin-top: 8px;
+	padding: 8px 12px;
+	width: 100%;
+	border: 1.5px solid var( --travail-color-border ) !important;
+	border-radius: var( --travail-radius-sm ) !important;
+	background: var( --travail-color-bg );
+	color: var( --travail-color-primary );
+	font-family: var( --travail-font-body );
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	text-align: center;
+	transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_see-more-button:hover,
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_see-more-button:hover {
+	background: var( --travail-color-primary );
+	border-color: var( --travail-color-primary ) !important;
+	color: #fff;
+}
+
+.ttbm_filter_area .leftSidebar .ttbm_filter .formControl,
+.ttbm-tour-list-shortcode .leftSidebar .ttbm_filter .formControl {
+	border: 1.5px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-sm );
+	background: var( --travail-color-bg );
+	color: var( --travail-ink );
+}
+
+.ttbm_filter_area .leftSidebar div.ttbm_filter::-webkit-scrollbar-thumb,
+.ttbm-tour-list-shortcode .leftSidebar div.ttbm_filter::-webkit-scrollbar-thumb {
+	background: var( --travail-color-border );
+	border-radius: 10px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Places You'll See + Location map (.ttbm_hiphop_area)
+   Match other details-page sections: serif titles, soft cards,
+   forest carousel controls. Markup/JS unchanged.
+   ══════════════════════════════════════════════════════════════ */
+
+.ttbm_hiphop_area {
+	padding: 28px 0 8px;
+	border-top: 1px solid var( --travail-color-border );
+	margin-top: 8px;
+}
+
+#place_you_see.place_you_see {
+	position: relative;
+	padding-top: 0;
+	margin-bottom: 28px;
+}
+
+#place_you_see .content-title,
+.ttbm_hiphop_area > .content-title {
+	font-family: var( --travail-font-heading );
+	font-size: 28px;
+	font-weight: 400;
+	line-height: 1.25;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var( --travail-ink );
+	margin: 0 0 18px;
+	padding: 0;
+}
+
+#place_you_see .carousel_area {
+	position: absolute;
+	top: 4px;
+	inset-inline-end: 0;
+	z-index: 2;
+}
+
+#place_you_see .carousel_area .w_50 {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: auto;
+}
+
+#place_you_see .carousel_area .prev,
+#place_you_see .carousel_area .next {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	margin: 0;
+	padding: 0;
+	line-height: 1;
+	border-radius: var( --travail-radius-sm );
+	border: 1.5px solid var( --travail-color-border );
+	background: var( --travail-color-surface );
+	color: var( --travail-color-primary );
+	font-size: 12px;
+	box-shadow: var( --travail-shadow-sm );
+	transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+#place_you_see .carousel_area .prev:hover,
+#place_you_see .carousel_area .next:hover {
+	background: var( --travail-color-primary );
+	border-color: var( --travail-color-primary );
+	color: #fff;
+}
+
+#place_you_see .ttbm_widget_content {
+	padding: 0;
+	border-radius: 0;
+	background: transparent;
+}
+
+#place_you_see .ttbm_widget_content.owl-carousel .owl-stage-outer {
+	margin-left: 0;
+	padding: 4px 2px 8px;
+}
+
+#place_you_see .filter_item {
+	box-shadow: none !important;
+	padding: 0 !important;
+	border: none !important;
+	border-radius: 0 !important;
+	background: transparent !important;
+	overflow: visible;
+	margin: 0;
+	height: auto;
+	min-height: 0;
+}
+
+#place_you_see .filter_item .bg_image_area {
+	position: relative;
+	height: 180px;
+	border-radius: var( --travail-radius-md );
+	overflow: hidden;
+	box-shadow: var( --travail-shadow-sm );
+	border: 1px solid var( --travail-color-border );
+	background: var( --travail-color-bg );
+}
+
+#place_you_see .filter_item .bg_image_area > div[data-bg-image] {
+	width: 100%;
+	height: 100%;
+	min-height: 180px;
+	background-size: cover;
+	background-position: center;
+	transition: transform 0.45s ease;
+}
+
+#place_you_see .filter_item:hover .bg_image_area > div[data-bg-image] {
+	transform: scale( 1.05 );
+}
+
+#place_you_see .filter_item .bg_image_area .circleIcon_xs {
+	position: absolute;
+	top: 10px;
+	inset-inline-end: 10px;
+	z-index: 2;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: rgba( 255, 255, 255, 0.92 );
+	color: var( --travail-color-primary );
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: var( --travail-shadow-sm );
+}
+
+#place_you_see .filter_item h6,
+#place_you_see .filter_item h6._dFlex_mT {
+	display: block;
+	margin: 12px 0 0;
+	padding: 0;
+	font-family: var( --travail-font-body );
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.35;
+	text-align: start;
+	color: var( --travail-ink );
+}
+
+/* Hide duplicate Owl default controls — custom .carousel_area handles nav */
+#place_you_see .owl-nav,
+#place_you_see .owl-dots {
+	display: none !important;
+}
+
+/* Location map card */
+.ttbm_hiphop_area > div:has( iframe ),
+.ttbm_hiphop_area > div:has( #gmap_canvas ) {
+	width: 100% !important;
+	height: 380px !important;
+	margin: 0 0 12px !important;
+	border-radius: var( --travail-radius-lg ) !important;
+	overflow: hidden !important;
+	border: 1px solid var( --travail-color-border );
+	box-shadow: var( --travail-shadow-sm );
+	background: var( --travail-color-bg );
+}
+
+.ttbm_hiphop_area > div:has( iframe ) iframe,
+.ttbm_hiphop_area > div:has( #gmap_canvas ) #gmap_canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+@media ( max-width: 767px ) {
+	#place_you_see .content-title,
+	.ttbm_hiphop_area > .content-title {
+		font-size: 24px;
+		padding-inline-end: 88px;
+	}
+
+	#place_you_see .filter_item .bg_image_area,
+	#place_you_see .filter_item .bg_image_area > div[data-bg-image] {
+		height: 160px;
+		min-height: 160px;
+	}
+
+	.ttbm_hiphop_area > div:has( iframe ),
+	.ttbm_hiphop_area > div:has( #gmap_canvas ) {
+		height: 280px !important;
+	}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Reviews (.ttbm_review_area) — header, list, write-review modal.
+   Match other details-page sections. Markup/JS unchanged.
+   ══════════════════════════════════════════════════════════════ */
+
+.ttbm_review_area {
+	padding: 28px 0 8px;
+	border-top: 1px solid var( --travail-color-border );
+	margin-top: 8px;
+}
+
+.ttbm_review_container {
+	margin-top: 0;
+}
+
+.ttbm-tour-review-list-wrapper {
+	border: 1px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-lg );
+	padding: 24px;
+	background: #fff;
+	box-shadow: var( --travail-shadow-sm );
+}
+
+.ttbm-avg-review-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 0;
+	padding-bottom: 20px;
+	border-bottom: 1px solid var( --travail-color-border );
+}
+
+.ttbm-avg-review-header-content .ttbm-review-title,
+h4.ttbm-review-title {
+	font-family: var( --travail-font-heading );
+	font-size: 28px;
+	font-weight: 400;
+	line-height: 1.25;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var( --travail-ink );
+	margin: 0 0 6px;
+}
+
+.ttbm-avg-review-header-content p {
+	font-family: var( --travail-font-body );
+	font-size: 14px;
+	font-weight: 500;
+	color: var( --travail-color-text-muted );
+	margin: 0;
+	line-height: 1.5;
+}
+
+#give-review-btn {
+	flex-shrink: 0;
+	padding: 10px 20px;
+	font-family: var( --travail-font-body );
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.4;
+	letter-spacing: 0.01em;
+	border-radius: var( --travail-radius-sm );
+	border: none;
+	background: var( --travail-color-primary );
+	color: #fff;
+	cursor: pointer;
+	box-shadow: 0 4px 14px rgba( 22, 53, 45, 0.18 );
+	transition: background 0.2s ease, box-shadow 0.2s ease;
+	white-space: nowrap;
+}
+
+#give-review-btn:hover {
+	background: var( --travail-forest-mid );
+	color: #fff;
+	text-decoration: none;
+}
+
+.ttbm-tour-review-list .ttbm-tour-review-item {
+	margin: 0;
+	padding: 20px 0;
+	border-bottom: 1px solid var( --travail-color-border );
+	border-radius: 0;
+}
+
+.ttbm-tour-review-list .ttbm-tour-review-item:last-child {
+	border-bottom: none;
+	padding-bottom: 4px;
+}
+
+.ttbm-tour-review-list .ttbm-tour-review-item .ttbm-tour-review-img img {
+	border: 2px solid var( --travail-color-border );
+	box-shadow: var( --travail-shadow-sm );
+}
+
+.ttbm-tour-review-list .ttbm-tour-review-item .ttbm-tour-review-name {
+	font-family: var( --travail-font-body );
+	font-weight: 700;
+	font-size: 15px;
+	color: var( --travail-ink );
+	text-transform: none;
+}
+
+.ttbm-tour-review-list .ttbm-tour-review-item .ttbm-tour-review-info .ttbm-review-title {
+	font-family: var( --travail-font-body );
+	font-size: 16px;
+	font-weight: 700;
+	color: var( --travail-ink );
+}
+
+.ttbm-tour-review-list .ttbm-tour-review-item .ttbm-tour-review-info .ttbm-tour-review-content,
+.ttbm-tour-review-content p {
+	font-family: var( --travail-font-body );
+	font-size: 14px;
+	line-height: 1.65;
+	color: var( --travail-color-text );
+}
+
+.ttbm-tour-review-item .ttbm-rating-stars {
+	color: var( --travail-color-accent );
+}
+
+/* Write-a-review modal */
+.mage-modal {
+	background-color: rgba( 21, 23, 22, 0.45 );
+	backdrop-filter: blur( 4px );
+}
+
+.mage-modal-content {
+	background: #fff;
+	border: 1px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-lg );
+	box-shadow: var( --travail-shadow-lg );
+	overflow: hidden;
+	width: min( 640px, 92vw );
+	max-width: min( 640px, 92vw );
+}
+
+.mage-modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row-reverse;
+	padding: 16px 22px;
+	border-bottom: 1px solid var( --travail-color-border );
+	background: var( --travail-color-bg );
+	color: var( --travail-ink );
+}
+
+.mage-modal-header h3,
+.mage-modal-content .mage-modal-header h3 {
+	font-family: var( --travail-font-heading );
+	font-size: 22px;
+	font-weight: 400;
+	margin: 0;
+	color: var( --travail-ink );
+}
+
+.mage-modal-header .close {
+	float: none;
+	font-size: 22px;
+	font-weight: 400;
+	line-height: 1;
+	color: var( --travail-color-text-muted );
+	padding: 0 2px;
+}
+
+.mage-modal-header .close:hover,
+.mage-modal-header .close:focus {
+	color: var( --travail-ink );
+}
+
+.mage-modal-body {
+	padding: 8px 22px 22px;
+}
+
+.ttbm-tour-review-form {
+	padding: 12px 0 8px;
+}
+
+.ttbm-tour-review-form .ttbm-tour-review-heading h3 {
+	font-family: var( --travail-font-heading );
+	font-size: 22px;
+	font-weight: 400;
+	color: var( --travail-ink );
+	margin: 0 0 4px;
+}
+
+.ttbm-tour-review-form .ttbm-tour-review-heading p {
+	font-size: 14px;
+	color: var( --travail-color-text-muted );
+	margin: 0 0 8px;
+}
+
+.ttbm-tour-review-form .label {
+	font-family: var( --travail-font-body );
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var( --travail-ink );
+	margin-bottom: 8px;
+}
+
+.ttbm-tour-review-form .group input[type="text"],
+#ttbm_review_form #ttbm-tour-review-form--title {
+	width: 100%;
+	max-width: 100%;
+	padding: 12px 16px;
+	border: 1.5px solid var( --travail-color-border );
+	border-radius: var( --travail-radius-sm );
+	background: var( --travail-color-bg );
+	font-family: var( --travail-font-body );
+	font-size: 14px;
+	color: var( --travail-ink );
+	box-shadow: none;
+}
+
+.ttbm-tour-review-form .group input[type="text"]:focus,
+#ttbm_review_form #ttbm-tour-review-form--title:focus {
+	border-color: var( --travail-color-primary );
+	outline: none;
+	box-shadow: 0 0 0 3px color-mix( in srgb, var( --travail-color-primary ) 14%, transparent );
+}
+
+div.ttbm_style .rating-group label {
+	font-size: 26px;
+	color: var( --travail-color-border );
+	line-height: 1;
+}
+
+.rating-group label:hover,
+.rating-group label:hover ~ label,
+.rating-group input:checked ~ label {
+	color: var( --travail-color-accent );
+}
+
+.ttbm-tour-review-form input[type="submit"],
+.ttbm-tour-review-form button[type="submit"] {
+	background: var( --travail-color-primary );
+	padding: 12px 28px;
+	font-family: var( --travail-font-body );
+	font-size: 14px;
+	font-weight: 700;
+	color: #fff;
+	border: none;
+	border-radius: var( --travail-radius-sm );
+	box-shadow: 0 4px 14px rgba( 22, 53, 45, 0.18 );
+	cursor: pointer;
+	transition: background 0.2s ease;
+}
+
+.ttbm-tour-review-form input[type="submit"]:hover,
+.ttbm-tour-review-form button[type="submit"]:hover {
+	background: var( --travail-forest-mid );
+}
+
+.ttbm-tour-review-form .wp-editor-wrap,
+.ttbm-tour-review-form .wp-editor-container {
+	border-radius: var( --travail-radius-sm );
+	overflow: hidden;
+	border-color: var( --travail-color-border );
+}
+
+@media ( max-width: 767px ) {
+	.ttbm-avg-review-header {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.ttbm-avg-review-header-content .ttbm-review-title,
+	h4.ttbm-review-title {
+		font-size: 24px;
+	}
+
+	#give-review-btn {
+		width: 100%;
+		text-align: center;
+	}
+
+	.ttbm-tour-review-list-wrapper {
+		padding: 18px 16px;
+	}
 }
