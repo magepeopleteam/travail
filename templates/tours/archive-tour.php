@@ -78,7 +78,10 @@ $travail_destination_count = is_array( $travail_destination_terms ) ? count( $tr
 		<?php do_action( 'travail_before_tour_archive' ); ?>
 
 		<?php if ( shortcode_exists( 'ttbm-tour-list' ) ) : ?>
-			<div class="travail-tbm-grid-wrap">
+			<?php /* id is what tells filter_pagination.js's top-search-form handler
+			   a same-page results grid exists to swap in place — see that file for
+			   why the AJAX swap only ever targets an element found by this exact id. */ ?>
+			<div class="travail-tbm-grid-wrap" id="ttbm-archive-results">
 				<?php
 				/**
 				 * Reference-design sidebar (tour-list.html) uses exactly 6 real,

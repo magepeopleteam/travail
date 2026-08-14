@@ -142,12 +142,15 @@ do_action( 'travail_after_header' );
 
 <?php
 /**
- * Tour archive renders its own breadcrumb inside .travail-archive-header
- * (matching the reference design's page-hero, which has the breadcrumb as
- * part of the same white hero block rather than a separate strip above it)
- * — skip the global one here so it isn't shown twice.
+ * Tour archive, the Destinations page template, and the plugin's "/find/"
+ * search-results page all render their own breadcrumb inside
+ * .travail-archive-header (matching the reference design's page-hero, which
+ * has the breadcrumb as part of the same white hero block rather than a
+ * separate strip above it) — skip the global one here so it isn't shown
+ * twice. See travail_page_title() in inc/template-hooks.php for the /find/
+ * case specifically.
  */
-if ( ! is_front_page() && ! is_post_type_archive( 'ttbm_tour' ) ) :
+if ( ! is_front_page() && ! is_post_type_archive( 'ttbm_tour' ) && ! is_page_template( 'templates/pages/page-destinations.php' ) && ! is_page( 'find' ) ) :
 	?>
 	<div class="travail-container">
 		<?php get_template_part( 'template-parts/content/breadcrumbs' ); ?>

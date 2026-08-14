@@ -483,22 +483,15 @@ fieldset.travail-fieldset legend {
 .travail-container {
 	max-width: var( --travail-container );
 	margin-inline: auto;
-	padding-inline: var( --travail-gutter );
 }
 
 @media ( max-width: 1024px ) {
-	.travail-container {
-		padding-inline: 32px;
-	}
 	:root {
 		--travail-gutter: 32px;
 	}
 }
 
 @media ( max-width: 640px ) {
-	.travail-container {
-		padding-inline: 20px;
-	}
 	:root {
 		--travail-gutter: 20px;
 	}

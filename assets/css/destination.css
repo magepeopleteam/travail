@@ -3,38 +3,49 @@
  * Grid card styles live in components.css (.travail-dest-card etc).
  */
 
-.travail-destination-hero {
-	position: relative;
-	height: 420px;
-	border-radius: var( --travail-radius-xl );
-	overflow: hidden;
-	margin-bottom: 40px;
+/* ══════════════════════════════════════════════════════════════
+   Page header — duplicated from .travail-archive-header/.travail-page-title/
+   .travail-hero-em/.travail-page-sub in assets/css/tour.css (same look as
+   templates/tours/archive-tour.php's hero) rather than pulling all of
+   tour.css's unrelated tour/ticket styles into every page using this
+   template. Keep both copies in sync by hand if either changes.
+   ══════════════════════════════════════════════════════════════ */
+
+.travail-archive-header {
+	background: #fff;
+	color: var( --travail-ink );
+	padding: 100px 0 40px;
+	border-bottom: 1px solid var( --travail-color-border );
 }
 
-.travail-destination-hero img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
-.travail-destination-hero__overlay {
-	position: absolute;
-	inset: 0;
-	background: linear-gradient( to top, rgba( 0, 0, 0, 0.6 ) 0%, transparent 60% );
+.travail-archive-header .travail-container {
 	display: flex;
-	align-items: flex-end;
-	padding: 40px;
+	flex-direction: column;
+	gap: 16px;
 }
 
-.travail-destination-hero__overlay h1 {
-	color: #fff;
-	font-size: clamp( 32px, 4vw, 52px );
-	margin-bottom: 4px;
+.travail-archive-header .travail-breadcrumbs {
+	padding: 0;
 }
 
-.travail-destination-hero__overlay p {
-	color: rgba( 255, 255, 255, 0.75 );
+.travail-page-title {
 	margin: 0;
+	font-size: clamp( 28px, 4vw, 42px );
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	color: var( --travail-ink );
+}
+
+.travail-hero-em {
+	font-family: var( --travail-font-heading );
+	font-style: italic;
+	font-weight: 400;
+}
+
+.travail-page-sub {
+	margin: 0;
+	font-size: 14px;
+	color: var( --travail-color-text-muted );
 }
 
 .travail-destination-stats {
@@ -55,11 +66,3 @@
 	color: var( --travail-color-text-muted );
 }
 
-@media ( max-width: 640px ) {
-	.travail-destination-hero {
-		height: 260px;
-	}
-	.travail-destination-hero__overlay {
-		padding: 24px;
-	}
-}

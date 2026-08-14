@@ -7,9 +7,12 @@
 
 /* Matches the reference design's .page-hero: a plain white band (not the
    dark-green banner this used to be), breadcrumb + title + subtitle + search
-   bar all together as one block. .travail-archive-header is only ever used
-   on this one template (confirmed — grepped the whole theme), so none of
-   this can affect any other archive. */
+   bar all together as one block. Originally only used on the tour archive
+   (templates/tours/archive-tour.php) — now also reused as-is by the
+   Destinations page template (its own copy, in destination.css, since that
+   page never loads this file) and by the plugin's own "/find/" results page
+   (inc/template-hooks.php's travail_page_title(), which does load this file
+   — see tbm-restyle.css for a fix that page specifically needed). */
 .travail-archive-header {
 	background: #fff;
 	color: var( --travail-ink );

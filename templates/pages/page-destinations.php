@@ -16,17 +16,57 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 
 $travail_has_tbm = class_exists( 'Travail_Plugin_Compatibility' ) && Travail_Plugin_Compatibility::is_tour_booking_manager_active();
+
+/**
+ * Real term/tour counts for the subtitle — fetched here (rather than down
+ * where the grid used to fetch it) so the header can show them too, matching
+ * the "X tours across Y destinations" real-data subtitle pattern in
+ * templates/tours/archive-tour.php instead of always needing page-editor
+ * copy to say anything at all.
+ */
+$travail_terms = $travail_has_tbm ? get_terms(
+	array(
+		'taxonomy'   => 'ttbm_tour_location',
+		'hide_empty' => true,
+		'orderby'    => 'name',
+		'order'      => 'ASC',
+	)
+) : array();
+$travail_terms_valid  = ! is_wp_error( $travail_terms ) && ! empty( $travail_terms );
+$travail_dest_count   = $travail_terms_valid ? count( $travail_terms ) : 0;
+$travail_tours_total  = $travail_terms_valid ? (int) array_sum( wp_list_pluck( $travail_terms, 'count' ) ) : 0;
+$travail_page_content = trim( wp_strip_all_tags( get_the_content() ) );
 ?>
 
-<header class="travail-destination-hero travail-container" style="margin-top:120px;">
-	<img src="<?php echo esc_url( has_post_thumbnail() ? get_the_post_thumbnail_url( get_the_ID(), 'travail-hero' ) : TRAVAIL_URI . '/assets/images/placeholder-wide.svg' ); ?>" alt="" />
-	<div class="travail-destination-hero__overlay">
-		<div>
-			<h1 class="travail-serif"><?php the_title(); ?></h1>
-			<?php if ( get_the_content() ) : ?>
-				<p><?php echo esc_html( wp_strip_all_tags( get_the_content() ) ); ?></p>
-			<?php endif; ?>
-		</div>
+<?php /* Same clean white hero as the tour archive (templates/tours/archive-tour.php)
+   — breadcrumb, italic-serif title, real-count subtitle — instead of the old
+   420px image-and-overlay hero, which needed a manual margin-top:120px hack
+   to clear the fixed site header and never matched the rest of the site's
+   directory-style pages. .travail-archive-header etc. are duplicated into
+   destination.css (kept in sync with tour.css by hand) rather than loading
+   all of tour.css's unrelated tour/ticket styles just for this page. */ ?>
+<header class="travail-archive-header">
+	<div class="travail-container">
+		<?php get_template_part( 'template-parts/content/breadcrumbs' ); ?>
+
+		<h1 class="travail-page-title"><em class="travail-hero-em"><?php the_title(); ?></em></h1>
+
+		<p class="travail-page-sub">
+			<?php
+			if ( $travail_page_content ) {
+				echo esc_html( $travail_page_content );
+			} elseif ( $travail_terms_valid ) {
+				echo esc_html(
+					sprintf(
+						/* translators: 1: "N destination(s)" phrase, 2: "N tour(s)" phrase */
+						__( '%1$s to explore, %2$s waiting for you', 'travail' ),
+						sprintf( _n( '%s destination', '%s destinations', $travail_dest_count, 'travail' ), number_format_i18n( $travail_dest_count ) ),
+						sprintf( _n( '%s tour', '%s tours', $travail_tours_total, 'travail' ), number_format_i18n( $travail_tours_total ) )
+					)
+				);
+			}
+			?>
+		</p>
 	</div>
 </header>
 
@@ -39,18 +79,7 @@ $travail_has_tbm = class_exists( 'Travail_Plugin_Compatibility' ) && Travail_Plu
 
 		<?php else : ?>
 
-			<?php
-			$travail_terms = get_terms(
-				array(
-					'taxonomy'   => 'ttbm_tour_location',
-					'hide_empty' => true,
-					'orderby'    => 'name',
-					'order'      => 'ASC',
-				)
-			);
-			?>
-
-			<?php if ( is_wp_error( $travail_terms ) || empty( $travail_terms ) ) : ?>
+			<?php if ( ! $travail_terms_valid ) : ?>
 				<div class="travail-empty-state">
 					<p><?php esc_html_e( 'No destinations yet — add a Location to a tour in Tour Booking Manager to see it here.', 'travail' ); ?></p>
 				</div>

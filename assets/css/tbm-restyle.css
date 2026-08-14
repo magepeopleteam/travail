@@ -734,14 +734,33 @@ div.ttbm_container {
    fell through to the bare `div.mpContainer` rule and its hardcoded
    1460px — unrelated to `--travail-container`. The plugin also ships
    ttbm_theme_align.css, a generic-theme compatibility layer keyed off
-   the body class this same detection adds (`ttbm-page-with-shortcode`),
-   but every selector in it targets block-theme markup (`.entry-content`,
+   the body class this same detection adds (`ttbm-page-with-shortcode`).
+   Almost every selector in it targets block-theme markup (`.entry-content`,
    `.wp-block-post-content`, `.is-layout-constrained`) that Travail — a
    classic PHP theme — never outputs (page.php uses `.travail-entry-content`,
-   not `.entry-content`), so none of it actually applies here either.
-   Matching the plugin's own `div.` qualifier reaches the same 0,1,1
-   specificity as both competing rules, winning on this stylesheet's
-   later print order. */
+   not `.entry-content`), so most of it doesn't apply here — EXCEPT one
+   rule that isn't block-theme-scoped at all:
+     body.ttbm-page-with-shortcode main { display:flex; flex-direction:column;
+       align-items:center; … }
+   `main` is a bare element selector, so it also matches Travail's own
+   `<main id="main" class="travail-main">` in page.php. `align-items:center`
+   on a column-flex container makes every direct child shrink to its own
+   content width instead of stretching full-width — invisible on this
+   page's actual results grid (its content is wide enough to hit
+   --travail-container's max-width anyway) but very visible on the
+   travail_page_title() header added for this page (see inc/template-hooks.php):
+   a short heading + breadcrumb shrink-wrapped into a narrow, centered box
+   instead of spanning edge-to-edge like the identical markup does on the
+   tour archive (whose <main> never gets .ttbm-page-with-shortcode/this
+   flex treatment at all, since a post-type archive isn't "an ordinary page
+   carrying a shortcode"). Opting this theme's own <main> back out of that
+   generic fallback — rather than fighting it child-by-child — matches the
+   file's own stated intent that none of this compatibility layer should
+   apply to Travail. */
+body.ttbm-page-with-shortcode main.travail-main {
+	display: block;
+}
+
 div.mpContainer {
 	max-width: var( --travail-container );
 	margin-inline: auto;
@@ -1232,10 +1251,20 @@ div.ttbm_style .rating-group label {
    Day-wise itinerary timeline (.ttbm_day_wise_timeline)
    Match other details-page sections: forest markers, soft cards,
    Travail typography. Markup/JS unchanged.
+
+   The bare `#ttbm_content .ttbm_day_wise_timeline` variant below (alongside
+   the `.ttbm_details_page`-scoped one) exists to also reach smart.php/
+   viator.php, which use their own root class instead of `.ttbm_details_page`.
+   It's gated with `:not(:has(.ttbm_travello_theme))` because the Travello
+   template has its own dedicated, deliberately flatter itinerary design in
+   the plugin's own ttbm_travello_details.css (no cards/accordion, matching
+   travail/tour-details.html's plain `.itinerary` list) — without this guard,
+   this ID-anchored selector's specificity silently won over that template's
+   plain-class overrides for the same shared markup/classes.
    ══════════════════════════════════════════════════════════════ */
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline,
-#ttbm_content .ttbm_day_wise_timeline {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline {
 	position: relative;
 	margin: 0;
 	padding: 4px 0 0 56px;
@@ -1243,7 +1272,7 @@ div.ttbm_style .rating-group label {
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline::before,
-#ttbm_content .ttbm_day_wise_timeline::before {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline::before {
 	content: "";
 	position: absolute;
 	top: 18px;
@@ -1255,7 +1284,7 @@ div.ttbm_style .rating-group label {
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_item,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_item {
 	margin: 0 0 16px;
 	padding: 0;
 	border: 0;
@@ -1263,7 +1292,7 @@ div.ttbm_style .rating-group label {
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_marker,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_marker {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_marker {
 	width: 36px;
 	height: 36px;
 	border-radius: 50%;
@@ -1279,8 +1308,8 @@ div.ttbm_style .rating-group label {
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_item.is-active .day_wise_details_marker,
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_item:has( .day_wise_details_item_title.mActive ) .day_wise_details_marker,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item.is-active .day_wise_details_marker,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item:has( .day_wise_details_item_title.mActive ) .day_wise_details_marker {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_item.is-active .day_wise_details_marker,
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_item:has( .day_wise_details_item_title.mActive ) .day_wise_details_marker {
 	color: #fff;
 	background: var( --travail-color-primary );
 	border-color: var( --travail-color-primary );
@@ -1288,7 +1317,7 @@ div.ttbm_style .rating-group label {
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_card,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_card {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_card {
 	background: #fff;
 	border: 1.5px solid var( --travail-color-border );
 	border-radius: var( --travail-radius-md );
@@ -1299,13 +1328,13 @@ div.ttbm_style .rating-group label {
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_item.is-active .day_wise_details_card,
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_item:has( .day_wise_details_item_title.mActive ) .day_wise_details_card,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item.is-active .day_wise_details_card,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item:has( .day_wise_details_item_title.mActive ) .day_wise_details_card {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_item.is-active .day_wise_details_card,
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_item:has( .day_wise_details_item_title.mActive ) .day_wise_details_card {
 	box-shadow: 0 10px 28px rgba( 22, 53, 45, 0.08 );
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_item_title,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item_title {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_item_title {
 	display: flex;
 	align-items: flex-start;
 	justify-content: space-between;
@@ -1318,7 +1347,7 @@ div.ttbm_style .rating-group label {
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_label,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_label {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_label {
 	font-family: var( --travail-font-body );
 	font-size: 11px;
 	font-weight: 700;
@@ -1328,7 +1357,7 @@ div.ttbm_style .rating-group label {
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_name,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_name {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_name {
 	font-family: var( --travail-font-heading );
 	font-size: 20px;
 	font-weight: 400;
@@ -1337,7 +1366,7 @@ div.ttbm_style .rating-group label {
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_item_title span[data-icon],
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item_title span[data-icon] {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_item_title span[data-icon] {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -1353,14 +1382,14 @@ div.ttbm_style .rating-group label {
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_item_title.mActive span[data-icon],
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item_title.mActive span[data-icon] {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_item_title.mActive span[data-icon] {
 	background: var( --travail-color-primary );
 	border-color: var( --travail-color-primary );
 	color: #fff;
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_item_details,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item_details {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_item_details {
 	padding: 0 20px 20px;
 	border-top: 1px solid var( --travail-color-border );
 	background: #fff;
@@ -1371,43 +1400,43 @@ div.ttbm_style .rating-group label {
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_item_details p,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_details_item_details p {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_item_details p {
 	margin: 14px 0 0;
 	color: var( --travail-color-text-muted );
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_activity_icon,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_activity_icon {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_activity_icon {
 	color: var( --travail-color-primary );
 	background: color-mix( in srgb, var( --travail-color-primary ) 10%, #fff );
 	border-radius: var( --travail-radius-sm );
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_activity_title,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_activity_title {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_activity_title {
 	font-family: var( --travail-font-body );
 	font-weight: 600;
 	color: var( --travail-ink );
 }
 
 #ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_activity_desc,
-#ttbm_content .ttbm_day_wise_timeline .day_wise_activity_desc {
+#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_activity_desc {
 	color: var( --travail-color-text-muted );
 }
 
 @media ( max-width: 768px ) {
 	#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline,
-	#ttbm_content .ttbm_day_wise_timeline {
+	#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline {
 		padding-left: 48px;
 	}
 
 	#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline::before,
-	#ttbm_content .ttbm_day_wise_timeline::before {
+	#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline::before {
 		left: 13px;
 	}
 
 	#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_marker,
-	#ttbm_content .ttbm_day_wise_timeline .day_wise_details_marker {
+	#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_marker {
 		left: -48px;
 		width: 30px;
 		height: 30px;
@@ -1415,7 +1444,7 @@ div.ttbm_style .rating-group label {
 	}
 
 	#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_name,
-	#ttbm_content .ttbm_day_wise_timeline .day_wise_details_name {
+	#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_name {
 		font-size: 18px;
 	}
 }
