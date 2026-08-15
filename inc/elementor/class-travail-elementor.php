@@ -102,6 +102,8 @@ class Travail_Elementor {
 		wp_enqueue_style( 'travail-base', TRAVAIL_URI . '/assets/css/base.css', array(), TRAVAIL_VERSION );
 		wp_enqueue_style( 'travail-layout', TRAVAIL_URI . '/assets/css/layout.css', array( 'travail-base' ), TRAVAIL_VERSION );
 		wp_enqueue_style( 'travail-components', TRAVAIL_URI . '/assets/css/components.css', array( 'travail-layout' ), TRAVAIL_VERSION );
+		wp_enqueue_style( 'travail-destination', TRAVAIL_URI . '/assets/css/destination.css', array( 'travail-components' ), TRAVAIL_VERSION );
+		wp_enqueue_style( 'travail-travello', TRAVAIL_URI . '/assets/css/travello.css', array( 'travail-components' ), TRAVAIL_VERSION );
 	}
 
 	/**

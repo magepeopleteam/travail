@@ -109,7 +109,19 @@ class Travail_Elementor_Page_Builder {
 		// the homepage" need, so this one strip is intentionally skipped
 		// rather than built into a dedicated widget for one small chip row.
 
-		$elements[] = self::section( 'travail-destination-grid', array( 'style' => 'classic' ) );
+		$elements[] = self::section(
+			'travail-destination-grid',
+			array(
+				'style'          => 'classic',
+				'title'          => __( 'Trending destinations', 'travail' ),
+				'title_emphasis' => '',
+				'subtitle'       => __( 'Popular places loved by travelers around the world.', 'travail' ),
+				'view_all_text'  => __( 'View all destinations', 'travail' ),
+				'view_all_url'   => $context['destinations_url'] ? array( 'url' => $context['destinations_url'] ) : array( 'url' => '' ),
+				'source'         => 'auto',
+				'limit'          => 4,
+			)
+		);
 		$elements[] = self::section( 'travail-tour-activities', array( 'style' => 'classic' ) );
 
 		// "Popular experiences" tour rail. Carries the #experiences
@@ -186,7 +198,19 @@ class Travail_Elementor_Page_Builder {
 
 		$elements[] = self::section( 'travail-tour-search', array( 'style' => 'travello' ) );
 		$elements[] = self::section( 'travail-tour-activities', array( 'style' => 'travello' ) );
-		$elements[] = self::section( 'travail-destination-grid', array( 'style' => 'travello' ) );
+		$elements[] = self::section(
+			'travail-destination-grid',
+			array(
+				'style'          => 'travello',
+				'title'          => __( 'Popular', 'travail' ),
+				'title_emphasis' => __( 'destinations', 'travail' ),
+				'subtitle'       => __( 'Places travelers are loving right now.', 'travail' ),
+				'view_all_text'  => __( 'View all destinations →', 'travail' ),
+				'view_all_url'   => $context['destinations_url'] ? array( 'url' => $context['destinations_url'] ) : array( 'url' => '' ),
+				'source'         => 'auto',
+				'limit'          => 4,
+			)
+		);
 
 		$elements[] = self::section(
 			'travail-tour-grid',

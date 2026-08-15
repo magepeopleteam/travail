@@ -133,6 +133,99 @@ function travail_get_term_image_url( $term, $size = 'travail-card' ) {
 }
 
 /**
+ * Destination cards for the homepage / Elementor Destinations widget.
+ *
+ * Returns a normalized list so both destination templates (Classic grid
+ * and Travello bento) and the Elementor widget can render the same
+ * structure — either live `ttbm_tour_location` terms or a pre-built
+ * custom-card array from Elementor.
+ *
+ * @param array $args {
+ *     @type int      $limit      Max cards. Default 4.
+ *     @type string   $orderby    Term orderby when querying. Default 'count'.
+ *     @type int[]    $term_ids   Optional include list (preserves this order).
+ *     @type bool     $hide_empty Skip locations with no published tours.
+ *     @type string   $style      'travello' uses tall image on the first card.
+ *     @type array    $cards      Pre-built cards; when non-empty, skips the query.
+ * }
+ * @return array<int, array{name:string, country:string, url:string, image:string, count:int}>
+ */
+function travail_get_destination_cards( $args = array() ) {
+	$args = wp_parse_args(
+		$args,
+		array(
+			'limit'      => 4,
+			'orderby'    => 'count',
+			'term_ids'   => array(),
+			'hide_empty' => true,
+			'style'      => 'classic',
+			'cards'      => array(),
+		)
+	);
+
+	if ( ! empty( $args['cards'] ) && is_array( $args['cards'] ) ) {
+		$normalized = array();
+		foreach ( $args['cards'] as $card ) {
+			if ( empty( $card['name'] ) ) {
+				continue;
+			}
+			$normalized[] = array(
+				'name'    => (string) $card['name'],
+				'country' => isset( $card['country'] ) ? (string) $card['country'] : '',
+				'url'     => ! empty( $card['url'] ) ? (string) $card['url'] : '#',
+				'image'   => ! empty( $card['image'] ) ? (string) $card['image'] : TRAVAIL_URI . '/assets/images/placeholder-tour.svg',
+				'count'   => isset( $card['count'] ) ? absint( $card['count'] ) : 0,
+			);
+		}
+		return $normalized;
+	}
+
+	if ( ! taxonomy_exists( 'ttbm_tour_location' ) ) {
+		return array();
+	}
+
+	$query = array(
+		'taxonomy'   => 'ttbm_tour_location',
+		'hide_empty' => (bool) $args['hide_empty'],
+		'number'     => max( 1, absint( $args['limit'] ) ),
+	);
+
+	$term_ids = array_filter( array_map( 'absint', (array) $args['term_ids'] ) );
+	if ( $term_ids ) {
+		$query['include'] = $term_ids;
+		$query['orderby'] = 'include';
+		$query['number']  = count( $term_ids );
+	} else {
+		$query['orderby'] = sanitize_key( $args['orderby'] ) ? sanitize_key( $args['orderby'] ) : 'count';
+		$query['order']   = 'count' === $query['orderby'] ? 'DESC' : 'ASC';
+	}
+
+	$terms = get_terms( $query );
+	if ( is_wp_error( $terms ) || empty( $terms ) ) {
+		return array();
+	}
+
+	if ( $term_ids && absint( $args['limit'] ) < count( $terms ) ) {
+		$terms = array_slice( $terms, 0, absint( $args['limit'] ) );
+	}
+
+	$cards = array();
+	foreach ( $terms as $index => $term ) {
+		$is_tall = ( 'travello' === $args['style'] && 0 === $index ) || ( 'classic' === $args['style'] && $index < 2 );
+		$link    = get_term_link( $term );
+		$cards[] = array(
+			'name'    => $term->name,
+			'country' => travail_get_term_country( $term ),
+			'url'     => is_wp_error( $link ) ? '#' : $link,
+			'image'   => travail_get_term_image_url( $term, $is_tall ? 'travail-card-tall' : 'travail-card-wide' ),
+			'count'   => (int) $term->count,
+		);
+	}
+
+	return $cards;
+}
+
+/**
  * Term image field (+ Country field on Destinations only): add form.
  *
  * @param string $taxonomy Taxonomy slug.
