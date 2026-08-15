@@ -366,6 +366,7 @@ body.admin-bar .travail-header {
 .travail-header--static .travail-btn-list {
 	background: var( --travail-color-primary );
 	border-color: var( --travail-color-primary );
+	color: #fff;
 }
 
 .travail-menu-toggle {
