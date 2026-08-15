@@ -71,6 +71,30 @@ class Travail_Elementor_Tour_Grid_Widget extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Tour id => title for the featured-section picker.
+	 *
+	 * @return array<int|string, string>
+	 */
+	protected function get_tour_options() {
+		$options = array( '0' => __( 'Automatic (best seller, then latest)', 'travail' ) );
+		if ( ! post_type_exists( 'ttbm_tour' ) ) {
+			return $options;
+		}
+		$tours = get_posts(
+			array(
+				'post_type'      => 'ttbm_tour',
+				'posts_per_page' => 50,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+			)
+		);
+		foreach ( $tours as $tour ) {
+			$options[ $tour->ID ] = $tour->post_title;
+		}
+		return $options;
+	}
+
+	/**
 	 * Controls.
 	 */
 	protected function register_controls() {
@@ -90,7 +114,6 @@ class Travail_Elementor_Tour_Grid_Widget extends \Elementor\Widget_Base {
 					'travello' => __( 'Travello', 'travail' ),
 				),
 				'condition'   => array( 'source' => array( 'latest', 'best_seller', 'on_sale' ) ),
-				'description' => __( 'Only affects Latest/Popular/Deals — Category and Destination always use the generic grid below since neither reference design has one.', 'travail' ),
 			)
 		);
 
@@ -113,9 +136,9 @@ class Travail_Elementor_Tour_Grid_Widget extends \Elementor\Widget_Base {
 		$this->add_control(
 			'term',
 			array(
-				'label'     => __( 'Category / Destination Slug', 'travail' ),
-				'type'      => \Elementor\Controls_Manager::TEXT,
-				'condition' => array( 'source' => array( 'category', 'location' ) ),
+				'label'       => __( 'Category / Destination Slug', 'travail' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'condition'   => array( 'source' => array( 'category', 'location' ) ),
 				'description' => __( 'Enter the term slug (found under Tours → Categories / Locations).', 'travail' ),
 			)
 		);
@@ -123,13 +146,105 @@ class Travail_Elementor_Tour_Grid_Widget extends \Elementor\Widget_Base {
 		$this->add_control(
 			'limit',
 			array(
-				'label'   => __( 'Number of Tours', 'travail' ),
-				'type'    => \Elementor\Controls_Manager::NUMBER,
-				'default' => 8,
-				'min'     => 1,
-				'max'     => 24,
+				'label'     => __( 'Number of Tours', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::NUMBER,
+				'default'   => 8,
+				'min'       => 1,
+				'max'       => 24,
+				'condition' => array( 'source!' => 'best_seller' ),
 			)
 		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'latest_content_section',
+			array(
+				'label'     => __( 'Content', 'travail' ),
+				'condition' => array( 'source' => 'latest' ),
+			)
+		);
+
+		$this->add_control( 'latest_title', array( 'label' => __( 'Title', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'Popular tours &', 'travail' ) ) );
+		$this->add_control(
+			'latest_title_emphasis',
+			array(
+				'label'     => __( 'Title (emphasized word)', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::TEXT,
+				'default'   => __( 'experiences', 'travail' ),
+				'condition' => array( 'style' => 'travello' ),
+			)
+		);
+		$this->add_control(
+			'latest_subtitle',
+			array(
+				'label'     => __( 'Subtitle', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::TEXTAREA,
+				'default'   => __( 'Discover unforgettable experiences curated for every kind of traveler.', 'travail' ),
+				'condition' => array( 'style' => 'travello' ),
+			)
+		);
+		$this->add_control( 'latest_view_all_text', array( 'label' => __( '"View all" Text', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'All tours →', 'travail' ), 'condition' => array( 'style' => 'travello' ) ) );
+		$this->add_control( 'latest_view_all_url', array( 'label' => __( '"View all" Link', 'travail' ), 'type' => \Elementor\Controls_Manager::URL, 'condition' => array( 'style' => 'travello' ) ) );
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'featured_content_section',
+			array(
+				'label'     => __( 'Featured Tour', 'travail' ),
+				'condition' => array( 'source' => 'best_seller' ),
+			)
+		);
+
+		$this->add_control(
+			'featured_tour_id',
+			array(
+				'label'   => __( 'Tour', 'travail' ),
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => '0',
+				'options' => $this->get_tour_options(),
+			)
+		);
+		$this->add_control(
+			'featured_title',
+			array(
+				'label'       => __( 'Title override', 'travail' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'default'     => '',
+				'description' => __( 'Leave empty to use the selected tour\'s name (e.g. Discover Patagonia).', 'travail' ),
+				'condition'   => array( 'style' => 'travello' ),
+			)
+		);
+		$this->add_control( 'featured_badge', array( 'label' => __( 'Badge', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( "Editor's Pick", 'travail' ), 'condition' => array( 'style' => 'travello' ) ) );
+		$this->add_control( 'featured_cta', array( 'label' => __( 'Button Text', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'Explore journey →', 'travail' ), 'condition' => array( 'style' => 'travello' ) ) );
+		$this->add_control(
+			'featured_image',
+			array(
+				'label'     => __( 'Image override', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::MEDIA,
+				'condition' => array( 'style' => 'travello' ),
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'deals_content_section',
+			array(
+				'label'     => __( 'Content', 'travail' ),
+				'condition' => array(
+					'source' => 'on_sale',
+					'style'  => 'travello',
+				),
+			)
+		);
+
+		$this->add_control( 'deals_title', array( 'label' => __( 'Title', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( "Don't miss these", 'travail' ) ) );
+		$this->add_control( 'deals_title_emphasis', array( 'label' => __( 'Title (emphasized word)', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'adventures', 'travail' ) ) );
+		$this->add_control( 'deals_subtitle', array( 'label' => __( 'Subtitle', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXTAREA, 'default' => __( 'Limited-time deals on top-rated experiences.', 'travail' ) ) );
+		$this->add_control( 'deals_badge', array( 'label' => __( 'Badge', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'Limited Offer', 'travail' ) ) );
+		$this->add_control( 'deals_cta', array( 'label' => __( 'Button Text', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'Book now →', 'travail' ) ) );
 
 		$this->end_controls_section();
 
@@ -157,11 +272,11 @@ class Travail_Elementor_Tour_Grid_Widget extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'columns',
 			array(
-				'label'      => __( 'Columns', 'travail' ),
-				'type'       => \Elementor\Controls_Manager::SELECT,
-				'default'    => '4',
-				'options'    => array( '2' => '2', '3' => '3', '4' => '4' ),
-				'condition'  => array( 'layout' => 'grid' ),
+				'label'     => __( 'Columns', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::SELECT,
+				'default'   => '4',
+				'options'   => array( '2' => '2', '3' => '3', '4' => '4' ),
+				'condition' => array( 'layout' => 'grid' ),
 			)
 		);
 
@@ -183,6 +298,18 @@ class Travail_Elementor_Tour_Grid_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		if ( class_exists( 'Travail_Elementor' ) ) {
+			Travail_Elementor::add_header_style_controls(
+				$this,
+				array(
+					'condition' => array(
+						'style'  => 'travello',
+						'source' => array( 'latest', 'on_sale' ),
+					),
+				)
+			);
+		}
 	}
 
 	/**
@@ -204,13 +331,24 @@ class Travail_Elementor_Tour_Grid_Widget extends \Elementor\Widget_Base {
 		switch ( $settings['source'] ) {
 			case 'latest':
 				if ( 'travello' === $style ) {
-					get_template_part( 'template-parts/home/travello/tours', null, array( 'limit' => $limit ) );
+					get_template_part(
+						'template-parts/home/travello/tours',
+						null,
+						array(
+							'title'          => isset( $settings['latest_title'] ) ? $settings['latest_title'] : '',
+							'title_emphasis' => isset( $settings['latest_title_emphasis'] ) ? $settings['latest_title_emphasis'] : '',
+							'subtitle'       => isset( $settings['latest_subtitle'] ) ? $settings['latest_subtitle'] : '',
+							'view_all_text'  => isset( $settings['latest_view_all_text'] ) ? $settings['latest_view_all_text'] : '',
+							'view_all_url'   => ! empty( $settings['latest_view_all_url']['url'] ) ? $settings['latest_view_all_url']['url'] : '',
+							'limit'          => $limit,
+						)
+					);
 				} else {
 					get_template_part(
 						'template-parts/tour/tour-rail',
 						null,
 						array(
-							'title' => $settings['title'] ? $settings['title'] : __( 'Popular experiences', 'travail' ),
+							'title' => ! empty( $settings['latest_title'] ) ? $settings['latest_title'] : ( $settings['title'] ? $settings['title'] : __( 'Popular experiences', 'travail' ) ),
 							'limit' => $limit,
 						)
 					);
@@ -218,22 +356,43 @@ class Travail_Elementor_Tour_Grid_Widget extends \Elementor\Widget_Base {
 				return;
 
 			case 'best_seller':
-				// Both featured-journey.php and travello/featured-tour.php
-				// are fixed single-card "editorial pick" sections — no
-				// title/limit to pass, by design (matches the reference).
-				get_template_part( 'travello' === $style ? 'template-parts/home/travello/featured-tour' : 'template-parts/tour/featured-journey' );
+				if ( 'travello' === $style ) {
+					get_template_part(
+						'template-parts/home/travello/featured-tour',
+						null,
+						array(
+							'tour_id'    => ! empty( $settings['featured_tour_id'] ) ? absint( $settings['featured_tour_id'] ) : 0,
+							'title'      => isset( $settings['featured_title'] ) ? $settings['featured_title'] : '',
+							'badge_text' => isset( $settings['featured_badge'] ) ? $settings['featured_badge'] : '',
+							'cta_text'   => isset( $settings['featured_cta'] ) ? $settings['featured_cta'] : '',
+							'image'      => ! empty( $settings['featured_image']['url'] ) ? $settings['featured_image']['url'] : '',
+						)
+					);
+				} else {
+					get_template_part( 'template-parts/tour/featured-journey' );
+				}
 				return;
 
 			case 'on_sale':
-				// Both deals-grid.php and travello/deals.php render their
-				// own full section + heading, so the generic title row
-				// below is skipped for this source in either style.
-				get_template_part( 'travello' === $style ? 'template-parts/home/travello/deals' : 'template-parts/tour/deals-grid' );
+				if ( 'travello' === $style ) {
+					get_template_part(
+						'template-parts/home/travello/deals',
+						null,
+						array(
+							'title'          => isset( $settings['deals_title'] ) ? $settings['deals_title'] : '',
+							'title_emphasis' => isset( $settings['deals_title_emphasis'] ) ? $settings['deals_title_emphasis'] : '',
+							'subtitle'       => isset( $settings['deals_subtitle'] ) ? $settings['deals_subtitle'] : '',
+							'badge_text'     => isset( $settings['deals_badge'] ) ? $settings['deals_badge'] : '',
+							'cta_text'       => isset( $settings['deals_cta'] ) ? $settings['deals_cta'] : '',
+							'limit'          => $limit,
+						)
+					);
+				} else {
+					get_template_part( 'template-parts/tour/deals-grid' );
+				}
 				return;
 		}
 
-		// category / location — no reference-design layout to match, so
-		// this keeps the original generic shortcode-based grid.
 		if ( ! shortcode_exists( 'ttbm-tour-list' ) ) {
 			return;
 		}

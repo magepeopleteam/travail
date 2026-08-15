@@ -15,26 +15,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$travail_reviews = apply_filters(
-	'travail_travello_reviews',
+$travail_args = travail_section_args(
+	isset( $args ) ? $args : array(),
 	array(
-		array(
-			'text' => __( 'Travello found us a hidden gem in Bali we would never have discovered alone. The local guide was extraordinary and every detail was flawless.', 'travail' ),
-			'name' => __( 'Sarah Mitchell', 'travail' ),
-			'loc'  => __( 'London, UK', 'travail' ),
-		),
-		array(
-			'text' => __( 'Booked our Swiss Alps trek through Travello — the itinerary was perfectly paced and our guide spoke three languages. Completely seamless.', 'travail' ),
-			'name' => __( 'Kenji Tanaka', 'travail' ),
-			'loc'  => __( 'Osaka, Japan', 'travail' ),
-		),
-		array(
-			'text' => __( 'From the Santorini sunset cruise to the Oia dinner — every moment exceeded our expectations. Travello has earned a lifelong customer.', 'travail' ),
-			'name' => __( 'Amélie Rousseau', 'travail' ),
-			'loc'  => __( 'Paris, France', 'travail' ),
-		),
+		'title'          => __( 'Loved by travelers', 'travail' ),
+		'title_emphasis' => __( 'around the world', 'travail' ),
+		'subtitle'       => travail_get_option( 'travello_why_us_stat_value', __( '50,000+', 'travail' ) ) . ' ' . __( 'happy travelers and counting.', 'travail' ),
+		'reviews'        => array(),
 	)
 );
+
+$travail_reviews = ! empty( $travail_args['reviews'] )
+	? $travail_args['reviews']
+	: apply_filters(
+		'travail_travello_reviews',
+		array(
+			array(
+				'text' => __( 'Travello found us a hidden gem in Bali we would never have discovered alone. The local guide was extraordinary and every detail was flawless.', 'travail' ),
+				'name' => __( 'Sarah Mitchell', 'travail' ),
+				'loc'  => __( 'London, UK', 'travail' ),
+			),
+			array(
+				'text' => __( 'Booked our Swiss Alps trek through Travello — the itinerary was perfectly paced and our guide spoke three languages. Completely seamless.', 'travail' ),
+				'name' => __( 'Kenji Tanaka', 'travail' ),
+				'loc'  => __( 'Osaka, Japan', 'travail' ),
+			),
+			array(
+				'text' => __( 'From the Santorini sunset cruise to the Oia dinner — every moment exceeded our expectations. Travello has earned a lifelong customer.', 'travail' ),
+				'name' => __( 'Amélie Rousseau', 'travail' ),
+				'loc'  => __( 'Paris, France', 'travail' ),
+			),
+		)
+	);
 
 if ( empty( $travail_reviews ) ) {
 	return;
@@ -43,8 +55,17 @@ if ( empty( $travail_reviews ) ) {
 <section class="travail-travello-section">
 	<div class="travail-travello-container">
 		<div class="travail-travello-section-head travail-travello-section-head--center">
-			<h2 class="travail-travello-section-title"><?php esc_html_e( 'Loved by travelers', 'travail' ); ?> <span class="travail-travello-hero__em"><?php esc_html_e( 'around the world', 'travail' ); ?></span></h2>
-			<p class="travail-travello-section-sub"><?php echo esc_html( travail_get_option( 'travello_why_us_stat_value', __( '50,000+', 'travail' ) ) ); ?> <?php esc_html_e( 'happy travelers and counting.', 'travail' ); ?></p>
+			<?php if ( $travail_args['title'] || $travail_args['title_emphasis'] ) : ?>
+				<h2 class="travail-travello-section-title">
+					<?php echo esc_html( $travail_args['title'] ); ?>
+					<?php if ( $travail_args['title_emphasis'] ) : ?>
+						<span class="travail-travello-hero__em"><?php echo esc_html( $travail_args['title_emphasis'] ); ?></span>
+					<?php endif; ?>
+				</h2>
+			<?php endif; ?>
+			<?php if ( $travail_args['subtitle'] ) : ?>
+				<p class="travail-travello-section-sub"><?php echo esc_html( $travail_args['subtitle'] ); ?></p>
+			<?php endif; ?>
 		</div>
 
 		<div class="travail-travello-reviews-grid">

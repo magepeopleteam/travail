@@ -157,6 +157,95 @@ class Travail_Elementor {
 		</div>
 		<?php
 	}
+
+	/**
+	 * Shared Style-tab header controls (title / emphasis / subtitle /
+	 * view-all). Empty values emit no CSS, so an unedited widget keeps
+	 * the reference design.
+	 *
+	 * @param \Elementor\Widget_Base $widget Widget instance.
+	 * @param array                  $config Selectors and optional condition.
+	 */
+	public static function add_header_style_controls( $widget, $config = array() ) {
+		$config = wp_parse_args(
+			$config,
+			array(
+				'title_selector' => '{{WRAPPER}} .travail-travello-section-title',
+				'sub_selector'   => '{{WRAPPER}} .travail-travello-section-sub',
+				'em_selector'    => '{{WRAPPER}} .travail-travello-hero__em',
+				'link_selector'  => '{{WRAPPER}} .travail-travello-link-more',
+				'condition'      => array(),
+			)
+		);
+
+		$section = array(
+			'label' => __( 'Header', 'travail' ),
+			'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+		);
+		if ( $config['condition'] ) {
+			$section['condition'] = $config['condition'];
+		}
+
+		$widget->start_controls_section( 'style_header_section', $section );
+
+		$widget->add_control(
+			'title_color',
+			array(
+				'label'     => __( 'Title Color', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array( $config['title_selector'] => 'color: {{VALUE}};' ),
+			)
+		);
+
+		$widget->add_control(
+			'title_emphasis_color',
+			array(
+				'label'     => __( 'Emphasis Color', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array( $config['em_selector'] => 'color: {{VALUE}};' ),
+			)
+		);
+
+		$widget->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'title_typography',
+				'selector' => $config['title_selector'],
+			)
+		);
+
+		$widget->add_control(
+			'subtitle_color',
+			array(
+				'label'     => __( 'Subtitle Color', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'separator' => 'before',
+				'selectors' => array( $config['sub_selector'] => 'color: {{VALUE}};' ),
+			)
+		);
+
+		$widget->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'subtitle_typography',
+				'selector' => $config['sub_selector'],
+			)
+		);
+
+		if ( $config['link_selector'] ) {
+			$widget->add_control(
+				'view_all_color',
+				array(
+					'label'     => __( '"View all" Color', 'travail' ),
+					'type'      => \Elementor\Controls_Manager::COLOR,
+					'separator' => 'before',
+					'selectors' => array( $config['link_selector'] => 'color: {{VALUE}};' ),
+				)
+			);
+		}
+
+		$widget->end_controls_section();
+	}
 }
 
 Travail_Elementor::init();

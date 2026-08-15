@@ -215,27 +215,97 @@ class Travail_Elementor_Page_Builder {
 		$elements[] = self::section(
 			'travail-tour-grid',
 			array(
-				'style'  => 'travello',
-				'source' => 'latest',
-				'limit'  => 8,
+				'style'                 => 'travello',
+				'source'                => 'latest',
+				'limit'                 => 8,
+				'latest_title'          => __( 'Popular tours &', 'travail' ),
+				'latest_title_emphasis' => __( 'experiences', 'travail' ),
+				'latest_subtitle'       => __( 'Discover unforgettable experiences curated for every kind of traveler.', 'travail' ),
+				'latest_view_all_text'  => __( 'All tours →', 'travail' ),
+				'latest_view_all_url'   => $context['tours_url'] ? array( 'url' => $context['tours_url'] ) : array( 'url' => '' ),
 			),
 			array( '_element_id' => 'experiences' )
 		);
 
-		$elements[] = self::section( 'travail-tour-grid', array( 'style' => 'travello', 'source' => 'best_seller' ) );
-		$elements[] = self::section( 'travail-features', array( 'section' => 'travello_services' ) );
-		$elements[] = self::section( 'travail-features', array( 'section' => 'travello_why_us' ) );
+		$elements[] = self::section(
+			'travail-tour-grid',
+			array(
+				'style'           => 'travello',
+				'source'          => 'best_seller',
+				'featured_badge'  => __( "Editor's Pick", 'travail' ),
+				'featured_cta'    => __( 'Explore journey →', 'travail' ),
+			)
+		);
+		$elements[] = self::section(
+			'travail-features',
+			array(
+				'section'                 => 'travello_services',
+				'services_title'          => __( 'Everything you need for your', 'travail' ),
+				'services_title_emphasis' => __( 'journey', 'travail' ),
+				'services_subtitle'       => __( 'One platform, every travel need.', 'travail' ),
+			)
+		);
+		$elements[] = self::section(
+			'travail-features',
+			array(
+				'section'            => 'travello_why_us',
+				'why_eyebrow'        => __( 'Why Travel With Us', 'travail' ),
+				'why_title'          => __( 'We make great', 'travail' ),
+				'why_title_emphasis' => __( 'trips happen.', 'travail' ),
+			)
+		);
 
 		$elements[] = self::section(
 			'travail-tour-grid',
-			array( 'style' => 'travello', 'source' => 'on_sale' ),
+			array(
+				'style'                => 'travello',
+				'source'               => 'on_sale',
+				'deals_title'          => __( "Don't miss these", 'travail' ),
+				'deals_title_emphasis' => __( 'adventures', 'travail' ),
+				'deals_subtitle'       => __( 'Limited-time deals on top-rated experiences.', 'travail' ),
+			),
 			array( '_element_id' => 'deals' )
 		);
 
-		$elements[] = self::section( 'travail-features', array( 'section' => 'travello_how_it_works' ) );
-		$elements[] = self::section( 'travail-testimonials', array( 'style' => 'travello' ) );
-		$elements[] = self::section( 'travail-blog-grid', array( 'style' => 'travello' ) );
-		$elements[] = self::section( 'travail-newsletter', array( 'style' => 'travello' ) );
+		$elements[] = self::section(
+			'travail-features',
+			array(
+				'section'             => 'travello_how_it_works',
+				'how_eyebrow'         => __( 'Simple Process', 'travail' ),
+				'how_title'           => __( 'Your journey starts in', 'travail' ),
+				'how_title_emphasis'  => __( 'three steps', 'travail' ),
+				'how_subtitle'        => __( 'From inspiration to booking — we make it effortless.', 'travail' ),
+			)
+		);
+		$elements[] = self::section(
+			'travail-testimonials',
+			array(
+				'style'                    => 'travello',
+				'travello_title'           => __( 'Loved by travelers', 'travail' ),
+				'travello_title_emphasis'  => __( 'around the world', 'travail' ),
+				'travello_subtitle'        => __( '50,000+ happy travelers and counting.', 'travail' ),
+			)
+		);
+		$elements[] = self::section(
+			'travail-blog-grid',
+			array(
+				'style'                   => 'travello',
+				'travello_title'          => __( 'Travel', 'travail' ),
+				'travello_title_emphasis' => __( 'inspiration', 'travail' ),
+				'travello_subtitle'       => __( 'Stories, guides and tips from our editors.', 'travail' ),
+				'travello_view_all_text'  => __( 'All articles →', 'travail' ),
+			)
+		);
+		$elements[] = self::section(
+			'travail-newsletter',
+			array(
+				'style'                    => 'travello',
+				'travello_eyebrow'         => __( 'Stay Inspired', 'travail' ),
+				'travello_title'           => __( 'Your next adventure is closer', 'travail' ),
+				'travello_title_emphasis'  => __( 'than you think.', 'travail' ),
+				'travello_subtitle'        => __( 'Get destination inspiration, travel tips and exclusive offers.', 'travail' ),
+			)
+		);
 
 		return $elements;
 	}

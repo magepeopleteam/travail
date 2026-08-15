@@ -62,11 +62,34 @@ $travail_services = apply_filters(
 if ( empty( $travail_services ) ) {
 	return;
 }
+
+$travail_args = travail_section_args(
+	isset( $args ) ? $args : array(),
+	array(
+		'title'          => __( 'Everything you need for your', 'travail' ),
+		'title_emphasis' => __( 'journey', 'travail' ),
+		'subtitle'       => __( 'One platform, every travel need.', 'travail' ),
+		'services'       => array(),
+	)
+);
+
+if ( ! empty( $travail_args['services'] ) ) {
+	$travail_services = $travail_args['services'];
+}
 ?>
 <section class="travail-travello-section travail-travello-section--surface travail-travello-section--center">
 	<div class="travail-travello-container">
-		<h2 class="travail-travello-section-title"><?php esc_html_e( 'Everything you need for your', 'travail' ); ?> <span class="travail-travello-hero__em"><?php esc_html_e( 'journey', 'travail' ); ?></span></h2>
-		<p class="travail-travello-section-sub"><?php esc_html_e( 'One platform, every travel need.', 'travail' ); ?></p>
+		<?php if ( $travail_args['title'] || $travail_args['title_emphasis'] ) : ?>
+			<h2 class="travail-travello-section-title">
+				<?php echo esc_html( $travail_args['title'] ); ?>
+				<?php if ( $travail_args['title_emphasis'] ) : ?>
+					<span class="travail-travello-hero__em"><?php echo esc_html( $travail_args['title_emphasis'] ); ?></span>
+				<?php endif; ?>
+			</h2>
+		<?php endif; ?>
+		<?php if ( $travail_args['subtitle'] ) : ?>
+			<p class="travail-travello-section-sub"><?php echo esc_html( $travail_args['subtitle'] ); ?></p>
+		<?php endif; ?>
 
 		<div class="travail-travello-services-grid">
 			<?php foreach ( $travail_services as $travail_service ) : ?>

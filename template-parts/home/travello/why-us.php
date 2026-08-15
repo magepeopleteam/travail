@@ -10,32 +10,47 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$travail_image = travail_get_option( 'travello_why_us_image', '' );
+$travail_args = travail_section_args(
+	isset( $args ) ? $args : array(),
+	array(
+		'eyebrow'        => __( 'Why Travel With Us', 'travail' ),
+		'title'          => __( 'We make great', 'travail' ),
+		'title_emphasis' => __( 'trips happen.', 'travail' ),
+		'image'          => '',
+		'stat_value'     => travail_get_option( 'travello_why_us_stat_value', __( '50,000+', 'travail' ) ),
+		'stat_label'     => travail_get_option( 'travello_why_us_stat_label', __( 'Happy travelers worldwide', 'travail' ) ),
+		'reasons'        => array(),
+	)
+);
+
+$travail_image = $travail_args['image'] ? $travail_args['image'] : travail_get_option( 'travello_why_us_image', '' );
 if ( ! $travail_image ) {
 	$travail_image = TRAVAIL_URI . '/assets/images/placeholder-wide.svg';
 }
 
-$travail_reasons = apply_filters(
-	'travail_travello_why_us_reasons',
-	array(
+$travail_reasons = ! empty( $travail_args['reasons'] )
+	? $travail_args['reasons']
+	: apply_filters(
+		'travail_travello_why_us_reasons',
 		array(
-			'title' => __( 'Handpicked experiences', 'travail' ),
-			'text'  => __( 'Every tour is vetted by our team of expert travelers who know what makes a journey truly memorable.', 'travail' ),
-		),
-		array(
-			'title' => __( 'Trusted local experts', 'travail' ),
-			'text'  => __( 'We partner with guides who know their destinations intimately — not just the highlights.', 'travail' ),
-		),
-		array(
-			'title' => __( 'Secure payments', 'travail' ),
-			'text'  => __( 'Bank-level encryption keeps every transaction safe. Book with complete confidence.', 'travail' ),
-		),
-		array(
-			'title' => __( 'Flexible cancellation', 'travail' ),
-			'text'  => __( 'Plans change — most tours offer free cancellation up to 24 hours before departure.', 'travail' ),
-		),
-	)
-);
+			array(
+				'title' => __( 'Handpicked experiences', 'travail' ),
+				'text'  => __( 'Every tour is vetted by our team of expert travelers who know what makes a journey truly memorable.', 'travail' ),
+			),
+			array(
+				'title' => __( 'Trusted local experts', 'travail' ),
+				'text'  => __( 'We partner with guides who know their destinations intimately — not just the highlights.', 'travail' ),
+			),
+			array(
+				'title' => __( 'Secure payments', 'travail' ),
+				'text'  => __( 'Bank-level encryption keeps every transaction safe. Book with complete confidence.', 'travail' ),
+			),
+			array(
+				'title' => __( 'Flexible cancellation', 'travail' ),
+				'text'  => __( 'Plans change — most tours offer free cancellation up to 24 hours before departure.', 'travail' ),
+			),
+		)
+	);
 ?>
 <section class="travail-travello-section">
 	<div class="travail-travello-container">
@@ -43,13 +58,22 @@ $travail_reasons = apply_filters(
 			<div class="travail-travello-why-img">
 				<img src="<?php echo esc_url( $travail_image ); ?>" alt="" loading="lazy" />
 				<div class="travail-travello-why-badge">
-					<p><?php echo esc_html( travail_get_option( 'travello_why_us_stat_value', __( '50,000+', 'travail' ) ) ); ?></p>
-					<p><?php echo esc_html( travail_get_option( 'travello_why_us_stat_label', __( 'Happy travelers worldwide', 'travail' ) ) ); ?></p>
+					<p><?php echo esc_html( $travail_args['stat_value'] ); ?></p>
+					<p><?php echo esc_html( $travail_args['stat_label'] ); ?></p>
 				</div>
 			</div>
 			<div>
-				<span class="travail-travello-eyebrow travail-travello-eyebrow--ink"><?php esc_html_e( 'Why Travel With Us', 'travail' ); ?></span>
-				<h2 class="travail-travello-section-title"><?php esc_html_e( 'We make great', 'travail' ); ?> <span class="travail-travello-hero__em"><?php esc_html_e( 'trips happen.', 'travail' ); ?></span></h2>
+				<?php if ( $travail_args['eyebrow'] ) : ?>
+					<span class="travail-travello-eyebrow travail-travello-eyebrow--ink"><?php echo esc_html( $travail_args['eyebrow'] ); ?></span>
+				<?php endif; ?>
+				<?php if ( $travail_args['title'] || $travail_args['title_emphasis'] ) : ?>
+					<h2 class="travail-travello-section-title">
+						<?php echo esc_html( $travail_args['title'] ); ?>
+						<?php if ( $travail_args['title_emphasis'] ) : ?>
+							<span class="travail-travello-hero__em"><?php echo esc_html( $travail_args['title_emphasis'] ); ?></span>
+						<?php endif; ?>
+					</h2>
+				<?php endif; ?>
 
 				<div class="travail-travello-reasons">
 					<?php foreach ( $travail_reasons as $travail_index => $travail_reason ) : ?>

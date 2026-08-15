@@ -71,7 +71,7 @@ class Travail_Elementor_Testimonials_Widget extends \Elementor\Widget_Base {
 					'classic'  => __( 'Travail Classic (dark slider)', 'travail' ),
 					'travello' => __( 'Travello (3-card review grid)', 'travail' ),
 				),
-				'description' => __( '"Classic"/"Travello" render that reference design\'s exact testimonials section (copy comes from travail_testimonials / travail_travello_reviews filters); everything below only applies to "Custom".', 'travail' ),
+				'description' => __( 'Classic and Travello keep their reference layouts. Every heading and review below stays editable.', 'travail' ),
 			)
 		);
 
@@ -82,6 +82,67 @@ class Travail_Elementor_Testimonials_Widget extends \Elementor\Widget_Base {
 				'type'      => \Elementor\Controls_Manager::TEXT,
 				'default'   => __( 'Loved by travelers worldwide', 'travail' ),
 				'condition' => array( 'style' => '' ),
+			)
+		);
+
+		$this->add_control(
+			'travello_title',
+			array(
+				'label'     => __( 'Title', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::TEXT,
+				'default'   => __( 'Loved by travelers', 'travail' ),
+				'condition' => array( 'style' => 'travello' ),
+			)
+		);
+		$this->add_control(
+			'travello_title_emphasis',
+			array(
+				'label'     => __( 'Title (emphasized word)', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::TEXT,
+				'default'   => __( 'around the world', 'travail' ),
+				'condition' => array( 'style' => 'travello' ),
+			)
+		);
+		$this->add_control(
+			'travello_subtitle',
+			array(
+				'label'     => __( 'Subtitle', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::TEXTAREA,
+				'default'   => __( '50,000+ happy travelers and counting.', 'travail' ),
+				'condition' => array( 'style' => 'travello' ),
+			)
+		);
+
+		$travello_rep = new \Elementor\Repeater();
+		$travello_rep->add_control( 'text', array( 'label' => __( 'Quote', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXTAREA ) );
+		$travello_rep->add_control( 'name', array( 'label' => __( 'Name', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT ) );
+		$travello_rep->add_control( 'loc', array( 'label' => __( 'Location', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT ) );
+
+		$this->add_control(
+			'travello_reviews',
+			array(
+				'label'       => __( 'Reviews', 'travail' ),
+				'type'        => \Elementor\Controls_Manager::REPEATER,
+				'fields'      => $travello_rep->get_controls(),
+				'title_field' => '{{{ name }}}',
+				'condition'   => array( 'style' => 'travello' ),
+				'default'     => array(
+					array(
+						'text' => __( 'Travello found us a hidden gem in Bali we would never have discovered alone. The local guide was extraordinary and every detail was flawless.', 'travail' ),
+						'name' => __( 'Sarah Mitchell', 'travail' ),
+						'loc'  => __( 'London, UK', 'travail' ),
+					),
+					array(
+						'text' => __( 'Booked our Swiss Alps trek through Travello — the itinerary was perfectly paced and our guide spoke three languages. Completely seamless.', 'travail' ),
+						'name' => __( 'Kenji Tanaka', 'travail' ),
+						'loc'  => __( 'Osaka, Japan', 'travail' ),
+					),
+					array(
+						'text' => __( 'From the Santorini sunset cruise to the Oia dinner — every moment exceeded our expectations. Travello has earned a lifelong customer.', 'travail' ),
+						'name' => __( 'Amélie Rousseau', 'travail' ),
+						'loc'  => __( 'Paris, France', 'travail' ),
+					),
+				),
 			)
 		);
 
@@ -132,6 +193,16 @@ class Travail_Elementor_Testimonials_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		if ( class_exists( 'Travail_Elementor' ) ) {
+			Travail_Elementor::add_header_style_controls(
+				$this,
+				array(
+					'condition'     => array( 'style' => 'travello' ),
+					'link_selector' => '',
+				)
+			);
+		}
 	}
 
 	/**
@@ -146,7 +217,26 @@ class Travail_Elementor_Testimonials_Widget extends \Elementor\Widget_Base {
 		}
 
 		if ( 'travello' === $settings['style'] ) {
-			get_template_part( 'template-parts/home/travello/testimonials' );
+			$reviews = array();
+			if ( ! empty( $settings['travello_reviews'] ) ) {
+				foreach ( $settings['travello_reviews'] as $item ) {
+					$reviews[] = array(
+						'text' => isset( $item['text'] ) ? $item['text'] : '',
+						'name' => isset( $item['name'] ) ? $item['name'] : '',
+						'loc'  => isset( $item['loc'] ) ? $item['loc'] : '',
+					);
+				}
+			}
+			get_template_part(
+				'template-parts/home/travello/testimonials',
+				null,
+				array(
+					'title'          => isset( $settings['travello_title'] ) ? $settings['travello_title'] : '',
+					'title_emphasis' => isset( $settings['travello_title_emphasis'] ) ? $settings['travello_title_emphasis'] : '',
+					'subtitle'       => isset( $settings['travello_subtitle'] ) ? $settings['travello_subtitle'] : '',
+					'reviews'        => $reviews,
+				)
+			);
 			return;
 		}
 

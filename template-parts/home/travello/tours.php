@@ -24,7 +24,21 @@ if ( ! class_exists( 'Travail_Plugin_Compatibility' ) || ! Travail_Plugin_Compat
 	return;
 }
 
-$travail_limit = isset( $args['limit'] ) ? absint( $args['limit'] ) : 8;
+$travail_tours_link = post_type_exists( 'ttbm_tour' ) ? get_post_type_archive_link( 'ttbm_tour' ) : '#';
+$travail_args       = travail_section_args(
+	isset( $args ) ? $args : array(),
+	array(
+		'title'          => __( 'Popular tours &', 'travail' ),
+		'title_emphasis' => __( 'experiences', 'travail' ),
+		'subtitle'       => __( 'Discover unforgettable experiences curated for every kind of traveler.', 'travail' ),
+		'view_all_text'  => __( 'All tours →', 'travail' ),
+		'view_all_url'   => $travail_tours_link ? $travail_tours_link : '',
+		'show_header'    => true,
+		'limit'          => 8,
+	)
+);
+
+$travail_limit = max( 1, absint( $travail_args['limit'] ) );
 
 $travail_candidate_ids = get_posts(
 	array(
@@ -90,19 +104,29 @@ if ( class_exists( 'Travail_Plugin_Compatibility' ) && Travail_Plugin_Compatibil
 	}
 }
 
-$travail_tours_link = post_type_exists( 'ttbm_tour' ) ? get_post_type_archive_link( 'ttbm_tour' ) : '#';
 ?>
 <section class="travail-travello-section travail-travello-section--top-flush">
 	<div class="travail-travello-container">
-		<div class="travail-travello-section-head">
-			<div>
-				<h2 class="travail-travello-section-title"><?php esc_html_e( 'Popular tours &', 'travail' ); ?> <span class="travail-travello-hero__em"><?php esc_html_e( 'experiences', 'travail' ); ?></span></h2>
-				<p class="travail-travello-section-sub"><?php esc_html_e( 'Discover unforgettable experiences curated for every kind of traveler.', 'travail' ); ?></p>
+		<?php if ( $travail_args['show_header'] ) : ?>
+			<div class="travail-travello-section-head">
+				<div>
+					<?php if ( $travail_args['title'] || $travail_args['title_emphasis'] ) : ?>
+						<h2 class="travail-travello-section-title">
+							<?php echo esc_html( $travail_args['title'] ); ?>
+							<?php if ( $travail_args['title_emphasis'] ) : ?>
+								<span class="travail-travello-hero__em"><?php echo esc_html( $travail_args['title_emphasis'] ); ?></span>
+							<?php endif; ?>
+						</h2>
+					<?php endif; ?>
+					<?php if ( $travail_args['subtitle'] ) : ?>
+						<p class="travail-travello-section-sub"><?php echo esc_html( $travail_args['subtitle'] ); ?></p>
+					<?php endif; ?>
+				</div>
+				<?php if ( $travail_args['view_all_text'] && $travail_args['view_all_url'] ) : ?>
+					<a href="<?php echo esc_url( $travail_args['view_all_url'] ); ?>" class="travail-travello-link-more"><?php echo esc_html( $travail_args['view_all_text'] ); ?></a>
+				<?php endif; ?>
 			</div>
-			<?php if ( $travail_tours_link ) : ?>
-				<a href="<?php echo esc_url( $travail_tours_link ); ?>" class="travail-travello-link-more"><?php esc_html_e( 'All tours →', 'travail' ); ?></a>
-			<?php endif; ?>
-		</div>
+		<?php endif; ?>
 
 		<div class="travail-travello-tours-grid">
 			<?php

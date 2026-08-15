@@ -16,17 +16,33 @@ if ( ! class_exists( 'Travail_Plugin_Compatibility' ) || ! Travail_Plugin_Compat
 	return;
 }
 
-$travail_query = new WP_Query(
+$travail_args = travail_section_args(
+	isset( $args ) ? $args : array(),
 	array(
-		'post_type'      => 'ttbm_tour',
-		'posts_per_page' => 1,
-		'meta_key'       => 'ttbm_best_seller',
-		'meta_value'     => 'on',
-		'no_found_rows'  => true,
+		'tour_id'    => 0,
+		'title'      => '',
+		'badge_text' => __( "Editor's Pick", 'travail' ),
+		'cta_text'   => __( 'Explore journey →', 'travail' ),
+		'image'      => '',
 	)
 );
 
-if ( ! $travail_query->have_posts() ) {
+$travail_query_args = array(
+	'post_type'      => 'ttbm_tour',
+	'posts_per_page' => 1,
+	'no_found_rows'  => true,
+);
+
+if ( ! empty( $travail_args['tour_id'] ) ) {
+	$travail_query_args['p'] = absint( $travail_args['tour_id'] );
+} else {
+	$travail_query_args['meta_key']   = 'ttbm_best_seller';
+	$travail_query_args['meta_value'] = 'on';
+}
+
+$travail_query = new WP_Query( $travail_query_args );
+
+if ( ! $travail_query->have_posts() && empty( $travail_args['tour_id'] ) ) {
 	$travail_query = new WP_Query(
 		array(
 			'post_type'      => 'ttbm_tour',
@@ -68,7 +84,9 @@ if ( $travail_duration ) {
 ?>
 <div class="travail-travello-editorial">
 	<div class="travail-travello-editorial__inner">
-		<?php if ( has_post_thumbnail() ) : ?>
+		<?php if ( $travail_args['image'] ) : ?>
+			<img src="<?php echo esc_url( $travail_args['image'] ); ?>" alt="" loading="lazy" />
+		<?php elseif ( has_post_thumbnail() ) : ?>
 			<?php the_post_thumbnail( 'travail-hero', array( 'loading' => 'lazy' ) ); ?>
 		<?php else : ?>
 			<img src="<?php echo esc_url( TRAVAIL_URI . '/assets/images/placeholder-wide.svg' ); ?>" alt="" loading="lazy" />
@@ -76,8 +94,10 @@ if ( $travail_duration ) {
 		<div class="travail-travello-editorial__gradient"></div>
 		<div class="travail-travello-editorial__content">
 			<div class="travail-travello-editorial__text">
-				<span class="travail-travello-badge travail-travello-badge--stack"><?php esc_html_e( "Editor's Pick", 'travail' ); ?></span>
-				<h2 class="travail-travello-editorial__title"><?php the_title(); ?></h2>
+				<?php if ( $travail_args['badge_text'] ) : ?>
+					<span class="travail-travello-badge travail-travello-badge--stack"><?php echo esc_html( $travail_args['badge_text'] ); ?></span>
+				<?php endif; ?>
+				<h2 class="travail-travello-editorial__title"><?php echo $travail_args['title'] ? esc_html( $travail_args['title'] ) : esc_html( get_the_title() ); ?></h2>
 				<div class="travail-travello-editorial__meta">
 					<?php if ( $travail_duration_label ) : ?><span><?php echo esc_html( $travail_duration_label ); ?></span><?php endif; ?>
 					<?php if ( $travail_rating ) : ?><span>★ <?php echo esc_html( number_format_i18n( (float) $travail_rating, 1 ) ); ?></span><?php endif; ?>
@@ -85,7 +105,9 @@ if ( $travail_duration ) {
 						<span class="travail-travello-editorial__price"><?php esc_html_e( 'From', 'travail' ); ?> <?php echo wp_kses_post( travail_format_price( $travail_start_price ) ); ?></span>
 					<?php endif; ?>
 				</div>
-				<a href="<?php the_permalink(); ?>" class="travail-travello-editorial-cta"><?php esc_html_e( 'Explore journey →', 'travail' ); ?></a>
+				<?php if ( $travail_args['cta_text'] ) : ?>
+					<a href="<?php the_permalink(); ?>" class="travail-travello-editorial-cta"><?php echo esc_html( $travail_args['cta_text'] ); ?></a>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>

@@ -65,7 +65,7 @@ class Travail_Elementor_Newsletter_Widget extends \Elementor\Widget_Base {
 					'classic'  => __( 'Travail Classic', 'travail' ),
 					'travello' => __( 'Travello (AJAX signup, own styling)', 'travail' ),
 				),
-				'description' => __( 'Travello renders its own real, working AJAX signup form (see inc/homepage-travello.php) — the fields below only apply to Classic.', 'travail' ),
+				'description' => __( 'Travello uses the theme AJAX signup form. Every heading and the background image stay editable below.', 'travail' ),
 			)
 		);
 
@@ -74,10 +74,9 @@ class Travail_Elementor_Newsletter_Widget extends \Elementor\Widget_Base {
 		$this->add_control(
 			'background_image',
 			array(
-				'label'     => __( 'Background Image', 'travail' ),
-				'type'      => \Elementor\Controls_Manager::MEDIA,
-				'default'   => array( 'url' => TRAVAIL_URI . '/assets/images/placeholder-wide.svg' ),
-				'condition' => array( 'style' => 'classic' ),
+				'label'   => __( 'Background Image', 'travail' ),
+				'type'    => \Elementor\Controls_Manager::MEDIA,
+				'default' => array( 'url' => TRAVAIL_URI . '/assets/images/placeholder-wide.svg' ),
 			)
 		);
 		$this->add_control(
@@ -90,7 +89,26 @@ class Travail_Elementor_Newsletter_Widget extends \Elementor\Widget_Base {
 			)
 		);
 
+		$this->add_control( 'travello_eyebrow', array( 'label' => __( 'Eyebrow', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'Stay Inspired', 'travail' ), 'condition' => array( 'style' => 'travello' ) ) );
+		$this->add_control( 'travello_title', array( 'label' => __( 'Title', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'Your next adventure is closer', 'travail' ), 'condition' => array( 'style' => 'travello' ) ) );
+		$this->add_control( 'travello_title_emphasis', array( 'label' => __( 'Title (emphasized word)', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'than you think.', 'travail' ), 'condition' => array( 'style' => 'travello' ) ) );
+		$this->add_control( 'travello_subtitle', array( 'label' => __( 'Subtitle', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXTAREA, 'default' => __( 'Get destination inspiration, travel tips and exclusive offers.', 'travail' ), 'condition' => array( 'style' => 'travello' ) ) );
+		$this->add_control( 'travello_placeholder', array( 'label' => __( 'Email Placeholder', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'Your email address', 'travail' ), 'condition' => array( 'style' => 'travello' ) ) );
+		$this->add_control( 'travello_button_text', array( 'label' => __( 'Button Text', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'Subscribe', 'travail' ), 'condition' => array( 'style' => 'travello' ) ) );
+
 		$this->end_controls_section();
+
+		if ( class_exists( 'Travail_Elementor' ) ) {
+			Travail_Elementor::add_header_style_controls(
+				$this,
+				array(
+					'condition'      => array( 'style' => 'travello' ),
+					'title_selector' => '{{WRAPPER}} .travail-travello-newsletter__title',
+					'sub_selector'   => '{{WRAPPER}} .travail-travello-newsletter__sub',
+					'link_selector'  => '',
+				)
+			);
+		}
 	}
 
 	/**
@@ -100,7 +118,19 @@ class Travail_Elementor_Newsletter_Widget extends \Elementor\Widget_Base {
 		$settings = $this->get_settings_for_display();
 
 		if ( 'travello' === $settings['style'] ) {
-			get_template_part( 'template-parts/home/travello/newsletter' );
+			get_template_part(
+				'template-parts/home/travello/newsletter',
+				null,
+				array(
+					'eyebrow'        => isset( $settings['travello_eyebrow'] ) ? $settings['travello_eyebrow'] : '',
+					'title'          => isset( $settings['travello_title'] ) ? $settings['travello_title'] : '',
+					'title_emphasis' => isset( $settings['travello_title_emphasis'] ) ? $settings['travello_title_emphasis'] : '',
+					'subtitle'       => isset( $settings['travello_subtitle'] ) ? $settings['travello_subtitle'] : '',
+					'image'          => ( ! empty( $settings['background_image']['id'] ) && ! empty( $settings['background_image']['url'] ) ) ? $settings['background_image']['url'] : '',
+					'placeholder'    => isset( $settings['travello_placeholder'] ) ? $settings['travello_placeholder'] : '',
+					'button_text'    => isset( $settings['travello_button_text'] ) ? $settings['travello_button_text'] : '',
+				)
+			);
 			return;
 		}
 

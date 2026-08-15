@@ -10,14 +10,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+$travail_blog_page = get_option( 'page_for_posts' ) ? get_permalink( get_option( 'page_for_posts' ) ) : get_post_type_archive_link( 'post' );
+if ( ! $travail_blog_page ) {
+	$travail_blog_page = home_url( '/blog/' );
+}
+
+$travail_args = travail_section_args(
+	isset( $args ) ? $args : array(),
+	array(
+		'title'          => __( 'Travel', 'travail' ),
+		'title_emphasis' => __( 'inspiration', 'travail' ),
+		'subtitle'       => __( 'Stories, guides and tips from our editors.', 'travail' ),
+		'view_all_text'  => __( 'All articles →', 'travail' ),
+		'view_all_url'   => $travail_blog_page,
+		'limit'          => 3,
+		'category'       => '',
+	)
+);
+
 $travail_query = new WP_Query(
 	array(
-		'post_type'      => 'post',
-		'posts_per_page' => 3,
-		'orderby'        => 'date',
-		'order'          => 'DESC',
-		'no_found_rows'  => true,
+		'post_type'           => 'post',
+		'posts_per_page'      => max( 1, absint( $travail_args['limit'] ) ),
+		'orderby'             => 'date',
+		'order'               => 'DESC',
+		'no_found_rows'       => true,
 		'ignore_sticky_posts' => true,
+		'category_name'       => $travail_args['category'] ? sanitize_title( $travail_args['category'] ) : '',
 	)
 );
 
@@ -27,20 +46,27 @@ if ( ! $travail_query->have_posts() ) {
 
 $travail_posts = $travail_query->posts;
 $travail_featured = $travail_posts[0];
-$travail_small     = array_slice( $travail_posts, 1, 2 );
-$travail_blog_page = get_option( 'page_for_posts' ) ? get_permalink( get_option( 'page_for_posts' ) ) : get_post_type_archive_link( 'post' );
-if ( ! $travail_blog_page ) {
-	$travail_blog_page = home_url( '/blog/' );
-}
+$travail_small     = array_slice( $travail_posts, 1 );
 ?>
 <section class="travail-travello-section">
 	<div class="travail-travello-container">
 		<div class="travail-travello-section-head">
 			<div>
-				<h2 class="travail-travello-section-title"><?php esc_html_e( 'Travel', 'travail' ); ?> <span class="travail-travello-hero__em"><?php esc_html_e( 'inspiration', 'travail' ); ?></span></h2>
-				<p class="travail-travello-section-sub"><?php esc_html_e( 'Stories, guides and tips from our editors.', 'travail' ); ?></p>
+				<?php if ( $travail_args['title'] || $travail_args['title_emphasis'] ) : ?>
+					<h2 class="travail-travello-section-title">
+						<?php echo esc_html( $travail_args['title'] ); ?>
+						<?php if ( $travail_args['title_emphasis'] ) : ?>
+							<span class="travail-travello-hero__em"><?php echo esc_html( $travail_args['title_emphasis'] ); ?></span>
+						<?php endif; ?>
+					</h2>
+				<?php endif; ?>
+				<?php if ( $travail_args['subtitle'] ) : ?>
+					<p class="travail-travello-section-sub"><?php echo esc_html( $travail_args['subtitle'] ); ?></p>
+				<?php endif; ?>
 			</div>
-			<a href="<?php echo esc_url( $travail_blog_page ); ?>" class="travail-travello-link-more"><?php esc_html_e( 'All articles →', 'travail' ); ?></a>
+			<?php if ( $travail_args['view_all_text'] && $travail_args['view_all_url'] ) : ?>
+				<a href="<?php echo esc_url( $travail_args['view_all_url'] ); ?>" class="travail-travello-link-more"><?php echo esc_html( $travail_args['view_all_text'] ); ?></a>
+			<?php endif; ?>
 		</div>
 
 		<div class="travail-travello-blog-grid">

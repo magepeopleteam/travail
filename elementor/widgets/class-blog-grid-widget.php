@@ -79,6 +79,32 @@ class Travail_Elementor_Blog_Grid_Widget extends \Elementor\Widget_Base {
 			)
 		);
 
+		$this->add_control( 'travello_title', array( 'label' => __( 'Title', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'Travel', 'travail' ), 'condition' => array( 'style' => 'travello' ) ) );
+		$this->add_control( 'travello_title_emphasis', array( 'label' => __( 'Title (emphasized word)', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'inspiration', 'travail' ), 'condition' => array( 'style' => 'travello' ) ) );
+		$this->add_control( 'travello_subtitle', array( 'label' => __( 'Subtitle', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXTAREA, 'default' => __( 'Stories, guides and tips from our editors.', 'travail' ), 'condition' => array( 'style' => 'travello' ) ) );
+		$this->add_control( 'travello_view_all_text', array( 'label' => __( '"View all" Text', 'travail' ), 'type' => \Elementor\Controls_Manager::TEXT, 'default' => __( 'All articles →', 'travail' ), 'condition' => array( 'style' => 'travello' ) ) );
+		$this->add_control( 'travello_view_all_url', array( 'label' => __( '"View all" Link', 'travail' ), 'type' => \Elementor\Controls_Manager::URL, 'condition' => array( 'style' => 'travello' ) ) );
+		$this->add_control(
+			'travello_limit',
+			array(
+				'label'     => __( 'Number of Posts', 'travail' ),
+				'type'      => \Elementor\Controls_Manager::NUMBER,
+				'default'   => 3,
+				'min'       => 1,
+				'max'       => 12,
+				'condition' => array( 'style' => 'travello' ),
+			)
+		);
+		$this->add_control(
+			'travello_category',
+			array(
+				'label'       => __( 'Category Slug (optional)', 'travail' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'condition'   => array( 'style' => 'travello' ),
+				'description' => __( 'Leave empty to show the latest posts from any category.', 'travail' ),
+			)
+		);
+
 		$this->add_control(
 			'limit',
 			array(
@@ -102,6 +128,13 @@ class Travail_Elementor_Blog_Grid_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		if ( class_exists( 'Travail_Elementor' ) ) {
+			Travail_Elementor::add_header_style_controls(
+				$this,
+				array( 'condition' => array( 'style' => 'travello' ) )
+			);
+		}
 	}
 
 	/**
@@ -116,7 +149,19 @@ class Travail_Elementor_Blog_Grid_Widget extends \Elementor\Widget_Base {
 		}
 
 		if ( 'travello' === $settings['style'] ) {
-			get_template_part( 'template-parts/home/travello/blog' );
+			get_template_part(
+				'template-parts/home/travello/blog',
+				null,
+				array(
+					'title'          => isset( $settings['travello_title'] ) ? $settings['travello_title'] : '',
+					'title_emphasis' => isset( $settings['travello_title_emphasis'] ) ? $settings['travello_title_emphasis'] : '',
+					'subtitle'       => isset( $settings['travello_subtitle'] ) ? $settings['travello_subtitle'] : '',
+					'view_all_text'  => isset( $settings['travello_view_all_text'] ) ? $settings['travello_view_all_text'] : '',
+					'view_all_url'   => ! empty( $settings['travello_view_all_url']['url'] ) ? $settings['travello_view_all_url']['url'] : '',
+					'limit'          => ! empty( $settings['travello_limit'] ) ? absint( $settings['travello_limit'] ) : 3,
+					'category'       => isset( $settings['travello_category'] ) ? $settings['travello_category'] : '',
+				)
+			);
 			return;
 		}
 

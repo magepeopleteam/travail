@@ -19,6 +19,21 @@ if ( ! class_exists( 'Travail_Plugin_Compatibility' ) || ! Travail_Plugin_Compat
 	return;
 }
 
+$travail_args = travail_section_args(
+	isset( $args ) ? $args : array(),
+	array(
+		'title'          => __( "Don't miss these", 'travail' ),
+		'title_emphasis' => __( 'adventures', 'travail' ),
+		'subtitle'       => __( 'Limited-time deals on top-rated experiences.', 'travail' ),
+		'show_header'    => true,
+		'badge_text'     => __( 'Limited Offer', 'travail' ),
+		'cta_text'       => __( 'Book now →', 'travail' ),
+		'limit'          => 3,
+	)
+);
+
+$travail_limit = max( 1, absint( $travail_args['limit'] ) );
+
 $travail_candidates = get_posts(
 	array(
 		'post_type'      => 'ttbm_tour',
@@ -34,7 +49,7 @@ foreach ( $travail_candidates as $travail_id ) {
 	if ( TTBM_Function::check_discount_price_exit( $travail_id ) ) {
 		$travail_deals[] = $travail_id;
 	}
-	if ( count( $travail_deals ) >= 3 ) {
+	if ( count( $travail_deals ) >= $travail_limit ) {
 		break;
 	}
 }
@@ -45,12 +60,23 @@ if ( empty( $travail_deals ) ) {
 ?>
 <section class="travail-travello-section travail-travello-section--surface">
 	<div class="travail-travello-container">
-		<div class="travail-travello-section-head">
-			<div>
-				<h2 class="travail-travello-section-title"><?php esc_html_e( "Don't miss these", 'travail' ); ?> <span class="travail-travello-hero__em"><?php esc_html_e( 'adventures', 'travail' ); ?></span></h2>
-				<p class="travail-travello-section-sub"><?php esc_html_e( 'Limited-time deals on top-rated experiences.', 'travail' ); ?></p>
+		<?php if ( $travail_args['show_header'] ) : ?>
+			<div class="travail-travello-section-head">
+				<div>
+					<?php if ( $travail_args['title'] || $travail_args['title_emphasis'] ) : ?>
+						<h2 class="travail-travello-section-title">
+							<?php echo esc_html( $travail_args['title'] ); ?>
+							<?php if ( $travail_args['title_emphasis'] ) : ?>
+								<span class="travail-travello-hero__em"><?php echo esc_html( $travail_args['title_emphasis'] ); ?></span>
+							<?php endif; ?>
+						</h2>
+					<?php endif; ?>
+					<?php if ( $travail_args['subtitle'] ) : ?>
+						<p class="travail-travello-section-sub"><?php echo esc_html( $travail_args['subtitle'] ); ?></p>
+					<?php endif; ?>
+				</div>
 			</div>
-		</div>
+		<?php endif; ?>
 
 		<div class="travail-travello-deals-grid">
 			<?php foreach ( $travail_deals as $travail_tour_id ) : ?>
@@ -62,7 +88,7 @@ if ( empty( $travail_deals ) ) {
 				?>
 				<div class="travail-travello-deal-card">
 					<div class="travail-travello-deal-card__img">
-						<span class="travail-travello-badge"><?php esc_html_e( 'Limited Offer', 'travail' ); ?></span>
+						<span class="travail-travello-badge"><?php echo esc_html( $travail_args['badge_text'] ); ?></span>
 						<img src="<?php echo esc_url( travail_get_featured_image_url( $travail_tour_id, 'travail-card-wide' ) ); ?>" alt="<?php echo esc_attr( get_the_title( $travail_tour_id ) ); ?>" loading="lazy" />
 					</div>
 					<div class="travail-travello-deal-card__body">
@@ -82,7 +108,7 @@ if ( empty( $travail_deals ) ) {
 								</div>
 								<p class="travail-travello-deal-card__new-price"><?php echo wp_kses_post( travail_format_price( $travail_start_price ) ); ?><span> <?php esc_html_e( '/person', 'travail' ); ?></span></p>
 							</div>
-							<a href="<?php echo esc_url( get_permalink( $travail_tour_id ) ); ?>" class="travail-travello-deal-btn"><?php esc_html_e( 'Book now →', 'travail' ); ?></a>
+							<a href="<?php echo esc_url( get_permalink( $travail_tour_id ) ); ?>" class="travail-travello-deal-btn"><?php echo esc_html( $travail_args['cta_text'] ); ?></a>
 						</div>
 					</div>
 				</div>
