@@ -2374,3 +2374,199 @@ body.travail-travello-home .travail-travello-mobile-bottom-nav__item span:last-c
 body.travail-travello-home .travail-travello-mobile-bottom-nav__item.is-active {
 	color: var( --travello-primary );
 }
+
+/*
+ * Destinations widget used outside the Travello homepage (Elementor
+ * canvas, inner pages). Same tokens + the section/card rules that
+ * destinations.php actually uses — other Travello sections keep the
+ * body.travail-travello-home prefix so they never leak here.
+ */
+.elementor-widget-travail-destination-grid {
+	--travello-bg: #f7f7f4;
+	--travello-fg: #17201d;
+	--travello-primary: #123b32;
+	--travello-accent: #f36b4f;
+	--travello-muted: #737a76;
+	--travello-border: #e7e7e2;
+	--travello-card: #ffffff;
+	--travello-soft: #eef1ef;
+	--travello-dark: #17201d;
+	--travello-radius-sm: 12px;
+	--travello-radius: 16px;
+	--travello-radius-lg: 24px;
+	--travello-max-w: 1280px;
+	--travello-px: clamp( 20px, 5vw, 80px );
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-container {
+	max-width: var( --travello-max-w );
+	margin: 0 auto;
+	padding: 0 var( --travello-px );
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-section {
+	padding: 80px 0;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-section-title {
+	font-size: clamp( 28px, 4vw, 40px );
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	color: var( --travello-fg );
+	margin-bottom: 8px;
+	line-height: 1.15;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-section-sub {
+	color: var( --travello-muted );
+	font-size: 15px;
+	margin: 0;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-section-head {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 40px;
+	flex-wrap: wrap;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-hero__em {
+	font-family: 'DM Serif Display', serif;
+	font-style: italic;
+	font-weight: 400;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-link-more {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 13px;
+	font-weight: 700;
+	color: var( --travello-primary );
+	transition: gap 0.2s ease;
+	white-space: nowrap;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-link-more:hover {
+	gap: 12px;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-rows: 240px 220px;
+	grid-auto-rows: 220px;
+	gap: 16px;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-card {
+	border-radius: 20px;
+	overflow: hidden;
+	position: relative;
+	display: block;
+	background: var( --travello-primary );
+	min-height: 220px;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-card--large {
+	grid-column: span 2;
+	grid-row: span 2;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-card--wide {
+	grid-column: span 2;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-card img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.7s cubic-bezier( 0.4, 0, 0.2, 1 );
+	position: absolute;
+	inset: 0;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-card:hover img {
+	transform: scale( 1.05 );
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-card__overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient( to top, rgba( 18, 59, 50, 0.85 ) 0%, transparent 55% );
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-card__info {
+	position: absolute;
+	inset-inline: 0;
+	bottom: 0;
+	padding: 20px;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-card__info h3 {
+	font-size: 18px;
+	font-weight: 700;
+	color: #fff;
+	letter-spacing: -0.01em;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-card--large .travail-travello-dest-card__info h3 {
+	font-size: 22px;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-card__info p {
+	color: rgba( 255, 255, 255, 0.65 );
+	font-size: 13px;
+	font-weight: 500;
+	margin-top: 2px;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-card__count {
+	font-size: 11px;
+	color: rgba( 255, 255, 255, 0.48 );
+	font-weight: 500;
+	margin-top: 3px;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-arrow {
+	width: 36px;
+	height: 36px;
+	border-radius: 999px;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba( 255, 255, 255, 0.18 );
+	backdrop-filter: blur( 4px );
+	color: #fff;
+	font-size: 16px;
+	transition: transform 0.2s ease;
+}
+
+.elementor-widget-travail-destination-grid .travail-travello-dest-card:hover .travail-travello-dest-arrow {
+	transform: translateX( 4px );
+}
+
+@media ( max-width: 768px ) {
+	.elementor-widget-travail-destination-grid .travail-travello-dest-grid {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto;
+	}
+	.elementor-widget-travail-destination-grid .travail-travello-dest-card--large {
+		grid-column: span 2;
+		min-height: 220px;
+	}
+	.elementor-widget-travail-destination-grid .travail-travello-dest-card--wide {
+		grid-column: span 2;
+		min-height: 180px;
+	}
+	.elementor-widget-travail-destination-grid .travail-travello-dest-card {
+		min-height: 180px;
+	}
+}

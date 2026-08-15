@@ -310,6 +310,7 @@
 	display: grid;
 	grid-template-columns: repeat( 3, 1fr );
 	grid-template-rows: repeat( 2, 270px );
+	grid-auto-rows: 270px;
 	gap: 16px;
 }
 
