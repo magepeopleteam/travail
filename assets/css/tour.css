@@ -5,67 +5,6 @@
 
 /* ── Archive toolbar ───────────────────────────────────────── */
 
-/* Matches the reference design's .page-hero: a plain white band (not the
-   dark-green banner this used to be), breadcrumb + title + subtitle + search
-   bar all together as one block. Originally only used on the tour archive
-   (templates/tours/archive-tour.php) — now also reused as-is by the
-   Destinations page template (its own copy, in destination.css, since that
-   page never loads this file) and by the plugin's own "/find/" results page
-   (inc/template-hooks.php's travail_page_title(), which does load this file
-   — see tbm-restyle.css for a fix that page specifically needed). */
-.travail-archive-header {
-	background: #fff;
-	color: var( --travail-ink );
-	padding: 100px 0 40px;
-	border-bottom: 1px solid var( --travail-color-border );
-}
-
-/* Breadcrumb / title / subtitle / search bar were each carrying their own
-   bespoke margin (16px, 6px, 24px — inherited piecemeal from the reference,
-   which isn't consistent either), giving the hero an uneven rhythm. A single
-   flex gap on the shared .travail-container replaces all of them with one
-   equal value between every section — the .travail-container class itself
-   is untouched (still the theme's plain max-width wrapper everywhere else),
-   only this page-specific instance is scoped to flex. */
-.travail-archive-header .travail-container {
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-}
-
-.travail-archive-header .travail-breadcrumbs {
-	padding: 0;
-}
-
-.travail-page-title {
-	/* base.css's global h1-h6 reset gives every heading its own 0.5em bottom
-	   margin — left in place, that stacks on TOP of the flex gap above and
-	   makes this one gap bigger than the others. Zeroed here so the flex gap
-	   is the only spacing in play. */
-	margin: 0;
-	font-size: clamp( 28px, 4vw, 42px );
-	font-weight: 700;
-	letter-spacing: -0.02em;
-	color: var( --travail-ink );
-}
-
-/* Reference's .serif-italic, reusing this theme's own heading font/tokens —
-   see travello.css's near-identical .travail-travello-hero__em for the same
-   family+italic+weight-400 pattern used elsewhere in this theme. */
-.travail-hero-em {
-	font-family: var( --travail-font-heading );
-	font-style: italic;
-	font-weight: 400;
-}
-
-.travail-page-sub {
-	/* Same reason as .travail-page-title above — base.css's global p{margin:0
-	   0 1em} would otherwise add on top of the flex gap. */
-	margin: 0;
-	font-size: 14px;
-	color: var( --travail-color-text-muted );
-}
-
 .travail-toolbar {
 	display: flex;
 	align-items: center;

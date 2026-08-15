@@ -10,6 +10,7 @@
 	inset-inline: 0;
 	top: 0;
 	z-index: 100;
+	overflow: visible;
 	transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -93,10 +94,13 @@ body.admin-bar .travail-header {
 	gap: 28px;
 }
 
-.travail-nav ul {
+.travail-nav > ul {
 	display: flex;
 	align-items: center;
-	gap: 28px;
+	gap: 4px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
 .travail-nav a {
@@ -111,38 +115,153 @@ body.admin-bar .travail-header {
 	color: var( --travail-ink );
 }
 
-.travail-nav .sub-menu {
-	display: none;
-	position: absolute;
-	background: #fff;
-	border-radius: var( --travail-radius-md );
-	box-shadow: var( --travail-shadow-md );
-	padding: 8px;
-	min-width: 200px;
-	margin-top: 12px;
-	z-index: 10;
-}
-
 .travail-nav li {
 	position: relative;
+	list-style: none;
+}
+
+.travail-nav > ul > li > a {
+	display: inline-flex;
+	align-items: center;
+	padding: 10px 12px;
+	border-radius: 999px;
+	white-space: nowrap;
+}
+
+.travail-nav > ul > .menu-item-has-children {
+	display: flex;
+	align-items: center;
+}
+
+.travail-nav .sub-menu {
+	display: none;
+	flex-direction: column;
+	position: absolute;
+	top: 100%;
+	inset-inline-start: 0;
+	min-width: 220px;
+	padding: 8px;
+	margin: 0;
+	list-style: none;
+	background: #fff;
+	border: 1px solid rgba( 22, 53, 45, 0.08 );
+	border-radius: 14px;
+	box-shadow: 0 16px 40px rgba( 22, 53, 45, 0.14 );
+	z-index: 220;
+}
+
+/* Invisible bridge so the pointer can travel from the parent into the panel. */
+.travail-nav .sub-menu::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 100%;
+	height: 14px;
 }
 
 .travail-nav li:hover > .sub-menu,
-.travail-nav li:focus-within > .sub-menu {
-	display: block;
+.travail-nav li:focus-within > .sub-menu,
+.travail-nav li.is-open > .sub-menu {
+	display: flex;
+}
+
+.travail-nav .sub-menu .sub-menu {
+	top: 0;
+	inset-inline-start: calc( 100% + 6px );
+	inset-inline-end: auto;
+}
+
+.travail-nav .sub-menu .sub-menu::before {
+	left: auto;
+	right: 100%;
+	top: 0;
+	bottom: 0;
+	width: 10px;
+	height: auto;
 }
 
 .travail-nav .sub-menu a {
-	color: var( --travail-ink );
-	display: block;
-	padding: 8px 12px;
-	border-radius: 8px;
-	font-size: 14px;
+	color: var( --travail-ink ) !important;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 10px 12px;
+	border-radius: 10px;
+	font-size: 13.5px;
+	font-weight: 500;
+	line-height: 1.3;
+	white-space: nowrap;
 }
 
-.travail-nav .sub-menu a:hover {
+.travail-nav .sub-menu a:hover,
+.travail-nav .sub-menu .current-menu-item > a {
 	background: var( --travail-color-bg );
+	color: var( --travail-color-primary ) !important;
 	opacity: 1;
+}
+
+.travail-submenu-toggle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	margin-inline-start: -4px;
+	padding: 0;
+	border: 0;
+	border-radius: 999px;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+	flex-shrink: 0;
+}
+
+.travail-submenu-toggle::before {
+	content: "";
+	width: 6px;
+	height: 6px;
+	border-inline-end: 1.6px solid currentColor;
+	border-bottom: 1.6px solid currentColor;
+	transform: rotate( 45deg );
+	margin-top: -3px;
+	opacity: 0.7;
+}
+
+.travail-nav .sub-menu .travail-submenu-toggle::before {
+	transform: rotate( -45deg );
+	margin-top: 0;
+}
+
+.travail-nav li.is-open > .travail-submenu-toggle::before,
+.travail-nav li:hover > .travail-submenu-toggle::before,
+.travail-nav li:focus-within > .travail-submenu-toggle::before {
+	transform: rotate( 225deg );
+	margin-top: 2px;
+}
+
+.travail-nav .sub-menu .menu-item-has-children.is-open > .travail-submenu-toggle::before,
+.travail-nav .sub-menu .menu-item-has-children:hover > .travail-submenu-toggle::before,
+.travail-nav .sub-menu .menu-item-has-children:focus-within > .travail-submenu-toggle::before {
+	transform: rotate( 135deg );
+	margin-top: 0;
+}
+
+.travail-header.is-scrolled .travail-submenu-toggle,
+.travail-header--solid .travail-submenu-toggle,
+.travail-header--static .travail-submenu-toggle {
+	color: var( --travail-ink );
+}
+
+.travail-nav .sub-menu .travail-submenu-toggle {
+	color: var( --travail-ink );
+	margin-inline-start: 0;
+}
+
+.travail-nav > ul > li:last-child > .sub-menu {
+	inset-inline-start: auto;
+	inset-inline-end: 0;
 }
 
 .travail-header-actions {
@@ -269,16 +388,62 @@ body.admin-bar .travail-header {
 	border-top: 1px solid var( --travail-color-border );
 }
 
+.travail-mobile-menu__list,
+.travail-mobile-menu .sub-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.travail-mobile-menu li {
+	position: relative;
+}
+
 .travail-mobile-menu a {
 	font-size: 15px;
 	font-weight: 500;
 	color: var( --travail-ink );
-	display: block;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	padding: 10px 0;
+	flex: 1;
+}
+
+.travail-mobile-menu .menu-item-has-children {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.travail-mobile-menu .menu-item-has-children > a {
+	flex: 1;
+}
+
+.travail-mobile-menu .travail-submenu-toggle {
+	color: var( --travail-ink );
+	width: 36px;
+	height: 36px;
+	margin: 0;
 }
 
 .travail-mobile-menu .sub-menu {
-	padding-inline-start: 16px;
+	display: none;
+	flex-basis: 100%;
+	padding: 4px 0 8px 14px;
+	margin-inline-start: 8px;
+	border-inline-start: 2px solid var( --travail-color-border );
+}
+
+.travail-mobile-menu .menu-item-has-children.is-open > .sub-menu {
+	display: flex;
+}
+
+.travail-mobile-menu .menu-item-has-children.is-open > .travail-submenu-toggle::before {
+	transform: rotate( 225deg );
+	margin-top: 2px;
 }
 
 .travail-mobile-actions {
@@ -391,6 +556,57 @@ body:not( .home ):not( :has( .travail-breadcrumbs ) ) #travail-content {
 .travail-breadcrumbs li[aria-current="page"] {
 	color: var( --travail-ink );
 	font-weight: 500;
+}
+
+/* ── Listing page header (theme chrome, not plugin markup) ──
+   White band used by Destinations, the tour archive, and ordinary
+   Pages that show a tour/hotel listing. Breadcrumb + italic serif
+   title live here so the plugin shortcodes never have to render a
+   page hero of their own. */
+.travail-archive-header {
+	background: #fff;
+	color: var( --travail-ink );
+	padding: 100px 0 40px;
+	border-bottom: 1px solid var( --travail-color-border );
+}
+
+.travail-archive-header .travail-container {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.travail-archive-header .travail-breadcrumbs {
+	padding: 0;
+}
+
+.travail-page-title {
+	margin: 0;
+	font-size: clamp( 28px, 4vw, 42px );
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	color: var( --travail-ink );
+}
+
+.travail-hero-em {
+	font-family: var( --travail-font-heading );
+	font-style: italic;
+	font-weight: 400;
+}
+
+.travail-page-sub {
+	margin: 0;
+	font-size: 14px;
+	color: var( --travail-color-text-muted );
+}
+
+.travail-archive-header .ttbm-top-search-modern.ttbm_top_filter,
+.travail-archive-header div.ttbm_top_filter.ttbm-top-search-modern,
+.travail-tour-archive-search .ttbm-top-search-modern.ttbm_top_filter,
+.travail-tour-archive-search div.ttbm_top_filter.ttbm-top-search-modern {
+	padding: 0;
+	margin: 0;
+	max-width: none;
 }
 
 /* ── Footer ────────────────────────────────────────────────── */

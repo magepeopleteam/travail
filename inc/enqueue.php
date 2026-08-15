@@ -213,6 +213,11 @@ function travail_body_classes( $classes ) {
 		$classes[] = 'travail-elementor-page';
 	}
 
+	if ( travail_uses_listing_page_header() ) {
+		$classes[] = 'travail-archive-view';
+		$classes[] = 'travail-ttbm-listing';
+	}
+
 	if ( travail_is_travello_home() ) {
 		$classes[] = 'travail-travello-home';
 	}

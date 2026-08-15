@@ -341,3 +341,22 @@ function travail_should_render_travello_hook() {
 
 	return 'travello' === travail_get_option( 'homepage_style', 'travello' );
 }
+
+/**
+ * Ordinary Pages that show a tour/hotel listing.
+ *
+ * The Destinations-style white page header (breadcrumb + italic title)
+ * is theme chrome — the plugin shortcode only renders the grid/filters
+ * below it. Destinations uses its own template hero, so it is excluded.
+ *
+ * @return bool
+ */
+function travail_uses_listing_page_header() {
+	if ( ! is_page() || is_front_page() ) {
+		return false;
+	}
+	if ( is_page_template( 'templates/pages/page-destinations.php' ) ) {
+		return false;
+	}
+	return class_exists( 'TTBM_Theme_Align' ) && TTBM_Theme_Align::post_has_ttbm_shortcode();
+}

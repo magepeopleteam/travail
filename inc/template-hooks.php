@@ -21,22 +21,19 @@ function travail_page_title() {
 		return;
 	}
 
-	/* The plugin's auto-created "/find/" ([ttbm-search-result]) results page
-	   gets the same clean header as the tour archive/destinations pages —
-	   breadcrumb + italic-serif title on a plain white band — instead of the
-	   generic centered title block below. Scoped to just this one page (by
-	   slug, same as it's created in TTBM_Init::on_activation_page_create())
-	   rather than changing every plain Page's header, since the rest have no
-	   "archive results" flavor to match. travail_is_tour_view() already
-	   enqueues tour.css here (it detects any TTBM-shortcode page), so
-	   .travail-archive-header/.travail-page-title/.travail-hero-em are
-	   already loaded — no separate CSS needed. */
-	if ( is_page( 'find' ) ) {
+	/* Theme listing-page header (same white band as Destinations):
+	   breadcrumb + italic title. The plugin shortcode below this only
+	   renders the grid/filters — it does not own this hero. */
+	if ( travail_uses_listing_page_header() ) {
+		$travail_subtitle = has_excerpt() ? get_the_excerpt() : '';
 		?>
 		<header class="travail-archive-header">
 			<div class="travail-container">
 				<?php get_template_part( 'template-parts/content/breadcrumbs' ); ?>
 				<h1 class="travail-page-title"><em class="travail-hero-em"><?php the_title(); ?></em></h1>
+				<?php if ( $travail_subtitle ) : ?>
+					<p class="travail-page-sub"><?php echo esc_html( $travail_subtitle ); ?></p>
+				<?php endif; ?>
 			</div>
 		</header>
 		<?php

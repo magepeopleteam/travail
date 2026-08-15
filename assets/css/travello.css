@@ -201,6 +201,7 @@ body.travail-travello-home .travail-travello-header {
 	left: 0;
 	right: 0;
 	z-index: 100;
+	overflow: visible;
 	background: rgba( 255, 255, 255, 0.92 );
 	backdrop-filter: blur( 12px );
 	transition: box-shadow 0.3s ease, background 0.3s ease;
@@ -273,10 +274,20 @@ body.travail-travello-home .travail-travello-nav {
 body.travail-travello-home .travail-travello-nav__list {
 	display: flex;
 	align-items: center;
-	gap: 28px;
+	gap: 4px;
 	list-style: none;
 	margin: 0;
 	padding: 0;
+}
+
+body.travail-travello-home .travail-travello-nav li {
+	position: relative;
+	list-style: none;
+}
+
+body.travail-travello-home .travail-travello-nav > ul > .menu-item-has-children {
+	display: flex;
+	align-items: center;
 }
 
 body.travail-travello-home .travail-travello-nav a {
@@ -286,8 +297,114 @@ body.travail-travello-home .travail-travello-nav a {
 	transition: color 0.2s ease;
 }
 
+body.travail-travello-home .travail-travello-nav > ul > li > a {
+	display: inline-flex;
+	align-items: center;
+	padding: 10px 12px;
+	border-radius: 999px;
+	white-space: nowrap;
+}
+
 body.travail-travello-home .travail-travello-nav a:hover {
 	color: var( --travello-primary );
+	opacity: 1;
+}
+
+body.travail-travello-home .travail-travello-nav .sub-menu {
+	display: none;
+	flex-direction: column;
+	position: absolute;
+	top: 100%;
+	inset-inline-start: 0;
+	min-width: 220px;
+	padding: 8px;
+	margin: 0;
+	list-style: none;
+	background: #fff;
+	border: 1px solid rgba( 18, 59, 50, 0.08 );
+	border-radius: 14px;
+	box-shadow: 0 16px 40px rgba( 18, 59, 50, 0.14 );
+	z-index: 220;
+}
+
+body.travail-travello-home .travail-travello-nav .sub-menu::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 100%;
+	height: 14px;
+}
+
+body.travail-travello-home .travail-travello-nav li:hover > .sub-menu,
+body.travail-travello-home .travail-travello-nav li:focus-within > .sub-menu,
+body.travail-travello-home .travail-travello-nav li.is-open > .sub-menu {
+	display: flex;
+}
+
+body.travail-travello-home .travail-travello-nav .sub-menu .sub-menu {
+	top: 0;
+	inset-inline-start: calc( 100% + 6px );
+	inset-inline-end: auto;
+}
+
+body.travail-travello-home .travail-travello-nav .sub-menu .sub-menu::before {
+	left: auto;
+	right: 100%;
+	top: 0;
+	bottom: 0;
+	width: 10px;
+	height: auto;
+}
+
+body.travail-travello-home .travail-travello-nav .sub-menu a {
+	color: var( --travello-fg );
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 10px 12px;
+	border-radius: 10px;
+	font-size: 13.5px;
+	white-space: nowrap;
+}
+
+body.travail-travello-home .travail-travello-nav .sub-menu a:hover,
+body.travail-travello-home .travail-travello-nav .sub-menu .current-menu-item > a {
+	background: rgba( 18, 59, 50, 0.06 );
+	color: var( --travello-primary );
+}
+
+body.travail-travello-home .travail-travello-nav .travail-submenu-toggle {
+	color: var( --travello-muted );
+}
+
+body.travail-travello-home .travail-travello-nav .sub-menu .travail-submenu-toggle {
+	color: var( --travello-fg );
+}
+
+body.travail-travello-home .travail-travello-nav .sub-menu .travail-submenu-toggle::before {
+	transform: rotate( -45deg );
+	margin-top: 0;
+}
+
+body.travail-travello-home .travail-travello-nav li.is-open > .travail-submenu-toggle::before,
+body.travail-travello-home .travail-travello-nav li:hover > .travail-submenu-toggle::before,
+body.travail-travello-home .travail-travello-nav li:focus-within > .travail-submenu-toggle::before {
+	transform: rotate( 225deg );
+	margin-top: 2px;
+}
+
+body.travail-travello-home .travail-travello-nav .sub-menu .menu-item-has-children.is-open > .travail-submenu-toggle::before,
+body.travail-travello-home .travail-travello-nav .sub-menu .menu-item-has-children:hover > .travail-submenu-toggle::before,
+body.travail-travello-home .travail-travello-nav .sub-menu .menu-item-has-children:focus-within > .travail-submenu-toggle::before {
+	transform: rotate( 135deg );
+	margin-top: 0;
+}
+
+body.travail-travello-home .travail-travello-nav > ul > li:last-child > .sub-menu {
+	inset-inline-start: auto;
+	inset-inline-end: 0;
 }
 
 body.travail-travello-home .travail-travello-header__actions {
@@ -366,7 +483,8 @@ body.travail-travello-home .travail-travello-mobile-nav.is-open {
 	display: flex;
 }
 
-body.travail-travello-home .travail-travello-mobile-nav__list {
+body.travail-travello-home .travail-travello-mobile-nav__list,
+body.travail-travello-home .travail-travello-mobile-nav .sub-menu {
 	display: flex;
 	flex-direction: column;
 	gap: 0;
@@ -375,12 +493,47 @@ body.travail-travello-home .travail-travello-mobile-nav__list {
 	padding: 0;
 }
 
+body.travail-travello-home .travail-travello-mobile-nav li {
+	position: relative;
+}
+
+body.travail-travello-home .travail-travello-mobile-nav .menu-item-has-children {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
 body.travail-travello-home .travail-travello-mobile-nav a {
 	font-size: 14px;
 	font-weight: 500;
 	color: var( --travello-fg );
-	padding: 6px 0;
-	display: block;
+	padding: 8px 0;
+	display: flex;
+	align-items: center;
+	flex: 1;
+}
+
+body.travail-travello-home .travail-travello-mobile-nav .travail-submenu-toggle {
+	color: var( --travello-fg );
+	width: 36px;
+	height: 36px;
+}
+
+body.travail-travello-home .travail-travello-mobile-nav .sub-menu {
+	display: none;
+	flex-basis: 100%;
+	padding: 4px 0 8px 14px;
+	margin-inline-start: 8px;
+	border-inline-start: 2px solid var( --travello-border );
+}
+
+body.travail-travello-home .travail-travello-mobile-nav .menu-item-has-children.is-open > .sub-menu {
+	display: flex;
+}
+
+body.travail-travello-home .travail-travello-mobile-nav .menu-item-has-children.is-open > .travail-submenu-toggle::before {
+	transform: rotate( 225deg );
+	margin-top: 2px;
 }
 
 body.travail-travello-home .travail-travello-mobile-nav__actions {

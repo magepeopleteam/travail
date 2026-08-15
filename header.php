@@ -80,7 +80,7 @@ if ( $travail_announcement ) :
 								'theme_location' => 'primary',
 								'container'      => false,
 								'items_wrap'     => '<ul id="primary-menu">%3$s</ul>',
-								'depth'          => 2,
+								'depth'          => 0,
 							)
 						);
 					} else {
@@ -110,8 +110,8 @@ if ( $travail_announcement ) :
 					array(
 						'theme_location' => 'mobile',
 						'container'      => false,
-						'items_wrap'     => '%3$s',
-						'depth'          => 2,
+						'items_wrap'     => '<ul class="travail-mobile-menu__list">%3$s</ul>',
+						'depth'          => 0,
 					)
 				);
 			} elseif ( has_nav_menu( 'primary' ) ) {
@@ -119,8 +119,8 @@ if ( $travail_announcement ) :
 					array(
 						'theme_location' => 'primary',
 						'container'      => false,
-						'items_wrap'     => '%3$s',
-						'depth'          => 2,
+						'items_wrap'     => '<ul class="travail-mobile-menu__list">%3$s</ul>',
+						'depth'          => 0,
 					)
 				);
 			}
@@ -142,15 +142,11 @@ do_action( 'travail_after_header' );
 
 <?php
 /**
- * Tour archive, the Destinations page template, and the plugin's "/find/"
- * search-results page all render their own breadcrumb inside
- * .travail-archive-header (matching the reference design's page-hero, which
- * has the breadcrumb as part of the same white hero block rather than a
- * separate strip above it) — skip the global one here so it isn't shown
- * twice. See travail_page_title() in inc/template-hooks.php for the /find/
- * case specifically.
+ * Tour archive, Destinations, and other listing pages render their own
+ * breadcrumb inside the theme's .travail-archive-header — skip the
+ * global one here so it isn't shown twice.
  */
-if ( ! is_front_page() && ! is_post_type_archive( 'ttbm_tour' ) && ! is_page_template( 'templates/pages/page-destinations.php' ) && ! is_page( 'find' ) ) :
+if ( ! is_front_page() && ! is_post_type_archive( 'ttbm_tour' ) && ! is_page_template( 'templates/pages/page-destinations.php' ) && ! travail_uses_listing_page_header() ) :
 	?>
 	<div class="travail-container">
 		<?php get_template_part( 'template-parts/content/breadcrumbs' ); ?>

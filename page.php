@@ -51,6 +51,16 @@ get_header();
 			// instead of being boxed into the theme's regular-content
 			// column width in one context but not the other.
 			the_content();
+		elseif ( travail_uses_listing_page_header() ) :
+			// Same full-width container as Destinations, not the prose
+			// column + featured-image treatment used for ordinary Pages.
+			?>
+			<div class="travail-container travail-section">
+				<div class="travail-entry-content">
+					<?php the_content(); ?>
+				</div>
+			</div>
+			<?php
 		else :
 			?>
 			<div class="travail-container travail-section--tight">

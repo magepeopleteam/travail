@@ -53,7 +53,7 @@ $travail_cta_url  = travail_get_option( 'header_cta_url', '#' );
 						'theme_location' => $travail_menu_location,
 						'container'      => false,
 						'items_wrap'     => '<ul class="travail-travello-nav__list">%3$s</ul>',
-						'depth'          => 1,
+						'depth'          => 0,
 					)
 				);
 			} else {
@@ -105,7 +105,7 @@ $travail_cta_url  = travail_get_option( 'header_cta_url', '#' );
 					'theme_location' => $travail_menu_location,
 					'container'      => false,
 					'items_wrap'     => '<ul class="travail-travello-mobile-nav__list">%3$s</ul>',
-					'depth'          => 1,
+					'depth'          => 0,
 				)
 			);
 		}

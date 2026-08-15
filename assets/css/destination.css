@@ -1,52 +1,8 @@
 /**
  * Travail — Destination landing/single page specifics.
  * Grid card styles live in components.css (.travail-dest-card etc).
+ * Page header styles live in header-footer.css (.travail-archive-header).
  */
-
-/* ══════════════════════════════════════════════════════════════
-   Page header — duplicated from .travail-archive-header/.travail-page-title/
-   .travail-hero-em/.travail-page-sub in assets/css/tour.css (same look as
-   templates/tours/archive-tour.php's hero) rather than pulling all of
-   tour.css's unrelated tour/ticket styles into every page using this
-   template. Keep both copies in sync by hand if either changes.
-   ══════════════════════════════════════════════════════════════ */
-
-.travail-archive-header {
-	background: #fff;
-	color: var( --travail-ink );
-	padding: 100px 0 40px;
-	border-bottom: 1px solid var( --travail-color-border );
-}
-
-.travail-archive-header .travail-container {
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-}
-
-.travail-archive-header .travail-breadcrumbs {
-	padding: 0;
-}
-
-.travail-page-title {
-	margin: 0;
-	font-size: clamp( 28px, 4vw, 42px );
-	font-weight: 700;
-	letter-spacing: -0.02em;
-	color: var( --travail-ink );
-}
-
-.travail-hero-em {
-	font-family: var( --travail-font-heading );
-	font-style: italic;
-	font-weight: 400;
-}
-
-.travail-page-sub {
-	margin: 0;
-	font-size: 14px;
-	color: var( --travail-color-text-muted );
-}
 
 .travail-destination-stats {
 	display: flex;

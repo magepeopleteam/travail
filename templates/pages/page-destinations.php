@@ -38,13 +38,8 @@ $travail_tours_total  = $travail_terms_valid ? (int) array_sum( wp_list_pluck( $
 $travail_page_content = trim( wp_strip_all_tags( get_the_content() ) );
 ?>
 
-<?php /* Same clean white hero as the tour archive (templates/tours/archive-tour.php)
-   — breadcrumb, italic-serif title, real-count subtitle — instead of the old
-   420px image-and-overlay hero, which needed a manual margin-top:120px hack
-   to clear the fixed site header and never matched the rest of the site's
-   directory-style pages. .travail-archive-header etc. are duplicated into
-   destination.css (kept in sync with tour.css by hand) rather than loading
-   all of tour.css's unrelated tour/ticket styles just for this page. */ ?>
+<?php /* Same clean white hero as the tour archive — breadcrumb, italic-serif
+   title, real-count subtitle. Header styles live in header-footer.css. */ ?>
 <header class="travail-archive-header">
 	<div class="travail-container">
 		<?php get_template_part( 'template-parts/content/breadcrumbs' ); ?>
