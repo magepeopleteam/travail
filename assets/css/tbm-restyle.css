@@ -435,6 +435,13 @@ div.ttbm_viator_theme {
 }
 
 .ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control .ttbm_date_chevron {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 20px;
+	height: 20px;
+	margin-left: auto;
 	color: var( --travail-color-text-muted );
 	transition: transform 0.2s ease, color 0.2s ease;
 }
