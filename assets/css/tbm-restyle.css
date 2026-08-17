@@ -236,12 +236,12 @@ body.admin-bar .ttbm_style .ttbm_sticky_area.mpSticky {
    width/centering — not the two-column content+sidebar layout inside
    it, which the scope note above already found to be best left alone.
 
-   `.ttbm_default_theme` is only ONE of four such outer wrappers — each
+`.ttbm_default_theme` is only ONE of four such outer wrappers — each
    single-tour "Theme File" choice (Tour edit screen → Layout) renders
    through its own template with its own class (checked every file
    under templates/themes/):
      default.php      → .ttbm_default_theme   (also used, +modifier
-                         class, by hotel_default.php for single hotels)
+                          class, by hotel_default.php for single hotels)
      smart.php         → .ttbm_smart_theme
      viator.php        → .ttbm_viator_theme
    A tour set to "Smart" or "Viator" layout wasn't covered by the first
@@ -267,15 +267,289 @@ body.admin-bar .ttbm_style .ttbm_sticky_area.mpSticky {
    travail_enqueue_tbm_restyle() in inc/enqueue.php) — it wins on
    cascade order alone, no !important needed. `background: transparent`
    removes the plugin's own white fill so this box shows the page's
-   real background instead of a second, separately-colored one. */
+   real background instead of a second, separately-colored one.
+
+   Third pass, measured in-headless-browser against the site header:
+   `.travail-container`'s own box model is max-width + margin-inline:auto
+   and NO side padding, but this rule originally added
+   `padding-inline: var(--travail-gutter)` (80px desktop) — so the outer
+   wrapper box was 1280px wide but its content only spanned 1120px,
+   visibly inset ~80px from each edge of the header/nav above it
+   (confirmed: header .travail-container left:73..1353, this wrapper's
+   content left:153..1273 at 1440px viewport). Removed the padding so
+   the wrapper genuinely shares .travail-container's box model; the
+   plugin's own .ttbm_container inside it already supplies its own
+   internal padding for the details page. */
 div.ttbm_default_theme,
 div.ttbm_smart_theme,
 div.ttbm_viator_theme {
 	width: 100%;
 	max-width: var( --travail-container );
 	margin-inline: auto;
-	padding-inline: var( --travail-gutter );
 	background: transparent;
+}
+
+/* Same container-width fix for the Travello single-tour template
+   (templates/themes/travello.php → .ttbm-travello-container). Its own
+   rule in the plugin's ttbm_travello_details.css:37-41 already caps the
+   box at 1280px and centers it, but ALSO adds
+   `padding-inline: clamp(20px, 5vw, 80px)` — the static reference mock
+   (travail/tour-details.html) pairs that padding with a padded header,
+   but Travail's real header (`.travail-container`) has no side padding,
+   so the travello content rendered inset ~5vw from each edge of the nav
+   above it (measured in-headless-browser: header content left:73..1353,
+   travello content left:145..1271 at 1440px viewport). Zeroing the
+   padding gives it the same flush box model as the header/default theme;
+   the template's own grid gaps and section margins keep the interior
+   breathing on every viewport. Same specificity (0,1,0), wins on this
+   stylesheet's later print order — no !important needed. */
+.ttbm-travello-container {
+	padding-inline: 0;
+}
+
+/* The scroll-nav tabs (ttbm_travello_details.css:443-454) are a flex row of
+   `white-space:nowrap` buttons, so their intrinsic min-content (~579px)
+   inflates the mobile grid track: `.ttbm-travello-layout` is 375px wide at
+   a 390px viewport but its single `1fr` column (minmax auto → min-content)
+   measured 578.688px, dragging both `.ttbm-travello-main` and
+   `.ttbm-travello-sidebar` off-screen. `min-width: 0` releases the
+   automatic minimum and the nav's own `overflow-x: auto` + hidden scrollbar
+   (plugin rules above) handle the rest — tabs scroll horizontally if they
+   ever outgrow the viewport. */
+.ttbm-travello-tabs {
+	min-width: 0;
+}
+
+/* Similar-tours card footer — plugin rule (ttbm_travello_details.css:2168)
+   had `padding: 0` flush against the card body; the reference mock keeps
+   20px breathing room above/below the divider + price row. */
+.ttbm-travello-similar .ttbm-gc-footer {
+	padding: 20px 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Travello booking card — date selection bar
+   (templates/ticket/regular_ticket.php → .ttbm-date-select__*)
+   ══════════════════════════════════════════════════════════════
+   The plugin's own "modern select bar" (ttbm_details.css:2437-2652)
+   is already rounded/soft, but uses an accent color fetched from the
+   setting palette (--ttbm-date-accent) and lays the date field + CTA
+   out as one horizontal row. In this theme the widget lives inside
+   the ~380px booking-card sidebar, where that row squeezes the date
+   input to ~92px (the "Mon 17 Aug, 2026" placeholder truncated) and
+   the CTA snaps to the label row, not the field. This pass ties the
+   widget to Travail's own design system — forest focus rings, a
+   coral CTA with the theme's soft shadows, the theme radius tokens,
+   a calendar-glyph micro-label — and always stacks the toolbar
+   vertically (label → field → full-width CTA), which is the layout
+   the card has room for on every viewport. Everything else
+   (datepicker wiring, hidden input, JS validation) stays untouched.
+   Scoped to .ttbm_travello_theme; outranks the plugin rules by
+   specificity (1,2,0 vs :is()'s 1,1,0), !important kept on the
+   handful of properties the plugin itself pins. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__toolbar {
+	flex-direction: column;
+	align-items: stretch;
+	gap: 12px;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__field {
+	flex: 1 1 auto;
+	max-width: 100%;
+	width: 100%;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__label {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var( --travail-color-text-muted );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__label::before {
+	content: "";
+	flex-shrink: 0;
+	width: 11px;
+	height: 11px;
+	background: url( "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff6b4a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.5' y='5' width='17' height='15' rx='2.5'/%3E%3Cpath d='M3.5 10h17'/%3E%3Cpath d='M8 3.5v3'/%3E%3Cpath d='M16 3.5v3'/%3E%3C/svg%3E" )
+		center / contain no-repeat;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control {
+	min-height: 54px;
+	height: 54px;
+	background: var( --travail-white );
+	border: 1.5px solid var( --travail-beige );
+	border-radius: var( --travail-radius-sm );
+	padding: 0 16px 0 12px;
+	box-shadow: none;
+	transition:
+		border-color 0.2s ease,
+		box-shadow 0.2s ease,
+		transform 0.2s ease;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control:hover,
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control:focus-within {
+	background: var( --travail-white );
+	border-color: rgba( 22, 53, 45, 0.4 );
+	box-shadow: 0 0 0 4px rgba( 22, 53, 45, 0.08 );
+	transform: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__label {
+	margin-bottom: 2px;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	flex-shrink: 0;
+	border-radius: 10px;
+	color: var( --travail-forest );
+	background: rgba( 22, 53, 45, 0.08 );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__icon svg {
+	display: block;
+}
+
+.ttbm_travello_theme #ttbm_booking_section #ttbm_select_date {
+	flex: 1;
+	min-width: 0;
+	font-family: var( --travail-font-body );
+	font-weight: 600;
+	font-size: 15px;
+	color: var( --travail-ink );
+}
+
+.ttbm_travello_theme #ttbm_booking_section #ttbm_select_date::placeholder {
+	color: rgba( 21, 23, 22, 0.4 );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control .ttbm_date_chevron {
+	color: var( --travail-color-text-muted );
+	transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control:hover .ttbm_date_chevron,
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control:focus-within .ttbm_date_chevron {
+	color: var( --travail-coral );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability,
+.ttbm_travello_theme #ttbm_booking_section .navy_blueButton.ttbm_check_ability,
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__action {
+	min-height: 54px;
+	height: 54px;
+	width: 100%;
+	border-radius: var( --travail-radius-sm );
+	padding: 0 22px;
+	background: var( --travail-coral ) !important;
+	color: var( --travail-white ) !important;
+	border: 0 !important;
+	font-family: var( --travail-font-body );
+	font-weight: 700;
+	font-size: 14px;
+	letter-spacing: 0.01em;
+	box-shadow: 0 10px 24px rgba( 255, 107, 74, 0.28 );
+	transition:
+		background 0.2s ease,
+		box-shadow 0.2s ease,
+		transform 0.2s ease;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability:hover,
+.ttbm_travello_theme #ttbm_booking_section .navy_blueButton.ttbm_check_ability:hover,
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__action:hover {
+	background: #ff5c38 !important;
+	transform: translateY( -1px );
+	box-shadow: 0 14px 30px rgba( 255, 107, 74, 0.34 );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability:active,
+.ttbm_travello_theme #ttbm_booking_section .navy_blueButton.ttbm_check_ability:active,
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__action:active {
+	transform: translateY( 0 );
+	box-shadow: 0 6px 16px rgba( 255, 107, 74, 0.24 );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability:focus-visible,
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__action:focus-visible {
+	outline: 2px solid var( --travail-forest );
+	outline-offset: 2px;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__action-icon {
+	font-size: 13px;
+}
+
+/* The real minimum-width lock is on the two grid items in
+   `.ttbm-travello-layout` (travello.php), not the tabs themselves: flex-row
+   nowrap tabs give the MAIN item a content-based automatic minimum (~579px),
+   and since `grid-template-columns: 1fr` is `minmax(auto,1fr)` the track
+   grows to that min-content and pushes the whole sidebar off-screen.
+   `min-width: 0` on the items releases the automatic minimum so the track
+   stays the container width; overflow stays inside the tabs' own
+   `overflow-x:auto` scrollport. */
+.ttbm-travello-layout > .ttbm-travello-main,
+.ttbm-travello-layout > .ttbm-travello-sidebar {
+	min-width: 0;
+}
+
+/* Same box-model class the plugin itself uses on the gallery, matched for
+   the single-featured-image case (no gallery enabled on the tour). The
+   plugin's hero grid (#ttbm_travello_gallery > .superSlider, same rule
+   that made the two stacked photos above) is always 2 rows of 260px —
+   but when the tour has no gallery, TTBM_Custom_Slider::featured_image_
+   slider() emits only `.superSlider.ttbm-featured-only > .sliderAllItem`
+   (no .ttbm_slider-wrapper at all), and that lone grid child defaults to
+   just row 1. Result, measured in-headless-browser on a featured-only
+   Travello tour: hero 530px tall but the image only 260px, with ~270px
+   of empty parchment below it. Spanning the item across both rows makes
+   the single photo fill the full hero height, exactly like a gallery
+   tour's big slide. Scoped to `#ttbm_travello_gallery` like all the
+   plugin's own travello-gallery rules, on desktop only (the plugin's
+   own <=768px single-row grid already handles the small screen), and
+   `min-width: 769px` matches the plugin's own mobile breakpoint. */
+@media ( min-width: 769px ) {
+	#ttbm_travello_gallery > .superSlider.ttbm-featured-only .sliderAllItem {
+		grid-row: 1 / span 2;
+	}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Travello booking card — keep ticket-row price content inside the
+   row/card (fixes content spilling outside the table area).
+   ══════════════════════════════════════════════════════════════
+   The plugin's own price line (ttbm_travello_details.css:1632-1642)
+   aligns the price under the ticket name with a negative-margin
+   hack — `margin: 0 -35px` + `padding-left: 44px`. Measured in-headless
+   on a real tour: with an icon it visually slips 35px left of its own
+   cell, so the box (left:977) ended up 20px OUTSIDE the ticket row
+   card (left:997), and without an icon the row's `white-space:nowrap`
+   + `flex-wrap:nowrap` still overflowed the price cell (scrollWidth
+   207 > clientWidth 188) with "price ~~struck~~ - N left" all on one
+   rigid line. Redesign: drop the negative margin entirely, keep the
+   44px icon-alignment padding only for icon rows (name shifts by the
+   icon+gap, so +44px lines the price up under it), and let the three
+   segments (sale / struck / stock) WRAP within the cell instead of
+   forcing one unbreakable line — stock count drops to its own line
+   when the price is long, so nothing can leave the table. Same
+   selectors as the plugin rules (equal specificity) — wins on this
+   stylesheet's later print order, no !important. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_price_container {
+	margin: 0;
+	flex-wrap: wrap;
+	min-width: 0;
+	white-space: normal;
 }
 
 div.ttbm_wraper {
