@@ -333,6 +333,26 @@ div.ttbm_viator_theme {
 	padding: 20px 0;
 }
 
+.ttbm_travello_theme .ttbm_widget_content {
+	padding-left: 0;
+}
+
+/* ── Section titles — unify font size, weight, color ────────────────
+   .ttbm_section_title (Overview), .ttbm-travello-section-title
+   (Traveler reviews, Location Map), and .content-title (Discover
+   Your Next Adventure) all share the same font / weight / color but
+   .content-title is 32px instead of 18px. Normalise to 18px so every
+   section heading in the travello template reads consistently. */
+.ttbm_travello_theme .ttbm_section_title,
+.ttbm_travello_theme .ttbm-travello-section-title,
+.ttbm_travello_theme #ttbm_related_tour .content-title {
+	font-family: var(--travail-font-heading);
+	font-size: 18px;
+	font-weight: 700;
+	color: var(--travail-ink);
+	letter-spacing: 0.01em;
+}
+
 /* ══════════════════════════════════════════════════════════════
    Travello booking card — date selection bar
    (templates/ticket/regular_ticket.php → .ttbm-date-select__*)
@@ -2037,5 +2057,125 @@ div.ttbm_style .rating-group label {
 	#ttbm_content .ttbm_details_page .ttbm_day_wise_timeline .day_wise_details_name,
 	#ttbm_content:not(:has(.ttbm_travello_theme)) .ttbm_day_wise_timeline .day_wise_details_name {
 		font-size: 18px;
+	}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Responsive — Travello single-tour template
+   ══════════════════════════════════════════════════════════════
+   Breakpoints match the theme's own system:
+     max-width: 1024px  — tablet / small desktop
+     max-width: 768px   — mobile
+     max-width: 640px   — small mobile
+   ══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+	/* Booking sidebar becomes static on tablet */
+	.ttbm_travello_theme .ttbm-travello-sidebar {
+		position: static;
+	}
+
+	/* Ticket table overflow scroll */
+	.ttbm_travello_theme .mp_tour_ticket_type {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+}
+
+@media (max-width: 768px) {
+	/* Gallery: ensure single image fills width */
+	.ttbm_travello_theme #ttbm_travello_gallery {
+		height: 260px;
+	}
+
+	/* Tabs: tighter padding on mobile */
+	.ttbm_travello_theme .ttbm-travello-tab {
+		padding: 10px 16px;
+		font-size: 13px;
+		white-space: nowrap;
+	}
+
+	/* Section titles: slightly smaller on mobile */
+	.ttbm_travello_theme .ttbm_section_title,
+	.ttbm_travello_theme .ttbm-travello-section-title {
+		font-size: 20px;
+	}
+
+	/* Booking card header: stack price info vertically */
+	.ttbm_travello_theme .ttbm-travello-bc-price-row {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+	}
+
+	/* Ticket row: ensure grid doesn't overflow */
+	.ttbm_travello_theme .ttbm_ticket_row {
+		grid-template-columns: 1fr;
+		gap: 8px;
+	}
+
+	/* Price container: prevent overflow */
+	.ttbm_travello_theme .ttbm_price_container {
+		min-width: 0;
+		flex-wrap: wrap;
+	}
+
+	/* Date/time controls: full width */
+	.ttbm_travello_theme .ttbm-date-select__control {
+		width: 100%;
+	}
+
+	.ttbm_travello_theme .ttbm-time-slots__select select {
+		width: 100%;
+	}
+
+	.ttbm_travello_theme .ttbm_check_ability {
+		width: 100%;
+	}
+
+	/* Similar tours: single column */
+	.ttbm_travello_theme .ttbm-gc-grid {
+		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+
+	/* Similar tours card */
+	.ttbm_travello_theme .ttbm-gc-card {
+		width: 100%;
+	}
+
+	/* Overview content: tighter padding */
+	.ttbm_travello_theme .ttbm_overview_section {
+		padding: 16px;
+	}
+
+	/* Widget content: no side padding */
+	.ttbm_travello_theme .ttbm_widget_content {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+@media (max-width: 640px) {
+	/* Gallery: smaller height on small mobile */
+	.ttbm_travello_theme #ttbm_travello_gallery {
+		height: 220px;
+	}
+
+	/* Tabs: even tighter on small screens */
+	.ttbm_travello_theme .ttbm-travello-tab {
+		padding: 8px 12px;
+		font-size: 12px;
+	}
+
+	/* Section titles: smaller on small mobile */
+	.ttbm_travello_theme .ttbm_section_title,
+	.ttbm_travello_theme .ttbm-travello-section-title {
+		font-size: 18px;
+	}
+
+	/* Booking card: tighter spacing */
+	.ttbm_travello_theme .ttbm-travello-bc-header {
+		padding: 12px;
 	}
 }
