@@ -320,6 +320,12 @@ div.ttbm_viator_theme {
 	min-width: 0;
 }
 
+.ttbm_travello_theme .ttbm-travello-tab.is-active {
+	background: var(--travail-forest);
+	color: #fff;
+	border-radius: var(--travail-radius-sm);
+}
+
 /* Similar-tours card footer — plugin rule (ttbm_travello_details.css:2168)
    had `padding: 0` flush against the card body; the reference mock keeps
    20px breathing room above/below the divider + price row. */
@@ -380,12 +386,12 @@ div.ttbm_viator_theme {
 }
 
 .ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control {
-	min-height: 54px;
-	height: 54px;
+	display: flex;
+	align-items: center;
+	text-align: left;
 	background: var( --travail-white );
 	border: 1.5px solid var( --travail-beige );
 	border-radius: var( --travail-radius-sm );
-	padding: 0 16px 0 12px;
 	box-shadow: none;
 	transition:
 		border-color 0.2s ease,
@@ -405,25 +411,30 @@ div.ttbm_viator_theme {
 	margin-bottom: 2px;
 }
 
+/* The standalone icon chip is removed (display:none); the calendar glyph
+   moves INTO the input itself as a coral background image, left-aligned,
+   so the control reads as a single clean field. The plugin pins
+   `padding: 0 !important` on the input, so the icon gutters are !important
+   here too (same specificity otherwise, later print order wins). */
 .ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__icon {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 32px;
-	height: 32px;
-	flex-shrink: 0;
-	border-radius: 10px;
-	color: var( --travail-forest );
-	background: rgba( 22, 53, 45, 0.08 );
+	display: none;
 }
 
-.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__icon svg {
-	display: block;
+.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control {
+	width: 100%;
 }
 
 .ttbm_travello_theme #ttbm_booking_section #ttbm_select_date {
 	flex: 1;
 	min-width: 0;
+	min-height: 54px;
+	text-align: left;
+	padding-left: 40px !important;
+	padding-right: 40px !important;
+	background: url( "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff6b4a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.5' y='5' width='17' height='15' rx='2.5'/%3E%3Cpath d='M3.5 10h17'/%3E%3Cpath d='M8 3.5v3'/%3E%3Cpath d='M16 3.5v3'/%3E%3C/svg%3E" )
+		left 14px center / 18px no-repeat,
+		url( "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23151716' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E" )
+		right 14px center / 18px no-repeat;
 	font-family: var( --travail-font-body );
 	font-weight: 600;
 	font-size: 15px;
@@ -434,21 +445,11 @@ div.ttbm_viator_theme {
 	color: rgba( 21, 23, 22, 0.4 );
 }
 
+/* The chevron span becomes a background image of the input above (same
+   treatment as the time select), so the span itself is removed from the
+   flow — the date control then renders as input-with-glyphs only. */
 .ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control .ttbm_date_chevron {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	flex-shrink: 0;
-	width: 20px;
-	height: 20px;
-	margin-left: auto;
-	color: var( --travail-color-text-muted );
-	transition: transform 0.2s ease, color 0.2s ease;
-}
-
-.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control:hover .ttbm_date_chevron,
-.ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__control:focus-within .ttbm_date_chevron {
-	color: var( --travail-coral );
+	display: none !important;
 }
 
 .ttbm_travello_theme #ttbm_booking_section .ttbm_check_ability,
@@ -496,6 +497,120 @@ div.ttbm_viator_theme {
 
 .ttbm_travello_theme #ttbm_booking_section .ttbm-date-select__action-icon {
 	font-size: 13px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Travello booking card — time slot selector
+   (templates/ticket/tour_default_selection.php → .ttbm-time-slots__*)
+   ══════════════════════════════════════════════════════════════
+   The PHP template hides .ttbm_select_time_area with an inline
+   `display:none` when no date is pre-selected; this forces it
+   visible so the section always sits under the date picker.
+   The select dropdown is restyled to match the date-control
+   aesthetic (white surface, beige border, 12px radius, 54px
+   height, forest focus ring) — same tokens as the date-control
+   above it. The header gets a clock glyph matching the calendar
+   glyph on the date label. */
+.ttbm_travello_theme #ttbm_booking_section .ttbm_select_time_area {
+	display: block !important;
+	margin-top: 16px;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm_select_date_area {
+	display: block !important;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-time-slots {
+	width: 100%;
+	padding: 0;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-time-slots__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-time-slots__title {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var( --travail-color-text-muted );
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-time-slots__title::before {
+	content: "";
+	flex-shrink: 0;
+	width: 11px;
+	height: 11px;
+	background: url( "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff6b4a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 3'/%3E%3C/svg%3E" )
+		center / contain no-repeat;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-time-slots__count {
+	display: inline-flex;
+	align-items: center;
+	padding: 3px 10px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	line-height: 1.3;
+	color: var( --travail-forest );
+	background: rgba( 22, 53, 45, 0.08 );
+	border-radius: 999px;
+	white-space: nowrap;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-time-slots__select {
+	display: block;
+	width: 100%;
+	max-width: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-time-slots__select select {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	min-height: 54px;
+	height: 54px;
+	box-sizing: border-box;
+	background: var( --travail-white );
+	border: 1.5px solid var( --travail-beige );
+	border-radius: var( --travail-radius-sm );
+	padding: 0 44px 0 40px;
+	font-family: var( --travail-font-body );
+	font-weight: 600;
+	font-size: 15px;
+	color: var( --travail-ink );
+	cursor: pointer;
+	appearance: none;
+	-webkit-appearance: none;
+	background-image: url( "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff6b4a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 3'/%3E%3C/svg%3E" ),
+		url( "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23151716' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E" );
+	background-repeat: no-repeat;
+	background-position: left 14px center, right 14px center;
+	background-size: 18px;
+	transition:
+		border-color 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-time-slots__select select:hover,
+.ttbm_travello_theme #ttbm_booking_section .ttbm-time-slots__select select:focus {
+	border-color: rgba( 22, 53, 45, 0.4 );
+	box-shadow: 0 0 0 4px rgba( 22, 53, 45, 0.08 );
+	outline: none;
+}
+
+.ttbm_travello_theme #ttbm_booking_section .ttbm-time-slots__select select:focus-visible {
+	border-color: var( --travail-forest );
+	box-shadow: 0 0 0 3px rgba( 22, 53, 45, 0.12 );
 }
 
 /* The real minimum-width lock is on the two grid items in
@@ -561,6 +676,201 @@ div.ttbm_viator_theme {
 
 div.ttbm_wraper {
 	margin: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Travello — date picker popup (jQuery UI, appended to <body>)
+   ══════════════════════════════════════════════════════════════
+   The plugin's generic popup skin (ttbm_details.css:2066-2120) is
+   already rounded/soft but uses the blue setting palette
+   (--color_theme) accent and a tinted-available-day scheme. This
+   pass re-skins the popup with Travail's own tokens: parchment nav
+   buttons, coral hover, forest selected/today rings, beige borders,
+   the theme radius/shadow — and drops the accent tint on available
+   days for a calmer, more minimal read (plain ink on white, forest
+   only on hover/select). Scoped exactly like the plugin's own
+   per-theme skins via `body:has(.ttbm_travello_theme)`, so it only
+   runs on Travello-themed tour pages. */
+body:has( .ttbm_travello_theme ) #ui-datepicker-div.ui-datepicker {
+	width: 288px;
+	padding: 16px 18px 14px;
+	margin-top: 8px;
+	border: 1px solid var( --travail-beige );
+	border-radius: var( --travail-radius-md );
+	background: var( --travail-white );
+	box-shadow: var( --travail-shadow-md );
+	font-family: var( --travail-font-body );
+	font-size: 13px;
+	color: var( --travail-ink );
+	z-index: 1000000 !important;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-header {
+	background: transparent;
+	border: 0;
+	padding: 0 0 12px;
+	margin-bottom: 8px;
+	border-bottom: 1px solid var( --travail-beige );
+	position: relative;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-title {
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	color: var( --travail-ink );
+	line-height: 30px;
+	background: transparent;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-title select.ui-datepicker-month,
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-title select.ui-datepicker-year {
+	font-family: var( --travail-font-body );
+	font-size: 13px;
+	font-weight: 600;
+	color: var( --travail-ink );
+	padding: 4px 8px;
+	margin: 0 3px;
+	border: 1px solid var( --travail-beige );
+	border-radius: 8px;
+	background: var( --travail-white );
+	cursor: pointer;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-title select:hover,
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-title select:focus {
+	border-color: rgba( 22, 53, 45, 0.4 );
+	box-shadow: 0 0 0 3px rgba( 22, 53, 45, 0.08 );
+	outline: none;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-prev,
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-next {
+	top: 0;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: var( --travail-parchment );
+	cursor: pointer;
+	border: 0;
+	transition: background 0.2s ease;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-prev {
+	left: 0;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-next {
+	right: 0;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-prev:hover,
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-next:hover {
+	background: var( --travail-coral );
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-prev span,
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-next span {
+	display: none;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-prev::after,
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-next::after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	line-height: 30px;
+	text-align: center;
+	font-size: 16px;
+	color: var( --travail-ink );
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-prev::after {
+	content: "\2039";
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-next::after {
+	content: "\203A";
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-prev:hover::after,
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-next:hover::after {
+	color: #fff;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div table.ui-datepicker-calendar {
+	width: 100%;
+	max-width: 100%;
+	table-layout: fixed;
+	border-collapse: collapse;
+	margin: 0;
+	font-size: 13px;
+	overflow: hidden;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-calendar th {
+	padding: 6px 0 8px;
+	font-size: 10px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: rgba( 21, 23, 22, 0.4 );
+	background: transparent;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-calendar td {
+	padding: 2px;
+	text-align: center;
+	border: 0;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-calendar td a,
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-calendar td span {
+	display: block;
+	width: 32px;
+	height: 32px;
+	line-height: 32px;
+	margin: 0 auto;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	color: var( --travail-ink );
+	font-weight: 600;
+	text-align: center;
+	text-decoration: none;
+	transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-default:hover,
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-hover {
+	background: var( --travail-forest );
+	color: #fff;
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-today a,
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-today span {
+	box-shadow: inset 0 0 0 2px var( --travail-coral );
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-active,
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-calendar td a.ui-state-highlight {
+	background: var( --travail-forest );
+	color: #fff;
+	box-shadow: 0 4px 10px rgba( 22, 53, 45, 0.25 );
+}
+
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-calendar td.ui-datepicker-unselectable span,
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-calendar td.ui-state-disabled span,
+body:has( .ttbm_travello_theme ) #ui-datepicker-div .ui-datepicker-calendar td.ttbm-date-unavailable span {
+	color: rgba( 21, 23, 22, 0.25 );
+	background: transparent;
+	text-decoration: line-through;
+	opacity: 1;
+	cursor: not-allowed;
 }
 
 div.ttbm_container {
