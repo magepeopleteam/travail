@@ -13,10 +13,10 @@
  * hardcoded place names, since real backing data already exists; the
  * date/travelers fields stay real inputs that a small calendar/counter
  * popup (assets/js/travello.js) merely writes formatted values into, so
- * the form keeps working even with JavaScript disabled. The 5 tabs
- * switch visually only — Destinations/Activities/Hotels/Transport have
- * no separate search backend in this plugin stack, so every tab submits
- * the same tour search rather than 404ing into a fake result page.
+ * the form keeps working even with JavaScript disabled. The tabs
+ * are real: Tours/Destinations/Activities submit the tour search with
+ * location_filter / activity_filter, Hotels submits to the plugin's
+ * hotel search page. Tabs without a backend on the site are left out.
  *
  * @package Travail
  */
@@ -44,19 +44,38 @@ if ( $travail_has_tbm ) {
 $travail_find_page  = get_page_by_path( 'find' );
 $travail_search_url = $travail_find_page ? get_permalink( $travail_find_page ) : home_url( '/find/' );
 
-$travail_tabs = apply_filters(
-	'travail_travello_search_tabs',
-	array(
-		'tours'        => __( 'Tours', 'travail' ),
-		'destinations' => __( 'Destinations', 'travail' ),
-		'activities'   => __( 'Activities', 'travail' ),
-		'hotels'       => __( 'Hotels', 'travail' ),
-		'transport'    => __( 'Transport', 'travail' ),
-	)
+$travail_hotel_page = get_page_by_path( 'hotel-search-result' );
+$travail_hotel_url  = $travail_hotel_page ? get_permalink( $travail_hotel_page ) : '';
+
+$travail_activities = array();
+if ( $travail_has_tbm ) {
+	$travail_activity_terms = get_terms(
+		array(
+			'taxonomy'   => 'ttbm_tour_activities',
+			'hide_empty' => false,
+			'number'     => 50,
+		)
+	);
+	if ( ! is_wp_error( $travail_activity_terms ) ) {
+		$travail_activities = $travail_activity_terms;
+	}
+}
+
+// Every tab is a real search. Tabs whose backend does not exist on this site are left out.
+$travail_tabs = array(
+	'tours'        => __( 'Tours', 'travail' ),
+	'destinations' => __( 'Destinations', 'travail' ),
 );
+if ( ! empty( $travail_activities ) ) {
+	$travail_tabs['activities'] = __( 'Activities', 'travail' );
+}
+if ( $travail_hotel_url ) {
+	$travail_tabs['hotels'] = __( 'Hotels', 'travail' );
+}
+$travail_tabs = apply_filters( 'travail_travello_search_tabs', $travail_tabs );
 ?>
 <div class="travail-travello-search-wrap">
-	<div class="travail-travello-search-panel">
+	<div class="travail-travello-search-panel" data-travello-search-panel data-search-url="<?php echo esc_url( $travail_search_url ); ?>" data-hotel-url="<?php echo esc_url( $travail_hotel_url ); ?>" data-text-where="<?php esc_attr_e( 'Where to?', 'travail' ); ?>" data-text-where-ph="<?php esc_attr_e( 'Search destination', 'travail' ); ?>" data-text-activity="<?php esc_attr_e( 'What to do?', 'travail' ); ?>" data-text-activity-ph="<?php esc_attr_e( 'Choose an activity', 'travail' ); ?>" data-text-search="<?php esc_attr_e( 'Search', 'travail' ); ?>" data-text-explore="<?php esc_attr_e( 'Explore', 'travail' ); ?>">
 
 		<?php if ( count( $travail_tabs ) > 1 ) : ?>
 			<?php
@@ -84,13 +103,26 @@ $travail_tabs = apply_filters(
 				<?php wp_nonce_field( 'ttbm_search_nonce', 'ttbm_search_nonce' ); ?>
 
 				<div class="travail-travello-field-group" id="travello-dest-group">
-					<label class="travail-travello-field-label" for="travello-dest-value"><?php esc_html_e( 'Where to?', 'travail' ); ?></label>
+					<label class="travail-travello-field-label" for="travello-dest-value" data-travello-dest-label><?php esc_html_e( 'Where to?', 'travail' ); ?></label>
 					<div class="travail-travello-field-input" id="travello-dest-input" data-travello-popup-trigger="travello-dest-dropdown">
 						<svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2a6 6 0 016 6c0 5-6 10-6 10S4 13 4 8a6 6 0 016-6Z"/><circle cx="10" cy="8" r="2"/></svg>
 						<input type="text" id="travello-dest-value" placeholder="<?php esc_attr_e( 'Search destination', 'travail' ); ?>" autocomplete="off" data-travello-dest-typed />
 						<input type="hidden" name="location_filter" id="travello-dest-filter" value="" />
 						<input type="hidden" name="title_filter" id="travello-dest-title-filter" value="" />
+						<input type="hidden" id="travello-activity-filter" value="" disabled />
 					</div>
+					<?php if ( ! empty( $travail_activities ) ) : ?>
+						<div class="travail-travello-field-dropdown" id="travello-activity-dropdown">
+							<div class="travail-travello-dropdown-section">
+								<p class="travail-travello-dropdown-label"><?php esc_html_e( 'Activities', 'travail' ); ?></p>
+								<?php foreach ( $travail_activities as $travail_activity ) : ?>
+									<button type="button" class="travail-travello-dropdown-item" data-act-id="<?php echo esc_attr( $travail_activity->term_id ); ?>" data-act-name="<?php echo esc_attr( $travail_activity->name ); ?>">
+										<span class="travail-travello-dropdown-icon" aria-hidden="true">★</span><?php echo esc_html( $travail_activity->name ); ?>
+									</button>
+								<?php endforeach; ?>
+							</div>
+						</div>
+					<?php endif; ?>
 					<?php if ( ! empty( $travail_locations ) ) : ?>
 						<div class="travail-travello-field-dropdown" id="travello-dest-dropdown">
 							<div class="travail-travello-dropdown-section">
@@ -164,7 +196,7 @@ $travail_tabs = apply_filters(
 
 				<button type="submit" class="travail-travello-search-btn">
 					<svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M14.5 14.5 18 18"/></svg>
-					<?php esc_html_e( 'Search', 'travail' ); ?>
+					<span class="travail-travello-search-btn-label"><?php esc_html_e( 'Search', 'travail' ); ?></span>
 				</button>
 			</form>
 		<?php else : ?>

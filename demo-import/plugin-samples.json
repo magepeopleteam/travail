@@ -1,0 +1,2576 @@
+{
+    "exported_on": "2026-11-02",
+    "terms": [
+        {
+            "taxonomy": "ttbm_hotel_activities_list",
+            "name": "Beach",
+            "meta": {
+                "ttbm_hotel_activity_icon": "mi mi-umbrella-beach"
+            }
+        },
+        {
+            "taxonomy": "ttbm_hotel_activities_list",
+            "name": "City Tours",
+            "meta": {
+                "ttbm_hotel_activity_icon": "mi mi-taxi-bus"
+            }
+        },
+        {
+            "taxonomy": "ttbm_hotel_activities_list",
+            "name": "Hiking",
+            "meta": {
+                "ttbm_hotel_activity_icon": "mi mi-hiking"
+            }
+        },
+        {
+            "taxonomy": "ttbm_hotel_activities_list",
+            "name": "Rural",
+            "meta": {
+                "ttbm_hotel_activity_icon": "mi mi-water"
+            }
+        },
+        {
+            "taxonomy": "ttbm_hotel_features_list",
+            "name": "Accommodation",
+            "meta": {
+                "ttbm_hotel_feature_icon": "mi mi-bed-alt"
+            }
+        },
+        {
+            "taxonomy": "ttbm_hotel_features_list",
+            "name": "Flights",
+            "meta": {
+                "ttbm_hotel_feature_icon": "mi mi-plane-alt"
+            }
+        },
+        {
+            "taxonomy": "ttbm_hotel_features_list",
+            "name": "Guide",
+            "meta": {
+                "ttbm_hotel_feature_icon": "mi mi-guide"
+            }
+        },
+        {
+            "taxonomy": "ttbm_hotel_features_list",
+            "name": "Hotel Rent",
+            "meta": {
+                "ttbm_hotel_feature_icon": "mi mi-hotel"
+            }
+        },
+        {
+            "taxonomy": "ttbm_hotel_features_list",
+            "name": "Transport",
+            "meta": {
+                "ttbm_hotel_feature_icon": "mi mi-bus"
+            }
+        },
+        {
+            "taxonomy": "ttbm_hotel_features_list",
+            "name": "Welcome Drinks",
+            "meta": {
+                "ttbm_hotel_feature_icon": "mi mi-drink-alt"
+            }
+        },
+        {
+            "taxonomy": "ttbm_tour_location",
+            "name": "Bandarban",
+            "meta": {
+                "ttbm_country_location": "Bangladesh",
+                "travail_term_country": "Bangladesh"
+            }
+        },
+        {
+            "taxonomy": "ttbm_tour_location",
+            "name": "Coxbazar",
+            "meta": {
+                "ttbm_country_location": "Bangladesh",
+                "travail_term_country": "Bangladesh"
+            }
+        },
+        {
+            "taxonomy": "ttbm_tour_location",
+            "name": "Las Vegas",
+            "meta": {
+                "ttbm_country_location": "United States"
+            }
+        },
+        {
+            "taxonomy": "ttbm_tour_location",
+            "name": "Naples Italy",
+            "meta": {
+                "ttbm_country_location": "Italy"
+            }
+        },
+        {
+            "taxonomy": "ttbm_tour_location",
+            "name": "Rangamati",
+            "meta": {
+                "ttbm_country_location": "Bangladesh"
+            }
+        },
+        {
+            "taxonomy": "ttbm_tour_activities",
+            "name": "Beach",
+            "meta": {
+                "ttbm_activities_icon": "mi mi-umbrella-beach"
+            }
+        },
+        {
+            "taxonomy": "ttbm_tour_activities",
+            "name": "Hiking",
+            "meta": {
+                "ttbm_activities_icon": "mi mi-hiking"
+            }
+        },
+        {
+            "taxonomy": "ttbm_tour_activities",
+            "name": "City Tours",
+            "meta": {
+                "ttbm_activities_icon": "mi mi-taxi-bus"
+            }
+        },
+        {
+            "taxonomy": "ttbm_tour_activities",
+            "name": "Rural",
+            "meta": {
+                "ttbm_activities_icon": "mi mi-water"
+            }
+        },
+        {
+            "taxonomy": "ttbm_tour_activities",
+            "name": "Snow & Ice",
+            "meta": {
+                "ttbm_activities_icon": "mi mi-snowflakes"
+            }
+        }
+    ],
+    "guides": [
+        {
+            "key": "ttbm_guide-52",
+            "title": "Adam Smith",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Adam-Smith-1.jpg",
+                "alt": "",
+                "title": "Adam Smith &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_guide-54",
+            "title": "Mahim",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Mahim-1.jpg",
+                "alt": "",
+                "title": "Mahim &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_guide-56",
+            "title": "Shamim",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Shamim-1.jpg",
+                "alt": "",
+                "title": "Shamim &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_guide-58",
+            "title": "Sumon",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Sumon-1.jpg",
+                "alt": "",
+                "title": "Sumon &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_guide-60",
+            "title": "Rabiul",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Rabiul-1.jpg",
+                "alt": "",
+                "title": "Rabiul &#8211; 1"
+            },
+            "meta": []
+        }
+    ],
+    "places": [
+        {
+            "key": "ttbm_places-12",
+            "title": "Bogura",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Bogura-1.jpg",
+                "alt": "",
+                "title": "Bogura &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-14",
+            "title": "Dim Pahar",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Dim-Pahar-1.jpg",
+                "alt": "",
+                "title": "Dim Pahar &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-16",
+            "title": "Ravello",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Ravello-1.jpg",
+                "alt": "",
+                "title": "Ravello &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-18",
+            "title": "Amalfi",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Amalfi-1.jpg",
+                "alt": "",
+                "title": "Amalfi &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-20",
+            "title": "Positano",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Positano-1.jpg",
+                "alt": "",
+                "title": "Positano &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-22",
+            "title": "Pompeii",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Pompeii-1.jpg",
+                "alt": "",
+                "title": "Pompeii &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-24",
+            "title": "Capri",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Capri-1.jpg",
+                "alt": "",
+                "title": "Capri &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-26",
+            "title": "Sorrento",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Sorrento-1.jpg",
+                "alt": "",
+                "title": "Sorrento &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-28",
+            "title": "Naples",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Naples-1.jpg",
+                "alt": "",
+                "title": "Naples &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-30",
+            "title": "Brandenburger Tor",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Brandenburger-Tor-1.jpg",
+                "alt": "",
+                "title": "Brandenburger Tor &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-32",
+            "title": "Rotes Rathaus (Neptune Fountain)",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Rotes-Rathaus-Neptune-Fountain-1.jpg",
+                "alt": "",
+                "title": "Rotes Rathaus (Neptune Fountain) &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-34",
+            "title": "Alexanderplatz (Alexa)",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Alexanderplatz-Alexa-1.jpg",
+                "alt": "",
+                "title": "Alexanderplatz (Alexa) &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-36",
+            "title": "Gendarmenmarkt / Taubenstr",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Gendarmenmarkt-Taubenstr-1.jpg",
+                "alt": "",
+                "title": "Gendarmenmarkt / Taubenstr &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-38",
+            "title": "Checkpoint Charlie",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Checkpoint-Charlie-1.jpg",
+                "alt": "",
+                "title": "Checkpoint Charlie &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-40",
+            "title": "Berliner Mauer / Martin-Gropius-Bau",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Berliner-Mauer-Martin-Gropius-Bau-1.jpg",
+                "alt": "",
+                "title": "Berliner Mauer / Martin-Gropius-Bau &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-42",
+            "title": "Dolphine Square",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Dolphine-Square-1.jpg",
+                "alt": "",
+                "title": "Dolphine Square &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-44",
+            "title": "Moheshkhali",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Moheshkhali-1.jpg",
+                "alt": "",
+                "title": "Moheshkhali &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-46",
+            "title": "Inani Beach",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Inani-Beach-1.jpg",
+                "alt": "",
+                "title": "Inani Beach &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-48",
+            "title": "Ramu",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Ramu-1.jpg",
+                "alt": "",
+                "title": "Ramu &#8211; 1"
+            },
+            "meta": []
+        },
+        {
+            "key": "ttbm_places-50",
+            "title": "Himchori",
+            "content": "",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Himchori-1.jpg",
+                "alt": "",
+                "title": "Himchori &#8211; 1"
+            },
+            "meta": []
+        }
+    ],
+    "hotels": [
+        {
+            "key": "ttbm_hotel-117",
+            "title": "The Mentalist Hotel: Las Vegas",
+            "content": "\n                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.\n                                ",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/The-Mentalist-Hotel-Las-Vegas-1.jpg",
+                "alt": "",
+                "title": "The Mentalist Hotel: Las Vegas &#8211; 1"
+            },
+            "meta": {
+                "ttbm_display_hotel_breakfast": "on",
+                "ttbm_display_hotel_map": "on",
+                "ttbm_display_hotel_parking": "on",
+                "ttbm_display_hotel_review": "on",
+                "ttbm_display_hotel_testimonial": "on",
+                "ttbm_display_service_review": "on",
+                "ttbm_display_slider_hotel": "on",
+                "ttbm_hotel_activity_status": "on",
+                "ttbm_hotel_area_info": [
+                    {
+                        "area_icon": "mi mi-restaurants",
+                        "area_title": "What's nearby",
+                        "area_items": [
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            },
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            },
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            }
+                        ]
+                    },
+                    {
+                        "area_icon": "mi mi-restaurants",
+                        "area_title": "What's nearby",
+                        "area_items": [
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            },
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            },
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            }
+                        ]
+                    }
+                ],
+                "ttbm_hotel_area_status": "on",
+                "ttbm_hotel_breakfast": "American, Buffet",
+                "ttbm_hotel_distance_des": "0.5 km from center",
+                "ttbm_hotel_faq": [
+                    {
+                        "title": "What is the check-in and check-out time?",
+                        "content": "Check-in is from 3:00 PM to 12:00 AM. Check-out is from 7:00 AM to 11:00 AM."
+                    },
+                    {
+                        "title": "Is parking available at the hotel?",
+                        "content": "Yes, we offer free parking for our guests."
+                    },
+                    {
+                        "title": "Does the hotel offer free Wi-Fi?",
+                        "content": "Yes, complimentary Wi-Fi is available throughout the hotel."
+                    }
+                ],
+                "ttbm_hotel_faq_status": "on",
+                "ttbm_hotel_features_status": "on",
+                "ttbm_hotel_location": "Bandarban",
+                "ttbm_hotel_map_location": "Bandarban Sadar, Bandarban Hill District, Chittagong Division, Bangladesh",
+                "ttbm_hotel_parking": "Free Parking Available On Site",
+                "ttbm_hotel_popular_feat_status": "on",
+                "ttbm_hotel_property_highlights": "Top Location: Highly rated by recent guests (9.0)",
+                "ttbm_hotel_rating": "5",
+                "ttbm_hotel_review_rating": "7.8",
+                "ttbm_hotel_review_title": "Excellent",
+                "ttbm_hotel_service_rating": "7.8",
+                "ttbm_hotel_service_review": "Wifi",
+                "ttbm_hotel_testimonial_text": "We loved this hotel",
+                "ttbm_hotel_testimonial_title": "Guests who stayed here loved",
+                "ttbm_map_latitude": "22.1953",
+                "ttbm_map_longitude": "92.2184",
+                "ttbm_room_details": [
+                    {
+                        "ttbm_hotel_room_name": "Standard Room",
+                        "ttbm_hotel_room_price": 150,
+                        "ttbm_hotel_room_qty": 25,
+                        "ttbm_hotel_room_capacity_adult": 15,
+                        "ttbm_hotel_room_capacity_child": 10,
+                        "room_qty_type": "inputbox",
+                        "room_type_icon": "mi mi-air-conditioner"
+                    },
+                    {
+                        "ttbm_hotel_room_name": "Standard Room",
+                        "ttbm_hotel_room_price": 150,
+                        "ttbm_hotel_room_qty": 25,
+                        "ttbm_hotel_room_capacity_adult": 15,
+                        "ttbm_hotel_room_capacity_child": 10,
+                        "room_qty_type": "inputbox",
+                        "room_type_icon": "mi mi-air-conditioner"
+                    },
+                    {
+                        "ttbm_hotel_room_name": "Standard Room",
+                        "ttbm_hotel_room_price": 150,
+                        "ttbm_hotel_room_qty": 25,
+                        "ttbm_hotel_room_capacity_adult": 15,
+                        "ttbm_hotel_room_capacity_child": 10,
+                        "room_qty_type": "inputbox",
+                        "room_type_icon": "mi mi-air-conditioner"
+                    }
+                ]
+            },
+            "gallery": [
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-1.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 1"
+                },
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-2.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 2"
+                },
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-3.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 3"
+                },
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-4.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 4"
+                },
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-5.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 5"
+                }
+            ],
+            "term_selection": {
+                "ttbm_hotel_activity_selection": {
+                    "taxonomy": "ttbm_hotel_activities_list",
+                    "names": [
+                        "Beach",
+                        "City Tours",
+                        "Hiking",
+                        "Rural"
+                    ]
+                },
+                "ttbm_hotel_feat_selection": {
+                    "taxonomy": "ttbm_hotel_features_list",
+                    "names": [
+                        "Accommodation",
+                        "Flights",
+                        "Guide"
+                    ]
+                },
+                "ttbm_hotel_popu_feat_selection": {
+                    "taxonomy": "ttbm_hotel_features_list",
+                    "names": [
+                        "Hotel Rent",
+                        "Transport",
+                        "Welcome Drinks"
+                    ]
+                }
+            }
+        },
+        {
+            "key": "ttbm_hotel-123",
+            "title": "The Mentalist Hotel: Las Vegas",
+            "content": "\n                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.\n                                ",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/The-Mentalist-Hotel-Las-Vegas-1-1.jpg",
+                "alt": "",
+                "title": "The Mentalist Hotel: Las Vegas &#8211; 1"
+            },
+            "meta": {
+                "ttbm_display_hotel_breakfast": "on",
+                "ttbm_display_hotel_map": "on",
+                "ttbm_display_hotel_parking": "on",
+                "ttbm_display_hotel_review": "on",
+                "ttbm_display_hotel_testimonial": "on",
+                "ttbm_display_service_review": "on",
+                "ttbm_display_slider_hotel": "on",
+                "ttbm_hotel_activity_status": "on",
+                "ttbm_hotel_area_info": [
+                    {
+                        "area_icon": "mi mi-restaurants",
+                        "area_title": "What's nearby",
+                        "area_items": [
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            },
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            },
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            }
+                        ]
+                    },
+                    {
+                        "area_icon": "mi mi-restaurants",
+                        "area_title": "What's nearby",
+                        "area_items": [
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            },
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            },
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            }
+                        ]
+                    }
+                ],
+                "ttbm_hotel_area_status": "on",
+                "ttbm_hotel_breakfast": "American, Buffet",
+                "ttbm_hotel_distance_des": "0.5 km from center",
+                "ttbm_hotel_faq": [
+                    {
+                        "title": "What is the check-in and check-out time?",
+                        "content": "Check-in is from 3:00 PM to 12:00 AM. Check-out is from 7:00 AM to 11:00 AM."
+                    },
+                    {
+                        "title": "Is parking available at the hotel?",
+                        "content": "Yes, we offer free parking for our guests."
+                    },
+                    {
+                        "title": "Does the hotel offer free Wi-Fi?",
+                        "content": "Yes, complimentary Wi-Fi is available throughout the hotel."
+                    }
+                ],
+                "ttbm_hotel_faq_status": "on",
+                "ttbm_hotel_features_status": "on",
+                "ttbm_hotel_location": "Coxbazar",
+                "ttbm_hotel_map_location": "Cox&#8217;s Bazar Sea Beach Road, Cox&#8217;s Bazar, Chattogram Division, Bangladesh",
+                "ttbm_hotel_parking": "Free Parking Available On Site",
+                "ttbm_hotel_popular_feat_status": "on",
+                "ttbm_hotel_property_highlights": "Top Location: Highly rated by recent guests (9.0)",
+                "ttbm_hotel_rating": "5",
+                "ttbm_hotel_review_rating": "7.8",
+                "ttbm_hotel_review_title": "Excellent",
+                "ttbm_hotel_service_rating": "7.8",
+                "ttbm_hotel_service_review": "Wifi",
+                "ttbm_hotel_testimonial_text": "We loved this hotel",
+                "ttbm_hotel_testimonial_title": "Guests who stayed here loved",
+                "ttbm_map_latitude": "21.4272",
+                "ttbm_map_longitude": "92.0058",
+                "ttbm_room_details": [
+                    {
+                        "ttbm_hotel_room_name": "Standard Room",
+                        "ttbm_hotel_room_price": 150,
+                        "ttbm_hotel_room_qty": 25,
+                        "ttbm_hotel_room_capacity_adult": 15,
+                        "ttbm_hotel_room_capacity_child": 10,
+                        "room_qty_type": "inputbox",
+                        "room_type_icon": "mi mi-air-conditioner"
+                    },
+                    {
+                        "ttbm_hotel_room_name": "Standard Room",
+                        "ttbm_hotel_room_price": 150,
+                        "ttbm_hotel_room_qty": 25,
+                        "ttbm_hotel_room_capacity_adult": 15,
+                        "ttbm_hotel_room_capacity_child": 10,
+                        "room_qty_type": "inputbox",
+                        "room_type_icon": "mi mi-air-conditioner"
+                    },
+                    {
+                        "ttbm_hotel_room_name": "Standard Room",
+                        "ttbm_hotel_room_price": 150,
+                        "ttbm_hotel_room_qty": 25,
+                        "ttbm_hotel_room_capacity_adult": 15,
+                        "ttbm_hotel_room_capacity_child": 10,
+                        "room_qty_type": "inputbox",
+                        "room_type_icon": "mi mi-air-conditioner"
+                    }
+                ]
+            },
+            "gallery": [
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-1-1.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 1"
+                },
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-2-1.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 2"
+                },
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-3-1.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 3"
+                },
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-4-1.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 4"
+                },
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-5-1.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 5"
+                }
+            ],
+            "term_selection": {
+                "ttbm_hotel_activity_selection": {
+                    "taxonomy": "ttbm_hotel_activities_list",
+                    "names": [
+                        "Beach",
+                        "City Tours",
+                        "Hiking",
+                        "Rural"
+                    ]
+                },
+                "ttbm_hotel_feat_selection": {
+                    "taxonomy": "ttbm_hotel_features_list",
+                    "names": [
+                        "Accommodation",
+                        "Flights",
+                        "Guide"
+                    ]
+                },
+                "ttbm_hotel_popu_feat_selection": {
+                    "taxonomy": "ttbm_hotel_features_list",
+                    "names": [
+                        "Hotel Rent",
+                        "Transport",
+                        "Welcome Drinks"
+                    ]
+                }
+            }
+        },
+        {
+            "key": "ttbm_hotel-129",
+            "title": "The Mentalist Hotel: Las Vegas",
+            "content": "\n                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.\n                                ",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/The-Mentalist-Hotel-Las-Vegas-1-2.jpg",
+                "alt": "",
+                "title": "The Mentalist Hotel: Las Vegas &#8211; 1"
+            },
+            "meta": {
+                "ttbm_display_hotel_breakfast": "on",
+                "ttbm_display_hotel_map": "on",
+                "ttbm_display_hotel_parking": "on",
+                "ttbm_display_hotel_review": "on",
+                "ttbm_display_hotel_testimonial": "on",
+                "ttbm_display_service_review": "on",
+                "ttbm_display_slider_hotel": "on",
+                "ttbm_hotel_activity_status": "on",
+                "ttbm_hotel_area_info": [
+                    {
+                        "area_icon": "mi mi-restaurants",
+                        "area_title": "What's nearby",
+                        "area_items": [
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            },
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            },
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            }
+                        ]
+                    },
+                    {
+                        "area_icon": "mi mi-restaurants",
+                        "area_title": "What's nearby",
+                        "area_items": [
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            },
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            },
+                            {
+                                "item_title": "The Strip",
+                                "item_distance": 1.5,
+                                "item_type": "The Strip"
+                            }
+                        ]
+                    }
+                ],
+                "ttbm_hotel_area_status": "on",
+                "ttbm_hotel_breakfast": "American, Buffet",
+                "ttbm_hotel_distance_des": "0.5 km from center",
+                "ttbm_hotel_faq": [
+                    {
+                        "title": "What is the check-in and check-out time?",
+                        "content": "Check-in is from 3:00 PM to 12:00 AM. Check-out is from 7:00 AM to 11:00 AM."
+                    },
+                    {
+                        "title": "Is parking available at the hotel?",
+                        "content": "Yes, we offer free parking for our guests."
+                    },
+                    {
+                        "title": "Does the hotel offer free Wi-Fi?",
+                        "content": "Yes, complimentary Wi-Fi is available throughout the hotel."
+                    }
+                ],
+                "ttbm_hotel_faq_status": "on",
+                "ttbm_hotel_features_status": "on",
+                "ttbm_hotel_location": "Las Vegas",
+                "ttbm_hotel_map_location": "3667 Las Vegas Blvd S, Las Vegas, NV 89109, USA",
+                "ttbm_hotel_parking": "Free Parking Available On Site",
+                "ttbm_hotel_popular_feat_status": "on",
+                "ttbm_hotel_property_highlights": "Top Location: Highly rated by recent guests (9.0)",
+                "ttbm_hotel_rating": "5",
+                "ttbm_hotel_review_rating": "7.8",
+                "ttbm_hotel_review_title": "Excellent",
+                "ttbm_hotel_service_rating": "7.8",
+                "ttbm_hotel_service_review": "Wifi",
+                "ttbm_hotel_testimonial_text": "We loved this hotel",
+                "ttbm_hotel_testimonial_title": "Guests who stayed here loved",
+                "ttbm_map_latitude": "36.1147",
+                "ttbm_map_longitude": "-115.1728",
+                "ttbm_room_details": [
+                    {
+                        "ttbm_hotel_room_name": "Standard Room",
+                        "ttbm_hotel_room_price": 150,
+                        "ttbm_hotel_room_qty": 25,
+                        "ttbm_hotel_room_capacity_adult": 15,
+                        "ttbm_hotel_room_capacity_child": 10,
+                        "room_qty_type": "inputbox",
+                        "room_type_icon": "mi mi-air-conditioner"
+                    },
+                    {
+                        "ttbm_hotel_room_name": "Standard Room",
+                        "ttbm_hotel_room_price": 150,
+                        "ttbm_hotel_room_qty": 25,
+                        "ttbm_hotel_room_capacity_adult": 15,
+                        "ttbm_hotel_room_capacity_child": 10,
+                        "room_qty_type": "inputbox",
+                        "room_type_icon": "mi mi-air-conditioner"
+                    },
+                    {
+                        "ttbm_hotel_room_name": "Standard Room",
+                        "ttbm_hotel_room_price": 150,
+                        "ttbm_hotel_room_qty": 25,
+                        "ttbm_hotel_room_capacity_adult": 15,
+                        "ttbm_hotel_room_capacity_child": 10,
+                        "room_qty_type": "inputbox",
+                        "room_type_icon": "mi mi-air-conditioner"
+                    }
+                ]
+            },
+            "gallery": [
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-1-2.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 1"
+                },
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-2-2.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 2"
+                },
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-3-2.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 3"
+                },
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-4-2.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 4"
+                },
+                {
+                    "file": "images/The-Mentalist-Hotel-Las-Vegas-5-2.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Hotel: Las Vegas &#8211; 5"
+                }
+            ],
+            "term_selection": {
+                "ttbm_hotel_activity_selection": {
+                    "taxonomy": "ttbm_hotel_activities_list",
+                    "names": [
+                        "Beach",
+                        "City Tours",
+                        "Hiking",
+                        "Rural"
+                    ]
+                },
+                "ttbm_hotel_feat_selection": {
+                    "taxonomy": "ttbm_hotel_features_list",
+                    "names": [
+                        "Accommodation",
+                        "Flights",
+                        "Guide"
+                    ]
+                },
+                "ttbm_hotel_popu_feat_selection": {
+                    "taxonomy": "ttbm_hotel_features_list",
+                    "names": [
+                        "Hotel Rent",
+                        "Transport",
+                        "Welcome Drinks"
+                    ]
+                }
+            }
+        }
+    ],
+    "tours": [
+        {
+            "key": "ttbm_tour-62",
+            "title": "The Mentalist Tickets: Las Vegas",
+            "content": "\n\n                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\n                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.\n                                ",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/The-Mentalist-Tickets-Las-Vegas-1.jpg",
+                "alt": "",
+                "title": "The Mentalist Tickets: Las Vegas &#8211; 1"
+            },
+            "meta": {
+                "mep_event_faq": [
+                    {
+                        "ttbm_faq_title": "What can I expect to see at The Mentalist at Planet Hollywood Resort and Casino?",
+                        "ttbm_faq_content": "Comedy, magic and mind-reading! The Mentalist has the ability to get inside the minds of audience members, revealing everything from their names, hometowns and anniversaries to their wildest wishes."
+                    },
+                    {
+                        "ttbm_faq_title": "Where is The Mentalist located?",
+                        "ttbm_faq_content": "The V Theater is located inside the Miracle Mile Shops at the Planet Hollywood Resort & Casino."
+                    },
+                    {
+                        "ttbm_faq_title": "Can I purchase alcohol at the venue during The Mentalist!?",
+                        "ttbm_faq_content": "Absolutely! Drinks are available for purchase at the Showgirl Bar outside of the theater and may be brought into the showroom, however, no other outside food or drink will be allowed in the theater."
+                    },
+                    {
+                        "ttbm_faq_title": "Is The Mentalist appropriate for children?",
+                        "ttbm_faq_content": "Due to language, this show is recommended for guests 16 years old and over."
+                    },
+                    {
+                        "ttbm_faq_title": "Do I need to exchange my ticket upon arrival at The Mentalist!?",
+                        "ttbm_faq_content": "Please pick up your tickets at the V Theater Box Office with a valid photo ID for the lead traveler at least 30 minutes prior to show time (box office opens at 11 am). Seating will begin 15 minutes before showtime."
+                    },
+                    {
+                        "ttbm_faq_title": "What is the cancellation and refund policy?",
+                        "ttbm_faq_content": "Bookings can be cancelled up to 48 hours before the tour start time for a full refund. Cancellations made after this window are non-refundable."
+                    }
+                ],
+                "reg_end_time": "23:59",
+                "ttbm_category": [
+                    "flexible-tour"
+                ],
+                "ttbm_contact_email": "info@example.com",
+                "ttbm_contact_phone": "123456789",
+                "ttbm_contact_text": "Do not hesitage to give us a call. We are an expert team and we are happy to talk to you.",
+                "ttbm_daywise_details": [
+                    {
+                        "ttbm_day_title": "Day 1: Arrival & Welcome",
+                        "ttbm_day_content": "<p>Arrive at the destination, meet your guide, and settle into your accommodation. Enjoy a welcome briefing and a relaxed evening to prepare for the days ahead.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 2: Guided City Exploration",
+                        "ttbm_day_content": "<p>Explore the major landmarks and hidden gems of the area with an expert local guide, including stops for photos and local snacks.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 3: Adventure & Activities",
+                        "ttbm_day_content": "<p>A full day dedicated to the tour&#8217;s signature activities, from outdoor adventures to cultural experiences tailored to the destination.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 4: Leisure & Local Markets",
+                        "ttbm_day_content": "<p>A flexible day to relax, shop for souvenirs at local markets, or opt into an optional excursion arranged by your guide.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 5: Cultural Immersion",
+                        "ttbm_day_content": "<p>Visit historical sites and enjoy a traditional meal, learning about the customs and stories that make this destination unique.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 6: Farewell & Departure",
+                        "ttbm_day_content": "<p>Enjoy a final breakfast, wrap up any last-minute shopping, and transfer to the airport or station for your onward journey.</p>"
+                    }
+                ],
+                "ttbm_display_activities": "on",
+                "ttbm_display_advance": "off",
+                "ttbm_display_description": "on",
+                "ttbm_display_duration": "on",
+                "ttbm_display_duration_night": "on",
+                "ttbm_display_exclude_service": "on",
+                "ttbm_display_faq": "on",
+                "ttbm_display_get_question": "on",
+                "ttbm_display_hiphop": "on",
+                "ttbm_display_hotels": "on",
+                "ttbm_display_include_service": "on",
+                "ttbm_display_location": "on",
+                "ttbm_display_map": "on",
+                "ttbm_display_max_people": "on",
+                "ttbm_display_min_age": "on",
+                "ttbm_display_price_start": "on",
+                "ttbm_display_rating": "on",
+                "ttbm_display_registration": "on",
+                "ttbm_display_related": "on",
+                "ttbm_display_schedule": "on",
+                "ttbm_display_seat_details": "on",
+                "ttbm_display_sidebar": "off",
+                "ttbm_display_start_location": "on",
+                "ttbm_display_top_picks_deals": "on",
+                "ttbm_display_tour_guide": "on",
+                "ttbm_display_tour_type": "on",
+                "ttbm_display_why_choose_us": "on",
+                "ttbm_extra_service_data": [
+                    {
+                        "service_icon": "mi mi-graduation-cap",
+                        "service_name": "Cap",
+                        "service_price": 6,
+                        "service_sale_price": 5,
+                        "service_qty": 500,
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "A branded souvenir cap to keep the sun off during the tour."
+                    },
+                    {
+                        "service_icon": "mi mi-coffee-heart",
+                        "service_name": "Coffee",
+                        "service_price": 4,
+                        "service_sale_price": 3,
+                        "service_qty": 1500,
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "Freshly brewed coffee to keep you energized throughout the day."
+                    },
+                    {
+                        "service_icon": "mi mi-camera-retro",
+                        "service_name": "Photo Package",
+                        "service_price": 15,
+                        "service_sale_price": 12,
+                        "service_qty": 50,
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "Professional photos captured during your tour, delivered digitally after the trip."
+                    }
+                ],
+                "ttbm_full_location_name": "Bandarban Sadar, Bandarban Hill District, Chittagong Division, Bangladesh",
+                "ttbm_guide_description_style": "full",
+                "ttbm_guide_image_style": "squire",
+                "ttbm_guide_style": "carousel",
+                "ttbm_location_name": "Bandarban",
+                "ttbm_map_latitude": "22.1953",
+                "ttbm_map_longitude": "92.2184",
+                "ttbm_month_list": "11,1",
+                "ttbm_organizer": [
+                    "autotour"
+                ],
+                "ttbm_rating_average": "4.9",
+                "ttbm_rating_count": "5",
+                "ttbm_reg_end_date": "2026-11-27",
+                "ttbm_section_title_style": "ttbm_title_style_2",
+                "ttbm_service_excluded_in_price": [
+                    "Airport Transfer",
+                    "BBQ Night",
+                    "Guide",
+                    "Insurance",
+                    "Outing Ticket",
+                    "Newspaper"
+                ],
+                "ttbm_service_included_in_price": [
+                    "Accommodation",
+                    "Breakfast",
+                    "Welcome Drinks",
+                    "Lunch",
+                    "Transport",
+                    "Additional Services"
+                ],
+                "ttbm_short_description": "Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.",
+                "ttbm_ticket_type": [
+                    {
+                        "ticket_type_icon": "mi mi-employee-man-alt",
+                        "ticket_type_name": "Adult",
+                        "ticket_type_price": 15,
+                        "sale_price": 10,
+                        "ticket_type_qty": 150,
+                        "ticket_type_default_qty": 0,
+                        "ticket_type_resv_qty": 5,
+                        "ticket_type_qty_type": "inputbox",
+                        "ticket_type_description": ""
+                    },
+                    {
+                        "ticket_type_icon": "mi mi-child-head",
+                        "ticket_type_name": "Child",
+                        "ticket_type_price": 10,
+                        "sale_price": 7,
+                        "ticket_type_qty": 100,
+                        "ticket_type_default_qty": 0,
+                        "ticket_type_resv_qty": 25,
+                        "ticket_type_qty_type": "inputbox",
+                        "ticket_type_description": ""
+                    }
+                ],
+                "ttbm_ticketing_system": "availability_section",
+                "ttbm_top_picks_deals": [
+                    "popular"
+                ],
+                "ttbm_tour_rating": "4.9",
+                "ttbm_travel_duration": "2",
+                "ttbm_travel_duration_night": "3",
+                "ttbm_travel_duration_type": "day",
+                "ttbm_travel_end_time": "17:00",
+                "ttbm_travel_min_age": "10",
+                "ttbm_travel_reg_end_date": "2026-11-27",
+                "ttbm_travel_start_date": "2026-11-22",
+                "ttbm_travel_start_place": "Las Vegas",
+                "ttbm_travel_start_price": "250",
+                "ttbm_travel_start_time": "09:00",
+                "ttbm_travel_type": "fixed",
+                "ttbm_type": "general",
+                "ttbm_upcoming_date": "2026-11-22",
+                "ttbm_why_choose_us_texts": [
+                    "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
+                    "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
+                    "Watch as Gerry McCambridge performs comedy and magic"
+                ]
+            },
+            "gallery": [
+                {
+                    "file": "images/The-Mentalist-Tickets-Las-Vegas-1.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Tickets: Las Vegas &#8211; 1"
+                },
+                {
+                    "file": "images/The-Mentalist-Tickets-Las-Vegas-2.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Tickets: Las Vegas &#8211; 2"
+                },
+                {
+                    "file": "images/The-Mentalist-Tickets-Las-Vegas-3.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Tickets: Las Vegas &#8211; 3"
+                },
+                {
+                    "file": "images/The-Mentalist-Tickets-Las-Vegas-4.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Tickets: Las Vegas &#8211; 4"
+                },
+                {
+                    "file": "images/The-Mentalist-Tickets-Las-Vegas-5.jpg",
+                    "alt": "",
+                    "title": "The Mentalist Tickets: Las Vegas &#8211; 5"
+                }
+            ],
+            "guides": [
+                "ttbm_guide-52",
+                "ttbm_guide-54"
+            ],
+            "places": [
+                {
+                    "key": "ttbm_places-12",
+                    "label": "Bogura"
+                },
+                {
+                    "key": "ttbm_places-14",
+                    "label": "Dim Pahar"
+                },
+                {
+                    "key": "ttbm_places-16",
+                    "label": "Ravello"
+                },
+                {
+                    "key": "ttbm_places-18",
+                    "label": "Amalfi"
+                },
+                {
+                    "key": "ttbm_places-20",
+                    "label": "Positano"
+                }
+            ],
+            "related": [
+                "ttbm_tour-95",
+                "ttbm_tour-84",
+                "ttbm_tour-73",
+                "ttbm_tour-106"
+            ],
+            "activities": [
+                "Beach",
+                "Hiking"
+            ],
+            "terms": {
+                "ttbm_tour_cat": [
+                    {
+                        "name": "Flexible Tour",
+                        "slug": "flexible-tour"
+                    }
+                ],
+                "ttbm_tour_org": [
+                    {
+                        "name": "Autotour",
+                        "slug": "autotour"
+                    }
+                ],
+                "ttbm_tour_location": [
+                    {
+                        "name": "Bandarban",
+                        "slug": "bandarban"
+                    }
+                ],
+                "ttbm_tour_activities": [
+                    {
+                        "name": "Beach",
+                        "slug": "beach"
+                    },
+                    {
+                        "name": "Hiking",
+                        "slug": "hiking"
+                    }
+                ]
+            }
+        },
+        {
+            "key": "ttbm_tour-73",
+            "title": "Highlights of Naples and the Amalfi Coast",
+            "content": "\n\n                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\n                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.\n                                ",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Highlights-of-Naples-and-the-Amalfi-Coast-1.jpg",
+                "alt": "",
+                "title": "Highlights of Naples and the Amalfi Coast &#8211; 1"
+            },
+            "meta": {
+                "mep_event_faq": [
+                    {
+                        "ttbm_faq_title": "What can I expect to see at The Mentalist at Planet Hollywood Resort and Casino?",
+                        "ttbm_faq_content": "Comedy, magic and mind-reading! The Mentalist has the ability to get inside the minds of audience members, revealing everything from their names, hometowns and anniversaries to their wildest wishes."
+                    },
+                    {
+                        "ttbm_faq_title": "Where is The Mentalist located?",
+                        "ttbm_faq_content": "The V Theater is located inside the Miracle Mile Shops at the Planet Hollywood Resort & Casino."
+                    },
+                    {
+                        "ttbm_faq_title": "Can I purchase alcohol at the venue during The Mentalist!?",
+                        "ttbm_faq_content": "Absolutely! Drinks are available for purchase at the Showgirl Bar outside of the theater and may be brought into the showroom, however, no other outside food or drink will be allowed in the theater."
+                    },
+                    {
+                        "ttbm_faq_title": "Is The Mentalist appropriate for children?",
+                        "ttbm_faq_content": "Due to language, this show is recommended for guests 16 years old and over."
+                    },
+                    {
+                        "ttbm_faq_title": "Do I need to exchange my ticket upon arrival at The Mentalist!?",
+                        "ttbm_faq_content": "Please pick up your tickets at the V Theater Box Office with a valid photo ID for the lead traveler at least 30 minutes prior to show time (box office opens at 11 am). Seating will begin 15 minutes before showtime."
+                    },
+                    {
+                        "ttbm_faq_title": "What is the cancellation and refund policy?",
+                        "ttbm_faq_content": "Bookings can be cancelled up to 48 hours before the tour start time for a full refund. Cancellations made after this window are non-refundable."
+                    }
+                ],
+                "reg_end_time": "23:59",
+                "ttbm_category": [
+                    "flexible-tour"
+                ],
+                "ttbm_contact_email": "info@example.com",
+                "ttbm_contact_phone": "123456789",
+                "ttbm_contact_text": "Do not hesitate to give us a call. We are an expert team and we are happy to talk to you.",
+                "ttbm_daywise_details": [
+                    {
+                        "ttbm_day_title": "Day 1: Arrival & Welcome",
+                        "ttbm_day_content": "<p>Arrive at the destination, meet your guide, and settle into your accommodation. Enjoy a welcome briefing and a relaxed evening to prepare for the days ahead.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 2: Guided City Exploration",
+                        "ttbm_day_content": "<p>Explore the major landmarks and hidden gems of the area with an expert local guide, including stops for photos and local snacks.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 3: Adventure & Activities",
+                        "ttbm_day_content": "<p>A full day dedicated to the tour&#8217;s signature activities, from outdoor adventures to cultural experiences tailored to the destination.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 4: Leisure & Local Markets",
+                        "ttbm_day_content": "<p>A flexible day to relax, shop for souvenirs at local markets, or opt into an optional excursion arranged by your guide.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 5: Cultural Immersion",
+                        "ttbm_day_content": "<p>Visit historical sites and enjoy a traditional meal, learning about the customs and stories that make this destination unique.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 6: Farewell & Departure",
+                        "ttbm_day_content": "<p>Enjoy a final breakfast, wrap up any last-minute shopping, and transfer to the airport or station for your onward journey.</p>"
+                    }
+                ],
+                "ttbm_display_activities": "on",
+                "ttbm_display_advance": "off",
+                "ttbm_display_description": "on",
+                "ttbm_display_duration": "on",
+                "ttbm_display_duration_night": "on",
+                "ttbm_display_exclude_service": "on",
+                "ttbm_display_faq": "on",
+                "ttbm_display_get_question": "on",
+                "ttbm_display_hiphop": "on",
+                "ttbm_display_hotels": "on",
+                "ttbm_display_include_service": "on",
+                "ttbm_display_location": "on",
+                "ttbm_display_map": "on",
+                "ttbm_display_max_people": "on",
+                "ttbm_display_min_age": "on",
+                "ttbm_display_price_start": "on",
+                "ttbm_display_rating": "on",
+                "ttbm_display_registration": "on",
+                "ttbm_display_related": "on",
+                "ttbm_display_schedule": "on",
+                "ttbm_display_seat_details": "on",
+                "ttbm_display_sidebar": "off",
+                "ttbm_display_start_location": "on",
+                "ttbm_display_tour_guide": "on",
+                "ttbm_display_tour_type": "on",
+                "ttbm_display_why_choose_us": "on",
+                "ttbm_extra_service_data": [
+                    {
+                        "service_icon": "mi mi-graduation-cap",
+                        "service_name": "Cap",
+                        "service_price": 6,
+                        "service_sale_price": 5,
+                        "service_qty": 500,
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "A branded souvenir cap to keep the sun off during the tour."
+                    },
+                    {
+                        "service_icon": "mi mi-coffee-heart",
+                        "service_name": "Coffee",
+                        "service_price": 4,
+                        "service_sale_price": 3,
+                        "service_qty": 1500,
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "Freshly brewed coffee to keep you energized throughout the day."
+                    },
+                    {
+                        "service_icon": "mi mi-camera-retro",
+                        "service_name": "Photo Package",
+                        "service_price": 15,
+                        "service_sale_price": 12,
+                        "service_qty": 50,
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "Professional photos captured during your tour, delivered digitally after the trip."
+                    }
+                ],
+                "ttbm_full_location_name": "Cox&#8217;s Bazar Sea Beach Road, Cox&#8217;s Bazar, Chattogram Division, Bangladesh",
+                "ttbm_guide_description_style": "full",
+                "ttbm_guide_image_style": "squire",
+                "ttbm_guide_style": "carousel",
+                "ttbm_location_name": "Coxbazar",
+                "ttbm_map_latitude": "21.4272",
+                "ttbm_map_longitude": "92.0058",
+                "ttbm_month_list": "12,1",
+                "ttbm_organizer": [
+                    "zayman"
+                ],
+                "ttbm_rating_average": "4.9",
+                "ttbm_rating_count": "5",
+                "ttbm_reg_end_date": "2026-12-03",
+                "ttbm_section_title_style": "ttbm_title_style_2",
+                "ttbm_service_excluded_in_price": [
+                    "Airport Transfer",
+                    "BBQ Night",
+                    "Guide",
+                    "Insurance",
+                    "Outing Ticket",
+                    "Newspaper"
+                ],
+                "ttbm_service_included_in_price": [
+                    "Accommodation",
+                    "Breakfast",
+                    "Welcome Drinks",
+                    "Lunch",
+                    "Transport",
+                    "Additional Services"
+                ],
+                "ttbm_short_description": "Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.",
+                "ttbm_ticket_type": [
+                    {
+                        "ticket_type_icon": "mi mi-employee-man-alt",
+                        "ticket_type_name": "Adult",
+                        "ticket_type_price": 55,
+                        "sale_price": 40,
+                        "ticket_type_qty": 220,
+                        "ticket_type_default_qty": 0,
+                        "ticket_type_resv_qty": 5,
+                        "ticket_type_qty_type": "inputbox",
+                        "ticket_type_description": ""
+                    },
+                    {
+                        "ticket_type_icon": "mi mi-child-head",
+                        "ticket_type_name": "Child",
+                        "ticket_type_price": 100,
+                        "sale_price": 70,
+                        "ticket_type_qty": 100,
+                        "ticket_type_default_qty": 0,
+                        "ticket_type_resv_qty": 20,
+                        "ticket_type_qty_type": "inputbox",
+                        "ticket_type_description": ""
+                    }
+                ],
+                "ttbm_ticketing_system": "availability_section",
+                "ttbm_tour_rating": "4.9",
+                "ttbm_travel_duration": "1",
+                "ttbm_travel_duration_night": "1",
+                "ttbm_travel_duration_type": "day",
+                "ttbm_travel_end_time": "16:30",
+                "ttbm_travel_min_age": "5",
+                "ttbm_travel_reg_end_date": "2026-12-03",
+                "ttbm_travel_start_date": "2026-12-02",
+                "ttbm_travel_start_place": "Naple",
+                "ttbm_travel_start_price": "180",
+                "ttbm_travel_start_time": "08:30",
+                "ttbm_travel_type": "fixed",
+                "ttbm_type": "general",
+                "ttbm_upcoming_date": "2026-12-02",
+                "ttbm_why_choose_us_texts": [
+                    "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
+                    "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
+                    "Watch as Gerry McCambridge performs comedy and magic"
+                ]
+            },
+            "gallery": [
+                {
+                    "file": "images/Highlights-of-Naples-and-the-Amalfi-Coast-1.jpg",
+                    "alt": "",
+                    "title": "Highlights of Naples and the Amalfi Coast &#8211; 1"
+                },
+                {
+                    "file": "images/Highlights-of-Naples-and-the-Amalfi-Coast-2.jpg",
+                    "alt": "",
+                    "title": "Highlights of Naples and the Amalfi Coast &#8211; 2"
+                },
+                {
+                    "file": "images/Highlights-of-Naples-and-the-Amalfi-Coast-3.jpg",
+                    "alt": "",
+                    "title": "Highlights of Naples and the Amalfi Coast &#8211; 3"
+                },
+                {
+                    "file": "images/Highlights-of-Naples-and-the-Amalfi-Coast-4.jpg",
+                    "alt": "",
+                    "title": "Highlights of Naples and the Amalfi Coast &#8211; 4"
+                },
+                {
+                    "file": "images/Highlights-of-Naples-and-the-Amalfi-Coast-5.jpg",
+                    "alt": "",
+                    "title": "Highlights of Naples and the Amalfi Coast &#8211; 5"
+                }
+            ],
+            "guides": [
+                "ttbm_guide-56",
+                "ttbm_guide-58"
+            ],
+            "places": [
+                {
+                    "key": "ttbm_places-22",
+                    "label": "Pompeii"
+                },
+                {
+                    "key": "ttbm_places-24",
+                    "label": "Capri"
+                },
+                {
+                    "key": "ttbm_places-26",
+                    "label": "Sorrento"
+                },
+                {
+                    "key": "ttbm_places-28",
+                    "label": "Naples"
+                },
+                {
+                    "key": "ttbm_places-30",
+                    "label": "Brandenburger Tor"
+                }
+            ],
+            "related": [
+                "ttbm_tour-95",
+                "ttbm_tour-106",
+                "ttbm_tour-84",
+                "ttbm_tour-62"
+            ],
+            "activities": [
+                "City Tours",
+                "Rural"
+            ],
+            "terms": {
+                "ttbm_tour_cat": [
+                    {
+                        "name": "Flexible Tour",
+                        "slug": "flexible-tour"
+                    }
+                ],
+                "ttbm_tour_org": [
+                    {
+                        "name": "Zayman",
+                        "slug": "zayman"
+                    }
+                ],
+                "ttbm_tour_location": [
+                    {
+                        "name": "Coxbazar",
+                        "slug": "coxbazar"
+                    }
+                ],
+                "ttbm_tour_activities": [
+                    {
+                        "name": "City Tours",
+                        "slug": "city-tours"
+                    },
+                    {
+                        "name": "Rural",
+                        "slug": "rural"
+                    }
+                ]
+            }
+        },
+        {
+            "key": "ttbm_tour-84",
+            "title": "Deep-Sea Exploration on a Shampan",
+            "content": "\n\n                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\n                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.\n                                ",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Deep-Sea-Exploration-on-a-Shampan-1.jpg",
+                "alt": "",
+                "title": "Deep-Sea Exploration on a Shampan &#8211; 1"
+            },
+            "meta": {
+                "mep_event_faq": [
+                    {
+                        "ttbm_faq_title": "What can I expect to see at The Mentalist at Planet Hollywood Resort and Casino?",
+                        "ttbm_faq_content": "Comedy, magic and mind-reading! The Mentalist has the ability to get inside the minds of audience members, revealing everything from their names, hometowns and anniversaries to their wildest wishes."
+                    },
+                    {
+                        "ttbm_faq_title": "Where is The Mentalist located?",
+                        "ttbm_faq_content": "The V Theater is located inside the Miracle Mile Shops at the Planet Hollywood Resort & Casino."
+                    },
+                    {
+                        "ttbm_faq_title": "Can I purchase alcohol at the venue during The Mentalist!?",
+                        "ttbm_faq_content": "Absolutely! Drinks are available for purchase at the Showgirl Bar outside of the theater and may be brought into the showroom, however, no other outside food or drink will be allowed in the theater."
+                    },
+                    {
+                        "ttbm_faq_title": "Is The Mentalist appropriate for children?",
+                        "ttbm_faq_content": "Due to language, this show is recommended for guests 16 years old and over."
+                    },
+                    {
+                        "ttbm_faq_title": "Do I need to exchange my ticket upon arrival at The Mentalist!?",
+                        "ttbm_faq_content": "Please pick up your tickets at the V Theater Box Office with a valid photo ID for the lead traveler at least 30 minutes prior to show time (box office opens at 11 am). Seating will begin 15 minutes before showtime."
+                    },
+                    {
+                        "ttbm_faq_title": "What is the cancellation and refund policy?",
+                        "ttbm_faq_content": "Bookings can be cancelled up to 48 hours before the tour start time for a full refund. Cancellations made after this window are non-refundable."
+                    }
+                ],
+                "reg_end_time": "23:59",
+                "ttbm_category": [
+                    "fixed-tour"
+                ],
+                "ttbm_contact_email": "info@example.com",
+                "ttbm_contact_phone": "123456789",
+                "ttbm_contact_text": "Do not hesitate to give us a call. We are an expert team and we are happy to talk to you.",
+                "ttbm_daywise_details": [
+                    {
+                        "ttbm_day_title": "Day 1: Arrival & Welcome",
+                        "ttbm_day_content": "<p>Arrive at the destination, meet your guide, and settle into your accommodation. Enjoy a welcome briefing and a relaxed evening to prepare for the days ahead.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 2: Guided City Exploration",
+                        "ttbm_day_content": "<p>Explore the major landmarks and hidden gems of the area with an expert local guide, including stops for photos and local snacks.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 3: Adventure & Activities",
+                        "ttbm_day_content": "<p>A full day dedicated to the tour&#8217;s signature activities, from outdoor adventures to cultural experiences tailored to the destination.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 4: Leisure & Local Markets",
+                        "ttbm_day_content": "<p>A flexible day to relax, shop for souvenirs at local markets, or opt into an optional excursion arranged by your guide.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 5: Cultural Immersion",
+                        "ttbm_day_content": "<p>Visit historical sites and enjoy a traditional meal, learning about the customs and stories that make this destination unique.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 6: Farewell & Departure",
+                        "ttbm_day_content": "<p>Enjoy a final breakfast, wrap up any last-minute shopping, and transfer to the airport or station for your onward journey.</p>"
+                    }
+                ],
+                "ttbm_display_activities": "on",
+                "ttbm_display_advance": "off",
+                "ttbm_display_description": "on",
+                "ttbm_display_duration": "on",
+                "ttbm_display_duration_night": "on",
+                "ttbm_display_exclude_service": "on",
+                "ttbm_display_faq": "on",
+                "ttbm_display_get_question": "on",
+                "ttbm_display_hiphop": "on",
+                "ttbm_display_hotels": "on",
+                "ttbm_display_include_service": "on",
+                "ttbm_display_location": "on",
+                "ttbm_display_map": "on",
+                "ttbm_display_max_people": "on",
+                "ttbm_display_min_age": "on",
+                "ttbm_display_price_start": "on",
+                "ttbm_display_rating": "on",
+                "ttbm_display_registration": "on",
+                "ttbm_display_related": "on",
+                "ttbm_display_schedule": "on",
+                "ttbm_display_seat_details": "on",
+                "ttbm_display_sidebar": "off",
+                "ttbm_display_start_location": "on",
+                "ttbm_display_top_picks_deals": "on",
+                "ttbm_display_tour_guide": "on",
+                "ttbm_display_tour_type": "on",
+                "ttbm_display_why_choose_us": "on",
+                "ttbm_extra_service_data": [
+                    {
+                        "service_icon": "mi mi-graduation-cap",
+                        "service_name": "Cap",
+                        "service_price": 6,
+                        "service_sale_price": 5,
+                        "service_qty": 500,
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "A branded souvenir cap to keep the sun off during the tour."
+                    },
+                    {
+                        "service_icon": "mi mi-coffee-heart",
+                        "service_name": "Coffee",
+                        "service_price": 4,
+                        "service_sale_price": 3,
+                        "service_qty": 1500,
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "Freshly brewed coffee to keep you energized throughout the day."
+                    },
+                    {
+                        "service_icon": "mi mi-camera-retro",
+                        "service_name": "Photo Package",
+                        "service_price": 15,
+                        "service_sale_price": 12,
+                        "service_qty": 50,
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "Professional photos captured during your tour, delivered digitally after the trip."
+                    }
+                ],
+                "ttbm_full_location_name": "3667 Las Vegas Blvd S, Las Vegas, NV 89109, USA",
+                "ttbm_guide_description_style": "full",
+                "ttbm_guide_image_style": "squire",
+                "ttbm_guide_style": "carousel",
+                "ttbm_location_name": "Las Vegas",
+                "ttbm_map_latitude": "36.1147",
+                "ttbm_map_longitude": "-115.1728",
+                "ttbm_month_list": "11,12,1,2,3,4,5,6,7,8,9,10",
+                "ttbm_organizer": [
+                    "zayman"
+                ],
+                "ttbm_rating_average": "4.9",
+                "ttbm_rating_count": "5",
+                "ttbm_reg_end_date": "2027-10-26",
+                "ttbm_section_title_style": "ttbm_title_style_2",
+                "ttbm_service_excluded_in_price": [
+                    "Airport Transfer",
+                    "Breakfast",
+                    "Guide",
+                    "Insurance",
+                    "Outing Ticket",
+                    "Newspaper"
+                ],
+                "ttbm_service_included_in_price": [
+                    "Accommodation",
+                    "BBQ Night",
+                    "Welcome Drinks",
+                    "Lunch",
+                    "Transport",
+                    "Additional Services"
+                ],
+                "ttbm_short_description": "Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.",
+                "ttbm_ticket_type": [
+                    {
+                        "ticket_type_icon": "mi mi-employee-man-alt",
+                        "ticket_type_name": "Adult",
+                        "ticket_type_price": 55,
+                        "sale_price": 40,
+                        "ticket_type_qty": 220,
+                        "ticket_type_default_qty": 0,
+                        "ticket_type_resv_qty": 5,
+                        "ticket_type_qty_type": "inputbox",
+                        "ticket_type_description": ""
+                    },
+                    {
+                        "ticket_type_icon": "mi mi-child-head",
+                        "ticket_type_name": "Child",
+                        "ticket_type_price": 100,
+                        "sale_price": 70,
+                        "ticket_type_qty": 100,
+                        "ticket_type_default_qty": 0,
+                        "ticket_type_resv_qty": 20,
+                        "ticket_type_qty_type": "inputbox",
+                        "ticket_type_description": ""
+                    }
+                ],
+                "ttbm_ticketing_system": "regular_ticket",
+                "ttbm_top_picks_deals": [
+                    "popular"
+                ],
+                "ttbm_tour_rating": "4.9",
+                "ttbm_travel_duration": "1",
+                "ttbm_travel_duration_night": "1",
+                "ttbm_travel_duration_type": "day",
+                "ttbm_travel_end_time": "15:00",
+                "ttbm_travel_min_age": "5",
+                "ttbm_travel_repeated_after": "4",
+                "ttbm_travel_repeated_end_date": "2027-10-28",
+                "ttbm_travel_repeated_start_date": "2026-11-12",
+                "ttbm_travel_repeated_start_time": "07:00",
+                "ttbm_travel_start_place": "",
+                "ttbm_travel_start_price": "",
+                "ttbm_travel_start_time": "07:00",
+                "ttbm_travel_type": "repeated",
+                "ttbm_type": "general",
+                "ttbm_upcoming_date": "2026-11-12",
+                "ttbm_why_choose_us_texts": [
+                    "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
+                    "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
+                    "Watch as Gerry McCambridge performs comedy and magic"
+                ]
+            },
+            "gallery": [
+                {
+                    "file": "images/Deep-Sea-Exploration-on-a-Shampan-1.jpg",
+                    "alt": "",
+                    "title": "Deep-Sea Exploration on a Shampan &#8211; 1"
+                },
+                {
+                    "file": "images/Deep-Sea-Exploration-on-a-Shampan-2.jpg",
+                    "alt": "",
+                    "title": "Deep-Sea Exploration on a Shampan &#8211; 2"
+                },
+                {
+                    "file": "images/Deep-Sea-Exploration-on-a-Shampan-3.jpg",
+                    "alt": "",
+                    "title": "Deep-Sea Exploration on a Shampan &#8211; 3"
+                },
+                {
+                    "file": "images/Deep-Sea-Exploration-on-a-Shampan-4.jpg",
+                    "alt": "",
+                    "title": "Deep-Sea Exploration on a Shampan &#8211; 4"
+                },
+                {
+                    "file": "images/Deep-Sea-Exploration-on-a-Shampan-5.jpg",
+                    "alt": "",
+                    "title": "Deep-Sea Exploration on a Shampan &#8211; 5"
+                }
+            ],
+            "guides": [
+                "ttbm_guide-60",
+                "ttbm_guide-52"
+            ],
+            "places": [
+                {
+                    "key": "ttbm_places-32",
+                    "label": "Rotes Rathaus (Neptune Fountain)"
+                },
+                {
+                    "key": "ttbm_places-34",
+                    "label": "Alexanderplatz (Alexa)"
+                },
+                {
+                    "key": "ttbm_places-36",
+                    "label": "Gendarmenmarkt / Taubenstr"
+                },
+                {
+                    "key": "ttbm_places-38",
+                    "label": "Checkpoint Charlie"
+                },
+                {
+                    "key": "ttbm_places-40",
+                    "label": "Berliner Mauer / Martin-Gropius-Bau"
+                }
+            ],
+            "related": [
+                "ttbm_tour-106",
+                "ttbm_tour-95",
+                "ttbm_tour-73",
+                "ttbm_tour-62"
+            ],
+            "activities": [
+                "Hiking",
+                "Snow & Ice"
+            ],
+            "terms": {
+                "ttbm_tour_cat": [
+                    {
+                        "name": "Fixed Tour",
+                        "slug": "fixed-tour"
+                    }
+                ],
+                "ttbm_tour_org": [
+                    {
+                        "name": "Zayman",
+                        "slug": "zayman"
+                    }
+                ],
+                "ttbm_tour_location": [
+                    {
+                        "name": "Las Vegas",
+                        "slug": "las-vegas"
+                    }
+                ],
+                "ttbm_tour_activities": [
+                    {
+                        "name": "Hiking",
+                        "slug": "hiking"
+                    },
+                    {
+                        "name": "Snow & Ice",
+                        "slug": "snow-ice"
+                    }
+                ]
+            }
+        },
+        {
+            "key": "ttbm_tour-95",
+            "title": "Beach Hopping at Inani, Himchari, Patuartek",
+            "content": "\n\n                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\n                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.\n                                ",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Beach-Hopping-at-Inani-Himchari-Patuartek-1.jpg",
+                "alt": "",
+                "title": "Beach Hopping at Inani, Himchari, Patuartek &#8211; 1"
+            },
+            "meta": {
+                "mep_event_faq": [
+                    {
+                        "ttbm_faq_title": "What can I expect to see at The Mentalist at Planet Hollywood Resort and Casino?",
+                        "ttbm_faq_content": "Comedy, magic and mind-reading! The Mentalist has the ability to get inside the minds of audience members, revealing everything from their names, hometowns and anniversaries to their wildest wishes."
+                    },
+                    {
+                        "ttbm_faq_title": "Where is The Mentalist located?",
+                        "ttbm_faq_content": "The V Theater is located inside the Miracle Mile Shops at the Planet Hollywood Resort & Casino."
+                    },
+                    {
+                        "ttbm_faq_title": "Can I purchase alcohol at the venue during The Mentalist!?",
+                        "ttbm_faq_content": "Absolutely! Drinks are available for purchase at the Showgirl Bar outside of the theater and may be brought into the showroom, however, no other outside food or drink will be allowed in the theater."
+                    },
+                    {
+                        "ttbm_faq_title": "Is The Mentalist appropriate for children?",
+                        "ttbm_faq_content": "Due to language, this show is recommended for guests 16 years old and over."
+                    },
+                    {
+                        "ttbm_faq_title": "Do I need to exchange my ticket upon arrival at The Mentalist!?",
+                        "ttbm_faq_content": "Please pick up your tickets at the V Theater Box Office with a valid photo ID for the lead traveler at least 30 minutes prior to show time (box office opens at 11 am). Seating will begin 15 minutes before showtime."
+                    },
+                    {
+                        "ttbm_faq_title": "What is the cancellation and refund policy?",
+                        "ttbm_faq_content": "Bookings can be cancelled up to 48 hours before the tour start time for a full refund. Cancellations made after this window are non-refundable."
+                    }
+                ],
+                "reg_end_time": "23:59",
+                "ttbm_category": [
+                    "flexible-tour"
+                ],
+                "ttbm_contact_email": "info@example.com",
+                "ttbm_contact_phone": "123456789",
+                "ttbm_contact_text": "Do not hesitate to give us a call. We are an expert team and we are happy to talk to you.",
+                "ttbm_daywise_details": [
+                    {
+                        "ttbm_day_title": "Day 1: Arrival & Welcome",
+                        "ttbm_day_content": "<p>Arrive at the destination, meet your guide, and settle into your accommodation. Enjoy a welcome briefing and a relaxed evening to prepare for the days ahead.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 2: Guided City Exploration",
+                        "ttbm_day_content": "<p>Explore the major landmarks and hidden gems of the area with an expert local guide, including stops for photos and local snacks.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 3: Adventure & Activities",
+                        "ttbm_day_content": "<p>A full day dedicated to the tour&#8217;s signature activities, from outdoor adventures to cultural experiences tailored to the destination.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 4: Leisure & Local Markets",
+                        "ttbm_day_content": "<p>A flexible day to relax, shop for souvenirs at local markets, or opt into an optional excursion arranged by your guide.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 5: Cultural Immersion",
+                        "ttbm_day_content": "<p>Visit historical sites and enjoy a traditional meal, learning about the customs and stories that make this destination unique.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 6: Farewell & Departure",
+                        "ttbm_day_content": "<p>Enjoy a final breakfast, wrap up any last-minute shopping, and transfer to the airport or station for your onward journey.</p>"
+                    }
+                ],
+                "ttbm_display_activities": "on",
+                "ttbm_display_advance": "off",
+                "ttbm_display_description": "on",
+                "ttbm_display_duration": "on",
+                "ttbm_display_duration_night": "on",
+                "ttbm_display_exclude_service": "on",
+                "ttbm_display_faq": "on",
+                "ttbm_display_get_question": "on",
+                "ttbm_display_hiphop": "on",
+                "ttbm_display_hotels": "on",
+                "ttbm_display_include_service": "on",
+                "ttbm_display_location": "on",
+                "ttbm_display_map": "on",
+                "ttbm_display_max_people": "on",
+                "ttbm_display_min_age": "on",
+                "ttbm_display_price_start": "on",
+                "ttbm_display_rating": "on",
+                "ttbm_display_registration": "on",
+                "ttbm_display_related": "on",
+                "ttbm_display_schedule": "on",
+                "ttbm_display_seat_details": "on",
+                "ttbm_display_sidebar": "off",
+                "ttbm_display_start_location": "on",
+                "ttbm_display_tour_guide": "on",
+                "ttbm_display_tour_type": "on",
+                "ttbm_display_why_choose_us": "on",
+                "ttbm_extra_service_data": [
+                    {
+                        "service_icon": "mi mi-graduation-cap",
+                        "service_name": "Cap",
+                        "service_price": 6,
+                        "service_sale_price": 5,
+                        "service_qty": 500,
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "A branded souvenir cap to keep the sun off during the tour."
+                    },
+                    {
+                        "service_icon": "mi mi-coffee-heart",
+                        "service_name": "Coffee",
+                        "service_price": 4,
+                        "service_sale_price": 3,
+                        "service_qty": 1500,
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "Freshly brewed coffee to keep you energized throughout the day."
+                    },
+                    {
+                        "service_icon": "mi mi-camera-retro",
+                        "service_name": "Photo Package",
+                        "service_price": 15,
+                        "service_sale_price": 12,
+                        "service_qty": 50,
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "Professional photos captured during your tour, delivered digitally after the trip."
+                    }
+                ],
+                "ttbm_full_location_name": "Via Partenope 1, 80121 Napoli NA, Italy",
+                "ttbm_guide_description_style": "full",
+                "ttbm_guide_image_style": "squire",
+                "ttbm_guide_style": "carousel",
+                "ttbm_location_name": "Naples Italy",
+                "ttbm_map_latitude": "40.8384",
+                "ttbm_map_longitude": "14.2489",
+                "ttbm_month_list": "11,12,1,2,3,4,5,6,7,8,9,10",
+                "ttbm_organizer": [
+                    "holiday-partner"
+                ],
+                "ttbm_rating_average": "4.9",
+                "ttbm_rating_count": "5",
+                "ttbm_reg_end_date": "2027-10-24",
+                "ttbm_section_title_style": "ttbm_title_style_2",
+                "ttbm_service_excluded_in_price": [
+                    "Airport Transfer",
+                    "Breakfast",
+                    "Guide",
+                    "Insurance",
+                    "Outing Ticket",
+                    "Newspaper"
+                ],
+                "ttbm_service_included_in_price": [
+                    "Accommodation",
+                    "BBQ Night",
+                    "Welcome Drinks",
+                    "Lunch",
+                    "Transport",
+                    "Additional Services"
+                ],
+                "ttbm_short_description": "Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.",
+                "ttbm_ticket_type": [
+                    {
+                        "ticket_type_icon": "mi mi-employee-man-alt",
+                        "ticket_type_name": "Adult",
+                        "ticket_type_price": 105,
+                        "sale_price": 100,
+                        "ticket_type_qty": 200,
+                        "ticket_type_default_qty": 0,
+                        "ticket_type_resv_qty": 2,
+                        "ticket_type_qty_type": "inputbox",
+                        "ticket_type_description": ""
+                    },
+                    {
+                        "ticket_type_icon": "mi mi-child-head",
+                        "ticket_type_name": "Child",
+                        "ticket_type_price": 100,
+                        "sale_price": 90,
+                        "ticket_type_qty": 100,
+                        "ticket_type_default_qty": 0,
+                        "ticket_type_resv_qty": 20,
+                        "ticket_type_qty_type": "inputbox",
+                        "ticket_type_description": ""
+                    }
+                ],
+                "ttbm_ticketing_system": "regular_ticket",
+                "ttbm_tour_rating": "4.9",
+                "ttbm_travel_duration": "2",
+                "ttbm_travel_duration_night": "1",
+                "ttbm_travel_duration_type": "day",
+                "ttbm_travel_end_time": "18:00",
+                "ttbm_travel_min_age": "12",
+                "ttbm_travel_repeated_after": "7",
+                "ttbm_travel_repeated_end_date": "2027-10-28",
+                "ttbm_travel_repeated_start_date": "2026-11-22",
+                "ttbm_travel_repeated_start_time": "06:30",
+                "ttbm_travel_start_place": "",
+                "ttbm_travel_start_price": "",
+                "ttbm_travel_start_time": "06:30",
+                "ttbm_travel_type": "repeated",
+                "ttbm_type": "general",
+                "ttbm_upcoming_date": "2026-11-22",
+                "ttbm_why_choose_us_texts": [
+                    "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
+                    "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
+                    "Watch as Gerry McCambridge performs comedy and magic"
+                ]
+            },
+            "gallery": [
+                {
+                    "file": "images/Beach-Hopping-at-Inani-Himchari-Patuartek-1.jpg",
+                    "alt": "",
+                    "title": "Beach Hopping at Inani, Himchari, Patuartek &#8211; 1"
+                },
+                {
+                    "file": "images/Beach-Hopping-at-Inani-Himchari-Patuartek-2.jpg",
+                    "alt": "",
+                    "title": "Beach Hopping at Inani, Himchari, Patuartek &#8211; 2"
+                },
+                {
+                    "file": "images/Beach-Hopping-at-Inani-Himchari-Patuartek-3.jpg",
+                    "alt": "",
+                    "title": "Beach Hopping at Inani, Himchari, Patuartek &#8211; 3"
+                },
+                {
+                    "file": "images/Beach-Hopping-at-Inani-Himchari-Patuartek-4.jpg",
+                    "alt": "",
+                    "title": "Beach Hopping at Inani, Himchari, Patuartek &#8211; 4"
+                },
+                {
+                    "file": "images/Beach-Hopping-at-Inani-Himchari-Patuartek-5.jpg",
+                    "alt": "",
+                    "title": "Beach Hopping at Inani, Himchari, Patuartek &#8211; 5"
+                }
+            ],
+            "guides": [
+                "ttbm_guide-54",
+                "ttbm_guide-56"
+            ],
+            "places": [
+                {
+                    "key": "ttbm_places-42",
+                    "label": "Dolphine Square"
+                },
+                {
+                    "key": "ttbm_places-44",
+                    "label": "Moheshkhali"
+                },
+                {
+                    "key": "ttbm_places-46",
+                    "label": "Inani Beach"
+                },
+                {
+                    "key": "ttbm_places-48",
+                    "label": "Ramu"
+                },
+                {
+                    "key": "ttbm_places-50",
+                    "label": "Himchori"
+                }
+            ],
+            "related": [
+                "ttbm_tour-106",
+                "ttbm_tour-73",
+                "ttbm_tour-84",
+                "ttbm_tour-62"
+            ],
+            "activities": [
+                "Beach",
+                "City Tours"
+            ],
+            "terms": {
+                "ttbm_tour_cat": [
+                    {
+                        "name": "Flexible Tour",
+                        "slug": "flexible-tour"
+                    }
+                ],
+                "ttbm_tour_org": [
+                    {
+                        "name": "Holiday Partner",
+                        "slug": "holiday-partner"
+                    }
+                ],
+                "ttbm_tour_location": [
+                    {
+                        "name": "Naples Italy",
+                        "slug": "naples-italy"
+                    }
+                ],
+                "ttbm_tour_activities": [
+                    {
+                        "name": "Beach",
+                        "slug": "beach"
+                    },
+                    {
+                        "name": "City Tours",
+                        "slug": "city-tours"
+                    }
+                ]
+            }
+        },
+        {
+            "key": "ttbm_tour-106",
+            "title": "Boga Lake : A Relaxing Gateway Tour",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.",
+            "excerpt": "",
+            "status": "publish",
+            "thumb": {
+                "file": "images/Boga-Lake-A-Relaxing-Gateway-Tour-1.jpg",
+                "alt": "",
+                "title": "Boga Lake : A Relaxing Gateway Tour &#8211; 1"
+            },
+            "meta": {
+                "mep_disable_ticket_time": "no",
+                "mep_event_faq": [
+                    {
+                        "ttbm_faq_title": "What can I expect to see at The Mentalist at Planet Hollywood Resort and Casino?",
+                        "ttbm_faq_content": "Comedy, magic and mind-reading! The Mentalist has the ability to get inside the minds of audience members, revealing everything from their names, hometowns and anniversaries to their wildest wishes."
+                    },
+                    {
+                        "ttbm_faq_title": "Where is The Mentalist located?",
+                        "ttbm_faq_content": "The V Theater is located inside the Miracle Mile Shops at the Planet Hollywood Resort & Casino."
+                    },
+                    {
+                        "ttbm_faq_title": "Can I purchase alcohol at the venue during The Mentalist!?",
+                        "ttbm_faq_content": "Absolutely! Drinks are available for purchase at the Showgirl Bar outside of the theater and may be brought into the showroom, however, no other outside food or drink will be allowed in the theater."
+                    },
+                    {
+                        "ttbm_faq_title": "Is The Mentalist appropriate for children?",
+                        "ttbm_faq_content": "Due to language, this show is recommended for guests 16 years old and over."
+                    },
+                    {
+                        "ttbm_faq_title": "Do I need to exchange my ticket upon arrival at The Mentalist!?",
+                        "ttbm_faq_content": "Please pick up your tickets at the V Theater Box Office with a valid photo ID for the lead traveler at least 30 minutes prior to show time (box office opens at 11 am). Seating will begin 15 minutes before showtime."
+                    },
+                    {
+                        "ttbm_faq_title": "What is the cancellation and refund policy?",
+                        "ttbm_faq_content": "Bookings can be cancelled up to 48 hours before the tour start time for a full refund. Cancellations made after this window are non-refundable."
+                    }
+                ],
+                "mep_ticket_off_dates": [
+                    {
+                        "mep_ticket_off_date": "2026-10-29"
+                    },
+                    {
+                        "mep_ticket_off_date": "2026-10-31"
+                    }
+                ],
+                "mep_ticket_offdays": [
+                    "sat",
+                    "sun"
+                ],
+                "mep_ticket_times_fri": [],
+                "mep_ticket_times_global": [],
+                "mep_ticket_times_mon": [],
+                "mep_ticket_times_sat": [],
+                "mep_ticket_times_sun": [],
+                "mep_ticket_times_thu": [],
+                "mep_ticket_times_tue": [],
+                "mep_ticket_times_wed": [],
+                "reg_end_time": "23:59",
+                "ttbm_admin_note": "",
+                "ttbm_auto_related_tour": "on",
+                "ttbm_category": [
+                    "fixed-tour"
+                ],
+                "ttbm_contact_email": "info@example.com",
+                "ttbm_contact_phone": "123456789",
+                "ttbm_contact_text": "Do not hesitate to give us a call. We are an expert team and we are happy to talk to you.",
+                "ttbm_country_name": "Bangladesh",
+                "ttbm_daywise_details": [
+                    {
+                        "ttbm_day_title": "Day 1: Arrival & Welcome",
+                        "ttbm_day_content": "<p>Arrive at the destination, meet your guide, and settle into your accommodation. Enjoy a welcome briefing and a relaxed evening to prepare for the days ahead.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 2: Guided City Exploration",
+                        "ttbm_day_content": "<p>Explore the major landmarks and hidden gems of the area with an expert local guide, including stops for photos and local snacks.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 3: Adventure & Activities",
+                        "ttbm_day_content": "<p>A full day dedicated to the tour&#8217;s signature activities, from outdoor adventures to cultural experiences tailored to the destination.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 4: Leisure & Local Markets",
+                        "ttbm_day_content": "<p>A flexible day to relax, shop for souvenirs at local markets, or opt into an optional excursion arranged by your guide.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 5: Cultural Immersion",
+                        "ttbm_day_content": "<p>Visit historical sites and enjoy a traditional meal, learning about the customs and stories that make this destination unique.</p>"
+                    },
+                    {
+                        "ttbm_day_title": "Day 6: Farewell & Departure",
+                        "ttbm_day_content": "<p>Enjoy a final breakfast, wrap up any last-minute shopping, and transfer to the airport or station for your onward journey.</p>"
+                    }
+                ],
+                "ttbm_display_activities": "on",
+                "ttbm_display_admin_note": "on",
+                "ttbm_display_advance": "off",
+                "ttbm_display_booking_section": "on",
+                "ttbm_display_description": "on",
+                "ttbm_display_duration": "on",
+                "ttbm_display_duration_night": "on",
+                "ttbm_display_enquiry": "on",
+                "ttbm_display_exclude_service": "on",
+                "ttbm_display_faq": "on",
+                "ttbm_display_get_question": "on",
+                "ttbm_display_hiphop": "on",
+                "ttbm_display_hotels": "on",
+                "ttbm_display_include_service": "on",
+                "ttbm_display_location": "on",
+                "ttbm_display_map": "on",
+                "ttbm_display_max_people": "on",
+                "ttbm_display_min_age": "on",
+                "ttbm_display_order_tour": "off",
+                "ttbm_display_price_start": "on",
+                "ttbm_display_rating": "on",
+                "ttbm_display_registration": "on",
+                "ttbm_display_related": "on",
+                "ttbm_display_schedule": "on",
+                "ttbm_display_seat_details": "on",
+                "ttbm_display_sidebar": "off",
+                "ttbm_display_slider": "on",
+                "ttbm_display_start_location": "on",
+                "ttbm_display_top_picks_deals": "on",
+                "ttbm_display_tour_guide": "on",
+                "ttbm_display_tour_type": "on",
+                "ttbm_display_why_choose_us": "on",
+                "ttbm_enable_off_schedule": "no",
+                "ttbm_enable_timewise_stock": "off",
+                "ttbm_extra_service_data": [
+                    {
+                        "service_icon": "mi mi-graduation-cap",
+                        "service_name": "Cap",
+                        "service_price": "6",
+                        "service_sale_price": "5",
+                        "service_qty": "500",
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "A branded souvenir cap to keep the sun off during the tour."
+                    },
+                    {
+                        "service_icon": "mi mi-coffee-heart",
+                        "service_name": "Coffee",
+                        "service_price": "4",
+                        "service_sale_price": "3",
+                        "service_qty": "1500",
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "Freshly brewed coffee to keep you energized throughout the day."
+                    },
+                    {
+                        "service_icon": "mi mi-camera-retro",
+                        "service_name": "Photo Package",
+                        "service_price": "15",
+                        "service_sale_price": "12",
+                        "service_qty": "50",
+                        "service_qty_type": "inputbox",
+                        "extra_service_description": "Professional photos captured during your tour, delivered digitally after the trip."
+                    }
+                ],
+                "ttbm_full_location_name": "Rangamati Sadar, Rangamati Hill District, Chittagong Division, Bangladesh",
+                "ttbm_guide_description_style": "full",
+                "ttbm_guide_image_style": "squire",
+                "ttbm_guide_style": "carousel",
+                "ttbm_location_name": "Rangamati",
+                "ttbm_manual_start_price": "",
+                "ttbm_map_latitude": "22.6533",
+                "ttbm_map_longitude": "92.1743",
+                "ttbm_month_list": "12,1,2,3,4,5,6,7,8,9,10",
+                "ttbm_organizer": [
+                    "autotour"
+                ],
+                "ttbm_particular_dates": [],
+                "ttbm_place_address": "",
+                "ttbm_place_lat": "",
+                "ttbm_place_lon": "",
+                "ttbm_rating_average": "4.9",
+                "ttbm_rating_count": "5",
+                "ttbm_reg_end_date": "2027-10-28",
+                "ttbm_repeat_number": "1",
+                "ttbm_repeat_type": "fixed",
+                "ttbm_section_title_style": "ttbm_title_style_2",
+                "ttbm_service_excluded_in_price": [
+                    "Airport Transfer",
+                    "Breakfast",
+                    "Guide",
+                    "Insurance",
+                    "Outing Ticket",
+                    "Newspaper"
+                ],
+                "ttbm_service_included_in_price": [
+                    "Accommodation",
+                    "BBQ Night",
+                    "Welcome Drinks",
+                    "Lunch",
+                    "Transport",
+                    "Additional Services"
+                ],
+                "ttbm_short_description": "Watch Gerry McCambridge perform comedy, magic, and mind reading live on stage at the amazing 75-minute Las Vegas show, The Mentalist! McCambridge has been nominated “Best Magician in Las Vegas”, so come and see him live for a mind-blowing night.",
+                "ttbm_theme_color": "#d97706",
+                "ttbm_theme_file": "smart.php",
+                "ttbm_ticket_type": [
+                    {
+                        "ticket_type_icon": "mi mi-employee-man-alt",
+                        "ticket_type_name": "Adult",
+                        "ticket_type_price": "105",
+                        "sale_price": "100",
+                        "ticket_type_qty": "200",
+                        "ticket_type_default_qty": "0",
+                        "ticket_type_resv_qty": "2",
+                        "ticket_type_qty_type": "inputbox",
+                        "ticket_type_description": ""
+                    },
+                    {
+                        "ticket_type_icon": "mi mi-child-head",
+                        "ticket_type_name": "Child",
+                        "ticket_type_price": "100",
+                        "sale_price": "90",
+                        "ticket_type_qty": "100",
+                        "ticket_type_default_qty": "0",
+                        "ticket_type_resv_qty": "20",
+                        "ticket_type_qty_type": "inputbox",
+                        "ticket_type_description": ""
+                    }
+                ],
+                "ttbm_ticketing_system": "regular_ticket",
+                "ttbm_top_picks_deals": [],
+                "ttbm_tour_rating": "4.9",
+                "ttbm_travel_duration": "4",
+                "ttbm_travel_duration_night": "5",
+                "ttbm_travel_duration_type": "day",
+                "ttbm_travel_end_date": "",
+                "ttbm_travel_end_time": "20:00",
+                "ttbm_travel_language": [
+                    "en_US"
+                ],
+                "ttbm_travel_language_status": "on",
+                "ttbm_travel_max_people_allow": "",
+                "ttbm_travel_min_age": "18",
+                "ttbm_travel_rank_tour": "",
+                "ttbm_travel_reg_end_date": "",
+                "ttbm_travel_repeated_after": "15",
+                "ttbm_travel_repeated_end_date": "2027-10-28",
+                "ttbm_travel_repeated_start_date": "2026-12-02",
+                "ttbm_travel_repeated_start_time": "08:00",
+                "ttbm_travel_start_date": "",
+                "ttbm_travel_start_place": "Ghatarchar",
+                "ttbm_travel_start_price": "",
+                "ttbm_travel_start_time": "08:00",
+                "ttbm_travel_type": "repeated",
+                "ttbm_type": "general",
+                "ttbm_upcoming_date": "2026-12-02",
+                "ttbm_why_choose_us_texts": [
+                    "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
+                    "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
+                    "Watch as Gerry McCambridge performs comedy and magic"
+                ]
+            },
+            "gallery": [
+                {
+                    "file": "images/Boga-Lake-A-Relaxing-Gateway-Tour-1.jpg",
+                    "alt": "",
+                    "title": "Boga Lake : A Relaxing Gateway Tour &#8211; 1"
+                },
+                {
+                    "file": "images/Boga-Lake-A-Relaxing-Gateway-Tour-2.jpg",
+                    "alt": "",
+                    "title": "Boga Lake : A Relaxing Gateway Tour &#8211; 2"
+                },
+                {
+                    "file": "images/Boga-Lake-A-Relaxing-Gateway-Tour-3.jpg",
+                    "alt": "",
+                    "title": "Boga Lake : A Relaxing Gateway Tour &#8211; 3"
+                },
+                {
+                    "file": "images/Boga-Lake-A-Relaxing-Gateway-Tour-4.jpg",
+                    "alt": "",
+                    "title": "Boga Lake : A Relaxing Gateway Tour &#8211; 4"
+                },
+                {
+                    "file": "images/Boga-Lake-A-Relaxing-Gateway-Tour-5.jpg",
+                    "alt": "",
+                    "title": "Boga Lake : A Relaxing Gateway Tour &#8211; 5"
+                }
+            ],
+            "guides": [
+                "ttbm_guide-60",
+                "ttbm_guide-58"
+            ],
+            "places": [
+                {
+                    "key": "ttbm_places-12",
+                    "label": "Bogura"
+                },
+                {
+                    "key": "ttbm_places-14",
+                    "label": "Dim Pahar"
+                },
+                {
+                    "key": "ttbm_places-22",
+                    "label": "Pompeii"
+                },
+                {
+                    "key": "ttbm_places-24",
+                    "label": "Capri"
+                },
+                {
+                    "key": "ttbm_places-28",
+                    "label": "Naples"
+                }
+            ],
+            "related": [
+                "ttbm_tour-95",
+                "ttbm_tour-84",
+                "ttbm_tour-73",
+                "ttbm_tour-62"
+            ],
+            "activities": [
+                "Hiking",
+                "Rural"
+            ],
+            "terms": {
+                "ttbm_tour_cat": [
+                    {
+                        "name": "Fixed Tour",
+                        "slug": "fixed-tour"
+                    }
+                ],
+                "ttbm_tour_org": [
+                    {
+                        "name": "Autotour",
+                        "slug": "autotour"
+                    }
+                ],
+                "ttbm_tour_location": [
+                    {
+                        "name": "Rangamati",
+                        "slug": "rangamati"
+                    }
+                ],
+                "ttbm_tour_activities": [
+                    {
+                        "name": "Hiking",
+                        "slug": "hiking"
+                    },
+                    {
+                        "name": "Rural",
+                        "slug": "rural"
+                    }
+                ]
+            }
+        }
+    ]
+}

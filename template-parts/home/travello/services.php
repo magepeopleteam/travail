@@ -24,6 +24,8 @@ $travail_activities_terms = taxonomy_exists( 'ttbm_tour_activities' ) ? get_term
 $travail_activities_link  = ( ! is_wp_error( $travail_activities_terms ) && ! empty( $travail_activities_terms ) ) ? get_term_link( $travail_activities_terms[0] ) : '#';
 
 $travail_placeholder = TRAVAIL_URI . '/assets/images/placeholder-tour.svg';
+$travail_hotel_page  = get_page_by_path( 'hotel-search' );
+$travail_hotels_link = $travail_hotel_page ? get_permalink( $travail_hotel_page ) : '#';
 
 $travail_services = apply_filters(
 	'travail_travello_services',
@@ -40,7 +42,7 @@ $travail_services = apply_filters(
 			'title' => __( 'Hotels', 'travail' ),
 			'desc'  => __( 'Stay somewhere extraordinary.', 'travail' ),
 			'image' => travail_get_option( 'travello_service_hotels_image', $travail_placeholder ),
-			'url'   => '#',
+			'url'   => $travail_hotels_link,
 		),
 		'transport'  => array(
 			'icon'  => '✈️',
@@ -74,7 +76,30 @@ $travail_args = travail_section_args(
 );
 
 if ( ! empty( $travail_args['services'] ) ) {
-	$travail_services = $travail_args['services'];
+	// Cards coming from the page builder: any card left without an image (or still on the grey placeholder),
+	// or without a real link, falls back to the matching default above (matched by title, else by position).
+	$travail_defaults_by_title = array();
+	foreach ( $travail_services as $travail_default ) {
+		$travail_defaults_by_title[ strtolower( $travail_default['title'] ) ] = $travail_default;
+	}
+	$travail_defaults_by_pos = array_values( $travail_services );
+	$travail_resolved        = array();
+	foreach ( array_values( $travail_args['services'] ) as $travail_i => $travail_card ) {
+		$travail_title_key = strtolower( isset( $travail_card['title'] ) ? $travail_card['title'] : '' );
+		$travail_fallback  = isset( $travail_defaults_by_title[ $travail_title_key ] ) ? $travail_defaults_by_title[ $travail_title_key ] : ( isset( $travail_defaults_by_pos[ $travail_i ] ) ? $travail_defaults_by_pos[ $travail_i ] : array() );
+		$travail_image     = isset( $travail_card['image'] ) ? $travail_card['image'] : '';
+		if ( '' === $travail_image || false !== strpos( $travail_image, 'placeholder-' ) ) {
+			$travail_image = isset( $travail_fallback['image'] ) ? $travail_fallback['image'] : $travail_placeholder;
+		}
+		$travail_url = isset( $travail_card['url'] ) ? $travail_card['url'] : '';
+		if ( '' === $travail_url || '#' === $travail_url ) {
+			$travail_url = isset( $travail_fallback['url'] ) ? $travail_fallback['url'] : '#';
+		}
+		$travail_card['image'] = $travail_image;
+		$travail_card['url']   = $travail_url;
+		$travail_resolved[]    = $travail_card;
+	}
+	$travail_services = $travail_resolved;
 }
 ?>
 <section class="travail-travello-section travail-travello-section--surface travail-travello-section--center">

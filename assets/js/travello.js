@@ -46,8 +46,102 @@
 	 */
 	function initSearchTabs() {
 		var wrap = document.querySelector( '[data-travello-search-tabs]' );
-		if ( ! wrap ) {
+		var panel = document.querySelector( '[data-travello-search-panel]' );
+		if ( ! wrap || ! panel ) {
 			return;
+		}
+		var form = panel.querySelector( 'form.travail-travello-search-fields' );
+		var destInput = document.getElementById( 'travello-dest-value' );
+		var destFilter = document.getElementById( 'travello-dest-filter' );
+		var destTitle = document.getElementById( 'travello-dest-title-filter' );
+		var actFilter = document.getElementById( 'travello-activity-filter' );
+		var destTrigger = document.getElementById( 'travello-dest-input' );
+		var dateGroup = document.getElementById( 'travello-date-group' );
+		var travGroup = document.getElementById( 'travello-travelers-group' );
+		var dateInput = document.getElementById( 'travello-date' );
+		var travCount = document.getElementById( 'travello-travelers-count' );
+		var destLabel = panel.querySelector( '[data-travello-dest-label]' );
+		var btnLabel = panel.querySelector( '.travail-travello-search-btn-label' );
+		var activityDropdown = document.getElementById( 'travello-activity-dropdown' );
+		var destDropdown = document.getElementById( 'travello-dest-dropdown' );
+
+		function t( key ) {
+			return panel.getAttribute( 'data-text-' + key ) || '';
+		}
+
+		function closePopups() {
+			panel.querySelectorAll( '.is-open' ).forEach( function ( el ) {
+				el.classList.remove( 'is-open' );
+			} );
+			panel.querySelectorAll( '[data-travello-popup-trigger].is-active' ).forEach( function ( el ) {
+				el.classList.remove( 'is-active' );
+			} );
+		}
+
+		// Field names each tab submits (an empty name = the field is not sent).
+		function applyMode( mode ) {
+			if ( ! form ) {
+				return;
+			}
+			closePopups();
+			var isHotels = 'hotels' === mode;
+			var isActivities = 'activities' === mode;
+			var isDestinations = 'destinations' === mode;
+
+			form.setAttribute( 'action', isHotels && panel.getAttribute( 'data-hotel-url' ) ? panel.getAttribute( 'data-hotel-url' ) : panel.getAttribute( 'data-search-url' ) );
+			form.setAttribute( 'data-mode', mode );
+
+			// Where / what field.
+			if ( destLabel ) {
+				destLabel.textContent = isActivities ? t( 'activity' ) : t( 'where' );
+			}
+			if ( destInput ) {
+				destInput.placeholder = isActivities ? t( 'activity-ph' ) : t( 'where-ph' );
+				destInput.readOnly = isActivities;
+				destInput.value = '';
+				destInput.name = isHotels ? 'ttbm_hotel_location_search' : '';
+			}
+			if ( destFilter ) {
+				destFilter.value = '';
+				destFilter.disabled = isHotels || isActivities;
+			}
+			if ( destTitle ) {
+				destTitle.value = '';
+				destTitle.disabled = isHotels || isActivities;
+			}
+			if ( actFilter ) {
+				actFilter.value = '';
+				actFilter.name = isActivities ? 'activity_filter' : '';
+				actFilter.disabled = ! isActivities;
+			}
+			if ( destTrigger ) {
+				var target = isActivities && activityDropdown ? 'travello-activity-dropdown' : 'travello-dest-dropdown';
+				if ( isHotels && ! destDropdown ) {
+					target = '';
+				}
+				if ( isHotels ) {
+					destTrigger.removeAttribute( 'data-travello-popup-trigger' );
+				} else if ( target ) {
+					destTrigger.setAttribute( 'data-travello-popup-trigger', target );
+				}
+			}
+
+			// When / travelers.
+			if ( dateGroup ) {
+				dateGroup.hidden = isDestinations;
+			}
+			if ( travGroup ) {
+				travGroup.hidden = isDestinations || isActivities;
+			}
+			if ( dateInput ) {
+				dateInput.name = isDestinations ? '' : ( isHotels ? 'search_date_range' : 'ttbm_date_start_end_input' );
+			}
+			if ( travCount ) {
+				travCount.name = ( isDestinations || isActivities ) ? '' : ( isHotels ? 'hotel_search_person' : 'people_filter' );
+			}
+			if ( btnLabel ) {
+				btnLabel.textContent = isDestinations ? t( 'explore' ) : t( 'search' );
+			}
 		}
 
 		wrap.addEventListener( 'click', function ( event ) {
@@ -61,7 +155,29 @@
 			} );
 			btn.classList.add( 'is-active' );
 			btn.setAttribute( 'aria-pressed', 'true' );
+			applyMode( btn.getAttribute( 'data-tab' ) );
 		} );
+
+		// Activity picks write the term id the plugin's activity_filter expects.
+		if ( activityDropdown ) {
+			activityDropdown.addEventListener( 'click', function ( event ) {
+				var item = event.target.closest( '[data-act-id]' );
+				if ( ! item ) {
+					return;
+				}
+				event.stopPropagation();
+				if ( actFilter ) {
+					actFilter.value = item.getAttribute( 'data-act-id' );
+				}
+				if ( destInput ) {
+					destInput.value = item.getAttribute( 'data-act-name' );
+				}
+				closePopups();
+			} );
+		}
+
+		var active = wrap.querySelector( '.travail-travello-search-tab.is-active' );
+		applyMode( active ? active.getAttribute( 'data-tab' ) : 'tours' );
 	}
 
 	/**

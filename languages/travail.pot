@@ -2,7 +2,7 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Travail 1.0.0\n"
+"Project-Id-Version: Travail 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/travail\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1883,4 +1883,1240 @@ msgstr ""
 
 #: templates/tours/archive-tour.php:31
 msgid "Handpicked tours and experiences, curated by our travel experts."
+msgstr ""
+
+#: inc/customizer.php:40
+msgid "Homepage"
+msgstr ""
+
+#: inc/customizer.php:43
+msgid "Choose which built-in homepage variation renders when no Travail-generated homepage page is set as your front page. If you've run Demo Import and activated one from Travail → Homepages, that Elementor page always wins over this setting."
+msgstr ""
+
+#: inc/customizer.php:56
+msgid "Homepage design"
+msgstr ""
+
+#: inc/customizer.php:58
+msgid "Travello (default homepage)"
+msgstr ""
+
+#: inc/customizer.php:59
+msgid "Travail (alternate demo homepage)"
+msgstr ""
+
+#: inc/customizer.php:74
+msgid "Travello Homepage"
+msgstr ""
+
+#: inc/customizer.php:81
+msgid "Travel Beyond Ordinary"
+msgstr ""
+
+#: inc/customizer.php:83
+msgid "Hero eyebrow text"
+msgstr ""
+
+#: inc/customizer.php:91
+msgid "Explore the world.{break}{emphasis}Create unforgettable memories.{/emphasis}"
+msgstr ""
+
+#: inc/customizer.php:96
+msgid "Hero headline"
+msgstr ""
+
+#: inc/customizer.php:97
+msgid "Use {break} for a line break and {emphasis}...{/emphasis} to italicize part of the headline."
+msgstr ""
+
+#: inc/customizer.php:106
+msgid "Discover handpicked tours, extraordinary destinations and experiences designed for curious travelers."
+msgstr ""
+
+#: inc/customizer.php:108
+msgid "Hero subtitle"
+msgstr ""
+
+#: inc/customizer.php:119
+msgid "Hero background image"
+msgstr ""
+
+#: inc/customizer.php:130
+msgid "Newsletter background image"
+msgstr ""
+
+#: inc/homepage-travello.php:94
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: inc/homepage-travello.php:104
+msgid "You're subscribed — welcome aboard!"
+msgstr ""
+
+#: inc/setup.php:82
+msgid "Travello Homepage — Primary Menu (optional — falls back to Primary Menu)"
+msgstr ""
+
+#: inc/compatibility/tour-booking-manager.php:240
+msgid "Shown on destination/category/activity cards across the homepage and archive."
+msgstr ""
+
+#: inc/compatibility/tour-booking-manager.php:244
+msgid "Country"
+msgstr ""
+
+#: inc/compatibility/tour-booking-manager.php:245
+msgid "e.g. Indonesia"
+msgstr ""
+
+#: inc/compatibility/tour-booking-manager.php:246
+msgid "Shown as the card subtitle, e.g. \"Indonesia\" under \"Bali\"."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:45
+msgid "Importing demo destinations, tours &amp; stories"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:46
+msgid "Importing sample tours, hotels, guides &amp; places"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:261
+msgid "Experiences"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:262
+msgid "Deals"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:421
+msgid "Tour Booking Manager is not active — skipped destinations/tours (blog stories were not affected)."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:434
+msgid "Imported %1$d destinations/activities, %2$d tours and %3$d travel stories."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:620
+msgid "Adult"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:771
+msgid "Bali Sunrise Jeep Adventure"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:772
+msgid "Watch the sun rise over Mount Batur from a vintage 4x4 jeep, then wind through rice terraces and hot springs before breakfast."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:783
+msgid "Dubai Desert Safari at Dusk"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:784
+msgid "Dune-bash across the Arabian desert at golden hour, then unwind at a Bedouin-style camp with a barbecue dinner and live entertainment under the stars."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:795
+msgid "Paris Eiffel Tower & Seine Cruise"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:796
+msgid "Skip the line up the Eiffel Tower at golden hour, then drift past Notre-Dame and the Louvre on an evening Seine river cruise."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:807
+msgid "Swiss Alps Hiking Trail"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:808
+msgid "A guided high-alpine hike through Grindelwald with panoramic views of the Eiger, finishing at a mountain hut for a traditional Swiss lunch."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:819
+msgid "Santorini Sunset Sailing"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:820
+msgid "Sail the caldera at golden hour aboard a traditional catamaran, with a swim stop and a spread of local wine and mezze."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:831
+msgid "Tokyo Food & Culture Walk"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:832
+msgid "Wander Shibuya's backstreets with a local guide, sampling street food and stepping into a century-old shrine along the way."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:843
+msgid "Iceland Northern Lights"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:844
+msgid "Chase the aurora across Iceland's volcanic landscape with an expert guide and hot cocoa to keep warm."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:855
+msgid "Discover Patagonia"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:856
+msgid "Journey through the end of the world — dramatic granite towers, vast glaciers, and pristine wilderness that will redefine what adventure means to you."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:869
+msgid "Maldives All-Inclusive Escape"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:870
+msgid "Seven nights in an overwater villa with all meals, snorkeling and sunset cruises included."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:882
+msgid "Bali All-Inclusive Getaway"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:883
+msgid "Five nights across a beach resort and a jungle villa, with daily breakfast and a private driver included."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:895
+msgid "Iceland Ring Road Adventure"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:896
+msgid "Six nights circling the island, with glacier hikes, hot springs and a guided aurora hunt included."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:927
+msgid "10 unforgettable places to discover in Bali"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:928
+msgid "From hidden waterfalls to centuries-old temples, Bali rewards travelers who venture past the beach clubs. Here are ten spots worth the detour."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:929
+msgid "Travel Guide"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:933
+msgid "A beginner's guide to the Swiss Alps"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:934
+msgid "Not sure where to start in the Alps? Here is everything a first-time visitor needs to know about trails, huts and getting around."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:935
+msgid "Destination"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:939
+msgid "The ultimate weekend escape to Santorini"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:940
+msgid "Two days is enough to fall in love with Santorini — here is how to make the most of a short stay on the island."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:941
+msgid "Inspiration"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:1055
+msgid "Discover your{break}next {emphasis}"
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:1105
+msgid "Elementor is not active — install and activate it, then re-run Demo Import to generate two ready-made, fully editable homepage pages."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:1109
+msgid "Homepage builder unavailable — skipped."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:1143
+msgid "Two Elementor-ready homepage pages are set up — pick and edit them any time under Travail → Homepages."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:1255
+msgid "Tour Booking Manager is not active, so the sample tours and hotels were skipped."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:1260
+msgid "No sample data file found — skipped."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:1264
+msgid "The sample data file could not be read — skipped."
+msgstr ""
+
+#: inc/importer/class-travail-demo-importer.php:1416
+msgid "Sample content ready: %1$d tours, %2$d hotels, %3$d guides and %4$d places."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:50
+msgid "Travello"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:51
+msgid "Bold, image-led design with an editorial hero, a service teaser grid and a 3-step booking flow."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:54
+msgid "Travail Classic"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:55
+msgid "Travail's original reference design — search-first hero, a destination grid and curated deals."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:176
+msgid "Explore the world."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:177
+msgid "Create unforgettable memories."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:181
+msgid "12K+"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:182
+msgid "180+"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:183
+msgid "50K+"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:183
+msgid "Travelers"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:185
+msgid "Explore tours"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:186
+msgid "View destinations"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:205
+msgid "Popular"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:206
+msgid "destinations"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:207
+msgid "Places travelers are loving right now."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:221
+msgid "Popular tours &"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:222
+msgid "experiences"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:223
+msgid "Discover unforgettable experiences curated for every kind of traveler."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:224
+msgid "All tours →"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:236
+msgid "Explore journey →"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:243
+msgid "Everything you need for your"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:244
+msgid "journey"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:245
+msgid "One platform, every travel need."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:252
+msgid "Why Travel With Us"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:253
+msgid "We make great"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:254
+msgid "trips happen."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:263
+msgid "Don't miss these"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:264
+msgid "adventures"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:265
+msgid "Limited-time deals on top-rated experiences."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:274
+msgid "Simple Process"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:275
+msgid "Your journey starts in"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:276
+msgid "three steps"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:277
+msgid "From inspiration to booking — we make it effortless."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:284
+msgid "Loved by travelers"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:285
+msgid "around the world"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:286
+msgid "50,000+ happy travelers and counting."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:293
+msgid "Travel"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:294
+msgid "inspiration"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:295
+msgid "Stories, guides and tips from our editors."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:296
+msgid "All articles →"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:303
+msgid "Stay Inspired"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:304
+msgid "Your next adventure is closer"
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:305
+msgid "than you think."
+msgstr ""
+
+#: inc/importer/class-travail-elementor-page-builder.php:306
+msgid "Get destination inspiration, travel tips and exclusive offers."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:158
+msgid "Could not reach WordPress.org: %s"
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:191
+msgid "Installation failed. WordPress could not download or unpack the plugin (check internet access and folder permissions)."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:196
+msgid "Plugin installed but could not be located for activation. Activate it from the Plugins screen."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:244
+msgid "You do not have permission to do this."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:251
+msgid "That page is not a recognized Travail homepage design."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:260
+msgid "Homepage updated — this design is now live."
+msgstr ""
+
+#: inc/admin/class-travail-admin.php:283
+msgid "Homepages"
+msgstr ""
+
+#: inc/admin/views/homepages.php:18
+msgid "Pick which homepage design is live on your site, then edit any section of it visually in Elementor."
+msgstr ""
+
+#: inc/admin/views/homepages.php:24
+msgid "Elementor is not active — install and activate it to build and edit these homepages visually."
+msgstr ""
+
+#: inc/admin/views/homepages.php:25
+msgid "Recommended Plugins →"
+msgstr ""
+
+#: inc/admin/views/homepages.php:31
+msgid "No homepage pages yet — run Demo Import once to generate two ready-made, fully editable homepage designs."
+msgstr ""
+
+#: inc/admin/views/homepages.php:32
+msgid "Run Demo Import →"
+msgstr ""
+
+#: inc/admin/views/homepages.php:72
+msgid "Currently Active"
+msgstr ""
+
+#: inc/admin/views/homepages.php:72
+msgid "Set as Homepage"
+msgstr ""
+
+#: inc/admin/views/homepages.php:77
+msgid "Edit with Elementor"
+msgstr ""
+
+#: inc/admin/views/homepages.php:82
+msgid "View"
+msgstr ""
+
+#: inc/admin/views/homepages.php:86
+msgid "Not generated yet"
+msgstr ""
+
+#: inc/elementor/class-travail-elementor.php:194
+msgid "Title Color"
+msgstr ""
+
+#: inc/elementor/class-travail-elementor.php:203
+msgid "Emphasis Color"
+msgstr ""
+
+#: inc/elementor/class-travail-elementor.php:220
+msgid "Subtitle Color"
+msgstr ""
+
+#: inc/elementor/class-travail-elementor.php:239
+msgid "\"View all\" Color"
+msgstr ""
+
+#: elementor/widgets/class-blog-grid-widget.php:61
+msgid "Design"
+msgstr ""
+
+#: elementor/widgets/class-blog-grid-widget.php:65
+msgid "Custom (use the fields below)"
+msgstr ""
+
+#: elementor/widgets/class-blog-grid-widget.php:66
+msgid "Travail Classic (\"Stories from the road\" grid)"
+msgstr ""
+
+#: elementor/widgets/class-blog-grid-widget.php:67
+msgid "Travello (1 featured + 2 list posts)"
+msgstr ""
+
+#: elementor/widgets/class-blog-grid-widget.php:85
+msgid "\"View all\" Text"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:114
+msgid "Travail Classic (4-card grid)"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:115
+msgid "Travello (bento grid)"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:123
+msgid "Show Section Header"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:126
+msgid "Hide"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:152
+msgid "Rendered in the accent italic after the title — e.g. Popular destinations."
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:181
+msgid "https://"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:189
+msgid "Show Country"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:201
+msgid "Show Tour Count"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:225
+msgid "Source"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:229
+msgid "Tour locations (automatic)"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:230
+msgid "Selected tour locations"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:231
+msgid "Custom cards"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:251
+msgid "Order By"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:255
+msgid "Most tours"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:256
+msgid "Name (A–Z)"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:265
+msgid "Locations"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:271
+msgid "Pick which tour locations to show, in this order. Leave empty to fall back to the automatic list."
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:278
+msgid "Hide Locations With No Tours"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:298
+msgid "Custom Cards"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:307
+msgid "Image"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:319
+msgid "Bali"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:327
+msgid "Indonesia"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:333
+msgid "Tour Count"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:342
+msgid "Link"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:367
+msgid "Santorini"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:368
+msgid "Greece"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:372
+msgid "Kyoto"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:373
+msgid "Japan"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:377
+msgid "Marrakech"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:378
+msgid "Morocco"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:469
+msgid "\"View all\" Hover Color"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:483
+msgid "Cards"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:491
+msgid "Gap"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:510
+msgid "Border Radius"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:529
+msgid "Overlay Color"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:541
+msgid "Name Color"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:561
+msgid "Country / Count Color"
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:630
+msgid "Install and activate Tour Booking Manager to list destinations here, or switch Source to Custom cards."
+msgstr ""
+
+#: elementor/widgets/class-destination-grid-widget.php:649
+msgid "No destinations to show yet. Add tour locations, pick specific ones, or switch Source to Custom cards."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:70
+msgid "Classic: Why Choose Us"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:74
+msgid "Classic: How It Works"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:78
+msgid "Travello: Services (Tours/Hotels/Transport/Activities)"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:82
+msgid "Travello: Why Travel With Us"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:86
+msgid "Travello: 3-Step Process"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:109
+msgid "Section"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:113
+msgid "Pick a reference-design section. Its heading, cards and copy stay editable below without changing the layout."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:161
+msgid "Services"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:172
+msgid "Find unforgettable experiences."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:185
+msgid "Hotels"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:185
+msgid "Stay somewhere extraordinary."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:186
+msgid "Transport"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:186
+msgid "Get where you're going."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:187
+msgid "Activities"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:187
+msgid "Make every moment count."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:206
+msgid "Side Image"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:210
+msgid "Stat Value"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:210
+msgid "50,000+"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:211
+msgid "Stat Label"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:211
+msgid "Happy travelers worldwide"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:220
+msgid "Reasons"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:225
+msgid "Every tour is vetted by our team of expert travelers who know what makes a journey truly memorable."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:226
+msgid "Trusted local experts"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:226
+msgid "We partner with guides who know their destinations intimately — not just the highlights."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:227
+msgid "Secure payments"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:227
+msgid "Bank-level encryption keeps every transaction safe. Book with complete confidence."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:228
+msgid "Flexible cancellation"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:228
+msgid "Plans change — most tours offer free cancellation up to 24 hours before departure."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:237
+msgid "How It Works"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:253
+msgid "Steps"
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:258
+msgid "Explore destinations and experiences tailored to your style of travel."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:259
+msgid "Compare tours, prices, dates and genuine traveler reviews side by side."
+msgstr ""
+
+#: elementor/widgets/class-features-widget.php:260
+msgid "Reserve securely in just a few clicks — then dream about what's next."
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:80
+msgid "Travail Classic (search-first hero)"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:81
+msgid "Travello (editorial hero with CTAs)"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:83
+msgid "Matches the exact markup/CSS of whichever reference design you pick — the Travello style adds its own CTA buttons below instead of an embedded search bar."
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:147
+msgid "Show Trust Metrics / Stats"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:158
+msgid "Travello CTA Buttons"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:163
+msgid "Primary Button Text"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:164
+msgid "Primary Button URL"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:165
+msgid "Secondary Button Text"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:166
+msgid "Secondary Button URL"
+msgstr ""
+
+#: elementor/widgets/class-hero-widget.php:173
+msgid "Trust Metrics / Stats"
+msgstr ""
+
+#: elementor/widgets/class-newsletter-widget.php:66
+msgid "Travello (AJAX signup, own styling)"
+msgstr ""
+
+#: elementor/widgets/class-newsletter-widget.php:68
+msgid "Travello uses the theme AJAX signup form. Every heading and the background image stay editable below."
+msgstr ""
+
+#: elementor/widgets/class-newsletter-widget.php:96
+msgid "Email Placeholder"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:70
+msgid "Custom (use the repeater below)"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:71
+msgid "Travail Classic (dark slider)"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:72
+msgid "Travello (3-card review grid)"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:74
+msgid "Classic and Travello keep their reference layouts. Every heading and review below stays editable."
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:119
+msgid "Location"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:124
+msgid "Reviews"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:131
+msgid "Travello found us a hidden gem in Bali we would never have discovered alone. The local guide was extraordinary and every detail was flawless."
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:132
+msgid "Sarah Mitchell"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:133
+msgid "London, UK"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:136
+msgid "Booked our Swiss Alps trek through Travello — the itinerary was perfectly paced and our guide spoke three languages. Completely seamless."
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:137
+msgid "Kenji Tanaka"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:138
+msgid "Osaka, Japan"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:141
+msgid "From the Santorini sunset cruise to the Oia dinner — every moment exceeded our expectations. Travello has earned a lifelong customer."
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:142
+msgid "Amélie Rousseau"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:143
+msgid "Paris, France"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:152
+msgid "Show Avatar Strip"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:162
+msgid "Review Count Label"
+msgstr ""
+
+#: elementor/widgets/class-testimonials-widget.php:164
+msgid "5,000+ verified reviews"
+msgstr ""
+
+#: elementor/widgets/class-tour-activities-widget.php:44
+msgid "Travail Tour Activities"
+msgstr ""
+
+#: elementor/widgets/class-tour-activities-widget.php:84
+msgid "Travail Classic (image-thumbnail pills)"
+msgstr ""
+
+#: elementor/widgets/class-tour-activities-widget.php:85
+msgid "Travello (slim emoji pill nav)"
+msgstr ""
+
+#: elementor/widgets/class-tour-activities-widget.php:87
+msgid "Title copy for Classic comes from the Customizer (travail_get_option('activities_title')), matching every other Classic section."
+msgstr ""
+
+#: elementor/widgets/class-tour-activities-widget.php:102
+msgid "Install and activate Tour Booking Manager to list activities here."
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:79
+msgid "Automatic (best seller, then latest)"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:195
+msgid "Featured Tour"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:203
+msgid "Tour"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:212
+msgid "Title override"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:215
+msgid "Leave empty to use the selected tour's name (e.g. Discover Patagonia)."
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:219
+msgid "Badge"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:224
+msgid "Image override"
+msgstr ""
+
+#: elementor/widgets/class-tour-grid-widget.php:247
+msgid "Book now →"
+msgstr ""
+
+#: elementor/widgets/class-tour-search-widget.php:70
+msgid "Travail Classic (3-field search bar)"
+msgstr ""
+
+#: elementor/widgets/class-tour-search-widget.php:71
+msgid "Travello (tabbed search panel)"
+msgstr ""
+
+#: elementor/widgets/class-tour-search-widget.php:72
+msgid "Generic ([ttbm-top-search] shortcode)"
+msgstr ""
+
+#: elementor/widgets/class-tour-search-widget.php:74
+msgid "\"Classic\"/\"Travello\" render that reference design's exact search UI (its copy comes from the Customizer, matching every other Classic/Travello section); \"Generic\" embeds the plugin's own shortcode as-is with the title/subtitle below, useful outside the homepage."
+msgstr ""
+
+#: template-parts/home/travello/deals.php:106
+msgid "OFF"
+msgstr ""
+
+#: template-parts/home/travello/deals.php:109
+msgid "/person"
+msgstr ""
+
+#: template-parts/home/travello/featured-tour.php:105
+msgid "From"
+msgstr ""
+
+#: template-parts/home/travello/footer.php:35
+msgid "The modern travel marketplace for curious explorers."
+msgstr ""
+
+#: template-parts/home/travello/footer.php:44
+msgid "Preferences"
+msgstr ""
+
+#: template-parts/home/travello/footer.php:45
+msgid "Language"
+msgstr ""
+
+#: template-parts/home/travello/footer.php:46
+msgid "🌐 English"
+msgstr ""
+
+#: template-parts/home/travello/footer.php:47
+msgid "🌐 Español"
+msgstr ""
+
+#: template-parts/home/travello/footer.php:48
+msgid "🌐 Français"
+msgstr ""
+
+#: template-parts/home/travello/footer.php:50
+msgid "Currency"
+msgstr ""
+
+#: template-parts/home/travello/footer.php:88
+msgid "Quick links"
+msgstr ""
+
+#: template-parts/home/travello/footer.php:95
+msgid "Bookings"
+msgstr ""
+
+#: template-parts/home/travello/footer.php:103
+msgid "Profile"
+msgstr ""
+
+#: template-parts/home/travello/header.php:30
+msgid "List Your Property"
+msgstr ""
+
+#: template-parts/home/travello/header.php:95
+msgid "Menu"
+msgstr ""
+
+#: template-parts/home/travello/header.php:100
+msgid "Primary (mobile)"
+msgstr ""
+
+#: template-parts/home/travello/newsletter.php:58
+msgid "Email address"
+msgstr ""
+
+#: template-parts/home/travello/search.php:78
+msgid "Where to?"
+msgstr ""
+
+#: template-parts/home/travello/search.php:78
+msgid "Search destination"
+msgstr ""
+
+#: template-parts/home/travello/search.php:78
+msgid "What to do?"
+msgstr ""
+
+#: template-parts/home/travello/search.php:78
+msgid "Choose an activity"
+msgstr ""
+
+#: template-parts/home/travello/search.php:129
+msgid "Popular Destinations"
+msgstr ""
+
+#: template-parts/home/travello/search.php:150
+msgid "Recently Searched"
+msgstr ""
+
+#: template-parts/home/travello/search.php:158
+msgid "When?"
+msgstr ""
+
+#: template-parts/home/travello/search.php:161
+msgid "Select date"
+msgstr ""
+
+#: template-parts/home/travello/search.php:170
+msgid "2 Adults"
+msgstr ""
+
+#: template-parts/home/travello/search.php:176
+msgid "Adults"
+msgstr ""
+
+#: template-parts/home/travello/search.php:176
+msgid "Ages 13+"
+msgstr ""
+
+#: template-parts/home/travello/search.php:177
+msgid "Children"
+msgstr ""
+
+#: template-parts/home/travello/search.php:177
+msgid "Ages 2–12"
+msgstr ""
+
+#: template-parts/home/travello/search.php:178
+msgid "Infants"
+msgstr ""
+
+#: template-parts/home/travello/search.php:178
+msgid "Under 2"
+msgstr ""
+
+#: template-parts/home/travello/search.php:188
+msgid "Decrease %s"
+msgstr ""
+
+#: template-parts/home/travello/search.php:190
+msgid "Increase %s"
+msgstr ""
+
+#: template-parts/home/travello/testimonials.php:23
+msgid "happy travelers and counting."
+msgstr ""
+
+#: template-parts/home/travello/testimonials.php:89
+msgid "Verified"
+msgstr ""
+
+#: template-parts/home/travello/tours.php:167
+msgid "Featured"
+msgstr ""
+
+#: template-parts/home/travello/tours.php:178
+msgid "Save to wishlist"
+msgstr ""
+
+#: template-parts/home/travello/tours.php:215
+msgid "View tour →"
+msgstr ""
+
+#: template-parts/search/popular-searches.php:57
+msgid "Traveler"
+msgstr ""
+
+#: template-parts/search/popular-searches.php:61
+msgid "5K+ travelers this week"
+msgstr ""
+
+#: template-parts/search/search-widget.php:58
+msgid "Where"
+msgstr ""
+
+#: template-parts/search/search-widget.php:61
+msgid "Anywhere"
+msgstr ""
+
+#: template-parts/search/search-widget.php:77
+msgid "When"
+msgstr ""
+
+#: template-parts/search/search-widget.php:78
+msgid "Add dates"
+msgstr ""
+
+#: template-parts/search/search-widget.php:88
+msgid "2 Guests"
+msgstr ""
+
+#: template-parts/search/search-widget.php:94
+msgid "Search tours"
+msgstr ""
+
+#: template-parts/tour/tour-card.php:100
+msgid "person"
+msgstr ""
+
+#: templates/tours/archive-tour.php:45
+msgid "All"
+msgstr ""
+
+#: templates/tours/archive-tour.php:59
+msgid "%1$s across %2$s"
+msgstr ""
+
+#: templates/pages/page-destinations.php:57
+msgid "%1$s to explore, %2$s waiting for you"
 msgstr ""

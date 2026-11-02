@@ -43,6 +43,7 @@ class Travail_Demo_Importer {
 			'menus'         => __( 'Building menus', 'travail' ),
 			'widgets'       => __( 'Setting up widgets', 'travail' ),
 			'demo_content'  => __( 'Importing demo destinations, tours &amp; stories', 'travail' ),
+			'plugin_samples' => __( 'Importing sample tours, hotels, guides &amp; places', 'travail' ),
 			'theme_options' => __( 'Applying theme settings', 'travail' ),
 			'homepage'      => __( 'Configuring homepage', 'travail' ),
 		);
@@ -346,20 +347,25 @@ class Travail_Demo_Importer {
 
 	/**
 	 * Step: widgets — populates the blog sidebar with a sensible
-	 * default set (Search, Recent Posts, Categories) if it's empty.
+	 * default set (Search, Categories) if it's empty.
 	 *
 	 * @return string
 	 */
 	public static function step_widgets() {
+		// Drop WordPress's default Recent Posts / Recent Comments before deciding whether the sidebar is empty.
+		if ( function_exists( 'travail_remove_default_sidebar_widgets' ) ) {
+			travail_remove_default_sidebar_widgets();
+		}
+
 		$sidebars_widgets = wp_get_sidebars_widgets();
 		if ( ! empty( $sidebars_widgets['sidebar-blog'] ) ) {
 			return __( 'Blog sidebar already has widgets — left untouched.', 'travail' );
 		}
 
+		// Recent Posts and Recent Comments are intentionally not part of the demo.
 		$widgets_to_add = array(
-			'search'      => array(),
-			'recent-posts' => array( 'title' => __( 'Recent Posts', 'travail' ) ),
-			'categories'  => array( 'title' => __( 'Categories', 'travail' ) ),
+			'search'     => array(),
+			'categories' => array( 'title' => __( 'Categories', 'travail' ) ),
 		);
 
 		$new_widget_ids = array();
@@ -582,10 +588,18 @@ class Travail_Demo_Importer {
 			array( 'Wildlife', 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=200&h=160&fit=crop&auto=format' ),
 			array( 'Family', 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=200&h=160&fit=crop&auto=format' ),
 			array( 'Wellness', 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&h=160&fit=crop&auto=format' ),
+			// Travel styles Tour Booking Manager's own sample tours use; they carry the plugin's icon class instead of a photo.
+			array( 'City Tours', '', 'mi mi-taxi-bus' ),
+			array( 'Rural', '', 'mi mi-water' ),
+			array( 'Snow & Ice', '', 'mi mi-snowflakes' ),
 		);
 		foreach ( $activities as $activity ) {
-			if ( self::upsert_demo_term( 'ttbm_tour_activities', $activity[0], $activity[1] ) ) {
+			$activity_term_id = self::upsert_demo_term( 'ttbm_tour_activities', $activity[0], $activity[1] );
+			if ( $activity_term_id ) {
 				++$count;
+				if ( ! empty( $activity[2] ) && ! get_term_meta( $activity_term_id, 'ttbm_activities_icon', true ) ) {
+					update_term_meta( $activity_term_id, 'ttbm_activities_icon', $activity[2] );
+				}
 			}
 		}
 
@@ -613,6 +627,32 @@ class Travail_Demo_Importer {
 				'ticket_type_description' => '',
 			),
 		);
+	}
+
+	/**
+	 * Fill Tour Booking Manager's own "city" and "country" fields from the tour's destination.
+	 * The plugin's city/country filters and location labels read these meta values (what its tour editor saves),
+	 * not the taxonomy, so tours imported with only a destination term showed empty location data.
+	 * Only fills EMPTY values, so anything an editor typed is kept.
+	 *
+	 * @param int   $tour_id Tour post ID.
+	 * @param array $data    Tour definition (needs `location_term`).
+	 */
+	protected static function set_tour_location_meta( $tour_id, $data ) {
+		if ( empty( $data['location_term'] ) ) {
+			return;
+		}
+		$term = get_term_by( 'name', $data['location_term'], 'ttbm_tour_location' );
+		if ( ! $term || is_wp_error( $term ) ) {
+			return;
+		}
+		if ( '' === (string) get_post_meta( $tour_id, 'ttbm_location_name', true ) ) {
+			update_post_meta( $tour_id, 'ttbm_location_name', $term->name );
+		}
+		$country = (string) get_term_meta( $term->term_id, 'travail_term_country', true );
+		if ( '' !== $country && '' === (string) get_post_meta( $tour_id, 'ttbm_country_name', true ) ) {
+			update_post_meta( $tour_id, 'ttbm_country_name', $country );
+		}
 	}
 
 	/**
@@ -660,6 +700,7 @@ class Travail_Demo_Importer {
 		}
 
 		if ( $already_exists ) {
+			self::set_tour_location_meta( $tour_id, $data );
 			return $tour_id;
 		}
 
@@ -669,11 +710,14 @@ class Travail_Demo_Importer {
 				wp_set_post_terms( $tour_id, array( $term_id ), 'ttbm_tour_location' );
 			}
 		}
+		self::set_tour_location_meta( $tour_id, $data );
 
 		if ( ! empty( $data['activity_term'] ) ) {
 			$term_id = self::upsert_demo_term( 'ttbm_tour_activities', $data['activity_term'] );
 			if ( $term_id ) {
 				wp_set_post_terms( $tour_id, array( $term_id ), 'ttbm_tour_activities' );
+				// Tour Booking Manager's activity lists/filters read this meta (what its editor saves), not the taxonomy.
+				update_post_meta( $tour_id, 'ttbm_tour_activities', array( (string) $term_id ) );
 			}
 		}
 
@@ -1194,6 +1238,387 @@ class Travail_Demo_Importer {
 
 		return $page_id;
 	}
+
+	/**
+	 * Step: plugin_samples — the Tour Booking Manager sample content this site ships with: 5 tours, 3 hotels,
+	 * 5 tour guides and 20 places (with their organizers, categories, activities, FAQs, itineraries, extra
+	 * services, tickets and photos). The data lives in demo-import/plugin-samples.json and the photos in
+	 * demo-import/images/, so nothing is downloaded.
+	 *
+	 * Safe to re-run: every object is tracked in the import map, and a tour/hotel/guide/place whose title already
+	 * exists on the site (for example from the plugin's own sample data) is reused instead of duplicated.
+	 *
+	 * @return string
+	 */
+	public static function step_plugin_samples() {
+		if ( ! post_type_exists( 'ttbm_tour' ) ) {
+			return __( 'Tour Booking Manager is not active, so the sample tours and hotels were skipped.', 'travail' );
+		}
+
+		$file = TRAVAIL_DIR . '/demo-import/plugin-samples.json';
+		if ( ! file_exists( $file ) ) {
+			return __( 'No sample data file found — skipped.', 'travail' );
+		}
+		$data = json_decode( (string) file_get_contents( $file ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local theme file.
+		if ( ! is_array( $data ) ) {
+			return __( 'The sample data file could not be read — skipped.', 'travail' );
+		}
+
+		// Date meta in the file is relative to the day it was exported; move it forward so tours stay upcoming.
+		$offset_days = 0;
+		if ( ! empty( $data['exported_on'] ) ) {
+			$offset_days = max( 0, (int) floor( ( strtotime( current_time( 'Y-m-d' ) ) - strtotime( $data['exported_on'] ) ) / DAY_IN_SECONDS ) );
+		}
+
+		// Terms first, so posts can be attached to them by name.
+		foreach ( (array) $data['terms'] as $term ) {
+			self::sample_upsert_term( $term['taxonomy'], $term['name'], '', isset( $term['meta'] ) ? (array) $term['meta'] : array() );
+		}
+
+		$ids   = array();
+		$count = array( 'guides' => 0, 'places' => 0, 'hotels' => 0, 'tours' => 0 );
+
+		foreach ( (array) $data['guides'] as $row ) {
+			$ids[ $row['key'] ] = self::sample_upsert_post( 'ttbm_guide', $row );
+			++$count['guides'];
+		}
+		foreach ( (array) $data['places'] as $row ) {
+			$ids[ $row['key'] ] = self::sample_upsert_post( 'ttbm_places', $row );
+			++$count['places'];
+		}
+
+		$hotel_seen = array();
+		foreach ( (array) $data['hotels'] as $row ) {
+			$hotel_seen[ $row['title'] ] = isset( $hotel_seen[ $row['title'] ] ) ? $hotel_seen[ $row['title'] ] + 1 : 1;
+			$hotel_id = self::sample_upsert_post( 'ttbm_hotel', $row, $hotel_seen[ $row['title'] ] );
+			if ( $hotel_id ) {
+				$ids[ $row['key'] ] = $hotel_id;
+				++$count['hotels'];
+				// A hotel that was already on the site keeps everything it has.
+				if ( 'created' !== get_post_meta( $hotel_id, '_travail_sample_state', true ) ) {
+					continue;
+				}
+				delete_post_meta( $hotel_id, '_travail_sample_state' );
+				self::sample_apply_meta( $hotel_id, $row, $offset_days );
+				if ( ! empty( $row['gallery'] ) ) {
+					$gallery = array();
+					foreach ( $row['gallery'] as $image ) {
+						$att = self::sideload_local_image( $image );
+						if ( $att ) {
+							$gallery[] = $att;
+						}
+					}
+					if ( $gallery ) {
+						update_post_meta( $hotel_id, 'ttbm_gallery_images_hotel', $gallery );
+					}
+				}
+				foreach ( (array) ( isset( $row['term_selection'] ) ? $row['term_selection'] : array() ) as $meta_key => $selection ) {
+					$term_ids = array();
+					foreach ( (array) $selection['names'] as $name ) {
+						$term_id = self::sample_upsert_term( $selection['taxonomy'], $name );
+						if ( $term_id ) {
+							$term_ids[] = $term_id;
+						}
+					}
+					if ( $term_ids ) {
+						update_post_meta( $hotel_id, $meta_key, $term_ids );
+					}
+				}
+			}
+		}
+
+		foreach ( (array) $data['tours'] as $row ) {
+			$tour_id = self::sample_upsert_post( 'ttbm_tour', $row );
+			if ( ! $tour_id ) {
+				continue;
+			}
+			$ids[ $row['key'] ] = $tour_id;
+			++$count['tours'];
+		}
+
+		// Second pass for tours: everything that points at another object by id.
+		foreach ( (array) $data['tours'] as $row ) {
+			if ( empty( $ids[ $row['key'] ] ) ) {
+				continue;
+			}
+			$tour_id = $ids[ $row['key'] ];
+			if ( 'created' !== get_post_meta( $tour_id, '_travail_sample_state', true ) ) {
+				continue; // An existing tour keeps whatever it already has.
+			}
+			self::sample_apply_meta( $tour_id, $row, $offset_days );
+
+			foreach ( (array) $row['terms'] as $taxonomy => $terms ) {
+				$term_ids = array();
+				foreach ( (array) $terms as $term ) {
+					$term_id = self::sample_upsert_term( $taxonomy, $term['name'], isset( $term['slug'] ) ? $term['slug'] : '' );
+					if ( $term_id ) {
+						$term_ids[] = $term_id;
+					}
+				}
+				if ( $term_ids && taxonomy_exists( $taxonomy ) ) {
+					wp_set_object_terms( $tour_id, $term_ids, $taxonomy );
+				}
+			}
+
+			$activity_ids = array();
+			foreach ( (array) $row['activities'] as $name ) {
+				$term_id = self::sample_upsert_term( 'ttbm_tour_activities', $name );
+				if ( $term_id ) {
+					$activity_ids[] = (string) $term_id;
+				}
+			}
+			update_post_meta( $tour_id, 'ttbm_tour_activities', $activity_ids );
+
+			$guides = array();
+			foreach ( (array) $row['guides'] as $key ) {
+				if ( ! empty( $ids[ $key ] ) ) {
+					$guides[] = (string) $ids[ $key ];
+				}
+			}
+			update_post_meta( $tour_id, 'ttbm_tour_guide', $guides );
+
+			$places = array();
+			foreach ( (array) $row['places'] as $place ) {
+				if ( ! empty( $ids[ $place['key'] ] ) ) {
+					$places[] = array(
+						'ttbm_city_place_id' => (string) $ids[ $place['key'] ],
+						'ttbm_place_label'   => $place['label'],
+					);
+				}
+			}
+			update_post_meta( $tour_id, 'ttbm_hiphop_places', $places );
+
+			$related = array();
+			foreach ( (array) $row['related'] as $key ) {
+				if ( ! empty( $ids[ $key ] ) ) {
+					$related[] = (string) $ids[ $key ];
+				}
+			}
+			update_post_meta( $tour_id, 'ttbm_related_tour', $related );
+
+			if ( ! empty( $row['gallery'] ) ) {
+				$gallery = array();
+				foreach ( $row['gallery'] as $image ) {
+					$att = self::sideload_local_image( $image );
+					if ( $att ) {
+						$gallery[] = $att;
+					}
+				}
+				if ( $gallery ) {
+					update_post_meta( $tour_id, 'ttbm_gallery_images', $gallery );
+				}
+			}
+			delete_post_meta( $tour_id, '_travail_sample_state' );
+		}
+
+		return sprintf(
+			/* translators: 1: tours, 2: hotels, 3: guides, 4: places */
+			__( 'Sample content ready: %1$d tours, %2$d hotels, %3$d guides and %4$d places.', 'travail' ),
+			$count['tours'],
+			$count['hotels'],
+			$count['guides'],
+			$count['places']
+		);
+	}
+
+	/**
+	 * Create-or-reuse a sample post. An existing post of the same type and title is reused (so the plugin's own
+	 * sample data is never duplicated); new tours are flagged so the second pass fills in their meta.
+	 *
+	 * @param string $post_type Post type.
+	 * @param array  $row       Exported row.
+	 * @param int    $nth       Which occurrence of this title this row is (hotels share a title).
+	 * @return int Post ID, or 0.
+	 */
+	protected static function sample_upsert_post( $post_type, $row, $nth = 1 ) {
+		$map = self::get_map();
+		if ( ! empty( $map['samples'][ $row['key'] ] ) && get_post( $map['samples'][ $row['key'] ] ) ) {
+			return (int) $map['samples'][ $row['key'] ];
+		}
+
+		$existing = get_posts(
+			array(
+				'post_type'      => $post_type,
+				'post_status'    => 'any',
+				'title'          => $row['title'],
+				'posts_per_page' => $nth,
+				'orderby'        => 'ID',
+				'order'          => 'ASC',
+				'fields'         => 'ids',
+				'no_found_rows'  => true,
+			)
+		);
+		if ( count( $existing ) >= $nth ) {
+			$post_id = (int) $existing[ $nth - 1 ];
+			$map['samples'][ $row['key'] ] = $post_id;
+			self::save_map( $map );
+			return $post_id;
+		}
+
+		$post_id = wp_insert_post(
+			array(
+				'post_type'    => $post_type,
+				'post_title'   => $row['title'],
+				'post_content' => isset( $row['content'] ) ? $row['content'] : '',
+				'post_excerpt' => isset( $row['excerpt'] ) ? $row['excerpt'] : '',
+				'post_status'  => 'publish',
+			),
+			true
+		);
+		if ( is_wp_error( $post_id ) || ! $post_id ) {
+			return 0;
+		}
+
+		if ( ! empty( $row['thumb'] ) ) {
+			$att = self::sideload_local_image( $row['thumb'] );
+			if ( $att ) {
+				set_post_thumbnail( $post_id, $att );
+			}
+		}
+		if ( ! in_array( $post_type, array( 'ttbm_tour', 'ttbm_hotel' ), true ) && ! empty( $row['meta'] ) ) {
+			foreach ( $row['meta'] as $meta_key => $meta_value ) {
+				update_post_meta( $post_id, $meta_key, $meta_value );
+			}
+		}
+		if ( in_array( $post_type, array( 'ttbm_tour', 'ttbm_hotel' ), true ) ) {
+			update_post_meta( $post_id, '_travail_sample_state', 'created' );
+		}
+
+		$map['samples'][ $row['key'] ] = $post_id;
+		self::save_map( $map );
+		return (int) $post_id;
+	}
+
+	/**
+	 * Write an exported row's meta onto a post, moving any dates forward by $offset_days.
+	 *
+	 * @param int   $post_id     Post ID.
+	 * @param array $row         Exported row.
+	 * @param int   $offset_days Days to add to Y-m-d values.
+	 */
+	protected static function sample_apply_meta( $post_id, $row, $offset_days ) {
+		if ( empty( $row['meta'] ) ) {
+			return;
+		}
+		foreach ( $row['meta'] as $meta_key => $meta_value ) {
+			if ( $offset_days > 0 && false !== strpos( $meta_key, 'date' ) ) {
+				$meta_value = self::sample_shift_dates( $meta_value, $offset_days );
+			}
+			update_post_meta( $post_id, $meta_key, $meta_value );
+		}
+	}
+
+	/**
+	 * Add days to every Y-m-d string inside a value (scalar or nested array).
+	 *
+	 * @param mixed $value Meta value.
+	 * @param int   $days  Days to add.
+	 * @return mixed
+	 */
+	protected static function sample_shift_dates( $value, $days ) {
+		if ( is_array( $value ) ) {
+			foreach ( $value as $k => $v ) {
+				$value[ $k ] = self::sample_shift_dates( $v, $days );
+			}
+			return $value;
+		}
+		if ( is_string( $value ) && preg_match( '/^\d{4}-\d{2}-\d{2}$/', $value ) ) {
+			return gmdate( 'Y-m-d', strtotime( $value . ' +' . (int) $days . ' days' ) );
+		}
+		return $value;
+	}
+
+	/**
+	 * Create-or-fetch a term by name (plus slug when given), set any term meta that is still empty.
+	 *
+	 * @param string $taxonomy Taxonomy.
+	 * @param string $name     Term name.
+	 * @param string $slug     Optional slug.
+	 * @param array  $meta     Optional term meta.
+	 * @return int Term ID, or 0.
+	 */
+	protected static function sample_upsert_term( $taxonomy, $name, $slug = '', $meta = array() ) {
+		if ( ! taxonomy_exists( $taxonomy ) ) {
+			return 0;
+		}
+		$term = get_term_by( 'name', $name, $taxonomy );
+		if ( ( ! $term || is_wp_error( $term ) ) && $slug ) {
+			$term = get_term_by( 'slug', $slug, $taxonomy );
+		}
+		if ( $term && ! is_wp_error( $term ) ) {
+			$term_id = (int) $term->term_id;
+		} else {
+			$result = wp_insert_term( $name, $taxonomy, $slug ? array( 'slug' => $slug ) : array() );
+			if ( is_wp_error( $result ) ) {
+				return 0;
+			}
+			$term_id = (int) $result['term_id'];
+		}
+		foreach ( (array) $meta as $meta_key => $meta_value ) {
+			if ( '' === (string) get_term_meta( $term_id, $meta_key, true ) ) {
+				update_term_meta( $term_id, $meta_key, $meta_value );
+			}
+		}
+		return $term_id;
+	}
+
+	/**
+	 * Add a photo that ships inside the theme (demo-import/images/) to the media library.
+	 *
+	 * @param array $image Exported image: file (relative to demo-import/), alt, title.
+	 * @return int Attachment ID, or 0.
+	 */
+	protected static function sideload_local_image( $image ) {
+		if ( empty( $image['file'] ) ) {
+			return 0;
+		}
+		$source = TRAVAIL_DIR . '/demo-import/' . ltrim( $image['file'], '/' );
+		if ( ! file_exists( $source ) ) {
+			return 0;
+		}
+
+		$map = self::get_map();
+		$key = md5( $image['file'] );
+		if ( ! empty( $map['images'][ $key ] ) && get_post( $map['images'][ $key ] ) ) {
+			return (int) $map['images'][ $key ];
+		}
+
+		if ( ! function_exists( 'wp_tempnam' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/image.php';
+		}
+		if ( ! function_exists( 'media_handle_sideload' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/media.php';
+		}
+
+		// media_handle_sideload() moves the file it is given, so hand it a temporary copy.
+		$tmp = wp_tempnam( basename( $source ) );
+		if ( ! $tmp || ! copy( $source, $tmp ) ) {
+			return 0;
+		}
+		$attachment_id = media_handle_sideload(
+			array(
+				'name'     => basename( $source ),
+				'tmp_name' => $tmp,
+			),
+			0,
+			! empty( $image['title'] ) ? $image['title'] : ''
+		);
+		if ( is_wp_error( $attachment_id ) ) {
+			wp_delete_file( $tmp );
+			return 0;
+		}
+		if ( ! empty( $image['alt'] ) ) {
+			update_post_meta( $attachment_id, '_wp_attachment_image_alt', sanitize_text_field( $image['alt'] ) );
+		}
+
+		$map['images'][ $key ] = $attachment_id;
+		self::save_map( $map );
+		return (int) $attachment_id;
+	}
+
 }
 
 Travail_Demo_Importer::init();

@@ -93,6 +93,69 @@ function travail_setup() {
 add_action( 'after_setup_theme', 'travail_setup' );
 
 /**
+ * Remove WordPress's default "Recent Posts" / "Recent Comments" widgets (classic and block versions)
+ * from the Blog Sidebar. WordPress carries them over when a theme is switched; Travail does not want them.
+ * Widgets an admin adds later are never touched: this only runs on theme activation, once for an
+ * existing install, and at the start of the demo import.
+ */
+function travail_remove_default_sidebar_widgets() {
+	$sidebars = wp_get_sidebars_widgets();
+	$blocks   = get_option( 'widget_block', array() );
+	$changed  = false;
+
+	// The blog sidebar, and Tour Booking Manager's tour-details sidebar (WordPress copies its default
+	// widgets into whichever widget areas exist when a theme is switched).
+	foreach ( array( 'sidebar-blog', 'ttbm_details_sidebar' ) as $sidebar_id ) {
+		if ( empty( $sidebars[ $sidebar_id ] ) || ! is_array( $sidebars[ $sidebar_id ] ) ) {
+			continue;
+		}
+		foreach ( $sidebars[ $sidebar_id ] as $index => $widget_id ) {
+			$remove = false;
+			// The tour-details page also drops the default Search box; the blog sidebar keeps it.
+			$strip_search = ( 'ttbm_details_sidebar' === $sidebar_id );
+			if ( 0 === strpos( $widget_id, 'recent-posts-' ) || 0 === strpos( $widget_id, 'recent-comments-' ) || ( $strip_search && 0 === strpos( $widget_id, 'search-' ) ) ) {
+				$remove = true;
+				$base   = 0 === strpos( $widget_id, 'recent-posts-' ) ? 'recent-posts' : ( 0 === strpos( $widget_id, 'recent-comments-' ) ? 'recent-comments' : 'search' );
+				$number = (int) substr( $widget_id, strlen( $base ) + 1 );
+				$option = get_option( 'widget_' . $base, array() );
+				if ( isset( $option[ $number ] ) ) {
+					unset( $option[ $number ] );
+					update_option( 'widget_' . $base, $option );
+				}
+			} elseif ( 0 === strpos( $widget_id, 'block-' ) ) {
+				$number  = (int) substr( $widget_id, 6 );
+				$content = isset( $blocks[ $number ]['content'] ) ? (string) $blocks[ $number ]['content'] : '';
+				if ( false !== strpos( $content, 'wp:latest-posts' ) || false !== strpos( $content, 'wp:latest-comments' ) || ( $strip_search && false !== strpos( $content, 'wp:search' ) ) ) {
+					$remove = true;
+					unset( $blocks[ $number ] );
+					update_option( 'widget_block', $blocks );
+				}
+			}
+			if ( $remove ) {
+				unset( $sidebars[ $sidebar_id ][ $index ] );
+				$changed = true;
+			}
+		}
+		$sidebars[ $sidebar_id ] = array_values( $sidebars[ $sidebar_id ] );
+	}
+
+	if ( $changed ) {
+		wp_set_sidebars_widgets( $sidebars );
+	}
+}
+add_action( 'after_switch_theme', 'travail_remove_default_sidebar_widgets' );
+
+/** One-time cleanup for sites where Travail is already active. */
+function travail_cleanup_default_widgets_once() {
+	if ( get_option( 'travail_default_widgets_cleaned_v3' ) ) {
+		return;
+	}
+	travail_remove_default_sidebar_widgets();
+	update_option( 'travail_default_widgets_cleaned_v3', 1 );
+}
+add_action( 'init', 'travail_cleanup_default_widgets_once', 20 );
+
+/**
  * Register widget areas.
  */
 function travail_widgets_init() {

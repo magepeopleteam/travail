@@ -114,30 +114,94 @@ class Travail_Admin {
 		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 		require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+
+		// Manual fallbacks, returned with every failure so the screen can offer them.
+		$manual = array(
+			'install_url'  => admin_url( 'plugin-install.php?s=' . rawurlencode( $requested_slug ) . '&tab=search&type=term' ),
+			'upload_url'   => admin_url( 'plugin-install.php?tab=upload' ),
+			'zip_url'      => 'https://downloads.wordpress.org/plugin/' . rawurlencode( $requested_slug ) . '.latest-stable.zip',
+			'plugins_url'  => admin_url( 'plugins.php' ),
+		);
+		$fail = static function ( $message ) use ( $manual ) {
+			wp_send_json_error( array( 'message' => $message, 'manual' => $manual ) );
+		};
+
+		// Already on disk (earlier or partial attempt, or uploaded by hand)? Just activate it.
+		foreach ( self::get_recommended_plugins() as $definition ) {
+			if ( $definition['wporg_slug'] === $requested_slug && file_exists( WP_PLUGIN_DIR . '/' . $definition['file'] ) ) {
+				$activated = activate_plugin( $definition['file'] );
+				if ( is_wp_error( $activated ) ) {
+					$fail( $activated->get_error_message() );
+				}
+				wp_send_json_success( array( 'message' => __( 'Activated.', 'travail' ) ) );
+			}
+		}
+
+		// Large downloads (WooCommerce is ~30 MB) need more than the default limits on a local server.
+		if ( function_exists( 'set_time_limit' ) ) {
+			@set_time_limit( 300 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+		}
+		wp_raise_memory_limit( 'admin' );
+
+		// Write straight to disk when PHP owns the plugins folder, instead of asking for FTP details.
+		$force_direct = static function ( $method ) {
+			return ( 'direct' !== $method && is_writable( WP_PLUGIN_DIR ) ) ? 'direct' : $method; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable
+		};
+		add_filter( 'filesystem_method', $force_direct );
 
 		$api = plugins_api( 'plugin_information', array( 'slug' => $requested_slug, 'fields' => array( 'sections' => false ) ) );
 		if ( is_wp_error( $api ) ) {
-			wp_send_json_error( array( 'message' => $api->get_error_message() ) );
+			$fail(
+				sprintf(
+					/* translators: %s: error message */
+					__( 'Could not reach WordPress.org: %s', 'travail' ),
+					$api->get_error_message()
+				)
+			);
 		}
 
 		$skin     = new Automatic_Upgrader_Skin();
 		$upgrader = new Plugin_Upgrader( $skin );
 		$result   = $upgrader->install( $api->download_link );
 
-		if ( is_wp_error( $result ) || ! $result ) {
-			wp_send_json_error( array( 'message' => is_wp_error( $result ) ? $result->get_error_message() : __( 'Installation failed.', 'travail' ) ) );
+		if ( is_wp_error( $result ) ) {
+			// The destination already exists: activate it rather than fail.
+			if ( 'folder_exists' === $result->get_error_code() ) {
+				foreach ( self::get_recommended_plugins() as $definition ) {
+					if ( $definition['wporg_slug'] === $requested_slug && file_exists( WP_PLUGIN_DIR . '/' . $definition['file'] ) ) {
+						$activated = activate_plugin( $definition['file'] );
+						if ( ! is_wp_error( $activated ) ) {
+							wp_send_json_success( array( 'message' => __( 'Activated.', 'travail' ) ) );
+						}
+					}
+				}
+			}
+			$fail( $result->get_error_message() );
+		}
+
+		if ( ! $result ) {
+			// install() returned false: the real reason is in the skin's error object.
+			$skin_errors = $skin->get_errors();
+			$reason      = ( is_wp_error( $skin_errors ) && $skin_errors->has_errors() ) ? $skin_errors->get_error_message() : '';
+			if ( '' === $reason ) {
+				$messages = $skin->get_upgrade_messages();
+				$reason   = $messages ? wp_strip_all_tags( end( $messages ) ) : '';
+			}
+			$fail( '' !== $reason ? $reason : __( 'Installation failed. WordPress could not download or unpack the plugin (check internet access and folder permissions).', 'travail' ) );
 		}
 
 		$plugin_file = $upgrader->plugin_info();
 		if ( ! $plugin_file ) {
-			wp_send_json_error( array( 'message' => __( 'Plugin installed but could not be located for activation.', 'travail' ) ) );
+			$fail( __( 'Plugin installed but could not be located for activation. Activate it from the Plugins screen.', 'travail' ) );
 		}
 
 		$activated = activate_plugin( $plugin_file );
 		if ( is_wp_error( $activated ) ) {
-			wp_send_json_error( array( 'message' => $activated->get_error_message() ) );
+			$fail( $activated->get_error_message() );
 		}
 
+		remove_filter( 'filesystem_method', $force_direct );
 		wp_send_json_success( array( 'message' => __( 'Installed and activated.', 'travail' ) ) );
 	}
 
@@ -242,8 +306,10 @@ class Travail_Admin {
 			'travail-admin',
 			'travailAdmin',
 			array(
-				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( 'travail_admin' ),
+				'ajaxUrl'          => admin_url( 'admin-ajax.php' ),
+				'nonce'            => wp_create_nonce( 'travail_admin' ),
+				'pluginInstallUrl' => admin_url( 'plugin-install.php' ),
+				'pluginsUrl'       => admin_url( 'plugins.php' ),
 			)
 		);
 	}

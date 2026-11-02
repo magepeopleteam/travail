@@ -2570,3 +2570,6 @@ body.travail-travello-home .travail-travello-mobile-bottom-nav__item.is-active {
 		min-height: 180px;
 	}
 }
+
+/* Search tabs: fields a tab does not use are hidden (Destinations hides When/Travelers, Activities hides Travelers) */
+body.travail-travello-home .travail-travello-field-group[hidden] { display: none !important; }

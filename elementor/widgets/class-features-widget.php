@@ -291,8 +291,9 @@ class Travail_Elementor_Features_Widget extends \Elementor\Widget_Base {
 						'icon'  => isset( $item['icon'] ) ? $item['icon'] : '',
 						'title' => isset( $item['title'] ) ? $item['title'] : '',
 						'desc'  => isset( $item['desc'] ) ? $item['desc'] : '',
-						'image' => ! empty( $item['image']['url'] ) ? $item['image']['url'] : TRAVAIL_URI . '/assets/images/placeholder-tour.svg',
-						'url'   => ! empty( $item['url']['url'] ) ? $item['url']['url'] : '#',
+						// Left empty when unset: the template then falls back to the service's real default image and link.
+						'image' => ! empty( $item['image']['url'] ) ? $item['image']['url'] : '',
+						'url'   => ! empty( $item['url']['url'] ) ? $item['url']['url'] : '',
 					);
 				}
 			}

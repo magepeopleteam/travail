@@ -4,7 +4,7 @@ Contributors: travailstudio
 Requires at least: WordPress 6.0
 Tested up to: WordPress 6.7
 Requires PHP: 7.4
-Version: 1.0.0
+Version: 1.1.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,17 @@ extra services, reviews) rather than duplicating it.
   languages/travail.pot.
 
 == Changelog ==
+
+= 1.1.0 – 2 November 2026 =
+* New: Tour pages redesigned: header card with info tiles, "clean list" booking card (date tiles, ticket cards, summary bar), compact accordion for itinerary, included items and FAQ.
+* New: Gallery uses a mosaic (one large photo plus a 2×2 grid) sized to the page body; every color follows the tour's Theme Color.
+* New: Homepage search tabs are real: Tours, Destinations, Activities and Hotels each submit the matching search (Transport is left out because the plugin has no transport search).
+* New: Demo import now also creates the Tour Booking Manager sample content (5 tours, 3 hotels, 5 guides, 20 places) from demo-import/plugin-samples.json, with its photos in demo-import/images/.
+* Improvement: Demo import fills each tour's city, country and activity data, adds the City Tours, Rural and Snow & Ice activities, and no longer adds Recent Posts to the blog sidebar.
+* Fix: Homepage service cards showed grey placeholders and "#" links; they now use the real images and links.
+* Fix: Default Recent Posts, Recent Comments (and Search on tour pages) widgets that WordPress carried over are removed.
+* Fix: Site search also finds tours by destination, country, activity and category names.
+* Fix: Recommended Plugins installs show the real error and offer manual install steps.
 
 = 1.0.0 =
 * Initial release.

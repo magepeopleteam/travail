@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'TRAVAIL_VERSION', '1.0.0' );
+define( 'TRAVAIL_VERSION', '1.1.0' );
 define( 'TRAVAIL_DIR', get_template_directory() );
 define( 'TRAVAIL_URI', get_template_directory_uri() );
 define( 'TRAVAIL_MIN_PHP', '7.4' );
