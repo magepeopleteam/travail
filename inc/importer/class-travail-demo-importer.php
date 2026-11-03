@@ -44,6 +44,7 @@ class Travail_Demo_Importer {
 			'widgets'       => __( 'Setting up widgets', 'travail' ),
 			'demo_content'  => __( 'Importing demo destinations, tours &amp; stories', 'travail' ),
 			'plugin_samples' => __( 'Importing sample tours, hotels, guides &amp; places', 'travail' ),
+			'complete_tours' => __( 'Completing tour details (itinerary, FAQ, tickets, extras &amp; reviews)', 'travail' ),
 			'theme_options' => __( 'Applying theme settings', 'travail' ),
 			'homepage'      => __( 'Configuring homepage', 'travail' ),
 		);
@@ -734,15 +735,21 @@ class Travail_Demo_Importer {
 		update_post_meta( $tour_id, 'ttbm_display_location', 'on' );
 		update_post_meta( $tour_id, 'ttbm_travel_max_people_allow', '20' );
 
-		// Fixed date ~30 days out so the tour reads as "upcoming" rather than expired.
-		$start_date = gmdate( 'Y-m-d', strtotime( '+30 days' ) );
-		$end_date   = 'day' === $data['duration_type']
-			? gmdate( 'Y-m-d', strtotime( '+' . ( 30 + max( 0, (int) $data['duration'] - 1 ) ) . ' days' ) )
-			: $start_date;
-		update_post_meta( $tour_id, 'ttbm_travel_type', 'fixed' );
-		update_post_meta( $tour_id, 'ttbm_travel_start_date', $start_date );
-		update_post_meta( $tour_id, 'ttbm_travel_end_date', $end_date );
-		update_post_meta( $tour_id, 'ttbm_upcoming_date', $start_date );
+		if ( ! empty( $data['offdays'] ) ) {
+			// Most demo tours run every day except two days a week, with no end date.
+			$details = self::demo_tour_details();
+			self::set_repeated_daily( $tour_id, $data['offdays'], isset( $details[ $key ]['start_time'] ) ? $details[ $key ]['start_time'] : '09:00' );
+		} else {
+			// Fixed date ~30 days out so the tour reads as "upcoming" rather than expired.
+			$start_date = gmdate( 'Y-m-d', strtotime( '+30 days' ) );
+			$end_date   = 'day' === $data['duration_type']
+				? gmdate( 'Y-m-d', strtotime( '+' . ( 30 + max( 0, (int) $data['duration'] - 1 ) ) . ' days' ) )
+				: $start_date;
+			update_post_meta( $tour_id, 'ttbm_travel_type', 'fixed' );
+			update_post_meta( $tour_id, 'ttbm_travel_start_date', $start_date );
+			update_post_meta( $tour_id, 'ttbm_travel_end_date', $end_date );
+			update_post_meta( $tour_id, 'ttbm_upcoming_date', $start_date );
+		}
 
 		if ( ! empty( $data['rating'] ) ) {
 			update_post_meta( $tour_id, 'ttbm_tour_rating', $data['rating'] );
@@ -766,8 +773,25 @@ class Travail_Demo_Importer {
 	 * @return int Number of tours created/found.
 	 */
 	protected static function create_demo_tours() {
-		$tours = array(
+		$count = 0;
+		foreach ( self::demo_tours() as $key => $data ) {
+			if ( self::upsert_demo_tour( $key, $data ) ) {
+				++$count;
+			}
+		}
+
+		return $count;
+	}
+
+	/**
+	 * The demo tour definitions (card data). Their page content lives in demo_tour_details().
+	 *
+	 * @return array
+	 */
+	protected static function demo_tours() {
+		return array(
 			'bali-sunrise'    => array(
+				'offdays'       => array( 'mon', 'tue' ), // Repeated daily, closed these weekdays.
 				'title'         => __( 'Bali Sunrise Jeep Adventure', 'travail' ),
 				'description'   => __( 'Watch the sun rise over Mount Batur from a vintage 4x4 jeep, then wind through rice terraces and hot springs before breakfast.', 'travail' ),
 				'image'         => 'https://images.unsplash.com/photo-1558005530-a7958896ec60?w=900&h=600&fit=crop&auto=format',
@@ -780,6 +804,7 @@ class Travail_Demo_Importer {
 				'rating'        => '4.9',
 			),
 			'dubai-safari'    => array(
+				'offdays'       => array( 'fri', 'sat' ), // Repeated daily, closed these weekdays.
 				'title'         => __( 'Dubai Desert Safari at Dusk', 'travail' ),
 				'description'   => __( 'Dune-bash across the Arabian desert at golden hour, then unwind at a Bedouin-style camp with a barbecue dinner and live entertainment under the stars.', 'travail' ),
 				'image'         => 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=900&h=600&fit=crop&auto=format',
@@ -792,6 +817,7 @@ class Travail_Demo_Importer {
 				'rating'        => '4.8',
 			),
 			'paris-eiffel'    => array(
+				'offdays'       => array( 'mon', 'tue' ), // Repeated daily, closed these weekdays.
 				'title'         => __( 'Paris Eiffel Tower & Seine Cruise', 'travail' ),
 				'description'   => __( 'Skip the line up the Eiffel Tower at golden hour, then drift past Notre-Dame and the Louvre on an evening Seine river cruise.', 'travail' ),
 				'image'         => 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=900&h=600&fit=crop&auto=format',
@@ -804,6 +830,7 @@ class Travail_Demo_Importer {
 				'rating'        => '4.9',
 			),
 			'swiss-hiking'    => array(
+				'offdays'       => array( 'wed', 'thu' ), // Repeated daily, closed these weekdays.
 				'title'         => __( 'Swiss Alps Hiking Trail', 'travail' ),
 				'description'   => __( 'A guided high-alpine hike through Grindelwald with panoramic views of the Eiger, finishing at a mountain hut for a traditional Swiss lunch.', 'travail' ),
 				'image'         => 'https://images.unsplash.com/photo-1520681504224-093d46124820?w=900&h=600&fit=crop&auto=format',
@@ -816,6 +843,7 @@ class Travail_Demo_Importer {
 				'rating'        => '4.8',
 			),
 			'santorini-sail'  => array(
+				'offdays'       => array( 'tue', 'wed' ), // Repeated daily, closed these weekdays.
 				'title'         => __( 'Santorini Sunset Sailing', 'travail' ),
 				'description'   => __( 'Sail the caldera at golden hour aboard a traditional catamaran, with a swim stop and a spread of local wine and mezze.', 'travail' ),
 				'image'         => 'https://images.unsplash.com/photo-1629470035936-3296c3bd8237?w=900&h=600&fit=crop&auto=format',
@@ -828,6 +856,7 @@ class Travail_Demo_Importer {
 				'rating'        => '5.0',
 			),
 			'tokyo-food-walk' => array(
+				'offdays'       => array( 'sun', 'mon' ), // Repeated daily, closed these weekdays.
 				'title'         => __( 'Tokyo Food & Culture Walk', 'travail' ),
 				'description'   => __( 'Wander Shibuya\'s backstreets with a local guide, sampling street food and stepping into a century-old shrine along the way.', 'travail' ),
 				'image'         => 'https://images.unsplash.com/photo-1601042879364-f3947d3f9c16?w=900&h=600&fit=crop&auto=format',
@@ -840,6 +869,7 @@ class Travail_Demo_Importer {
 				'rating'        => '4.9',
 			),
 			'iceland-lights'  => array(
+				'offdays'       => array( 'wed', 'thu' ), // Repeated daily, closed these weekdays.
 				'title'         => __( 'Iceland Northern Lights', 'travail' ),
 				'description'   => __( 'Chase the aurora across Iceland\'s volcanic landscape with an expert guide and hot cocoa to keep warm.', 'travail' ),
 				'image'         => 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=900&h=600&fit=crop&auto=format',
@@ -866,6 +896,7 @@ class Travail_Demo_Importer {
 				'best_seller'   => true,
 			),
 			'deal-maldives'   => array(
+				'offdays'       => array( 'sat', 'sun' ), // Repeated daily, closed these weekdays.
 				'title'          => __( 'Maldives All-Inclusive Escape', 'travail' ),
 				'description'    => __( 'Seven nights in an overwater villa with all meals, snorkeling and sunset cruises included.', 'travail' ),
 				'image'          => 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=900&h=600&fit=crop&auto=format',
@@ -879,6 +910,7 @@ class Travail_Demo_Importer {
 				'duration_night' => '7',
 			),
 			'deal-bali'       => array(
+				'offdays'       => array( 'sun', 'mon' ), // Repeated daily, closed these weekdays.
 				'title'          => __( 'Bali All-Inclusive Getaway', 'travail' ),
 				'description'    => __( 'Five nights across a beach resort and a jungle villa, with daily breakfast and a private driver included.', 'travail' ),
 				'image'          => 'https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=900&h=600&fit=crop&auto=format',
@@ -892,6 +924,7 @@ class Travail_Demo_Importer {
 				'duration_night' => '5',
 			),
 			'deal-iceland'    => array(
+				'offdays'       => array( 'sat', 'sun' ), // Repeated daily, closed these weekdays.
 				'title'          => __( 'Iceland Ring Road Adventure', 'travail' ),
 				'description'    => __( 'Six nights circling the island, with glacier hikes, hot springs and a guided aurora hunt included.', 'travail' ),
 				'image'          => 'https://images.unsplash.com/photo-1516655855035-d5215bcb5604?w=900&h=600&fit=crop&auto=format',
@@ -905,15 +938,918 @@ class Travail_Demo_Importer {
 				'duration_night' => '6',
 			),
 		);
+	}
 
+	/**
+	 * Step: give every imported tour all the sections a Tour Booking Manager tour page can show.
+	 *
+	 * The demo tours above only carry what the homepage cards need, so their single pages had no
+	 * itinerary, FAQ, included/excluded list, extra services, second ticket type, gallery slider,
+	 * reviews and so on. This step fills those in. It runs after the sample step so the sample
+	 * guides exist to be assigned.
+	 *
+	 * It only fills values that are EMPTY, so it is safe to re-run on a site whose tours were edited:
+	 * nothing a site owner typed is replaced. When a section's content is filled here, that section's
+	 * display switch is turned on too (a tour saved in the editor with an empty section has it "off").
+	 *
+	 * @return string
+	 */
+	public static function step_complete_tours() {
+		if ( ! post_type_exists( 'ttbm_tour' ) ) {
+			return __( 'Tour Booking Manager is not active, so tour details were skipped.', 'travail' );
+		}
+
+		self::ensure_feature_terms();
+
+		$map      = self::get_map();
+		$details  = self::demo_tour_details();
+		$demo_ids = array();
+		foreach ( (array) ( isset( $map['tours'] ) ? $map['tours'] : array() ) as $key => $tour_id ) {
+			if ( 'ttbm_tour' === get_post_type( $tour_id ) ) {
+				$demo_ids[ $key ] = (int) $tour_id;
+			}
+		}
+
+		$guides = get_posts(
+			array(
+				'post_type'      => 'ttbm_guide',
+				'post_status'    => 'publish',
+				'posts_per_page' => 10,
+				'orderby'        => 'ID',
+				'order'          => 'ASC',
+				'fields'         => 'ids',
+				'no_found_rows'  => true,
+			)
+		);
+
+		$tours = self::demo_tours();
 		$count = 0;
-		foreach ( $tours as $key => $data ) {
-			if ( self::upsert_demo_tour( $key, $data ) ) {
+		$index = 0;
+		foreach ( $demo_ids as $key => $tour_id ) {
+			if ( empty( $details[ $key ] ) ) {
+				continue;
+			}
+			// The star rating the reviews should add up to (deals have none: 4.8).
+			$details[ $key ]['rating']  = ! empty( $tours[ $key ]['rating'] ) ? (float) $tours[ $key ]['rating'] : 4.8;
+			$details[ $key ]['offdays'] = ! empty( $tours[ $key ]['offdays'] ) ? $tours[ $key ]['offdays'] : array();
+			self::complete_demo_tour( $tour_id, $key, $details[ $key ], $demo_ids, $guides, $index++ );
+			++$count;
+		}
+
+		// The plugin's sample tours already carry their content; fill only the switches/fields they miss.
+		foreach ( (array) ( isset( $map['samples'] ) ? $map['samples'] : array() ) as $post_id ) {
+			if ( 'ttbm_tour' === get_post_type( $post_id ) ) {
+				self::complete_common_tour_fields( (int) $post_id );
 				++$count;
 			}
 		}
 
-		return $count;
+		return sprintf(
+			/* translators: %d: number of tours */
+			__( 'Completed the details of %d tours.', 'travail' ),
+			$count
+		);
+	}
+
+	/**
+	 * Whether a meta value is missing: unset, '' or an array with nothing in it.
+	 *
+	 * @param int    $post_id Post ID.
+	 * @param string $key     Meta key.
+	 * @return bool
+	 */
+	protected static function meta_is_empty( $post_id, $key ) {
+		$value = get_post_meta( $post_id, $key, true );
+		if ( is_array( $value ) ) {
+			return ! array_filter( $value );
+		}
+		return '' === (string) $value;
+	}
+
+	/**
+	 * Set a meta value only when it is still empty.
+	 *
+	 * @param int    $post_id Post ID.
+	 * @param string $key     Meta key.
+	 * @param mixed  $value   Value.
+	 * @return bool True when the value was written.
+	 */
+	protected static function fill_meta( $post_id, $key, $value ) {
+		if ( ! self::meta_is_empty( $post_id, $key ) ) {
+			return false;
+		}
+		update_post_meta( $post_id, $key, $value );
+		return true;
+	}
+
+	/**
+	 * Fill a section's content when empty; switch the section on when its content was filled here,
+	 * or when its switch has never been set.
+	 *
+	 * @param int    $post_id     Post ID.
+	 * @param string $data_key    Meta key holding the section content.
+	 * @param mixed  $value       Content.
+	 * @param string $display_key Meta key of the section's on/off switch.
+	 */
+	protected static function fill_section( $post_id, $data_key, $value, $display_key ) {
+		if ( self::fill_meta( $post_id, $data_key, $value ) ) {
+			update_post_meta( $post_id, $display_key, 'on' );
+			return;
+		}
+		self::fill_meta( $post_id, $display_key, 'on' );
+	}
+
+	/**
+	 * Fields every tour page needs, sample tours included: the photo slider (the plugin treats a
+	 * missing switch as OFF), language and group size.
+	 *
+	 * @param int $tour_id Tour post ID.
+	 */
+	protected static function complete_common_tour_fields( $tour_id ) {
+		$gallery = array_filter( (array) get_post_meta( $tour_id, 'ttbm_gallery_images', true ) );
+		if ( count( $gallery ) > 1 ) {
+			self::fill_meta( $tour_id, 'ttbm_display_slider', 'on' );
+		}
+		self::fill_meta( $tour_id, 'ttbm_travel_language_status', 'on' );
+		self::fill_meta( $tour_id, 'ttbm_travel_language', array( 'en_US' ) );
+		self::fill_meta( $tour_id, 'ttbm_travel_max_people_allow', '20' );
+		self::fill_meta( $tour_id, 'ttbm_display_max_people', 'on' );
+	}
+
+	/**
+	 * Fill in every missing section of one demo tour.
+	 *
+	 * @param int    $tour_id  Tour post ID.
+	 * @param string $key      Demo tour key.
+	 * @param array  $d        Details from demo_tour_details().
+	 * @param array  $demo_ids All demo tours, key => ID (for related tours / gallery).
+	 * @param array  $guides   Guide post IDs on the site.
+	 * @param int    $index    Position of this tour, used to rotate guides.
+	 */
+	protected static function complete_demo_tour( $tour_id, $key, $d, $demo_ids, $guides, $index ) {
+		$post = get_post( $tour_id );
+
+		// --- Gallery + slider: the tour photo, its destination and activity photos, and other demo tours at the same destination. ---
+		$gallery = array_values( array_filter( array_map( 'intval', (array) get_post_meta( $tour_id, 'ttbm_gallery_images', true ) ) ) );
+		if ( count( $gallery ) < 3 ) {
+			$candidates = array( (int) get_post_thumbnail_id( $tour_id ) );
+			$location   = get_the_terms( $tour_id, 'ttbm_tour_location' );
+			$activity   = get_the_terms( $tour_id, 'ttbm_tour_activities' );
+			if ( is_array( $location ) ) {
+				$candidates[] = (int) get_term_meta( $location[0]->term_id, 'travail_term_image_id', true );
+				foreach ( $demo_ids as $other_id ) {
+					if ( $other_id !== $tour_id && has_term( $location[0]->term_id, 'ttbm_tour_location', $other_id ) ) {
+						$candidates[] = (int) get_post_thumbnail_id( $other_id );
+					}
+				}
+			}
+			if ( is_array( $activity ) ) {
+				$candidates[] = (int) get_term_meta( $activity[0]->term_id, 'travail_term_image_id', true );
+			}
+			foreach ( $candidates as $attachment_id ) {
+				if ( $attachment_id && ! in_array( $attachment_id, $gallery, true ) && wp_attachment_is_image( $attachment_id ) ) {
+					$gallery[] = $attachment_id;
+				}
+			}
+			update_post_meta( $tour_id, 'ttbm_gallery_images', $gallery );
+			if ( count( $gallery ) > 1 ) {
+				update_post_meta( $tour_id, 'ttbm_display_slider', 'on' );
+			}
+		}
+
+		// --- Overview / key facts. ---
+		self::fill_meta( $tour_id, 'ttbm_short_description', wp_trim_words( wp_strip_all_tags( $post->post_content ), 30 ) );
+		self::fill_meta( $tour_id, 'ttbm_display_description', 'on' );
+		self::fill_meta( $tour_id, 'ttbm_travel_min_age', $d['min_age'] );
+		self::fill_meta( $tour_id, 'ttbm_display_min_age', 'on' );
+		self::fill_meta( $tour_id, 'ttbm_travel_start_place', $d['start_place'] );
+		self::fill_meta( $tour_id, 'ttbm_display_start_location', 'on' );
+		self::fill_meta( $tour_id, 'ttbm_display_tour_type', 'on' );
+		self::fill_meta( $tour_id, 'ttbm_type', 'general' );
+		self::fill_meta( $tour_id, 'ttbm_travel_language_status', 'on' );
+		self::fill_meta( $tour_id, 'ttbm_travel_language', $d['languages'] );
+		self::fill_meta( $tour_id, 'ttbm_travel_max_people_allow', '20' );
+		self::fill_meta( $tour_id, 'ttbm_display_max_people', 'on' );
+
+		// --- Location map. ---
+		self::fill_meta( $tour_id, 'ttbm_map_latitude', $d['lat'] );
+		self::fill_meta( $tour_id, 'ttbm_map_longitude', $d['lon'] );
+		self::fill_meta( $tour_id, 'ttbm_display_map', 'on' );
+
+		// --- Dates: a tour with no repeated start date (imported by an older version with a fixed
+		// date, or switched to "Repeated" in the editor without one, which leaves it with no bookable
+		// dates) moves to repeated daily from today, never ending, with its two weekly off days. ---
+		if ( ! empty( $d['offdays'] ) && self::meta_is_empty( $tour_id, 'ttbm_travel_repeated_start_date' ) ) {
+			self::set_repeated_daily( $tour_id, $d['offdays'], $d['start_time'] );
+		}
+
+		// --- Times + booking window. ---
+		self::fill_meta( $tour_id, 'ttbm_travel_start_time', $d['start_time'] );
+		self::fill_meta( $tour_id, 'ttbm_travel_end_time', $d['end_time'] );
+		if ( 'fixed' === get_post_meta( $tour_id, 'ttbm_travel_type', true ) ) {
+			self::fill_meta( $tour_id, 'ttbm_travel_reg_end_date', (string) get_post_meta( $tour_id, 'ttbm_travel_start_date', true ) );
+		}
+		self::fill_meta( $tour_id, 'reg_end_time', '23:59' );
+		self::fill_meta( $tour_id, 'ttbm_display_registration', 'on' );
+
+		// --- Tickets: at least two types. Rows a site owner already has are kept; missing types are appended. ---
+		$tickets = get_post_meta( $tour_id, 'ttbm_ticket_type', true );
+		$tickets = is_array( $tickets ) ? array_values( array_filter( $tickets ) ) : array();
+		if ( count( $tickets ) < 2 ) {
+			$have = array();
+			foreach ( $tickets as $row ) {
+				$have[] = isset( $row['ticket_type_name'] ) ? strtolower( $row['ticket_type_name'] ) : '';
+			}
+			$adult_price = ! empty( $tickets[0]['ticket_type_price'] ) ? (float) $tickets[0]['ticket_type_price'] : (float) $d['price'];
+			$adult_sale  = isset( $tickets[0]['sale_price'] ) ? (string) $tickets[0]['sale_price'] : '';
+			foreach ( self::demo_ticket_rows( $adult_price, $adult_sale, ! empty( $d['senior_ticket'] ) ) as $row ) {
+				if ( ! in_array( strtolower( $row['ticket_type_name'] ), $have, true ) ) {
+					$tickets[] = $row;
+				}
+			}
+			foreach ( $tickets as $i => $row ) {
+				if ( empty( $row['ticket_type_icon'] ) ) {
+					$tickets[ $i ]['ticket_type_icon'] = 'mi mi-employee-man-alt';
+				}
+			}
+			update_post_meta( $tour_id, 'ttbm_ticket_type', $tickets );
+		}
+
+		// --- Extra services. ---
+		$extras = array();
+		foreach ( $d['extras'] as $extra ) {
+			$extras[] = array(
+				'service_icon'              => $extra[0],
+				'service_name'              => $extra[1],
+				'service_price'             => $extra[2],
+				'service_sale_price'        => '',
+				'service_qty'               => '100',
+				'service_qty_type'          => 'inputbox',
+				'extra_service_description' => $extra[3],
+			);
+		}
+		self::fill_meta( $tour_id, 'ttbm_extra_service_data', $extras );
+
+		// --- Included / excluded, itinerary, FAQ, why choose us. ---
+		self::fill_section( $tour_id, 'ttbm_service_included_in_price', $d['included'], 'ttbm_display_include_service' );
+		self::fill_section( $tour_id, 'ttbm_service_excluded_in_price', $d['excluded'], 'ttbm_display_exclude_service' );
+
+		$itinerary = array();
+		foreach ( $d['itinerary'] as $step ) {
+			$itinerary[] = array(
+				'ttbm_day_title'   => $step[0],
+				'ttbm_day_content' => '<p>' . $step[1] . '</p>',
+			);
+		}
+		self::fill_section( $tour_id, 'ttbm_daywise_details', $itinerary, 'ttbm_display_schedule' );
+
+		$faq = array();
+		foreach ( array_merge( $d['faq'], self::demo_shared_faq() ) as $item ) {
+			$faq[] = array(
+				'ttbm_faq_title'   => $item[0],
+				'ttbm_faq_content' => $item[1],
+			);
+		}
+		self::fill_section( $tour_id, 'mep_event_faq', $faq, 'ttbm_display_faq' );
+		self::fill_section( $tour_id, 'ttbm_why_choose_us_texts', $d['highlights'], 'ttbm_display_why_choose_us' );
+
+		// --- "Have a question?" box. ---
+		self::fill_meta( $tour_id, 'ttbm_contact_email', get_option( 'admin_email' ) );
+		self::fill_meta( $tour_id, 'ttbm_contact_phone', '+1 555 0100' );
+		self::fill_meta( $tour_id, 'ttbm_contact_text', __( 'Not sure this tour is right for you? Send us a message or give us a call and our travel team will help you plan it.', 'travail' ) );
+		self::fill_meta( $tour_id, 'ttbm_display_get_question', 'on' );
+
+		// --- Activities + rating + badge switches. ---
+		self::fill_meta( $tour_id, 'ttbm_display_activities', 'on' );
+		self::fill_meta( $tour_id, 'ttbm_display_rating', 'on' );
+		self::fill_meta( $tour_id, 'ttbm_display_duration', 'on' );
+		if ( 'on' === get_post_meta( $tour_id, 'ttbm_best_seller', true ) ) {
+			self::fill_meta( $tour_id, 'ttbm_top_picks_deals', array( 'popular' ) );
+			self::fill_meta( $tour_id, 'ttbm_display_top_picks_deals', 'on' );
+		}
+
+		// --- Category + organizer (the booking card's "Organized by" reads the organizer term). ---
+		if ( ! has_term( '', 'ttbm_tour_cat', $tour_id ) ) {
+			$term_id = self::sample_upsert_term( 'ttbm_tour_cat', __( 'Fixed Tour', 'travail' ) );
+			if ( $term_id ) {
+				wp_set_object_terms( $tour_id, array( $term_id ), 'ttbm_tour_cat' );
+			}
+		}
+		if ( ! has_term( '', 'ttbm_tour_org', $tour_id ) ) {
+			$term_id = self::sample_upsert_term( 'ttbm_tour_org', __( 'Travail Tours', 'travail' ) );
+			if ( $term_id ) {
+				wp_set_object_terms( $tour_id, array( $term_id ), 'ttbm_tour_org' );
+			}
+		}
+
+		// --- Tour guides: two of the sample guides, rotated so tours don't all share the same pair. ---
+		if ( count( $guides ) >= 2 ) {
+			$pick = array(
+				(string) $guides[ $index % count( $guides ) ],
+				(string) $guides[ ( $index + 1 ) % count( $guides ) ],
+			);
+			if ( self::fill_meta( $tour_id, 'ttbm_tour_guide', $pick ) ) {
+				update_post_meta( $tour_id, 'ttbm_display_tour_guide', 'on' );
+				self::fill_meta( $tour_id, 'ttbm_guide_style', 'carousel' );
+				self::fill_meta( $tour_id, 'ttbm_guide_image_style', 'squire' );
+				self::fill_meta( $tour_id, 'ttbm_guide_description_style', 'full' );
+			}
+		}
+
+		// --- Related tours: other demo tours sharing the activity first, then the rest. ---
+		$same = array();
+		$rest = array();
+		$activity_terms = wp_get_post_terms( $tour_id, 'ttbm_tour_activities', array( 'fields' => 'ids' ) );
+		foreach ( $demo_ids as $other_key => $other_id ) {
+			if ( $other_id === $tour_id ) {
+				continue;
+			}
+			$other_terms = wp_get_post_terms( $other_id, 'ttbm_tour_activities', array( 'fields' => 'ids' ) );
+			if ( is_array( $activity_terms ) && is_array( $other_terms ) && array_intersect( $activity_terms, $other_terms ) ) {
+				$same[] = (string) $other_id;
+			} else {
+				$rest[] = (string) $other_id;
+			}
+		}
+		$related = array_slice( array_merge( $same, $rest ), 0, 4 );
+		if ( $related ) {
+			self::fill_section( $tour_id, 'ttbm_related_tour', $related, 'ttbm_display_related' );
+		}
+
+		// --- Reviews behind the star rating. ---
+		self::seed_demo_reviews( $tour_id, $index, $d['rating'] );
+	}
+
+	/**
+	 * Make a tour run every day from today, with no end date ("never"), closed on the given weekdays.
+	 * Same fields the tour editor saves for "Repeated Dates" + "Off Days".
+	 *
+	 * @param int    $tour_id    Tour post ID.
+	 * @param array  $offdays    Weekday keys (mon, tue, wed, thu, fri, sat, sun).
+	 * @param string $start_time Start time, H:i.
+	 */
+	protected static function set_repeated_daily( $tour_id, $offdays, $start_time ) {
+		update_post_meta( $tour_id, 'ttbm_travel_type', 'repeated' );
+		update_post_meta( $tour_id, 'ttbm_travel_repeated_start_date', current_time( 'Y-m-d' ) );
+		update_post_meta( $tour_id, 'ttbm_travel_repeated_after', '1' );
+		update_post_meta( $tour_id, 'ttbm_repeat_type', 'continue' );
+		update_post_meta( $tour_id, 'ttbm_travel_repeated_end_date', '' );
+		update_post_meta( $tour_id, 'ttbm_travel_repeated_start_time', $start_time );
+		update_post_meta( $tour_id, 'ttbm_travel_start_time', $start_time );
+		update_post_meta( $tour_id, 'ttbm_enable_off_schedule', 'yes' );
+		update_post_meta( $tour_id, 'mep_ticket_offdays', array_values( $offdays ) );
+		// A fixed booking deadline would close a tour that runs every day.
+		delete_post_meta( $tour_id, 'ttbm_travel_reg_end_date' );
+
+		// Refresh the "next date" the tour lists and search filter on.
+		if ( class_exists( 'TTBM_Function' ) && method_exists( 'TTBM_Function', 'update_upcoming_date_month' ) ) {
+			TTBM_Function::update_upcoming_date_month( $tour_id, 'yes' );
+		}
+	}
+
+	/**
+	 * Adult + Child (+ Senior) ticket rows for a demo tour.
+	 *
+	 * @param float  $adult_price Adult price.
+	 * @param string $adult_sale  Adult sale price, or ''.
+	 * @param bool   $senior      Add a Senior ticket.
+	 * @return array
+	 */
+	protected static function demo_ticket_rows( $adult_price, $adult_sale, $senior ) {
+		$row = function ( $name, $icon, $factor, $qty, $description ) use ( $adult_price, $adult_sale ) {
+			return array(
+				'ticket_type_icon'        => $icon,
+				'ticket_type_name'        => $name,
+				'ticket_type_price'       => (string) round( $adult_price * $factor ),
+				'sale_price'              => '' !== $adult_sale ? (string) round( (float) $adult_sale * $factor ) : '',
+				'ticket_type_qty'         => (string) $qty,
+				'ticket_type_default_qty' => '0',
+				'ticket_type_resv_qty'    => '0',
+				'ticket_type_qty_type'    => 'inputbox',
+				'ticket_type_description' => $description,
+			);
+		};
+		$rows = array(
+			$row( __( 'Adult', 'travail' ), 'mi mi-employee-man-alt', 1, 20, __( 'Ages 12 and over.', 'travail' ) ),
+			$row( __( 'Child', 'travail' ), 'mi mi-child-head', 0.7, 10, __( 'Ages 3 to 11, with an adult.', 'travail' ) ),
+		);
+		if ( $senior ) {
+			$rows[] = $row( __( 'Senior', 'travail' ), 'mi mi-employee-man-alt', 0.85, 10, __( 'Ages 65 and over.', 'travail' ) );
+		}
+		return $rows;
+	}
+
+	/**
+	 * The "What's included" list only shows items that exist as feature terms, so make sure the
+	 * ones the demo tours use are there (with the plugin's icons).
+	 */
+	protected static function ensure_feature_terms() {
+		$features = array(
+			'Accommodation'   => 'mi mi-bed-alt',
+			'Airport Transfer' => 'mi mi-plane-alt',
+			'BBQ Night'       => 'mi mi-grill',
+			'Breakfast'       => 'mi mi-burger-fries',
+			'Flights'         => 'mi mi-plane-alt',
+			'Guide'           => 'mi mi-guide',
+			'Insurance'       => 'mi mi-hand-holding-seeding',
+			'Lunch'           => 'mi mi-bowl-rice',
+			'Meals'           => 'mi mi-burger-glass',
+			'Outing Ticket'   => 'mi mi-ticket',
+			'Transport'       => 'mi mi-bus',
+			'Welcome Drinks'  => 'mi mi-drink-alt',
+		);
+		foreach ( $features as $name => $icon ) {
+			self::sample_upsert_term( 'ttbm_tour_features_list', $name, '', array( 'ttbm_feature_icon' => $icon ) );
+		}
+	}
+
+	/**
+	 * Five sample reviews per demo tour whose average is the tour's star rating (4.7 to 5.0).
+	 * Skipped when the tour already has reviews or the review post type is not registered.
+	 *
+	 * @param int   $tour_id Tour post ID.
+	 * @param int   $index   Tour position, used to vary reviewer names.
+	 * @param float $target  Star rating the five reviews should average.
+	 */
+	protected static function seed_demo_reviews( $tour_id, $index, $target ) {
+		if ( ! post_type_exists( 'ttbm_tour_review' ) ) {
+			return;
+		}
+		$existing = get_posts(
+			array(
+				'post_type'      => 'ttbm_tour_review',
+				'post_status'    => 'any',
+				'fields'         => 'ids',
+				'posts_per_page' => 1,
+				'meta_key'       => 'ttbm_tour_id', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- one-off import.
+				'meta_value'     => $tour_id, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- one-off import.
+				'no_found_rows'  => true,
+			)
+		);
+		if ( $existing ) {
+			return;
+		}
+
+		$halves = max( 0, min( 5, (int) round( ( 5 - $target ) * 10 ) ) ); // 4.9 → one 4.5-star review, 4.7 → three.
+
+		$reviews = array(
+			array( __( 'Best day of our trip', 'travail' ), __( 'Everything was well organized from pickup to drop-off, and our guide clearly loved sharing the place with us. Worth every penny.', 'travail' ) ),
+			array( __( 'Would book again', 'travail' ), __( 'Small group, relaxed pace and plenty of time for photos. The guide knew the best spots and kept it fun for everyone.', 'travail' ) ),
+			array( __( 'Great for families', 'travail' ), __( 'We travelled with two kids and they were looked after the whole time. Clear instructions, friendly staff and no stress.', 'travail' ) ),
+			array( __( 'Exactly as described', 'travail' ), __( 'The itinerary matched what we booked, timings were spot on and the extras were good value. Easy booking too.', 'travail' ) ),
+			array( __( 'A real highlight', 'travail' ), __( 'Stunning views and a guide full of stories. A couple of minutes late at the start, but that did not take anything away from it.', 'travail' ) ),
+		);
+		$names = array( 'Sarah M.', 'James T.', 'Priya K.', 'Daniel O.', 'Emily R.', 'Lucas F.', 'Aiko N.', 'Omar H.' );
+
+		$sum = 0;
+		foreach ( $reviews as $i => $review ) {
+			$rating   = $i >= 5 - $halves ? 4.5 : 5;
+			$sum     += $rating;
+			$days_ago = 60 - ( $i * 12 );
+			$date     = gmdate( 'Y-m-d H:i:s', strtotime( '-' . $days_ago . ' days' ) );
+			$name     = $names[ ( $index + $i ) % count( $names ) ];
+
+			$review_id = wp_insert_post(
+				array(
+					'post_title'    => $review[0],
+					'post_content'  => $review[1],
+					'post_type'     => 'ttbm_tour_review',
+					'post_status'   => 'publish',
+					'post_author'   => 0,
+					'post_date'     => $date,
+					'post_date_gmt' => $date,
+				)
+			);
+			if ( ! $review_id || is_wp_error( $review_id ) ) {
+				continue;
+			}
+			update_post_meta( $review_id, 'ttbm_tour_id', $tour_id );
+			update_post_meta( $review_id, 'ttbm_review_rating_meta', $rating );
+			update_post_meta( $review_id, 'ttbm_tour_review_cust_name', $name );
+			update_post_meta( $review_id, 'ttbm_tour_review_cust_email', strtolower( preg_replace( '/[^a-z]/i', '', $name ) ) . '@example.com' );
+			update_post_meta( $review_id, 'ttbm_tour_review_cust_ID', 0 );
+		}
+
+		$average = round( $sum / count( $reviews ), 1 );
+		update_post_meta( $tour_id, 'ttbm_tour_rating', $average );
+		update_post_meta( $tour_id, 'ttbm_rating_average', $average );
+		update_post_meta( $tour_id, 'ttbm_rating_count', count( $reviews ) );
+	}
+
+	/**
+	 * FAQ entry added to every demo tour (matches the booking card's cancellation line).
+	 *
+	 * @return array
+	 */
+	protected static function demo_shared_faq() {
+		return array(
+			array(
+				__( 'What is the cancellation policy?', 'travail' ),
+				__( 'Cancel up to 24 hours before the start time for a full refund. Cancellations made later than that are not refunded.', 'travail' ),
+			),
+		);
+	}
+
+	/**
+	 * Per-tour content for the demo tours, keyed like create_demo_tours().
+	 *
+	 * extras: [ icon, name, price, description ]. included/excluded: feature term names.
+	 *
+	 * @return array
+	 */
+	protected static function demo_tour_details() {
+		return array(
+			'bali-sunrise'    => array(
+				'price'         => '89',
+				'min_age'       => '8',
+				'start_place'   => __( 'Ubud hotel pickup', 'travail' ),
+				'languages'     => array( 'en_US', 'id_ID' ),
+				'lat'           => '-8.2421',
+				'lon'           => '115.3750',
+				'start_time'    => '03:30',
+				'end_time'      => '09:30',
+				'senior_ticket' => true,
+				'included'      => array( 'Transport', 'Guide', 'Breakfast', 'Welcome Drinks' ),
+				'excluded'      => array( 'Lunch', 'Insurance', 'Airport Transfer' ),
+				'extras'        => array(
+					array( 'mi mi-camera-retro', __( 'Drone photo package', 'travail' ), '25', __( 'Aerial photos and a short video of the crater at sunrise, sent the same day.', 'travail' ) ),
+					array( 'mi mi-coffee-heart', __( 'Luwak coffee tasting', 'travail' ), '12', __( 'A stop at a coffee plantation on the way back to taste Bali\'s famous coffees.', 'travail' ) ),
+					array( 'mi mi-drink-alt', __( 'Hot spring entry', 'travail' ), '10', __( 'Entry to the Toya Devasya natural hot springs after the jeep ride.', 'travail' ) ),
+				),
+				'itinerary'     => array(
+					array( __( '03:30 — Hotel pickup', 'travail' ), __( 'Your driver collects you from your Ubud hotel and drives you to the jeep base at Kintamani.', 'travail' ) ),
+					array( __( '04:45 — Jeep ride up Mount Batur', 'travail' ), __( 'Climb the lava fields in a vintage 4x4 to the black-sand viewpoint above the crater lake.', 'travail' ) ),
+					array( __( '05:45 — Sunrise and breakfast', 'travail' ), __( 'Watch the sun come up over Mount Agung with a hot drink and a breakfast cooked on volcanic steam.', 'travail' ) ),
+					array( __( '07:30 — Rice terraces and hot springs', 'travail' ), __( 'Drive back down past rice terraces, with an optional soak in the natural hot springs.', 'travail' ) ),
+					array( __( '09:30 — Drop-off', 'travail' ), __( 'Return to your hotel in Ubud in time for a late morning swim.', 'travail' ) ),
+				),
+				'faq'           => array(
+					array( __( 'How early is the pickup?', 'travail' ), __( 'Around 03:30 from Ubud. Hotels further away are collected earlier; we confirm the exact time the day before.', 'travail' ) ),
+					array( __( 'Is the jeep ride bumpy?', 'travail' ), __( 'Yes, parts of the lava track are rough. It is not recommended for travellers who are pregnant or have back problems.', 'travail' ) ),
+					array( __( 'What should I wear?', 'travail' ), __( 'Warm layers. It can be around 10°C at the top before sunrise, even when the coast is hot.', 'travail' ) ),
+				),
+				'highlights'    => array(
+					__( 'Sunrise over Mount Agung from the Batur lava fields', 'travail' ),
+					__( 'Breakfast cooked on volcanic steam', 'travail' ),
+					__( 'Small groups of up to six per jeep', 'travail' ),
+				),
+			),
+			'dubai-safari'    => array(
+				'price'         => '120',
+				'min_age'       => '3',
+				'start_place'   => __( 'Dubai hotel pickup', 'travail' ),
+				'languages'     => array( 'en_US', 'ar' ),
+				'lat'           => '24.9857',
+				'lon'           => '55.6911',
+				'start_time'    => '15:00',
+				'end_time'      => '23:00',
+				'senior_ticket' => true,
+				'included'      => array( 'Transport', 'Guide', 'BBQ Night', 'Welcome Drinks' ),
+				'excluded'      => array( 'Insurance', 'Airport Transfer', 'Accommodation' ),
+				'extras'        => array(
+					array( 'mi mi-bus', __( 'Quad bike (30 min)', 'travail' ), '45', __( 'Ride your own quad bike across the dunes with an instructor.', 'travail' ) ),
+					array( 'mi mi-camera-retro', __( 'Falcon photo session', 'travail' ), '15', __( 'Hold a trained falcon and take home the photos.', 'travail' ) ),
+					array( 'mi mi-ticket', __( 'VIP front-row seating', 'travail' ), '20', __( 'Reserved front-row majlis seats for the evening show.', 'travail' ) ),
+				),
+				'itinerary'     => array(
+					array( __( '15:00 — Pickup by 4x4', 'travail' ), __( 'A Land Cruiser collects you from your Dubai hotel and heads to the Lahbab red dunes.', 'travail' ) ),
+					array( __( '16:30 — Dune bashing', 'travail' ), __( 'Thirty minutes of dune driving with an expert desert driver, then a stop for sandboarding.', 'travail' ) ),
+					array( __( '18:00 — Sunset camel ride', 'travail' ), __( 'A short camel ride and photo stop as the sun sets over the desert.', 'travail' ) ),
+					array( __( '19:00 — Camp dinner and shows', 'travail' ), __( 'Barbecue buffet at a Bedouin-style camp with tanoura and fire shows.', 'travail' ) ),
+					array( __( '23:00 — Return to hotel', 'travail' ), __( 'Drive back to the city and drop-off at your hotel.', 'travail' ) ),
+				),
+				'faq'           => array(
+					array( __( 'Is dune bashing safe for children?', 'travail' ), __( 'Children aged 3 and over can join with a child seat. If you prefer, ask the driver for a gentler ride.', 'travail' ) ),
+					array( __( 'Are vegetarian meals available?', 'travail' ), __( 'Yes, the buffet always has vegetarian and vegan dishes. Tell us about other diets when you book.', 'travail' ) ),
+					array( __( 'Is alcohol served at the camp?', 'travail' ), __( 'Soft drinks, water, tea and coffee are included. Alcohol is available to buy at the camp bar.', 'travail' ) ),
+				),
+				'highlights'    => array(
+					__( 'Dune bashing on the Lahbab red dunes', 'travail' ),
+					__( 'Barbecue dinner under the stars', 'travail' ),
+					__( 'Hotel pickup and drop-off included', 'travail' ),
+				),
+			),
+			'paris-eiffel'    => array(
+				'price'         => '85',
+				'min_age'       => '0',
+				'start_place'   => __( 'Eiffel Tower, Champ de Mars', 'travail' ),
+				'languages'     => array( 'en_US', 'fr_FR' ),
+				'lat'           => '48.8584',
+				'lon'           => '2.2945',
+				'start_time'    => '17:00',
+				'end_time'      => '21:00',
+				'senior_ticket' => true,
+				'included'      => array( 'Guide', 'Outing Ticket', 'Welcome Drinks' ),
+				'excluded'      => array( 'Transport', 'Meals', 'Insurance' ),
+				'extras'        => array(
+					array( 'mi mi-ticket', __( 'Summit access', 'travail' ), '30', __( 'Go up to the very top of the tower, 276 m above the city.', 'travail' ) ),
+					array( 'mi mi-drink-alt', __( 'Champagne on the cruise', 'travail' ), '18', __( 'A glass of champagne served on board the Seine cruise.', 'travail' ) ),
+					array( 'mi mi-camera-retro', __( 'Photo package', 'travail' ), '20', __( 'Professional photos of your group at the Trocadéro viewpoint.', 'travail' ) ),
+				),
+				'itinerary'     => array(
+					array( __( '17:00 — Meet at the Eiffel Tower', 'travail' ), __( 'Meet your guide at the south pillar and skip the ticket line.', 'travail' ) ),
+					array( __( '17:15 — Second floor at golden hour', 'travail' ), __( 'Ride the lift to the second floor and take in the view over the Seine and Montmartre.', 'travail' ) ),
+					array( __( '18:45 — Walk to the river', 'travail' ), __( 'A short walk down to the Port de la Bourdonnais pier.', 'travail' ) ),
+					array( __( '19:30 — Seine river cruise', 'travail' ), __( 'One-hour cruise past the Louvre, Notre-Dame and the Musée d\'Orsay as the lights come on.', 'travail' ) ),
+					array( __( '21:00 — Tour ends', 'travail' ), __( 'Finish at the pier, right next to the sparkling tower.', 'travail' ) ),
+				),
+				'faq'           => array(
+					array( __( 'Do we skip the line?', 'travail' ), __( 'Yes, your guide has timed entry tickets, so you skip the ticket queue. Security checks still apply to everyone.', 'travail' ) ),
+					array( __( 'Is the tour wheelchair accessible?', 'travail' ), __( 'The tower lifts and the cruise boat are accessible. Let us know when booking so we can plan the route.', 'travail' ) ),
+					array( __( 'Can I bring a stroller?', 'travail' ), __( 'Folding strollers are fine. Large strollers may need to be left at the tower\'s stroller park.', 'travail' ) ),
+				),
+				'highlights'    => array(
+					__( 'Skip-the-line Eiffel Tower entry', 'travail' ),
+					__( 'Seine cruise as the city lights up', 'travail' ),
+					__( 'Live guide in English and French', 'travail' ),
+				),
+			),
+			'swiss-hiking'    => array(
+				'price'         => '149',
+				'min_age'       => '10',
+				'start_place'   => __( 'Grindelwald station', 'travail' ),
+				'languages'     => array( 'en_US', 'de_DE' ),
+				'lat'           => '46.6242',
+				'lon'           => '8.0414',
+				'start_time'    => '08:00',
+				'end_time'      => '16:00',
+				'senior_ticket' => true,
+				'included'      => array( 'Guide', 'Lunch', 'Outing Ticket', 'Insurance' ),
+				'excluded'      => array( 'Accommodation', 'Airport Transfer', 'Breakfast' ),
+				'extras'        => array(
+					array( 'mi mi-guide', __( 'Trekking pole rental', 'travail' ), '8', __( 'A pair of adjustable trekking poles for the day.', 'travail' ) ),
+					array( 'mi mi-ticket', __( 'First Cliff Walk', 'travail' ), '15', __( 'Add the cliff walk and its viewing platform at the top station.', 'travail' ) ),
+					array( 'mi mi-bus', __( 'Interlaken transfer', 'travail' ), '20', __( 'Return train tickets between Interlaken and Grindelwald.', 'travail' ) ),
+				),
+				'itinerary'     => array(
+					array( __( '08:00 — Gondola to First', 'travail' ), __( 'Meet at Grindelwald station and ride the gondola up to First at 2,168 m.', 'travail' ) ),
+					array( __( '09:00 — Hike to Bachalpsee', 'travail' ), __( 'An easy climb to the Bachalpsee lake, with the Eiger, Mönch and Jungfrau reflected in it.', 'travail' ) ),
+					array( __( '12:00 — Lunch at a mountain hut', 'travail' ), __( 'Swiss rösti and local cheese at a family-run hut.', 'travail' ) ),
+					array( __( '13:30 — Descent via Bort', 'travail' ), __( 'Walk down through alpine meadows to Bort, then take the gondola back to the village.', 'travail' ) ),
+					array( __( '16:00 — Back in Grindelwald', 'travail' ), __( 'The tour ends in the village centre.', 'travail' ) ),
+				),
+				'faq'           => array(
+					array( __( 'How hard is the hike?', 'travail' ), __( 'Moderate: about 12 km and 500 m of climbing on good paths. You should be comfortable walking for 5 hours.', 'travail' ) ),
+					array( __( 'What happens if the weather is bad?', 'travail' ), __( 'If the guide decides the route is unsafe, we move you to another date or give you a full refund.', 'travail' ) ),
+					array( __( 'What should I bring?', 'travail' ), __( 'Hiking boots, a rain jacket, sun cream, a hat and at least one litre of water.', 'travail' ) ),
+				),
+				'highlights'    => array(
+					__( 'Views of the Eiger, Mönch and Jungfrau', 'travail' ),
+					__( 'Certified mountain guide', 'travail' ),
+					__( 'Traditional lunch at a mountain hut', 'travail' ),
+				),
+			),
+			'santorini-sail'  => array(
+				'price'         => '119',
+				'min_age'       => '0',
+				'start_place'   => __( 'Ammoudi Bay, Oia', 'travail' ),
+				'languages'     => array( 'en_US', 'el' ),
+				'lat'           => '36.4618',
+				'lon'           => '25.3753',
+				'start_time'    => '15:30',
+				'end_time'      => '20:30',
+				'senior_ticket' => false,
+				'included'      => array( 'Meals', 'Welcome Drinks', 'Guide', 'Transport' ),
+				'excluded'      => array( 'Accommodation', 'Airport Transfer', 'Insurance' ),
+				'extras'        => array(
+					array( 'mi mi-drink-alt', __( 'Premium wine pairing', 'travail' ), '25', __( 'Three Santorini wines chosen to go with the mezze.', 'travail' ) ),
+					array( 'mi mi-camera-retro', __( 'Sunset photo shoot', 'travail' ), '35', __( 'A photographer on board for 30 minutes of sunset photos.', 'travail' ) ),
+				),
+				'itinerary'     => array(
+					array( __( '15:30 — Board at Ammoudi Bay', 'travail' ), __( 'Board the catamaran below Oia and meet the crew.', 'travail' ) ),
+					array( __( '16:30 — Red Beach and swim stop', 'travail' ), __( 'Sail along the caldera to the Red Beach for a swim and snorkel.', 'travail' ) ),
+					array( __( '17:30 — Hot springs', 'travail' ), __( 'Swim in the warm volcanic springs near Nea Kameni.', 'travail' ) ),
+					array( __( '18:30 — Dinner on board', 'travail' ), __( 'A freshly cooked Greek dinner with local wine.', 'travail' ) ),
+					array( __( '20:00 — Sunset at Oia', 'travail' ), __( 'Watch the sun go down from the water before sailing back to the harbour.', 'travail' ) ),
+				),
+				'faq'           => array(
+					array( __( 'Is there a toilet on board?', 'travail' ), __( 'Yes, every catamaran has a toilet and a shower for after your swim.', 'travail' ) ),
+					array( __( 'Is hotel transfer included?', 'travail' ), __( 'Yes, a shared minibus collects you from hotels anywhere on the island.', 'travail' ) ),
+					array( __( 'What if the sea is rough?', 'travail' ), __( 'If the port authority cancels sailings, you can choose another date or a full refund.', 'travail' ) ),
+				),
+				'highlights'    => array(
+					__( 'Sunset from the water at Oia', 'travail' ),
+					__( 'Swim stops at the Red Beach and hot springs', 'travail' ),
+					__( 'Dinner and local wine on board', 'travail' ),
+				),
+			),
+			'tokyo-food-walk' => array(
+				'price'         => '75',
+				'min_age'       => '6',
+				'start_place'   => __( 'Hachiko statue, Shibuya', 'travail' ),
+				'languages'     => array( 'en_US', 'ja' ),
+				'lat'           => '35.6595',
+				'lon'           => '139.7005',
+				'start_time'    => '17:30',
+				'end_time'      => '22:30',
+				'senior_ticket' => true,
+				'included'      => array( 'Guide', 'Meals', 'Welcome Drinks' ),
+				'excluded'      => array( 'Transport', 'Accommodation', 'Insurance' ),
+				'extras'        => array(
+					array( 'mi mi-drink-alt', __( 'Sake tasting flight', 'travail' ), '18', __( 'Taste three regional sakes with a sommelier.', 'travail' ) ),
+					array( 'mi mi-ticket', __( 'Shibuya Sky ticket', 'travail' ), '20', __( 'Entry to the Shibuya Sky rooftop after the walk.', 'travail' ) ),
+					array( 'mi mi-camera-retro', __( 'Photo package', 'travail' ), '15', __( 'Photos of your evening, sent the next day.', 'travail' ) ),
+				),
+				'itinerary'     => array(
+					array( __( '17:30 — Meet at Hachiko', 'travail' ), __( 'Meet your guide at the Hachiko statue and cross the famous Shibuya scramble.', 'travail' ) ),
+					array( __( '18:00 — Nonbei Yokocho', 'travail' ), __( 'Yakitori and a drink in "Drunkard\'s Alley", a lane of tiny bars.', 'travail' ) ),
+					array( __( '19:15 — Konno Hachimangu shrine', 'travail' ), __( 'Visit a quiet shrine that has stood here for more than 900 years.', 'travail' ) ),
+					array( __( '20:00 — Ramen and gyoza', 'travail' ), __( 'A local ramen counter, then gyoza at a family-run spot.', 'travail' ) ),
+					array( __( '21:30 — Dessert', 'travail' ), __( 'Finish with taiyaki or matcha sweets before the tour ends near the station.', 'travail' ) ),
+				),
+				'faq'           => array(
+					array( __( 'How much food is included?', 'travail' ), __( 'Six tastings, which add up to a full dinner. Come hungry.', 'travail' ) ),
+					array( __( 'Can you cater for allergies?', 'travail' ), __( 'Vegetarian and most allergies can be catered for if you tell us when you book. Gluten-free is harder in Japan.', 'travail' ) ),
+					array( __( 'How far do we walk?', 'travail' ), __( 'About 3 km at an easy pace, with breaks at every stop.', 'travail' ) ),
+				),
+				'highlights'    => array(
+					__( 'Six tastings in Shibuya\'s backstreets', 'travail' ),
+					__( 'A 900-year-old shrine away from the crowds', 'travail' ),
+					__( 'Local guide who grew up in Tokyo', 'travail' ),
+				),
+			),
+			'iceland-lights'  => array(
+				'price'         => '199',
+				'min_age'       => '6',
+				'start_place'   => __( 'Reykjavik bus stop pickup', 'travail' ),
+				'languages'     => array( 'en_US', 'is_IS' ),
+				'lat'           => '64.1466',
+				'lon'           => '-21.9426',
+				'start_time'    => '19:00',
+				'end_time'      => '01:00',
+				'senior_ticket' => true,
+				'included'      => array( 'Transport', 'Guide', 'Welcome Drinks' ),
+				'excluded'      => array( 'Meals', 'Accommodation', 'Insurance' ),
+				'extras'        => array(
+					array( 'mi mi-camera-retro', __( 'Aurora photos', 'travail' ), '30', __( 'Your guide photographs you under the lights with a professional camera.', 'travail' ) ),
+					array( 'mi mi-guide', __( 'Thermal suit rental', 'travail' ), '15', __( 'A warm insulated overall to wear over your clothes.', 'travail' ) ),
+					array( 'mi mi-burger-glass', __( 'Lamb soup dinner', 'travail' ), '20', __( 'Traditional Icelandic lamb soup at a countryside stop.', 'travail' ) ),
+				),
+				'itinerary'     => array(
+					array( __( '19:00 — Pickup in Reykjavik', 'travail' ), __( 'Your guide picks you up at your nearest bus stop.', 'travail' ) ),
+					array( __( '20:00 — Drive away from city lights', 'travail' ), __( 'Head out to the dark countryside, choosing the spot with the clearest skies.', 'travail' ) ),
+					array( __( '21:00 — Aurora hunt', 'travail' ), __( 'Wait for the northern lights with hot cocoa and tips for photographing them.', 'travail' ) ),
+					array( __( '01:00 — Return to Reykjavik', 'travail' ), __( 'Drive back to the city and drop-off at your bus stop.', 'travail' ) ),
+				),
+				'faq'           => array(
+					array( __( 'What if we don\'t see the northern lights?', 'travail' ), __( 'If the aurora doesn\'t show, you can join another night for free.', 'travail' ) ),
+					array( __( 'When is the best season?', 'travail' ), __( 'From September to April, when the nights are long and dark.', 'travail' ) ),
+					array( __( 'How cold does it get?', 'travail' ), __( 'It can drop to -10°C at night. Wear warm layers, a hat, gloves and boots.', 'travail' ) ),
+				),
+				'highlights'    => array(
+					__( 'Free second night if the aurora doesn\'t appear', 'travail' ),
+					__( 'Guide who reads the forecast to find clear skies', 'travail' ),
+					__( 'Hot cocoa to keep warm', 'travail' ),
+				),
+			),
+			'patagonia'       => array(
+				'price'         => '1290',
+				'min_age'       => '12',
+				'start_place'   => __( 'El Calafate airport', 'travail' ),
+				'languages'     => array( 'en_US', 'es_ES' ),
+				'lat'           => '-49.3315',
+				'lon'           => '-72.8863',
+				'start_time'    => '10:00',
+				'end_time'      => '12:00',
+				'senior_ticket' => false,
+				'included'      => array( 'Accommodation', 'Breakfast', 'Guide', 'Transport', 'Airport Transfer' ),
+				'excluded'      => array( 'Flights', 'Insurance', 'Lunch' ),
+				'extras'        => array(
+					array( 'mi mi-guide', __( 'Glacier ice trek', 'travail' ), '180', __( 'Walk on the Perito Moreno glacier with crampons and a glacier guide.', 'travail' ) ),
+					array( 'mi mi-bed-alt', __( 'Private room upgrade', 'travail' ), '320', __( 'A private room in every hotel instead of a shared twin.', 'travail' ) ),
+					array( 'mi mi-drink-alt', __( 'Malbec tasting dinner', 'travail' ), '60', __( 'An Argentine steak dinner with three Malbec wines.', 'travail' ) ),
+				),
+				'itinerary'     => array(
+					array( __( 'Day 1: Arrive in El Calafate', 'travail' ), __( 'Airport pickup and welcome briefing at your lakeside hotel.', 'travail' ) ),
+					array( __( 'Day 2: Perito Moreno glacier', 'travail' ), __( 'Walk the balconies facing the glacier and watch ice crash into the lake.', 'travail' ) ),
+					array( __( 'Day 3: Drive to El Chaltén', 'travail' ), __( 'Cross the steppe to the trekking capital of Argentina, stopping for photos of Mount Fitz Roy.', 'travail' ) ),
+					array( __( 'Day 4: Laguna de los Tres', 'travail' ), __( 'A full-day hike to the lake at the foot of Fitz Roy.', 'travail' ) ),
+					array( __( 'Day 5: Laguna Torre', 'travail' ), __( 'A gentler hike to the glacier lake below Cerro Torre.', 'travail' ) ),
+					array( __( 'Day 6: Cross into Chile', 'travail' ), __( 'Travel to Puerto Natales, gateway to Torres del Paine.', 'travail' ) ),
+					array( __( 'Day 7: Torres del Paine', 'travail' ), __( 'Hike to the base of the granite towers.', 'travail' ) ),
+					array( __( 'Day 8: Departure', 'travail' ), __( 'Transfer to Puerto Natales airport for your flight home.', 'travail' ) ),
+				),
+				'faq'           => array(
+					array( __( 'How fit do I need to be?', 'travail' ), __( 'You should be able to hike 6 to 8 hours a day on mountain trails. Each hike has a shorter option.', 'travail' ) ),
+					array( __( 'Are flights included?', 'travail' ), __( 'International flights are not included. All transfers inside Patagonia are.', 'travail' ) ),
+					array( __( 'Where do we stay?', 'travail' ), __( 'Comfortable 3-star hotels and lodges, in twin rooms. A private room is available as an extra.', 'travail' ) ),
+				),
+				'highlights'    => array(
+					__( 'Perito Moreno, Fitz Roy and Torres del Paine in one trip', 'travail' ),
+					__( 'Small group of up to 12 travellers', 'travail' ),
+					__( 'Every transfer and hotel arranged for you', 'travail' ),
+				),
+			),
+			'deal-maldives'   => array(
+				'price'         => '2890',
+				'min_age'       => '0',
+				'start_place'   => __( 'Velana International Airport, Malé', 'travail' ),
+				'languages'     => array( 'en_US' ),
+				'lat'           => '4.1755',
+				'lon'           => '73.5093',
+				'start_time'    => '14:00',
+				'end_time'      => '12:00',
+				'senior_ticket' => false,
+				'included'      => array( 'Accommodation', 'Meals', 'Airport Transfer', 'Welcome Drinks' ),
+				'excluded'      => array( 'Flights', 'Insurance', 'Guide' ),
+				'extras'        => array(
+					array( 'mi mi-guide', __( 'Scuba dive', 'travail' ), '120', __( 'A guided reef dive with all equipment. Beginners welcome.', 'travail' ) ),
+					array( 'mi mi-drink-alt', __( 'Sandbank dinner', 'travail' ), '250', __( 'A private dinner for two on a sandbank at sunset.', 'travail' ) ),
+					array( 'mi mi-plane-alt', __( 'Seaplane transfer upgrade', 'travail' ), '400', __( 'Arrive by seaplane instead of speedboat.', 'travail' ) ),
+				),
+				'itinerary'     => array(
+					array( __( 'Day 1: Arrival', 'travail' ), __( 'Speedboat from Malé to the resort, welcome drink and check in to your overwater villa.', 'travail' ) ),
+					array( __( 'Days 2–3: Reef and lagoon', 'travail' ), __( 'Guided snorkelling on the house reef and time to relax in the lagoon.', 'travail' ) ),
+					array( __( 'Day 4: Island hopping', 'travail' ), __( 'Visit a local island and a sandbank by boat.', 'travail' ) ),
+					array( __( 'Days 5–6: Sunset cruise', 'travail' ), __( 'Free days at the resort, with a sunset dolphin cruise.', 'travail' ) ),
+					array( __( 'Day 7: Spa day', 'travail' ), __( 'A spa treatment and a final dinner on the beach.', 'travail' ) ),
+					array( __( 'Day 8: Departure', 'travail' ), __( 'Check out and speedboat back to Malé airport.', 'travail' ) ),
+				),
+				'faq'           => array(
+					array( __( 'What does all-inclusive cover?', 'travail' ), __( 'Breakfast, lunch, dinner, snacks, soft drinks and house wine. Premium drinks cost extra.', 'travail' ) ),
+					array( __( 'Is the villa over the water?', 'travail' ), __( 'Yes, every booking is in an overwater villa with steps down to the lagoon.', 'travail' ) ),
+					array( __( 'Do I need a visa?', 'travail' ), __( 'Most nationalities get a free 30-day visa when they arrive. Check the rules for your passport before you travel.', 'travail' ) ),
+				),
+				'highlights'    => array(
+					__( 'Seven nights in an overwater villa', 'travail' ),
+					__( 'All meals and drinks included', 'travail' ),
+					__( 'Snorkelling and a sunset cruise included', 'travail' ),
+				),
+			),
+			'deal-bali'       => array(
+				'price'         => '1450',
+				'min_age'       => '0',
+				'start_place'   => __( 'Ngurah Rai Airport, Denpasar', 'travail' ),
+				'languages'     => array( 'en_US', 'id_ID' ),
+				'lat'           => '-8.5069',
+				'lon'           => '115.2625',
+				'start_time'    => '14:00',
+				'end_time'      => '12:00',
+				'senior_ticket' => false,
+				'included'      => array( 'Accommodation', 'Breakfast', 'Transport', 'Airport Transfer' ),
+				'excluded'      => array( 'Flights', 'Lunch', 'Insurance' ),
+				'extras'        => array(
+					array( 'mi mi-guide', __( 'Balinese cooking class', 'travail' ), '45', __( 'Market visit and a half-day cooking class in Ubud.', 'travail' ) ),
+					array( 'mi mi-hand-holding-seeding', __( 'Spa package', 'travail' ), '80', __( 'A two-hour Balinese massage and flower bath.', 'travail' ) ),
+					array( 'mi mi-ticket', __( 'Nusa Penida day trip', 'travail' ), '95', __( 'Fast boat to Nusa Penida with Kelingking Beach and snorkelling.', 'travail' ) ),
+				),
+				'itinerary'     => array(
+					array( __( 'Day 1: Arrive in Seminyak', 'travail' ), __( 'Airport pickup and check in to your beach resort.', 'travail' ) ),
+					array( __( 'Day 2: Beach day', 'travail' ), __( 'Free day on the beach, ending with sunset at Tanah Lot temple.', 'travail' ) ),
+					array( __( 'Day 3: Move to Ubud', 'travail' ), __( 'Your driver takes you to a jungle villa, via the Tegallalang rice terraces.', 'travail' ) ),
+					array( __( 'Day 4: Temples and waterfalls', 'travail' ), __( 'Tirta Empul water temple and Tegenungan waterfall with your private driver.', 'travail' ) ),
+					array( __( 'Day 5: Free day in Ubud', 'travail' ), __( 'Explore the Monkey Forest, the market and the cafés.', 'travail' ) ),
+					array( __( 'Day 6: Departure', 'travail' ), __( 'Transfer to the airport for your flight home.', 'travail' ) ),
+				),
+				'faq'           => array(
+					array( __( 'Is the driver available every day?', 'travail' ), __( 'Your private driver is available for up to 8 hours a day on days 3 and 4, and for every transfer.', 'travail' ) ),
+					array( __( 'Can I change the hotels?', 'travail' ), __( 'Yes, ask when you book and we will quote for the hotels you prefer.', 'travail' ) ),
+					array( __( 'Is it suitable for families?', 'travail' ), __( 'Yes, both hotels have family rooms and pools. Children travel at the child price.', 'travail' ) ),
+				),
+				'highlights'    => array(
+					__( 'Beach resort and jungle villa in one trip', 'travail' ),
+					__( 'Private driver for sightseeing days', 'travail' ),
+					__( 'Daily breakfast included', 'travail' ),
+				),
+			),
+			'deal-iceland'    => array(
+				'price'         => '3200',
+				'min_age'       => '8',
+				'start_place'   => __( 'Keflavík International Airport', 'travail' ),
+				'languages'     => array( 'en_US', 'is_IS' ),
+				'lat'           => '64.1466',
+				'lon'           => '-21.9426',
+				'start_time'    => '10:00',
+				'end_time'      => '16:00',
+				'senior_ticket' => false,
+				'included'      => array( 'Accommodation', 'Breakfast', 'Guide', 'Transport', 'Airport Transfer' ),
+				'excluded'      => array( 'Flights', 'Insurance', 'Meals' ),
+				'extras'        => array(
+					array( 'mi mi-ticket', __( 'Blue Lagoon entry', 'travail' ), '90', __( 'Comfort entry to the Blue Lagoon with towel and a drink.', 'travail' ) ),
+					array( 'mi mi-guide', __( 'Ice cave tour', 'travail' ), '150', __( 'Explore a natural blue ice cave under Vatnajökull (winter only).', 'travail' ) ),
+					array( 'mi mi-bus', __( 'Whale watching', 'travail' ), '85', __( 'A three-hour whale watching trip from Húsavík.', 'travail' ) ),
+				),
+				'itinerary'     => array(
+					array( __( 'Day 1: Reykjavik', 'travail' ), __( 'Airport pickup, check in and an evening walk around the old harbour.', 'travail' ) ),
+					array( __( 'Day 2: Golden Circle', 'travail' ), __( 'Þingvellir, the Geysir hot springs and Gullfoss waterfall.', 'travail' ) ),
+					array( __( 'Day 3: South coast', 'travail' ), __( 'Seljalandsfoss and Skógafoss waterfalls and the black sands of Reynisfjara.', 'travail' ) ),
+					array( __( 'Day 4: Glacier lagoon', 'travail' ), __( 'A glacier hike, then icebergs at Jökulsárlón and Diamond Beach.', 'travail' ) ),
+					array( __( 'Day 5: East fjords', 'travail' ), __( 'Drive the winding fjords to Egilsstaðir.', 'travail' ) ),
+					array( __( 'Day 6: Lake Mývatn', 'travail' ), __( 'Volcanic craters, Dettifoss and the Mývatn nature baths.', 'travail' ) ),
+					array( __( 'Day 7: Return to Reykjavik', 'travail' ), __( 'Drive back west via Akureyri and transfer to the airport.', 'travail' ) ),
+				),
+				'faq'           => array(
+					array( __( 'Is the Ring Road open in winter?', 'travail' ), __( 'Yes, but weather can close roads. Your guide may change the order of the days to keep you safe.', 'travail' ) ),
+					array( __( 'Do we see the northern lights?', 'travail' ), __( 'From September to April there is a guided aurora hunt on clear nights. Sightings are never guaranteed.', 'travail' ) ),
+					array( __( 'What kind of hotels are used?', 'travail' ), __( 'Comfortable country hotels and guesthouses with private bathrooms.', 'travail' ) ),
+				),
+				'highlights'    => array(
+					__( 'The whole Ring Road in seven days', 'travail' ),
+					__( 'Glacier hike and hot springs included', 'travail' ),
+					__( 'Expert local guide and driver', 'travail' ),
+				),
+			),
+		);
 	}
 
 	/**
