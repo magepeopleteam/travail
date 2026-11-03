@@ -1227,7 +1227,8 @@
                     "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
                     "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
                     "Watch as Gerry McCambridge performs comedy and magic"
-                ]
+                ],
+                "ttbm_display_slider": "on"
             },
             "gallery": [
                 {
@@ -1512,18 +1513,27 @@
                 "ttbm_travel_duration_type": "day",
                 "ttbm_travel_end_time": "16:30",
                 "ttbm_travel_min_age": "5",
-                "ttbm_travel_reg_end_date": "2026-12-03",
-                "ttbm_travel_start_date": "2026-12-02",
                 "ttbm_travel_start_place": "Naple",
                 "ttbm_travel_start_price": "180",
                 "ttbm_travel_start_time": "08:30",
-                "ttbm_travel_type": "fixed",
+                "ttbm_travel_type": "repeated",
                 "ttbm_type": "general",
                 "ttbm_upcoming_date": "2026-12-02",
                 "ttbm_why_choose_us_texts": [
                     "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
                     "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
                     "Watch as Gerry McCambridge performs comedy and magic"
+                ],
+                "ttbm_display_slider": "on",
+                "ttbm_travel_repeated_after": "1",
+                "ttbm_repeat_type": "continue",
+                "ttbm_travel_repeated_start_date": "2026-11-02",
+                "ttbm_travel_repeated_end_date": "",
+                "ttbm_travel_repeated_start_time": "08:30",
+                "ttbm_enable_off_schedule": "yes",
+                "mep_ticket_offdays": [
+                    "sun",
+                    "mon"
                 ]
             },
             "gallery": [
@@ -1813,9 +1823,9 @@
                 "ttbm_travel_duration_type": "day",
                 "ttbm_travel_end_time": "15:00",
                 "ttbm_travel_min_age": "5",
-                "ttbm_travel_repeated_after": "4",
-                "ttbm_travel_repeated_end_date": "2027-10-28",
-                "ttbm_travel_repeated_start_date": "2026-11-12",
+                "ttbm_travel_repeated_after": "1",
+                "ttbm_travel_repeated_end_date": "",
+                "ttbm_travel_repeated_start_date": "2026-11-02",
                 "ttbm_travel_repeated_start_time": "07:00",
                 "ttbm_travel_start_place": "",
                 "ttbm_travel_start_price": "",
@@ -1827,6 +1837,13 @@
                     "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
                     "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
                     "Watch as Gerry McCambridge performs comedy and magic"
+                ],
+                "ttbm_display_slider": "on",
+                "ttbm_repeat_type": "continue",
+                "ttbm_enable_off_schedule": "yes",
+                "mep_ticket_offdays": [
+                    "tue",
+                    "wed"
                 ]
             },
             "gallery": [
@@ -2112,9 +2129,9 @@
                 "ttbm_travel_duration_type": "day",
                 "ttbm_travel_end_time": "18:00",
                 "ttbm_travel_min_age": "12",
-                "ttbm_travel_repeated_after": "7",
-                "ttbm_travel_repeated_end_date": "2027-10-28",
-                "ttbm_travel_repeated_start_date": "2026-11-22",
+                "ttbm_travel_repeated_after": "1",
+                "ttbm_travel_repeated_end_date": "",
+                "ttbm_travel_repeated_start_date": "2026-11-02",
                 "ttbm_travel_repeated_start_time": "06:30",
                 "ttbm_travel_start_place": "",
                 "ttbm_travel_start_price": "",
@@ -2126,6 +2143,13 @@
                     "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
                     "Enjoy a taste of Las Vegas glitz at the mind-bending magic show",
                     "Watch as Gerry McCambridge performs comedy and magic"
+                ],
+                "ttbm_display_slider": "on",
+                "ttbm_repeat_type": "continue",
+                "ttbm_enable_off_schedule": "yes",
+                "mep_ticket_offdays": [
+                    "wed",
+                    "thu"
                 ]
             },
             "gallery": [
@@ -2270,8 +2294,8 @@
                     }
                 ],
                 "mep_ticket_offdays": [
-                    "sat",
-                    "sun"
+                    "mon",
+                    "tue"
                 ],
                 "mep_ticket_times_fri": [],
                 "mep_ticket_times_global": [],
@@ -2349,7 +2373,7 @@
                 "ttbm_display_tour_guide": "on",
                 "ttbm_display_tour_type": "on",
                 "ttbm_display_why_choose_us": "on",
-                "ttbm_enable_off_schedule": "no",
+                "ttbm_enable_off_schedule": "yes",
                 "ttbm_enable_timewise_stock": "off",
                 "ttbm_extra_service_data": [
                     {
@@ -2400,7 +2424,7 @@
                 "ttbm_rating_count": "5",
                 "ttbm_reg_end_date": "2027-10-28",
                 "ttbm_repeat_number": "1",
-                "ttbm_repeat_type": "fixed",
+                "ttbm_repeat_type": "continue",
                 "ttbm_section_title_style": "ttbm_title_style_2",
                 "ttbm_service_excluded_in_price": [
                     "Airport Transfer",
@@ -2460,12 +2484,10 @@
                 "ttbm_travel_max_people_allow": "",
                 "ttbm_travel_min_age": "18",
                 "ttbm_travel_rank_tour": "",
-                "ttbm_travel_reg_end_date": "",
-                "ttbm_travel_repeated_after": "15",
-                "ttbm_travel_repeated_end_date": "2027-10-28",
-                "ttbm_travel_repeated_start_date": "2026-12-02",
+                "ttbm_travel_repeated_after": "1",
+                "ttbm_travel_repeated_end_date": "",
+                "ttbm_travel_repeated_start_date": "2026-11-02",
                 "ttbm_travel_repeated_start_time": "08:00",
-                "ttbm_travel_start_date": "",
                 "ttbm_travel_start_place": "Ghatarchar",
                 "ttbm_travel_start_price": "",
                 "ttbm_travel_start_time": "08:00",
